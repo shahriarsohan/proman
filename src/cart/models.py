@@ -10,6 +10,8 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
     expires = models.BooleanField(blank=True, null=True)
+    size = models.CharField(max_length=200, blank=True, null=True)
+    color = models.CharField(max_length=200, blank=True, null=True)
     quantity = models.IntegerField(default=1)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -29,3 +31,8 @@ class Cart(models.Model):
         if self.product.discount_price:
             return self.get_total_discount_item_price()
         return self.get_total_item_price()
+
+
+class OrderItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Cart)

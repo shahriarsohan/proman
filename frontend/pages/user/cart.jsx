@@ -6,6 +6,8 @@ import Footer from "../../src/components/Footer/Footer";
 import Newsletter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
 
+import { Checkbox } from "semantic-ui-react";
+
 export default class cart extends Component {
   state = {
     cart: [],
@@ -30,6 +32,21 @@ export default class cart extends Component {
       });
   }
 
+  handleChange = (item) => {
+    const config = {
+      headers: {
+        authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    };
+
+    axios
+      .post("http://127.0.0.1:8000/api/v1/cart/add-to-order-item", item, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err.response.data));
+  };
+
   handlePayment = () => {};
 
   render() {
@@ -44,6 +61,7 @@ export default class cart extends Component {
                 <table className="table shopping-summery">
                   <thead>
                     <tr className="main-hading">
+                      <th>Select</th>
                       <th>PRODUCT</th>
                       <th>NAME</th>
                       <th className="text-center">UNIT PRICE</th>
@@ -59,6 +77,13 @@ export default class cart extends Component {
                       ? this.state.cart.map((item) => {
                           return (
                             <tr>
+                              <td>
+                                <Checkbox
+                                  onChange={() =>
+                                    this.handleChange(item.product.slug)
+                                  }
+                                />
+                              </td>
                               <td className="image" data-title="No">
                                 <img
                                   src="https://via.placeholder.com/100x100"

@@ -40,6 +40,13 @@ class Products(models.Model):
     quantity_in_stock = models.PositiveIntegerField(null=True, blank=True)
     out_of_stock = models.BooleanField(default=False)
 
+    # size
+    s_size = models.BooleanField(default=True)
+    m_size = models.BooleanField(default=True)
+    l_size = models.BooleanField(default=True)
+    xl_size = models.BooleanField(default=True)
+    xxl_size = models.BooleanField(default=True)
+
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'

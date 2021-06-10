@@ -41,6 +41,12 @@ class ProductsSerializer(serializers.ModelSerializer):
             'trending',
             'quantity_in_stock',
             'out_of_stock',
-            'images'
+            'images',
+
+            's_size',
+            'm_size',
+            'l_size',
+            'xl_size',
+            'xxl_size',
 
         ]

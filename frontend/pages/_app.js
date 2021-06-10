@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { Provider } from "react-redux";
 // import "semantic-ui-css/semantic.min.css";
+import "react-notifications/lib/notifications.css";
+
 import "react-phone-number-input/style.css";
 
 import store from "../src/store";

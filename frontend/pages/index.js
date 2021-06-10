@@ -5,7 +5,7 @@ import Footer from "../src/components/Footer/Footer";
 import { HeroSlider } from "../src/components/Hero/HeroSlider";
 import PromotionalSlider from "../src/components/Hero/PromotinalSlider";
 import SmallBanner from "../src/components/Hero/SmallBanner";
-import { Navbar } from "../src/components/Navbar/Navbar";
+import Navbar from "../src/components/Navbar/Navbar";
 import NewsLetter from "../src/components/NewsLetter/NewsLetter";
 import MediumBanner from "../src/components/Products/MediumBanner";
 import BestSelling from "../src/components/Products/PopularProducts";
@@ -17,27 +17,10 @@ import { useEffect, useState } from "react";
 import Navigation from "../src/components/Navigation";
 
 const Home = (props) => {
-  const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const config = {
-      headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
-      },
-    };
-
-    axios
-      .get("http://127.0.0.1:8000/api/v1/cart/user-cart", config)
-      .then((res) => setCart(res.data))
-      .catch((err) => setError(err));
-  }, []);
-
   // console.log(props.data);
   return (
     <>
-      <Navbar cart={cart} />
+      <Navbar />
       <HeroSlider />
       <PromotionalSlider />
       <SmallBanner />

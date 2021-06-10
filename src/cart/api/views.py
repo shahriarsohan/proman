@@ -42,36 +42,22 @@ class AddProductToCart(views.APIView):
     def post(self, request, *args, **kwargs):
         slug = request.data.get('slug', None)
         if slug is None:
-            return Response({"msg": "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"msg": "Something went wrong"}, status=status.HTTP_404_NOT_FOUND)
         item = get_object_or_404(Products, slug=slug)
-        print(item)
-        item_is_cart_qs = Cart.objects.filter(
-            product=item,
-            user=request.user,
-            expires=False
-        )
-        if item_is_cart_qs.exists():
-            order_item = item_is_cart_qs.first()
-            order_item.quantity += 1
-            order_item.save()
-        else:
-            order_item = Cart.objects.create(
-                product=item, user=request.user, expires=False)
-            print(order_item)
-            order_item.save()
+        order_item = Cart.objects.create(
+            product=item, user=request.user, expires=False)
+        print(order_item)
+        order_item.save()
         print('order_item', order_item.id)
         order_qs = Order.objects.filter(user=request.user, ordered=False)
         print('order_qs', order_qs)
         if order_qs.exists():
             order = order_qs[0]
-            # order.save()
             if not order.products.filter(product__id=order_item.id).exists():
                 order.products.add(order_item)
                 return Response(status=status.HTTP_200_OK)
-
             else:
                 return Response({"msg": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
-
         else:
             ordered_date = timezone.now()
             order = Order.objects.create(

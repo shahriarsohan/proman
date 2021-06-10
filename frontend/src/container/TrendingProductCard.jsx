@@ -2,15 +2,23 @@ import React, { Component } from "react";
 import Link from "next/link";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
+import { connect } from "react-redux";
 
+import { fetchUserOrder } from "../store/actions/productsFetch";
 import QuickLookModal from "../container/QuickLookModal";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
-export default class TrendingProductCard extends Component {
+class TrendingProductCard extends Component {
   state = {
     modal: false,
     loading: true,
     error: "",
     details: {},
+    order_added_success: null,
+    order_added_error: null,
   };
 
   handleAddToCart = (slug) => {
@@ -26,8 +34,19 @@ export default class TrendingProductCard extends Component {
     // console.log(config);
     axios
       .post("http://127.0.0.1:8000/api/v1/cart/add-to-cart", product, config)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        this.props.fetchUserOrder(),
+          this.setState({ order_added_success: true });
+        setTimeout(() => {
+          this.setState({ order_added_success: false });
+        }, 10);
+      })
+      .catch((err) => {
+        this.setState({ order_added_error: true });
+        setTimeout(() => {
+          this.setState({ order_added_error: false });
+        }, 10);
+      });
   };
 
   showModalwithInfo = (slug) => {
@@ -49,10 +68,15 @@ export default class TrendingProductCard extends Component {
   };
 
   render() {
-    const { modal } = this.state;
+    const { modal, order_added_success, order_added_error } = this.state;
+    console.log(order_added_success);
     // console.log(this.props);
     return (
       <>
+        {order_added_success
+          ? NotificationManager.success("success message")
+          : ""}
+        {order_added_error ? NotificationManager.error("error message") : ""}
         <div className="col-xl-3 col-lg-3 col-md-4 col-5">
           <div className="single-product">
             <div className="product-img">
@@ -133,7 +157,10 @@ export default class TrendingProductCard extends Component {
             </Modal.Body>
           </Modal>
         )}
+        <NotificationContainer />
       </>
     );
   }
 }
+
+export default connect(null, { fetchUserOrder })(TrendingProductCard);

@@ -399,7 +399,7 @@ class AllListShop extends Component {
             </div>
           </div>
         </section>
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }

@@ -12,7 +12,7 @@ from .serializers import ProductsSerializer, ProductImageSerializer
 
 
 class ProductsListApiView(views.APIView):
-    @method_decorator(cache_page(60*60*2))
+    # @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         hair_care_qs = Products.objects.filter(category="hair_care")
         skin_care_qs = Products.objects.filter(category="skin_care")

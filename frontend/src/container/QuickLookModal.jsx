@@ -1,10 +1,27 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import ContentLoader, { Facebook } from "react-content-loader";
+import { handleAddToCart } from "../store/actions/cart";
 
-export default class QuickLookModal extends Component {
+class QuickLookModal extends Component {
+  state = {
+    size: "",
+    color: "",
+  };
+
+  onSubmitCart = (slug) => {
+    console.log(this.state.size);
+    console.log(this.state.color);
+    const data = {
+      size: this.state.size,
+      slug: slug,
+    };
+    this.props.handleAddToCart(data);
+  };
+
   render() {
     const { details } = this.props;
-    console.log(details);
+    console.log(this.state.size);
     return (
       <div role="document">
         <div className="modal-content">
@@ -18,13 +35,25 @@ export default class QuickLookModal extends Component {
               </ContentLoader>
             ) : (
               <div className="row no-gutters">
-                <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 d-flex">
                   {/* Product Slider */}
-                  <div className="product-gallery">
+                  <div className="product-gallery justify-content-center align-items-center">
                     <div className="quickview-slider-active">
-                      <div className="single-slider">
+                      <div
+                        style={{ overflow: "hidden" }}
+                        className="single-slider"
+                      >
                         <img
-                          src="https://via.placeholder.com/569x528"
+                          style={{
+                            height: "500px",
+                            width: "500px",
+                            overflow: "hidden",
+                          }}
+                          src={
+                            details.thumbnail
+                              ? `http://127.0.0.1:8000${details.thumbnail}`
+                              : "https://via.placeholder.com/550x750"
+                          }
                           alt="#"
                         />
                       </div>
@@ -56,7 +85,87 @@ export default class QuickLookModal extends Component {
                     <div className="quickview-peragraph mt-3">
                       <p>{details.short_desc}</p>
                     </div>
+                    <div class="size">
+                      <div class="row">
+                        <div class="col-lg-4 col-12">
+                          <h5 class="title">Size</h5>
+                          <select
+                            onChange={(e) =>
+                              this.setState({ size: e.target.value })
+                            }
+                          >
+                            {details.s_size ? (
+                              <option
+                                selected={`${
+                                  this.state.size === "s" ? "selected" : ""
+                                }`}
+                              >
+                                S
+                              </option>
+                            ) : (
+                              ""
+                            )}
 
+                            {details.m_size ? (
+                              <option
+                                selected={`${
+                                  this.state.size === "m" ? "selected" : ""
+                                }`}
+                              >
+                                M
+                              </option>
+                            ) : (
+                              ""
+                            )}
+                            {details.l_size ? (
+                              <option
+                                selected={`${
+                                  this.state.size === "l" ? "selected" : ""
+                                }`}
+                              >
+                                L
+                              </option>
+                            ) : (
+                              ""
+                            )}
+
+                            {details.m_size ? (
+                              <option
+                                selected={`${
+                                  this.state.size === "m" ? "selected" : ""
+                                }`}
+                              >
+                                M
+                              </option>
+                            ) : (
+                              ""
+                            )}
+                            {details.xl_size ? (
+                              <option
+                                selected={`${
+                                  this.state.size === "xl" ? "selected" : ""
+                                }`}
+                              >
+                                XL
+                              </option>
+                            ) : (
+                              ""
+                            )}
+                            {details.xxl_size ? (
+                              <option
+                                selected={`${
+                                  this.state.size === "xxl" ? "selected" : ""
+                                }`}
+                              >
+                                XXL
+                              </option>
+                            ) : (
+                              ""
+                            )}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
                     <div className="quantity mt-3">
                       {/* Input Order */}
                       <div className="input-group">
@@ -93,9 +202,12 @@ export default class QuickLookModal extends Component {
                       {/*/ End Input Order */}
                     </div>
                     <div className="add-to-cart">
-                      <a href="#" className="btn">
+                      <button
+                        onClick={() => this.onSubmitCart(details.slug)}
+                        className="btn"
+                      >
                         Add to cart
-                      </a>
+                      </button>
                       <a href="#" className="btn min">
                         <i className="ti-heart" />
                       </a>
@@ -138,3 +250,5 @@ export default class QuickLookModal extends Component {
     );
   }
 }
+
+export default connect(null, { handleAddToCart })(QuickLookModal);

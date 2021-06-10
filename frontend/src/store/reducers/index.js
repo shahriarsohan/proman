@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
+import test from "./test";
 
 export default combineReducers({
-  dummy: () => 5,
+  test: test,
 });
