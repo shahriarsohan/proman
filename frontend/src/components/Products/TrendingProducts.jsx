@@ -36,6 +36,8 @@ export default class TrendingProducts extends Component {
                                   thumbnail={p.thumbnail}
                                   slug={p.slug}
                                   id={p.id}
+                                  price={p.price}
+                                  discount_price={p.discount_price}
                                 />
                               );
                             })

@@ -708,14 +708,14 @@ table th[class*="col-"] {
   transform: scale(1);
 }
 .bottom-nav input:checked + .cart {
-  color: #a439f1;
+  color: "black";
 }
 .bottom-nav input:checked + .cart > ion-icon:first-child {
   opacity: 0;
 }
-.bottom-nav input:checked + .cart::before {
-  background: #d9bcee;
-  transform: scale(1);
+.bottom-nav input:checked + .cart::hover {
+  /* background: #d9bcee; */
+  transform: rotate(360deg);
 }
 .bottom-nav input:checked + .fav {
   color: #00d1c7;
@@ -747,4 +747,108 @@ table th[class*="col-"] {
   transform: scale(0);
   opacity: 0;
   transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.cf:before,
+.cf:after {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.cf {
+  zoom: 1;
+}
+#content {
+  max-width: 650px;
+  margin: 3rem auto;
+  text-align: center;
+}
+#featured_img img,
+#thumb_img img {
+  max-width: 100%;
+}
+#thumb_img {
+  margin-top: 2%;
+}
+#thumb_img img {
+  float: left;
+  max-width: 32%;
+  width: 32%;
+  cursor: pointer;
+  margin-right: 2%;
+  border: 2px solid #eee;
+  box-sizing: border-box;
+}
+#thumb_img img.active {
+  border: 2px solid #cac6b8;
+}
+#thumb_img img:last-child {
+  margin-right: 0;
+}
+/* 
+.current-1 {
+  color: "red";
+  font-weight: "bold";
+} */
+
+.feature-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.feature-heading h2 {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  color: #1b1919;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 40px;
+  padding: 5px 30px;
+  border: 1px solid #e0e0e0;
+}
+.feature-box {
+  width: 155px;
+  height: 160px;
+  margin: 0px 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.feature-box a img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.item span {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 5px;
+  color: #444444;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* #autoWidth{
+  display: flex;
+  justify-content: center !important;
+  margin: 10px auto 40px auto;
+} */
+
+.modal-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+.modal-open {
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 0 !important;
+}
+
+.bottom-nav-icon:hover {
+  transform: rotate(360deg);
 }

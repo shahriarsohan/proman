@@ -22,6 +22,7 @@ export default class PopularProducts extends Component {
                   ? bestselling.map((p) => {
                       return (
                         <BestSellingCard
+                          img={p.thumbnail}
                           slug={p.slug}
                           name={p.name}
                           price={p.price}

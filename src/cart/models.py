@@ -12,7 +12,7 @@ class Cart(models.Model):
     expires = models.BooleanField(blank=True, null=True)
     size = models.CharField(max_length=200, blank=True, null=True)
     color = models.CharField(max_length=200, blank=True, null=True)
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -36,3 +36,10 @@ class Cart(models.Model):
 class OrderItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Cart)
+
+# C
+
+
+class RecentlyView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)

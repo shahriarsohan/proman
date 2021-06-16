@@ -1,1 +1,1 @@
-export const TRY = "TRY";
+export const FETCH_BEST_SELLING = "FETCH_BEST_SELLING";

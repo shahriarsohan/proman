@@ -1,31 +1,64 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ContentLoader, { Facebook } from "react-content-loader";
-import { handleAddToCart } from "../store/actions/cart";
+import { css } from "@emotion/react";
+
+import HashLoader from "react-spinners/HashLoader";
+
+import { handleAddToCart, fetchUserOrder } from "../store/actions/cart";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 class QuickLookModal extends Component {
   state = {
     size: "",
     color: "",
+    quantity: 1,
   };
 
   onSubmitCart = (slug) => {
-    console.log(this.state.size);
-    console.log(this.state.color);
     const data = {
       size: this.state.size,
       slug: slug,
+      quantity: this.state.quantity,
     };
     this.props.handleAddToCart(data);
+    this.props.fetchUserOrder();
+  };
+
+  handlePlusQuantity = () => {
+    this.setState({ quantity: 1 + this.state.quantity });
+  };
+
+  handleMinusQuantity = () => {
+    this.setState({ quantity: this.state.quantity - 1 });
   };
 
   render() {
-    const { details } = this.props;
-    console.log(this.state.size);
+    const { details, loading_two } = this.props;
     return (
-      <div role="document">
-        <div className="modal-content">
-          <div className="modal-body">
+      <div
+        style={{ overflow: "hidden", overflowX: "hidden", overflowY: "hidden" }}
+        role="document"
+      >
+        <div style={{ overflow: "hidden" }} className="modal-content">
+          <div style={{ overflow: "hidden" }} className="modal-body">
+            {loading_two ? (
+              <>
+                <HashLoader
+                  color="#39a6a3"
+                  loading={true}
+                  css={override}
+                  size={50}
+                />
+              </>
+            ) : (
+              ""
+            )}
             {this.props.loading ? (
               <ContentLoader viewBox="0 0 380 70">
                 {/* Only SVG shapes */}
@@ -46,8 +79,10 @@ class QuickLookModal extends Component {
                         <img
                           style={{
                             height: "500px",
+
                             width: "500px",
                             overflow: "hidden",
+                            borderRadius: "20px",
                           }}
                           src={
                             details.thumbnail
@@ -170,44 +205,63 @@ class QuickLookModal extends Component {
                       {/* Input Order */}
                       <div className="input-group">
                         <div className="button minus">
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-number"
-                            disabled="disabled"
-                            data-type="minus"
-                            data-field="quant[1]"
-                          >
-                            <i className="ti-minus" />
-                          </button>
+                          {this.state.quantity !== 1 ? (
+                            <button
+                              type="button"
+                              className="btn btn-primary btn-number"
+                              data-type="minus"
+                              data-field="quant[1]"
+                            >
+                              <i
+                                onClick={() => this.handleMinusQuantity()}
+                                className="ti-minus"
+                              />
+                            </button>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         <input
                           type="text"
-                          name="quant[1]"
+                          name="quant[5]"
                           className="input-number"
                           data-min={1}
-                          data-max={1000}
-                          defaultValue={1}
+                          data-max={20}
+                          value={this.state.quantity}
                         />
                         <div className="button plus">
                           <button
-                            type="button"
+                            type="submit"
                             className="btn btn-primary btn-number"
                             data-type="plus"
                             data-field="quant[1]"
                           >
-                            <i className="ti-plus" />
+                            <i
+                              onClick={() =>
+                                this.handlePlusQuantity(details.id)
+                              }
+                              className="ti-plus"
+                            />
                           </button>
                         </div>
                       </div>
                       {/*/ End Input Order */}
                     </div>
                     <div className="add-to-cart">
-                      <button
-                        onClick={() => this.onSubmitCart(details.slug)}
-                        className="btn"
+                      <span
+                        data-tip="Specify Size"
+                        data-tip-disable={this.state.size === "" ? false : true}
                       >
-                        Add to cart
-                      </button>
+                        <button
+                          data-tip
+                          data-for="registerTip"
+                          onClick={() => this.onSubmitCart(details.slug)}
+                          className="btn"
+                          disabled={this.state.size === "" ? true : false}
+                        >
+                          <p style={{ color: "white" }}>Add to cart</p>
+                        </button>
+                      </span>
                       <a href="#" className="btn min">
                         <i className="ti-heart" />
                       </a>
@@ -251,4 +305,12 @@ class QuickLookModal extends Component {
   }
 }
 
-export default connect(null, { handleAddToCart })(QuickLookModal);
+const mapStateToProps = (state) => {
+  return {
+    loading_two: state.cart.loading,
+  };
+};
+
+export default connect(mapStateToProps, { handleAddToCart, fetchUserOrder })(
+  QuickLookModal
+);

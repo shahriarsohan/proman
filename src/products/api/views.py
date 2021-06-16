@@ -100,3 +100,36 @@ class ProductsInfiniteScrollView(generics.ListAPIView):
             'products': serializer.data,
             'hasMore': is_there_more(request)
         })
+
+
+def infinte_scroll_query(request):
+    limit = request.GET.get('limit')
+    offset = request.GET.get('offset')
+    query = request.query_params.get('query')
+    filter_kwargs = {query: True}
+    return Products.objects.filter(**filter_kwargs)[int(offset): int(offset) + int(limit)]
+
+
+def is_there_more_query(request):
+    offset = request.GET.get('offset')
+    query = request.query_params.get('query')
+    filter_kwargs = {query: True}
+    if int(offset) > Products.objects.filter(**filter_kwargs).count():
+        return False
+    return True
+
+
+class GetProductsBasedOnQuery(generics.ListAPIView):
+    serializer_class = ProductsSerializer
+
+    def get_queryset(self, **kwargs):
+        qs = infinte_scroll_query(self.request)
+        return qs
+
+    def list(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        serializer = ProductsSerializer(qs, many=True)
+        return Response({
+            'products': serializer.data,
+            'hasMore': is_there_more_query(request)
+        })

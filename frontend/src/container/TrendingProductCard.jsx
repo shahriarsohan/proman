@@ -70,7 +70,7 @@ class TrendingProductCard extends Component {
   render() {
     const { modal, order_added_success, order_added_error } = this.state;
     console.log(order_added_success);
-    // console.log(this.props);
+    console.log(this.props);
     return (
       <>
         {order_added_success
@@ -123,7 +123,7 @@ class TrendingProductCard extends Component {
                     <span>Add to Compare</span>
                   </a>
                 </div>
-                <div className="product-action-2">
+                {/* <div className="product-action-2">
                   <button
                     onClick={() => this.handleAddToCart(this.props.slug)}
                     title="Add to cart"
@@ -131,17 +131,21 @@ class TrendingProductCard extends Component {
                   >
                     Add to cart
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
-            <div className="product-content">
+            <div className="product-content text-capitalize">
               <h3>
                 <Link href={`/details/${this.props.slug}`}>
                   {this.props.name}
                 </Link>
               </h3>
               <div className="product-price">
-                <span>$29.00</span>
+                <span>{`${
+                  this.props.discount_price
+                    ? `৳ ${this.props.discount_price}`
+                    : `৳ ${this.props.price}`
+                }`}</span>
               </div>
             </div>
           </div>

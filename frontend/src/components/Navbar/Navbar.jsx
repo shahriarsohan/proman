@@ -1,44 +1,68 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Link from "next/link";
 import { connect } from "react-redux";
 
-import { fetchUserOrder } from "../../store/actions/productsFetch";
+import Link from "next/link";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/react";
+
+import { fetchUserOrder } from "../../store/actions/cart";
+
+import { handleDeleteFromCart } from "../../store/actions/cart";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 class Navbar extends Component {
   componentDidMount() {
     this.props.fetchCart();
   }
+
+  handleDelete = (id) => {
+    const data = {
+      id: id,
+    };
+    this.props.deleteItem(data);
+  };
+
   render() {
     const { cart } = this.props;
     console.log(cart);
     return (
       <header className="header shop">
+        {/* <HashLoader color="#39a6a3" loading={true} css={override} size={50} /> */}
+
         {/* Topbar */}
         <div className="topbar">
           <div className="container">
             <div className="row">
-              <div className="col-lg-4 col-md-12 col-12">
+              <div className="col-lg-5 col-md-12 col-12">
                 {/* Top Left */}
                 <div className="top-left">
                   <ul className="list-main">
                     <li>
-                      <i className="ti-headphone-alt" /> +060 (800) 801-582
+                      <a href="tel:+8801786910645">
+                        <i className="ti-headphone-alt" /> +880 (178) 6910-645
+                      </a>
                     </li>
                     <li>
-                      <i className="ti-email" /> support@shophub.com
+                      <a href="mailto:support@proman.com.bd">
+                        <i className="ti-email" /> support@proman.com.bd
+                      </a>
                     </li>
                   </ul>
                 </div>
                 {/*/ End Top Left */}
               </div>
-              <div className="col-lg-8 col-md-12 col-12">
+              <div className="col-lg-7 col-md-12 col-12">
                 {/* Top Right */}
                 <div className="right-content">
                   <ul className="list-main">
-                    <li>
+                    {/* <li>
                       <i className="ti-location-pin" /> Store location
-                    </li>
+                    </li> */}
                     <li>
                       <i className="ti-alarm-clock" />{" "}
                       <a href="#">Daily deal</a>
@@ -48,7 +72,7 @@ class Navbar extends Component {
                     </li>
                     <li>
                       <i className="ti-power-off" />
-                      <a href="login.html#">Login</a>
+                      <Link href="/user/login">Login</Link>
                     </li>
                   </ul>
                 </div>
@@ -143,11 +167,10 @@ class Navbar extends Component {
                               return (
                                 <li>
                                   <a
-                                    href="#"
                                     className="remove"
                                     title="Remove this item"
                                     onClick={() => {
-                                      handleDelete(c);
+                                      this.handleDelete(c.id);
                                     }}
                                   >
                                     <i className="fa fa-remove" />
@@ -217,11 +240,13 @@ class Navbar extends Component {
                     </h3>
                     <ul className="main-category">
                       <li>
-                        <a href="#">
-                          New Arrivals{" "}
-                          <i className="fa fa-angle-right" aria-hidden="true" />
-                        </a>
-                        <ul className="sub-category">
+                        <Link href="/shop/filter/query?=best_selling">
+                          New Arrivals
+                        </Link>
+                        <Link href="/shop/filter/query?=trending">
+                          Trending
+                        </Link>
+                        {/* <ul className="sub-category">
                           <li>
                             <a href="#">accessories</a>
                           </li>
@@ -249,9 +274,9 @@ class Navbar extends Component {
                           <li>
                             <a href="#">denim </a>
                           </li>
-                        </ul>
+                        </ul> */}
                       </li>
-                      <li className="main-mega">
+                      {/* <li className="main-mega">
                         <a href="#">
                           best selling{" "}
                           <i className="fa fa-angle-right" aria-hidden="true" />
@@ -309,9 +334,9 @@ class Navbar extends Component {
                             </div>
                           </li>
                         </ul>
-                      </li>
+                      </li> */}
                       <li>
-                        <a href="#">accessories</a>
+                        <Link href="#">accessories</Link>
                       </li>
                       <li>
                         <a href="#">top 100 offer</a>
@@ -345,11 +370,11 @@ class Navbar extends Component {
                         <div className="nav-inner">
                           <ul className="nav main-menu menu navbar-nav">
                             <li className="active">
-                              <a href="#">
+                              <Link href="/">
                                 Home
-                                <i className="ti-angle-down" />
-                              </a>
-                              <ul className="dropdown">
+                                {/* <i className="ti-angle-down" /> */}
+                              </Link>
+                              {/* <ul className="dropdown">
                                 <li>
                                   <a href="index.html">Home Ecommerce V1</a>
                                 </li>
@@ -362,21 +387,19 @@ class Navbar extends Component {
                                 <li>
                                   <a href="index4.html">Home Ecommerce V4</a>
                                 </li>
-                              </ul>
+                              </ul> */}
                             </li>
-                            <li>
+                            {/* <li>
                               <a href="#">Product</a>
-                            </li>
+                            </li> */}
+
                             <li>
-                              <a href="#">Service</a>
-                            </li>
-                            <li>
-                              <a href="#">
+                              <a href="/shop/all">
                                 Shop
-                                <i className="ti-angle-down" />
+                                <i class="fas fa-store-alt"></i>
                                 <span className="new">New</span>
                               </a>
-                              <ul className="dropdown">
+                              {/* <ul className="dropdown">
                                 <li>
                                   <a href="shop-grid.html">Shop Grid</a>
                                 </li>
@@ -392,9 +415,12 @@ class Navbar extends Component {
                                 <li>
                                   <a href="checkout.html">Checkout</a>
                                 </li>
-                              </ul>
+                              </ul> */}
                             </li>
                             <li>
+                              <a href="#">Service</a>
+                            </li>
+                            {/* <li>
                               <a href="#">
                                 Pages
                                 <i className="ti-angle-down" />
@@ -416,8 +442,8 @@ class Navbar extends Component {
                                   <a href="404.html">404</a>
                                 </li>
                               </ul>
-                            </li>
-                            <li>
+                            </li> */}
+                            {/* <li>
                               <a href="#">
                                 Blog
                                 <i className="ti-angle-down" />
@@ -440,7 +466,7 @@ class Navbar extends Component {
                                   </a>
                                 </li>
                               </ul>
-                            </li>
+                            </li> */}
                             <li>
                               <a href="contact.html">Contact Us</a>
                             </li>
@@ -462,13 +488,14 @@ class Navbar extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    cart: state.test.data,
+    cart: state.cart.data,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
+    deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

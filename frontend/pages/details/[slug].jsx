@@ -1,40 +1,71 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import { withRouter } from "next/router";
 
-// import SimpleImageSlider from "react-simple-image-slider";
-import ImageGallery from "react-image-gallery";
+import { GlassMagnifier } from "react-image-magnifiers";
+import ReactTooltip from "react-tooltip";
 
-import { NavbarTwo } from "../../src/components/Navbar/NavbarTwo";
+import { handleAddToCart, fetchUserOrder } from "../../src/store/actions/cart";
+
+import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import Footer from "../../src/components/Footer/Footer";
 
 import "react-image-gallery/styles/css/image-gallery.css";
-import Image from "next/image";
-
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 // const
 
 class DetailsPage extends Component {
   state = {
-    images: [],
+    size: "",
+    activeImg: `http://127.0.0.1:8000${this.props.details.images[0].image}`,
+    quantity: 1,
+    sizeError: null,
   };
 
-  componentDidMount() {
-    if (this.props.details.images) {
-      this.props.details.images.forEach((image) => {
-        image.image = `{http://127.0.0.1:8000${image.image}}`;
-      });
-      this.setState({ images: this.props.details.images });
-    }
-  }
+  handleChangeSize = (e) => {
+    console.log(e.value);
+    this.setState({
+      size: e.target.value,
+    });
+  };
+
+  onSubmitCart = (slug) => {
+    this.setState({ sizeError: true });
+    const data = {
+      size: this.state.size,
+      slug: slug,
+      quantity: this.state.quantity,
+    };
+
+    console.log(data);
+    this.props.handleAddToCart(data);
+    this.props.fetchUserOrder();
+  };
+
+  handlePlusQuantity = () => {
+    this.setState({ quantity: 1 + this.state.quantity });
+  };
+
+  handleMinusQuantity = () => {
+    this.setState({ quantity: this.state.quantity - 1 });
+  };
 
   render() {
-    const { details } = this.props;
-    // console.log(details);
-    // console.log(this.state.images);
+    const { details, data, loading, error, add_to_cart_success } = this.props;
+    console.log(add_to_cart_success);
+    console.log(this.state.sizeError);
 
     return (
       <>
         <NavbarTwo />
+        <ReactTooltip />
+        {add_to_cart_success
+          ? NotificationManager.success("success message")
+          : ""}
         <section className="shop single section">
           <div className="container">
             <div className="row">
@@ -42,16 +73,31 @@ class DetailsPage extends Component {
                 <div className="row">
                   <div className="col-lg-6 col-12">
                     {/* Product Slider */}
-                    <div class="flexslider-thumbnails mt-3">
-                      {this.state.images
-                        ? this.state.images.map((img) => {
-                            console.log(img);
+                    <div id="content">
+                      <div id="featured_img">
+                        <GlassMagnifier
+                          imageSrc={this.state.activeImg}
+                          imageAlt="Example"
+                        />
+                      </div>
 
-                            return (
-                              <img src={img.image} width="100" height="100" />
-                            );
-                          })
-                        : ""}
+                      <div id="thumb_img" className="cf">
+                        {details.images.map((img) => {
+                          return (
+                            <figure onMouseMove={() => console.log("hello")}>
+                              <img
+                                className="active hover-zoom"
+                                onClick={() =>
+                                  this.setState({
+                                    activeImg: `http://127.0.0.1:8000${img.image}`,
+                                  })
+                                }
+                                src={`http://127.0.0.1:8000${img.image}`}
+                              />
+                            </figure>
+                          );
+                        })}
+                      </div>
                     </div>
                     {/* End Product slider */}
                   </div>
@@ -59,7 +105,9 @@ class DetailsPage extends Component {
                     <div className="product-des">
                       {/* Description */}
                       <div className="short">
-                        <h4>Nonstick Dishwasher PFOA</h4>
+                        <h4 className="text-capitalize">
+                          {details.products.name}
+                        </h4>
                         <div className="rating-main">
                           <ul className="rating">
                             <li>
@@ -72,32 +120,42 @@ class DetailsPage extends Component {
                               <i className="fa fa-star" />
                             </li>
                             <li>
+                              <i className="fa fa-star" />
+                            </li>
+                            <li>
+                              <i className="fa fa-star" />
+                            </li>
+                            {/* <li>
                               <i className="fa fa-star-half-o" />
                             </li>
                             <li className="dark">
                               <i className="fa fa-star-o" />
-                            </li>
+                            </li> */}
                           </ul>
                           <a href="#" className="total-review">
-                            (102) Review
+                            (0) Review
                           </a>
                         </div>
                         <p className="price">
-                          <span className="discount">$70.00</span>
-                          <s>$80.00</s>{" "}
+                          <span className="discount">
+                            {details.products.discount_price
+                              ? `৳ ${details.products.discount_price}`
+                              : ""}
+                          </span>
+                          <s>
+                            {details.products.price
+                              ? `৳ ${details.products.price}`
+                              : ""}
+                          </s>{" "}
                         </p>
+
                         <p className="description">
-                          eget velit. Donec ac tempus ante. Fusce ultricies
-                          massa massa. Fusce aliquam, purus eget sagittis
-                          vulputate, sapien libero hendrerit est, sed commodo
-                          augue nisi non neque. Lorem ipsum dolor sit amet,
-                          consectetur adipiscing elit. Sed tempor, lorem et
-                          placerat vestibulum, metus nisi posuere nisl, in
+                          {details.products.short_desc}
                         </p>
                       </div>
                       {/*/ End Description */}
                       {/* Color */}
-                      <div className="color">
+                      {/* <div className="color">
                         <h4>
                           Available Options <span>Color</span>
                         </h4>
@@ -123,37 +181,108 @@ class DetailsPage extends Component {
                             </a>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/*/ End Color */}
                       {/* Size */}
                       <div className="size">
-                        <h4>Size</h4>
+                        <h4>Available Size</h4>
                         <ul>
-                          <li>
-                            <a href="#" className="one">
-                              S
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="two">
-                              M
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="three">
-                              L
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="four">
-                              XL
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="four">
-                              XXL
-                            </a>
-                          </li>
+                          {details.products.s_size && (
+                            <li>
+                              <a
+                                onClick={() => this.setState({ size: "s" })}
+                                value="s"
+                                style={{
+                                  color:
+                                    this.state.size === "s" ? "#39a6a3" : "",
+                                  fontWeight:
+                                    this.state.size === "s" ? "bolder" : "",
+                                  borderRadius:
+                                    this.state.size === "s" ? "20px" : "",
+                                }}
+                                className="one"
+                              >
+                                S
+                              </a>
+                            </li>
+                          )}
+
+                          {details.products.m_size && (
+                            <li>
+                              <a
+                                onClick={() => this.setState({ size: "m" })}
+                                value="m"
+                                style={{
+                                  color:
+                                    this.state.size === "m" ? "#39a6a3" : "",
+                                  fontWeight:
+                                    this.state.size === "m" ? "bolder" : "",
+                                  borderRadius:
+                                    this.state.size === "m" ? "20px" : "",
+                                }}
+                                className="one"
+                              >
+                                M
+                              </a>
+                            </li>
+                          )}
+                          {details.products.l_size && (
+                            <li>
+                              <a
+                                onClick={() => this.setState({ size: "l" })}
+                                value="l"
+                                style={{
+                                  color:
+                                    this.state.size === "l" ? "#39a6a3" : "",
+                                  fontWeight:
+                                    this.state.size === "l" ? "bolder" : "",
+                                  borderRadius:
+                                    this.state.size === "l" ? "20px" : "",
+                                }}
+                                className="one"
+                              >
+                                L
+                              </a>
+                            </li>
+                          )}
+                          {details.products.xl_size && (
+                            <li>
+                              <a
+                                onClick={() => this.setState({ size: "xl" })}
+                                value="xl"
+                                className="one"
+                                style={{
+                                  color:
+                                    this.state.size === "xl" ? "#39a6a3" : "",
+                                  fontWeight:
+                                    this.state.size === "xl" ? "bolder" : "",
+                                  borderRadius:
+                                    this.state.size === "xl" ? "20px" : "",
+                                }}
+                              >
+                                XL
+                              </a>
+                            </li>
+                          )}
+                          {details.products.xxl_size && (
+                            <li>
+                              <a
+                                onClick={() => this.setState({ size: "xxl" })}
+                                value="XXL"
+                                className="one"
+                                style={{
+                                  color:
+                                    this.state.size === "xxl" ? "#39a6a3" : "",
+                                  fontWeight:
+                                    this.state.size === "xxl" ? "bolder" : "",
+                                  borderRadius:
+                                    this.state.size === "xxl" ? "20px" : "",
+                                }}
+                              >
+                                XXL
+                              </a>
+                            </li>
+                          )}
                         </ul>
                       </div>
                       {/*/ End Size */}
@@ -164,42 +293,72 @@ class DetailsPage extends Component {
                           {/* Input Order */}
                           <div className="input-group">
                             <div className="button minus">
-                              <button
-                                type="button"
-                                className="btn btn-primary btn-number"
-                                disabled="disabled"
-                                data-type="minus"
-                                data-field="quant[1]"
-                              >
-                                <i className="ti-minus" />
-                              </button>
+                              {this.state.quantity !== 1 ? (
+                                <button
+                                  type="button"
+                                  className="btn btn-primary btn-number"
+                                  data-type="minus"
+                                  data-field="quant[1]"
+                                >
+                                  <i
+                                    onClick={() => this.handleMinusQuantity()}
+                                    className="ti-minus"
+                                  />
+                                </button>
+                              ) : (
+                                ""
+                              )}
                             </div>
                             <input
                               type="text"
-                              name="quant[1]"
+                              name="quant[5]"
                               className="input-number"
                               data-min={1}
-                              data-max={1000}
-                              defaultValue={1}
+                              data-max={20}
+                              value={this.state.quantity}
                             />
                             <div className="button plus">
                               <button
-                                type="button"
+                                type="submit"
                                 className="btn btn-primary btn-number"
                                 data-type="plus"
                                 data-field="quant[1]"
                               >
-                                <i className="ti-plus" />
+                                <i
+                                  onClick={() =>
+                                    this.handlePlusQuantity(details.id)
+                                  }
+                                  className="ti-plus"
+                                />
                               </button>
                             </div>
                           </div>
                           {/*/ End Input Order */}
                         </div>
                         <div className="add-to-cart">
-                          <a href="#" className="btn">
-                            Add to cart
-                          </a>
-                          <a href="#" className="btn min">
+                          <span
+                            data-tip="Specify Size"
+                            data-tip-disable={
+                              this.state.size === "" ? false : true
+                            }
+                          >
+                            <button
+                              data-tip
+                              data-for="registerTip"
+                              onClick={() =>
+                                this.onSubmitCart(details.products.slug)
+                              }
+                              className="btn"
+                              disabled={this.state.size === "" ? true : false}
+                            >
+                              <p style={{ color: "white" }}>Add to cart</p>
+                            </button>
+                          </span>
+                          <a
+                            data-tip="Add To Wishlist"
+                            href="#"
+                            className="btn min"
+                          >
                             <i className="ti-heart" />
                           </a>
                           <a href="#" className="btn min">
@@ -233,7 +392,7 @@ class DetailsPage extends Component {
                               Description
                             </a>
                           </li>
-                          <li className="nav-item">
+                          {/* <li className="nav-item">
                             <a
                               className="nav-link"
                               data-toggle="tab"
@@ -242,7 +401,7 @@ class DetailsPage extends Component {
                             >
                               Reviews
                             </a>
-                          </li>
+                          </li> */}
                         </ul>
                         {/*/ End Tab Nav */}
                       </div>
@@ -505,6 +664,7 @@ class DetailsPage extends Component {
             </div>
           </div>
         </section>
+        <NotificationContainer />
         <Footer />
       </>
     );
@@ -533,4 +693,15 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default withRouter(DetailsPage);
+const mapStateToProps = (state) => {
+  return {
+    data: state.cart.data,
+    loading: state.cart.loading,
+    error: state.cart.error,
+    add_to_cart_success: state.cart.add_to_cart_success,
+  };
+};
+
+export default connect(mapStateToProps, { handleAddToCart, fetchUserOrder })(
+  withRouter(DetailsPage)
+);

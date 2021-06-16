@@ -6,7 +6,7 @@ import { withRouter } from "next/router";
 import { Formik, Field } from "formik";
 
 import Footer from "../../src/components/Footer/Footer";
-import { NavbarTwo } from "../../src/components/Navbar/NavbarTwo";
+import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
 

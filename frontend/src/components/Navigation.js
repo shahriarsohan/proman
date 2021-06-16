@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Nav } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image";
 
 const tabs = [
   {
@@ -32,8 +33,7 @@ const Navigation = (props) => {
 
       {/* Bottom Tab Navigator*/}
       <nav
-        className="navbar fixed-bottom navbar-light d-block  d-sm-block d-md-none d-lg-none
- bottom-tab-nav"
+        className="fixed-bottom navbar-light d-block  d-sm-block d-md-none d-lg-none"
         role="navigation"
       >
         <nav className="w-100">
@@ -52,22 +52,46 @@ const Navigation = (props) => {
               id="tab-2"
               checked
             />
-            <label class="icon cart" for="tab-2">
-              <ion-icon name="cart-outline"></ion-icon>
-              <ion-icon class="fill" name="cart"></ion-icon>
-            </label>
+            <Link href="/shop/all">
+              <label class="cart">
+                <ion-icon
+                  style={{ color: "black" }}
+                  name="cart-outline"
+                ></ion-icon>
+                <ion-icon
+                  style={{ color: "#39A6A3" }}
+                  class="fill"
+                  name="cart"
+                ></ion-icon>
+              </label>
+            </Link>
 
-            <input type="radio" name="radio" value="3" id="tab-3" checked />
-            <label class="icon fav" for="tab-3">
-              <ion-icon name="heart-outline"></ion-icon>
-              <ion-icon class="fill" name="heart"></ion-icon>
-            </label>
+            <input type="radio" name="radio" value="3" id="tab-3" />
+            <Link href="/shop/all">
+              <label class="fav" for="tab-3">
+                <Image
+                  className="bottom-nav-icon"
+                  src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/Untitled+design+(1).png"
+                  width="100px"
+                  height="100px"
+                />
+              </label>
+            </Link>
 
-            <input type="radio" name="radio" value="4" id="tab-4" checked />
-            <label class="icon profile" for="tab-4">
-              <ion-icon name="person-outline"></ion-icon>
-              <ion-icon class="fill" name="person"></ion-icon>
-            </label>
+            <input type="radio" name="radio" value="4" id="tab-4" />
+            <Link href="/shop/all">
+              <label class="profile" for="tab-4">
+                <ion-icon
+                  style={{ color: "black" }}
+                  name="person-outline"
+                ></ion-icon>
+                <ion-icon
+                  style={{ color: "#39A6A3" }}
+                  class="fill"
+                  name="person"
+                ></ion-icon>
+              </label>
+            </Link>
           </div>
         </nav>
       </nav>

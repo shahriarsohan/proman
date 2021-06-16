@@ -19,7 +19,15 @@ export default class FeaturedProducts extends Component {
               <div className="owl-carousel popular-slider">
                 {featured
                   ? featured.map((p) => {
-                      return <FeaturedCard name={p.name} slug={p.slug} />;
+                      return (
+                        <FeaturedCard
+                          img={p.thumbnail}
+                          name={p.name}
+                          slug={p.slug}
+                          price={p.price}
+                          discount_price={p.discount_price}
+                        />
+                      );
                     })
                   : ""}
               </div>

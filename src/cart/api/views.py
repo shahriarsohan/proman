@@ -8,7 +8,7 @@ from address.api.serializers import AddressSerializer
 
 from address.models import Address
 from products.models import Products
-from cart.models import Cart
+from cart.models import Cart, RecentlyView
 from orders.models import Order
 from .serializers import CartSerailizers
 
@@ -41,14 +41,23 @@ class AddProductToCart(views.APIView):
 
     def post(self, request, *args, **kwargs):
         slug = request.data.get('slug', None)
+        quantity = request.data.get('quantity', None)
+        size = request.data.get('size', None)
+        print(type(size))
+        print(quantity)
+        if size is None:
+            return Response({"msg": "Please specify size"}, status=status.HTTP_400_BAD_REQUEST)
         if slug is None:
             return Response({"msg": "Something went wrong"}, status=status.HTTP_404_NOT_FOUND)
+
         item = get_object_or_404(Products, slug=slug)
+        if quantity is not None:
+            order_item = Cart.objects.create(
+                product=item, user=request.user, quantity=quantity, size=size, expires=False)
         order_item = Cart.objects.create(
-            product=item, user=request.user, expires=False)
+            product=item, user=request.user, quantity=quantity, size=size, expires=False)
         print(order_item)
         order_item.save()
-        print('order_item', order_item.id)
         order_qs = Order.objects.filter(user=request.user, ordered=False)
         print('order_qs', order_qs)
         if order_qs.exists():
@@ -66,6 +75,36 @@ class AddProductToCart(views.APIView):
             return Response(status=status.HTTP_200_OK)
 
 
+class ItemDeleteFromCart(views.APIView):
+    def post(self, request, *args, **kwargs):
+        item = request.data.get('id', None)
+        user = request.user
+        print(item)
+        if item is None:
+            return Response({'msg': 'Something went wrong'}, status=status.HTTP_404_NOT_FOUND)
+        item_qs = get_object_or_404(Cart, id=item)
+        if item_qs:
+            user_qs = Cart.objects.get(id=item)
+            if user_qs.user == request.user:
+                user_qs.delete()
+            else:
+                return Response({'msg': 'Invalid token'})
+            return Response({'msg': 'item removed from cart'}, status=status.HTTP_200_OK)
+        print('nothing')
+        return Response({'msg': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PlusQuantity(views.APIView):
+    def post(self, request, *args, **kwargs):
+        id = request.data.get('id', None)
+        if id is not None:
+            cart_qs = get_object_or_404(Cart, id=id)
+            if cart_qs.exists():
+                cart = cart_qs.quantity + 1
+                cart.save()
+                return Response({'msg': 'cart quantity updated'}, status=status.HTTP_200_OK)
+
+
 class PaymentView(views.APIView):
     def get(self, request, *args, **kwargs):
         order_qs = Order.objects.get(user=request.user, ordered=False)
@@ -74,6 +113,21 @@ class PaymentView(views.APIView):
             serializer = AddressSerializer(address_qs, many=True)
             return response.Response({'address_qs': serializer.data, "total_amount": order_qs.get_total()})
         return response.Response({"total_amount": order_qs.get_total()})
+
+
+class CreateRecentActivity(views.APIView):
+    def post(self, request, *args, **kwargs):
+        user = self.request.user.user
+        slug = request.data.get('slug', None)
+        if slug is not None:
+            item_qs = get_object_or_404(Products, slug=slug)
+            activity = RecentlyView.objects.create(
+                user=user,
+                product=item_qs
+            )
+            return response.Response(status=status.HTTP_200_OK)
+        else:
+            return response.Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class OrdercofirmApiView(views.APIView):

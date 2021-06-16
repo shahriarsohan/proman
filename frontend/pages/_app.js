@@ -15,18 +15,6 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   const authCheckState = () => {
-    // const token = localStorage.getItem("access_token");
-    // console.log(token);
-    // // localStorage.removeItem("access_token");
-    // const expirationDate = new Date(localStorage.getItem("expirationDate"));
-    // console.log(expirationDate);
-    // if (expirationDate <= new Date()) {
-    //   console.log("logging out");
-    // } else {
-    //   (expirationDate.getTime() - new Date().getTime()) / 1000;
-    //   console.log("logging in");
-    // }
-
     const token = localStorage.getItem("access_token");
     if (token === undefined) {
       console.log("logging in 1");
@@ -94,7 +82,7 @@ function MyApp({ Component, pageProps }) {
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/modified/styles1.css"
+          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/modified/new.css"
         />
 
         {/* tmart */}

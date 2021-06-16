@@ -31,6 +31,7 @@ class FeaturedCard extends React.Component {
   };
 
   render() {
+    const { img, price, discount_price, name, slug } = this.props;
     return (
       <>
         <div className="single-product">
@@ -38,13 +39,12 @@ class FeaturedCard extends React.Component {
             <a href="product-details.html">
               <img
                 className="default-img"
-                src="https://via.placeholder.com/550x750"
-                alt="#"
-              />
-              <img
-                className="hover-img"
-                src="https://via.placeholder.com/550x750"
-                alt="#"
+                src={
+                  img
+                    ? `http://127.0.0.1:8000${img}`
+                    : "https://via.placeholder.com/550x750"
+                }
+                alt={this.props.name}
               />
               <span className="out-of-stock">Hot</span>
             </a>
@@ -65,10 +65,6 @@ class FeaturedCard extends React.Component {
                 <a title="Wishlist" href="#">
                   <i className=" ti-heart " />
                   <span>Add to Wishlist</span>
-                </a>
-                <a title="Compare" href="#">
-                  <i className="ti-bar-chart-alt" />
-                  <span>Add to Compare</span>
                 </a>
               </div>
               <div className="product-action-2">

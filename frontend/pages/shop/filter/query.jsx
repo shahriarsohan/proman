@@ -2,14 +2,16 @@ import React, { Component } from "react";
 
 import axios from "axios";
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
+import queryString from "query-string";
+import { withRouter } from "next/router";
+import Router from "next/router";
 
-import Footer from "../../src/components/Footer/Footer";
-import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
-import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
-import Service from "../../src/components/Service/Service";
-import ShopListSingle from "../../src/components/ShopList/ShopListSingle";
-import ShopGirdSingle from "../../src/components/ShopList/ShopGirdSingle";
-import Navigation from "../../src/components/Navigation";
+import Footer from "../../../src/components/Footer/Footer";
+import NavbarTwo from "../../../src/components/Navbar/NavbarTwo";
+import NewsLetter from "../../../src/components/NewsLetter/NewsLetter";
+import Service from "../../../src/components/Service/Service";
+import ShopListSingle from "../../../src/components/ShopList/ShopListSingle";
+import ShopGirdSingle from "../../../src/components/ShopList/ShopGirdSingle";
 
 class AllListShop extends Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class AllListShop extends Component {
       offset: 1,
       limit: 1,
       list: false,
+      query: "",
     };
 
     if (typeof window !== "undefined") {
@@ -44,21 +47,17 @@ class AllListShop extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      loading: true,
-    });
-    if (this.props.details) {
-      this.setState({ products: this.props.details, loading: false });
-    }
-  }
-
   loadProducts = () => {
     this.setState({ loading: true });
     console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/api/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}`
+        `http://127.0.0.1:8000/api/v1/products/product-filter/?limit=${this.state.limit}&offset=${this.state.offset}`,
+        {
+          params: {
+            query: this.state.query,
+          },
+        }
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -78,9 +77,46 @@ class AllListShop extends Component {
       });
   };
 
+  componentWillMount() {
+    this.setState({
+      query: this.props.router.query[Object.keys(this.props.router.query)[0]],
+    });
+  }
+
+  componentDidMount() {
+    if (!this.state.query) {
+      Router.push("/");
+    }
+    axios
+      .get(
+        "http://127.0.0.1:8000/api/v1/products/product-filter/?limit=1&offset=0",
+        {
+          params: {
+            query: this.state.query,
+          },
+        }
+      )
+      .then((res) => {
+        const newProducts = res.data.products;
+        const hasMore = res.data.hasMore;
+        console.log(hasMore);
+
+        this.setState({
+          hasMore: hasMore,
+          loading: false,
+          products: [...this.state.products, ...newProducts],
+          offset: this.state.offset + this.state.limit,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ loading: false });
+      });
+  }
+
   render() {
-    console.log(this.props.details);
-    console.log(this.state.products);
+    console.log(this.state.query);
+
     return (
       <>
         <NavbarTwo />
@@ -400,32 +436,10 @@ class AllListShop extends Component {
             </div>
           </div>
         </section>
-        <Navigation />
         {/* <Footer /> */}
       </>
     );
   }
 }
 
-export async function getServerSideProps(context) {
-  // Fetch data from external API
-  const details_qs = await axios.get(
-    `http://127.0.0.1:8000/api/v1/products/list-infinite/?limit=1&offset=0`
-  );
-
-  const details = await details_qs.data.products;
-
-  if (!details) {
-    return {
-      props: {
-        not_found: true,
-      },
-    };
-  }
-  // Pass data to the page via props
-  return {
-    props: { details: details },
-  };
-}
-
-export default AllListShop;
+export default withRouter(AllListShop);

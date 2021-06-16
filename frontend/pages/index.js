@@ -13,8 +13,9 @@ import Products from "../src/components/Products/TrendingProducts";
 import Shop from "../src/components/Products/Shop";
 import Service from "../src/components/Service/Service";
 import CountDownProducts from "../src/components/Products/CountDownProducts";
-import { useEffect, useState } from "react";
+
 import Navigation from "../src/components/Navigation";
+import Featuredcat from "../src/components/featuredcat/featuredcat";
 
 const Home = (props) => {
   // console.log(props.data);
@@ -24,6 +25,7 @@ const Home = (props) => {
       <HeroSlider />
       <PromotionalSlider />
       <SmallBanner />
+      <Featuredcat />
       <Products p={props.trending.trending_qs} />
       <MediumBanner />
       <BestSelling bestselling={props.bestselling.bestSelling_qs} />

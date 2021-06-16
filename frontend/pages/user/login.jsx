@@ -8,7 +8,7 @@ import { GoogleLoginButton } from "react-social-login-buttons";
 import facebookLogin from "../../src/components/axios/facebookLogin";
 import googleLoginReq from "../../src/components/axios/googleLoginReq";
 
-import { NavbarTwo } from "../../src/components/Navbar/NavbarTwo";
+import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import Footer from "../../src/components/Footer/Footer";
 import Newsletter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";

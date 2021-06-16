@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import { NavbarTwo } from "../../src/components/Navbar/NavbarTwo";
+import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import Footer from "../../src/components/Footer/Footer";
 import Newsletter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
