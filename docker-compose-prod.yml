@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  backend:
+    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend
+    build:
+      context: ./src
+    command: gunicorn cosmetica.wsgi --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      - PGUSER=proman
+      - PGHOST=postgres
+      - PGDATABASE=proman
+      - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
+      - PGPORT=5432
+    depends_on:
+      - db
+  db:
+    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-db
+  frontend:
+    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend
+    build:
+      context: ./frontend
+    volumes:
+      - react_build:/react/build
+    depends_on:
+      - backend
+  nginx:
+    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "3050:80"
+volumes:
+  react_build:
