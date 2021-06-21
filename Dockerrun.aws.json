@@ -5,7 +5,7 @@
       "name": "frontend",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend",
       "hostname": "frontend",
-      "essential": false,
+      "essential": true,
       "memory": 128
     },
     {
