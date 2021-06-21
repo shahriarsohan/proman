@@ -1,7 +1,7 @@
 FROM node:alpine as dependencies
 WORKDIR /my-project
 COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
+RUN npm install --from-lockfile
 
 FROM node:alpine as builder
 WORKDIR /my-project
