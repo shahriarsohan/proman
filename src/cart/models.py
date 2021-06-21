@@ -37,7 +37,6 @@ class OrderItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Cart)
 
-# C
 
 
 class RecentlyView(models.Model):
