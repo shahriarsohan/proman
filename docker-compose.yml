@@ -1,29 +1,29 @@
 version: "3"
 
 services:
-  backend:
-    build:
-      context: ./src
-    command: gunicorn cosmetica.wsgi --bind 0.0.0.0:8000
-    ports:
-      - "8000:8000"
-    environment:
-      - PGUSER=proman
-      - PGHOST=postgres
-      - PGDATABASE=proman
-      - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
-      - PGPORT=5432
-    depends_on:
-      - db
-  db:
-    image: postgres
+  # backend:
+  #   build:
+  #     context: ./src
+  #   command: gunicorn cosmetica.wsgi --bind 0.0.0.0:8000
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - PGUSER=proman
+  #     - PGHOST=postgres
+  #     - PGDATABASE=proman
+  #     - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
+  #     - PGPORT=5432
+  #   depends_on:
+  #     - db
+  # db:
+  #   image: postgres
   frontend:
     build:
       context: ./frontend
     volumes:
       - react_build:/react/build
-    depends_on:
-      - backend
+    # depends_on:
+    #   - backend
   nginx:
     restart: always
     build:

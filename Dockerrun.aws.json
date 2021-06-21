@@ -9,13 +9,6 @@
       "memory": 128
     },
     {
-      "name": "backend",
-      "image": "sohan0077/proman_backend",
-      "hostname": "backend",
-      "essential": false,
-      "memory": 128
-    },
-    {
       "name": "nginx",
       "image": "sohan0077/nginx",
       "hostname": "nginx",
@@ -26,9 +19,7 @@
           "containerPort": 80
         }
       ],
-      "links": ["frontend", "backend"],
       "memory": 64
     }
   ]
 }
-
