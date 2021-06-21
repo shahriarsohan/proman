@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import PromotionalSlider from "../src/components/Hero/PromotinalSlider";
 
-import { NavbarTwo } from "../src/components/Navbar/NavbarTwo";
+import NavbarTwo from "../src/components/Navbar/NavbarTwo";
 import PopularProductsForShop from "../src/components/ScrollProductsForShop";
 
 export default class Shop extends Component {
@@ -114,7 +114,7 @@ export default class Shop extends Component {
                         <div className="row">
                           {this.state.products.map((p) => {
                             return (
-                              <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                              <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                                 <div className="single-product">
                                   <div className="product-img">
                                     <a href="product-details.html">
@@ -178,7 +178,7 @@ export default class Shop extends Component {
                     <div className="tab-pane fade" id="women" role="tabpanel">
                       <div className="tab-single">
                         <div className="row">
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -232,7 +232,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -286,7 +286,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -340,7 +340,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -395,7 +395,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -449,7 +449,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -504,7 +504,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -558,7 +558,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -622,7 +622,7 @@ export default class Shop extends Component {
                     <div className="tab-pane fade" id="kids" role="tabpanel">
                       <div className="tab-single">
                         <div className="row">
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -676,7 +676,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -730,7 +730,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -784,7 +784,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -839,7 +839,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -893,7 +893,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -948,7 +948,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1002,7 +1002,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1070,7 +1070,7 @@ export default class Shop extends Component {
                     >
                       <div className="tab-single">
                         <div className="row">
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1124,7 +1124,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1178,7 +1178,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1232,7 +1232,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1287,7 +1287,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1341,7 +1341,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1396,7 +1396,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1450,7 +1450,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1518,7 +1518,7 @@ export default class Shop extends Component {
                     >
                       <div className="tab-single">
                         <div className="row">
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1572,7 +1572,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1626,7 +1626,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1680,7 +1680,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1735,7 +1735,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1789,7 +1789,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1844,7 +1844,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1898,7 +1898,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -1962,7 +1962,7 @@ export default class Shop extends Component {
                     <div className="tab-pane fade" id="prices" role="tabpanel">
                       <div className="tab-single">
                         <div className="row">
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2016,7 +2016,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2070,7 +2070,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2124,7 +2124,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2179,7 +2179,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2233,7 +2233,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2288,7 +2288,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">
@@ -2342,7 +2342,7 @@ export default class Shop extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-5">
+                          <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                             <div className="single-product">
                               <div className="product-img">
                                 <a href="product-details.html">

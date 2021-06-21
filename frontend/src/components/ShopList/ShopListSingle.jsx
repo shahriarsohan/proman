@@ -51,7 +51,7 @@ const ShopListSingle = ({ product }) => {
             </div>
           </div>
         </div>
-        <div className="col-lg-8 col-md-6 col-5">
+        <div className="col-lg-8 col-md-6 col-6">
           <div className="list-content">
             <div className="product-content">
               <div className="product-price">

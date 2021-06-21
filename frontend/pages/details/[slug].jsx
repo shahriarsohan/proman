@@ -674,7 +674,7 @@ class DetailsPage extends Component {
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const details_qs = await axios.get(
-    `http://127.0.0.1:8000/api/v1/products/details/${context.params.slug}`
+    `http://backend:8000/api/v1/products/details/${context.params.slug}`
   );
 
   const details = await details_qs.data;

@@ -42,54 +42,54 @@ function MyApp({ Component, pageProps }) {
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/magnific-popup.min.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/magnific-popup.min.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/font-awesome.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/font-awesome.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/jquery.fancybox.min.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/jquery.fancybox.min.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/themify-icons.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/themify-icons.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/niceselect.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/niceselect.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/animate.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/animate.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/flex-slider.min.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/flex-slider.min.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/owl-carousel.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/owl-carousel.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/slicknav.min.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/slicknav.min.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/reset.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/reset.css"
         />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/modified/new.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/new.css"
         />
 
         {/* tmart */}
 
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/css/core.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/core.css"
         />
         <script
           type="module"
@@ -108,28 +108,27 @@ function MyApp({ Component, pageProps }) {
         <link href="../fonts/Themify/themify.svg" />
         <link
           rel="stylesheet"
-          href="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/css/responsive.css"
+          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/responsive.css"
         />
         <link
           href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
           rel="stylesheet"
         ></link>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/jquery.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/jquery-migrate-3.0.0.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/jquery-ui.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/popper.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/bootstrap.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/slicknav.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/owl-carousel.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/magnific-popup.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/waypoints.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/finalcountdown.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/nicesellect.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/flex-slider.js"></script>
-        {/* <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/scrollup.js"></script> */}
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/onepage-nav.min.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/easing.js"></script>
-        <script src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/js/active.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/jquery.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/jquery-migrate-3.0.0.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/jquery-ui.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/popper.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/bootstrap.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/slicknav.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/owl-carousel.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/magnific-popup.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/waypoints.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/finalcountdown.min.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/nicesellect.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/flex-slider.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/flex-slider.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/easing.js"></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/active.js"></script>
         <script
           src="https://kit.fontawesome.com/51af182525.js"
           crossorigin="anonymous"

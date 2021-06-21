@@ -20,8 +20,11 @@ class AllListShop extends Component {
       products: [],
       hasMore: true,
       offset: 1,
-      limit: 1,
+      limit: 12,
       list: false,
+      sort: "",
+      min: 0,
+      max: 0,
     };
 
     if (typeof window !== "undefined") {
@@ -69,7 +72,7 @@ class AllListShop extends Component {
           hasMore: hasMore,
           loading: false,
           products: [...this.state.products, ...newProducts],
-          offset: this.state.offset + this.state.limit,
+          offset: this.state.offset + parseInt(this.state.limit),
         });
       })
       .catch((err) => {
@@ -78,9 +81,42 @@ class AllListShop extends Component {
       });
   };
 
+  sortByPriceAsc() {
+    this.setState((prevState) => {
+      this.state.products.sort((a, b) => a.price - b.price);
+    });
+  }
+
+  sortByPriceDesc() {
+    this.setState((prevState) => {
+      this.state.products.sort((a, b) => b.price - a.price);
+    });
+  }
+
+  sortAscending = () => {
+    const { products } = this.state;
+    products.sort((a, b) => b.name.localeCompare(a.name));
+    this.setState({ products });
+  };
+
+  sortDescending = () => {
+    const { products } = this.state;
+    products.sort((a, b) => a.name.localeCompare(b.name));
+    this.setState({ products });
+  };
+
+  handleChange = (e) => {
+    this.setState({ sort: e.target.value });
+    if (this.state.sort === "asc") {
+      return this.sortAscending();
+    } else if (this.state.sort === "desc") {
+      return this.sortDescending();
+    }
+  };
+
   render() {
     console.log(this.props.details);
-    console.log(this.state.products);
+    console.log(this.state.limit);
     return (
       <>
         <NavbarTwo />
@@ -120,27 +156,29 @@ class AllListShop extends Component {
                   {/* Shop By Price */}
                   <div className="single-widget range">
                     <h3 className="title">Shop by Price</h3>
-                    <div className="price-filter">
+                    {/* <div className="price-filter">
                       <div className="price-filter-inner">
                         <div id="slider-range" />
                         <div className="price_slider_amount">
                           <div className="label-input">
                             <span>Range:</span>
                             <input
+                              onChange={(e) => console.log(e.target)}
                               type="text"
                               id="amount"
                               name="price"
-                              placeholder="Add Your Price"
+                              // placeholder="Add Your Price"
                             />
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     <ul className="check-box-list">
                       <li>
                         <label className="checkbox-inline" htmlFor={1}>
                           <input name="news" id={1} type="checkbox" />
-                          $20 - $50<span className="count">(3)</span>
+                          $200 - $250
+                          <span className="count">(3)</span>
                         </label>
                       </li>
                       <li>
@@ -277,126 +315,63 @@ class AllListShop extends Component {
                   {/*/ End Single Widget */}
                 </div>
               </div>
-              {this.state.list ? (
-                <div className="col-lg-9 col-md-8 col-12">
-                  <div className="row">
-                    <div className="col-12">
-                      {/* Shop Top */}
-                      <div className="shop-top">
-                        <div className="shop-shorter">
-                          <div className="single-shorter">
-                            <label>Show :</label>
-                            <select>
-                              <option selected="selected">09</option>
-                              <option>15</option>
-                              <option>25</option>
-                              <option>30</option>
-                            </select>
-                          </div>
-                          <div className="single-shorter">
-                            <label>Sort By :</label>
-                            <select>
-                              <option selected="selected">Name</option>
-                              <option>Price</option>
-                              <option>Size</option>
-                            </select>
-                          </div>
+              {/* {this.state.list ? ( */}
+              <div className="col-lg-9 col-md-8 col-12">
+                <div className="row">
+                  <div className="col-12">
+                    {/* Shop Top */}
+                    <div className="shop-top">
+                      <div className="shop-shorter">
+                        <div className="single-shorter">
+                          <label>Show :</label>
+                          <select
+                            onChange={(e) =>
+                              this.setState({ limit: e.target.value })
+                            }
+                          >
+                            <option>09</option>
+                            <option>15</option>
+                            <option>25</option>
+                            <option>30</option>
+                          </select>
                         </div>
-                        <ul className="view-mode">
-                          <li>
-                            <a
-                              onClick={() =>
-                                this.setState({ list: !this.state.list })
-                              }
-                            >
-                              <i className="fa fa-th-large" />
-                            </a>
-                          </li>
-                          <li className="active">
-                            <a
-                              onClick={() =>
-                                this.setState({ list: !this.state.list })
-                              }
-                            >
-                              <i className="fa fa-th-list" />
-                            </a>
-                          </li>
-                        </ul>
+                        <div className="single-shorter">
+                          <label>Sort By :</label>
+                          <select onChange={(e) => this.handleChange(e)}>
+                            <option value="asc">A - Z</option>
+                            <option value="desc">Z- A</option>
+                          </select>
+                        </div>
                       </div>
-                      {/*/ End Shop Top */}
+                      <ul className="view-mode">
+                        <li>
+                          <a onClick={() => this.setState({ list: false })}>
+                            <i className="fa fa-th-large" />
+                          </a>
+                        </li>
+                        <li className="active">
+                          <a onClick={() => this.setState({ list: true })}>
+                            <i className="fa fa-th-list" />
+                          </a>
+                        </li>
+                      </ul>
                     </div>
+                    {/*/ End Shop Top */}
                   </div>
-                  <div className="row">
-                    {/* Start Single List */}
-
-                    {this.state.products
-                      ? this.state.products.map((product) => {
+                </div>
+                <div className="row">
+                  {this.state.products
+                    ? this.state.products.map((product) => {
+                        if (this.state.list) {
                           return <ShopListSingle product={product} />;
-                        })
-                      : ""}
-
-                    {/* End Single List */}
-                    {/* Start Single List */}
-                  </div>
-                </div>
-              ) : (
-                <div className="col-lg-9 col-md-8 col-12">
-                  <div className="row">
-                    <div className="col-12">
-                      {/* Shop Top */}
-                      <div className="shop-top">
-                        <div className="shop-shorter">
-                          <div className="single-shorter">
-                            <label>Show :</label>
-                            <select>
-                              <option selected="selected">09</option>
-                              <option>15</option>
-                              <option>25</option>
-                              <option>30</option>
-                            </select>
-                          </div>
-                          <div className="single-shorter">
-                            <label>Sort By :</label>
-                            <select>
-                              <option selected="selected">Name</option>
-                              <option>Price</option>
-                              <option>Size</option>
-                            </select>
-                          </div>
-                        </div>
-                        <ul className="view-mode">
-                          <li className="active">
-                            <a
-                              onClick={() =>
-                                this.setState({ list: !this.state.list })
-                              }
-                            >
-                              <i className="fa fa-th-large" />
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              onClick={() =>
-                                this.setState({ list: !this.state.list })
-                              }
-                            >
-                              <i className="fa fa-th-list" />
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      {/*/ End Shop Top */}
-                    </div>
-                  </div>
-                  <div className="row">
-                    {this.state.products
-                      ? this.state.products.map((product) => {
+                        } else {
                           return <ShopGirdSingle product={product} />;
-                        })
-                      : ""}
-                  </div>
+                        }
+                      })
+                    : ""}
                 </div>
-              )}
+              </div>
+              {/* ) : ( */}
             </div>
           </div>
         </section>
@@ -408,9 +383,8 @@ class AllListShop extends Component {
 }
 
 export async function getServerSideProps(context) {
-  // Fetch data from external API
   const details_qs = await axios.get(
-    `http://127.0.0.1:8000/api/v1/products/list-infinite/?limit=1&offset=0`
+    `http://127.0.0.1:8000/api/v1/products/list-infinite/?limit=20&offset=0`
   );
 
   const details = await details_qs.data.products;

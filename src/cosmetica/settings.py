@@ -73,13 +73,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cosmetica.wsgi.application'
 AUTH_USER_MODEL = "users.NewUser"
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'your_database_project_name',
+            'USER': 'your_postgres_username',
+            'PASSWORD': 'your_postgres_password',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -113,6 +125,7 @@ SITE_ID = 1
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
+    "http://127.0.0.1:3050",
     "http://localhost:3000",
 ]
 

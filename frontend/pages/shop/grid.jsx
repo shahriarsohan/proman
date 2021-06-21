@@ -244,7 +244,7 @@ export default class AllGridShop extends Component {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -298,7 +298,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -350,7 +350,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -404,7 +404,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -459,7 +459,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -513,7 +513,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -568,7 +568,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -622,7 +622,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">
@@ -678,7 +678,7 @@ export default class AllGridShop extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6 col-5">
+                  <div className="col-lg-4 col-md-6 col-6">
                     <div className="single-product">
                       <div className="product-img">
                         <a href="product-details.html">

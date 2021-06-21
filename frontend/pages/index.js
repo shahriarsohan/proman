@@ -1,4 +1,4 @@
-import axios from "../src/api/axios";
+import axios from "axios";
 
 import FeaturedProducts from "../src/components/Featured/FeaturedProducts";
 import Footer from "../src/components/Footer/Footer";
@@ -16,8 +16,14 @@ import CountDownProducts from "../src/components/Products/CountDownProducts";
 
 import Navigation from "../src/components/Navigation";
 import Featuredcat from "../src/components/featuredcat/featuredcat";
+import { useEffect } from "react";
 
 const Home = (props) => {
+  useEffect(() => {
+    axios.get("products/trending").then((res) => {
+      console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    });
+  }, []);
   // console.log(props.data);
   return (
     <>
@@ -42,10 +48,16 @@ const Home = (props) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const trending_res = await axios.get("products/trending");
+  const trending_res = await axios.get(
+    "http://backend:8000/api/v1/products/trending"
+  );
 
-  const bestselling_res = await axios.get("products/best-selling");
-  const featured_res = await axios.get("products/featured");
+  const bestselling_res = await axios.get(
+    "http://backend:8000/api/v1/products/best-selling"
+  );
+  const featured_res = await axios.get(
+    "http://backend:8000/api/v1/products/featured"
+  );
   const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
   console.log(trending);

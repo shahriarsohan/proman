@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 
-import { fetchUserOrder } from "../store/actions/productsFetch";
+import { fetchUserOrder } from "../store/actions/cart";
 import QuickLookModal from "../container/QuickLookModal";
 import {
   NotificationContainer,
@@ -77,7 +77,7 @@ class TrendingProductCard extends Component {
           ? NotificationManager.success("success message")
           : ""}
         {order_added_error ? NotificationManager.error("error message") : ""}
-        <div className="col-xl-3 col-lg-3 col-md-4 col-5">
+        <div className="col-xl-3 col-lg-3 col-md-4 col-6">
           <div className="single-product">
             <div className="product-img">
               <a href="product-details.html">

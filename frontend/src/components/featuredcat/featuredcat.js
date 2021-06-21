@@ -24,7 +24,7 @@ export default class featuredcat extends Component {
                   >
                     <div className="tab-single">
                       <div className="row">
-                        <div className="col-xl-2 col-lg-2 col-md-3 col-5">
+                        <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
@@ -34,7 +34,7 @@ export default class featuredcat extends Component {
                             <span>T-Shirts</span>
                           </li>
                         </div>
-                        <div className="col-xl-2 col-lg-2 col-md-3 col-5">
+                        <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
@@ -44,7 +44,7 @@ export default class featuredcat extends Component {
                             <span>T-Shirts</span>
                           </li>
                         </div>
-                        <div className="col-xl-2 col-lg-2 col-md-3 col-5">
+                        <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
@@ -54,7 +54,7 @@ export default class featuredcat extends Component {
                             <span>T-Shirts</span>
                           </li>
                         </div>
-                        <div className="col-xl-2 col-lg-2 col-md-3 col-5">
+                        <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
@@ -64,7 +64,7 @@ export default class featuredcat extends Component {
                             <span>T-Shirts</span>
                           </li>
                         </div>
-                        <div className="col-xl-2 col-lg-2 col-md-3 col-5">
+                        <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
@@ -74,7 +74,7 @@ export default class featuredcat extends Component {
                             <span>T-Shirts</span>
                           </li>
                         </div>
-                        <div className="col-xl-2 col-lg-2 col-md-3 col-5">
+                        <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Image from "next/image";
-import { NavbarTwo } from "../src/components/Navbar/NavbarTwo";
+import NavbarTwo from "../src/components/Navbar/NavbarTwo";
 
 export default class Details extends Component {
   render() {

@@ -1,8 +1,8 @@
 import React from "react";
 
-const ShopGirdSingle = () => {
+const ShopGirdSingle = ({ product }) => {
   return (
-    <div className="col-lg-3 col-md-6 col-5">
+    <div className="col-lg-3 col-md-6 col-6">
       <div className="single-product">
         <div className="product-img">
           <a href="product-details.html">
@@ -46,10 +46,10 @@ const ShopGirdSingle = () => {
         </div>
         <div className="product-content">
           <h3>
-            <a href="product-details.html">Women Hot Collection</a>
+            <a href="product-details.html">{product.name}</a>
           </h3>
           <div className="product-price">
-            <span>$29.00</span>
+            <span>${product.price}</span>
           </div>
         </div>
       </div>
