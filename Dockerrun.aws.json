@@ -3,14 +3,14 @@
   "containerDefinitions": [
     {
       "name": "frontend",
-      "image": "sohan0077/proman-frontend",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend",
       "hostname": "frontend",
       "essential": true,
       "memory": 128
     },
     {
       "name": "nginx",
-      "image": "sohan0077/nginx",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx",
       "hostname": "nginx",
       "essential": false,
       "portMappings": [
