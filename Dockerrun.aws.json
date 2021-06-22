@@ -3,23 +3,31 @@
   "containerDefinitions": [
     {
       "name": "frontend",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest",
       "hostname": "frontend",
-      "essential": true,
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "backend",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
+      "hostname": "backend",
+      "essential": false,
       "memory": 128
     },
     {
       "name": "nginx",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest",
       "hostname": "nginx",
-      "essential": false,
+      "essential": true,
       "portMappings": [
         {
           "hostPort": 80,
           "containerPort": 80
         }
       ],
-      "memory": 64
+      "links": ["frontend", "backend"],
+      "memory": 128
     }
   ]
 }
