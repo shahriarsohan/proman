@@ -14,10 +14,10 @@ services:
       - PGDATABASE=proman
       - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
       - PGPORT=5432
-      depends_on:
-        - db
-    db:
-      image: postgres
+    depends_on:
+      - db
+  db:
+    image: postgres
   # frontend:
   #   image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend
   #   build:
