@@ -13,22 +13,19 @@ services:
       - PGDATABASE=proman
       - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
       - PGPORT=5432
-    depends_on:
-      - db
-  db:
-    image: postgres
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #   volumes:
-  #     - react_build:/react/build
-  #   # depends_on:
-  #   #   - backend
-  # nginx:
-  #   restart: always
-  #   build:
-  #     context: ./nginx
-  #   ports:
-  #     - "3050:80"
+
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - react_build:/react/build
+    # depends_on:
+    #   - backend
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "3050:80"
 volumes:
   react_build:
