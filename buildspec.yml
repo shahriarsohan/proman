@@ -5,33 +5,22 @@ phases:
       docker: 18
   pre_build:
     commands:
-      # Install Snyk
-      - echo Install Snyk
-      - curl -Lo ./snyk "https://github.com/snyk/snyk/releases/download/v1.210.0/snyk-linux"
-      - chmod -R +x ./snyk
-      # Snyk auth
-      # - ./snyk config set api="$SNYK_AUTH_TOKEN"
-      # Build Docker image for testing
-      - echo Build client and backend docker images for testing...
-      - docker build -t sohan0077/react-test -f ./frontend/Dockerfile ./frontend
-      - docker build -t sohan0077/django-test -f ./src/Dockerfile ./src
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 215680092654.dkr.ecr.ap-south-1.amazonaws.com
   build:
     commands:
+      # Test Build (Dockerfile.dev)
+      #- echo Build started on `date`
+      #- echo Building Docker test image...
+      #- docker build -t $IMAGE_REPO_NAME:$TEST_IMAGE_TAG -f Dockerfile.dev .
+      #- docker run -e CI=true $IMAGE_REPO_NAME:$TEST_IMAGE_TAG npm run test
       - echo Build started on `date`
-      # Run tests with built Docker images
-      - echo Run react tests...
-      - docker run -e CI=true sohan0077/react-test
-      - echo Run nodejs tests...
-      - docker run -e CI=true sohan0077/django-test
-
+      - echo Building the Docker image...
       - docker-compose --file=docker-compose-prod.yml build
-
-      - echo "sohanhas45" | docker login -u "sohan0077" --password-stdin
   post_build:
     commands:
-      # Take these images and push them to Docker hub
-      - echo Pushing the Docker images...
-
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
       - docker-compose --file=docker-compose-prod.yml push
 artifacts:
   files:
