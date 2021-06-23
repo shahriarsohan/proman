@@ -24,19 +24,15 @@ phases:
       - echo Run nodejs tests...
       - docker run -e CI=true sohan0077/django-test
 
-      - echo Building the production Docker image...
-      - docker build -t sohan0077/proman-prod-frontend ./frontend
-      - docker build -t sohan0077/proman-prod-django ./src
-      - docker build -t sohan0077/proman-prod-nginx ./nginx
+      - docker-compose --file=docker-compose-prod.yml build
 
       - echo "sohanhas45" | docker login -u "sohan0077" --password-stdin
   post_build:
     commands:
       # Take these images and push them to Docker hub
       - echo Pushing the Docker images...
-      - docker push sohan0077/proman-prod-frontend
-      - docker push sohan0077/proman-prod-django
-      - docker push sohan0077/proman-prod-nginx
+
+      - docker-compose --file=docker-compose-prod.yml push
 artifacts:
   files:
     - "Dockerrun.aws.json"

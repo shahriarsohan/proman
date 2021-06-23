@@ -1,6 +1,19 @@
 version: "3"
 
 services:
+  nginx:
+    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+
+  client:
+    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest
+    build:
+      context: ./frontend
+
   backend:
     image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest
     build:
@@ -14,15 +27,3 @@ services:
       - PGDATABASE=proman
       - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
       - PGPORT=5432
-
-  client:
-    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest
-    build:
-      context: ./frontend
-  nginx:
-    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest
-    restart: always
-    build:
-      context: ./nginx
-    ports:
-      - "80:80"
