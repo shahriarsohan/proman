@@ -2,22 +2,8 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "frontend",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest",
-      "hostname": "frontend",
-      "essential": false,
-      "memory": 128
-    },
-    {
-      "name": "backend",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
-      "hostname": "backend",
-      "essential": false,
-      "memory": 128
-    },
-    {
       "name": "nginx",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest",
+      "image": "docker push sohan0077/proman-prod-nginx",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
@@ -26,7 +12,21 @@
           "containerPort": 80
         }
       ],
-      "links": ["frontend", "backend"],
+      "links": ["client", "backend"],
+      "memory": 128
+    },
+    {
+      "name": "client",
+      "image": "docker push sohan0077/proman-prod-frontend",
+      "hostname": "client",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "backend",
+      "image": "docker push sohan0077/proman-prod-django",
+      "hostname": "backend",
+      "essential": false,
       "memory": 128
     }
   ]

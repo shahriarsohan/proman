@@ -15,7 +15,7 @@ services:
       - PGPASSWORD=ZIhLFAJGHk66ukMIYchE
       - PGPORT=5432
 
-  frontend:
+  client:
     image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest
     build:
       context: ./frontend
@@ -26,5 +26,3 @@ services:
       context: ./nginx
     ports:
       - "80:80"
-# volumes:
-#   react_build:
