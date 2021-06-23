@@ -13,7 +13,7 @@
         }
       ],
 
-      "links": ["backend", "frontend"],
+      "links": ["backend", "client"],
       "memory": 1024
     },
     {
@@ -24,9 +24,9 @@
       "memory": 1024
     },
     {
-      "name": "frontend",
+      "name": "client",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest",
-      "hostname": "frontend",
+      "hostname": "client",
       "essential": false,
       "memory": 1024
     }
