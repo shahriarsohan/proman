@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "nginx",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest",
+      "image": "sohan0077/proman_nginx:latest",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
@@ -18,14 +18,14 @@
     },
     {
       "name": "client",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest",
+      "image": "sohan0077/proman_frontend:latest",
       "hostname": "client",
       "essential": false,
       "memory": 1024
     },
     {
       "name": "backend",
-      "image": "sohan0077/dkr-multicontainer-app-backend",
+      "image": "sohan0077/proman_backend:latest",
       "hostname": "backend",
       "essential": false,
       "memory": 300
