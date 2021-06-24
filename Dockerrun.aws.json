@@ -22,13 +22,6 @@
       "hostname": "client",
       "essential": false,
       "memory": 300
-    },
-    {
-      "name": "backend",
-      "image": "sohan0077/proman_backend:latest",
-      "hostname": "backend",
-      "essential": false,
-      "memory": 300
     }
   ]
 }
