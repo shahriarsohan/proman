@@ -5,7 +5,7 @@
       "name": "backend",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
       "hostname": "backend",
-      "essential": false,
+      "essential": true,
       "memory": 1024
     },
     {
