@@ -23,4 +23,4 @@ COPY --from=builder /my-project/node_modules ./node_modules
 COPY --from=builder /my-project/package.json ./package.json
 
 EXPOSE 3000
-CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
+CMD ["npm" , "start"]
