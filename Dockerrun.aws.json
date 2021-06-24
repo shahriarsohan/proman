@@ -14,14 +14,14 @@
       ],
 
       "links": ["backend", "client"],
-      "memory": 1024
+      "memory": 300
     },
     {
       "name": "client",
       "image": "sohan0077/proman_frontend:latest",
       "hostname": "client",
       "essential": false,
-      "memory": 1024
+      "memory": 300
     },
     {
       "name": "backend",
