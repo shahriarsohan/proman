@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "nginx",
-      "image": "sohan0077/dkr-multicontainer-app-nginx",
+      "image": "sohan0077/proman_nginx:latest",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
@@ -12,20 +12,14 @@
           "containerPort": 80
         }
       ],
-      "links": ["client", "backend"],
-      "memory": 100
-    },
-    {
-      "name": "client",
-      "image": "sohan0077/dkr-multicontainer-app-client",
-      "hostname": "client",
-      "essential": false,
+
+      "links": ["backend", "client"],
       "memory": 300
     },
     {
-      "name": "backend",
-      "image": "sohan0077/dkr-multicontainer-app-backend",
-      "hostname": "backend",
+      "name": "client",
+      "image": "sohan0077/proman_frontend:latest",
+      "hostname": "client",
       "essential": false,
       "memory": 300
     }
