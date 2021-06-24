@@ -2,6 +2,13 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+      "name": "backend",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
+      "hostname": "backend",
+      "essential": false,
+      "memory": 1024
+    },
+    {
       "name": "nginx",
       "image": "sohan0077/dkr-multicontainer-app-nginx",
       "essential": true,
@@ -13,13 +20,6 @@
       ],
 
       "links": ["backend"],
-      "memory": 1024
-    },
-    {
-      "name": "backend",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
-      "hostname": "backend",
-      "essential": false,
       "memory": 1024
     }
   ]
