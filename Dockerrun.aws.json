@@ -1,6 +1,20 @@
 {
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
+        {
+        "name": "nginx",
+        "image": "sohan0077/dkr-multicontainer-app-nginx",
+        "hostname": "nginx",
+        "essential": true,
+        "portMappings": [
+          {
+            "hostPort": 80,
+            "containerPort": 80
+          }
+        ],
+        "links": ["backend"],
+        "memory": 100
+      },
     {
       "name": "backend",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
