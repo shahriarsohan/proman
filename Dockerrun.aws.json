@@ -12,15 +12,8 @@
       "name": "nginx",
       "image": "sohan0077/dkr-multicontainer-app-nginx",
       "essential": true,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 80
-        }
-      ],
-
       "links": ["backend"],
-      "memory": 1024
+      "memory": 100
     }
   ]
 }
