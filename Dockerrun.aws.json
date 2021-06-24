@@ -2,13 +2,6 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "client",
-      "image": "sohan0077/proman_frontend:latest",
-      "hostname": "client",
-      "essential": false,
-      "memory": 300
-    },
-    {
       "name": "backend",
       "image": "sohan0077/proman_backend:latest",
       "hostname": "backend",
@@ -27,7 +20,7 @@
         }
       ],
 
-      "links": ["backend", "client"],
+      "links": ["backend"],
       "memory": 300
     }
   ]
