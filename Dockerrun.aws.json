@@ -10,10 +10,18 @@
     },
     {
       "name": "nginx",
-      "image": "sohan0077/dkr-multicontainer-app-nginx",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest",
+      "hostname": "nginx",
       "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+
       "links": ["backend"],
-      "memory": 100
+      "memory": 1024
     }
   ]
 }
