@@ -13,7 +13,6 @@
       "image": "sohan0077/proman_backend:latest",
       "hostname": "backend",
       "essential": false,
-
       "memory": 700
     },
     {
