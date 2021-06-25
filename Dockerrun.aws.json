@@ -20,15 +20,8 @@
         }
       ],
 
-      "links": ["client", "backend"],
+      "links": ["client"],
       "memory": 100
-    },
-    {
-      "name": "backend",
-      "image": "sohan0077/proman_backend",
-      "hostname": "backend",
-      "essential": false,
-      "memory": 200
     }
   ]
 }
