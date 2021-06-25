@@ -5,15 +5,13 @@
       "name": "client",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend",
       "hostname": "client",
-      "essential": false,
-      "memory": 300
+      "essential": false
     },
     {
       "name": "backend",
       "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend",
       "hostname": "backend",
-      "essential": false,
-      "memory": 600
+      "essential": false
     },
     {
       "name": "nginx",
@@ -27,8 +25,7 @@
         }
       ],
 
-      "links": ["client", "backend"],
-      "memory": 100
+      "links": ["client", "backend"]
     }
   ]
 }
