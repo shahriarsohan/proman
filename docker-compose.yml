@@ -24,9 +24,9 @@ services:
   backend:
     build:
       context: ./src
-    command: gunicorn cosmetica.wsgi --bind 0.0.0.0:8000
+    command: gunicorn cosmetica.wsgi --bind 0.0.0.0:4000
     ports:
-      - "8000:8000"
+      - "4000:4000"
     environment:
       - PGUSER=proman
       - PGHOST=postgres
