@@ -1,0 +1,541 @@
+[2021-06-25T07:36:40.079Z] INFO  [3091]  - [Initialization] : Starting activity...
+[2021-06-25T07:36:40.079Z] INFO  [3091]  - [Initialization/AddonsBefore] : Starting activity...
+[2021-06-25T07:36:40.079Z] INFO  [3091]  - [Initialization/AddonsBefore/InstallCWLAgent] : Starting activity...
+[2021-06-25T07:36:40.079Z] INFO  [3091]  - [Initialization/AddonsBefore/InstallCWLAgent/01-install-cwl-agent.sh] : Starting activity...
+[2021-06-25T07:36:42.472Z] INFO  [3091]  - [Initialization/AddonsBefore/InstallCWLAgent/01-install-cwl-agent.sh] : Completed activity. Result:
+  + grep -iq 'Amazon Linux' /etc/issue
+  + yum install -y awslogs
+  Loaded plugins: priorities, update-motd, upgrade-helper
+  Repodata is over 2 weeks old. Install yum-cron? Or run: yum makecache fast
+  Resolving Dependencies
+  --> Running transaction check
+  ---> Package awslogs.noarch 0:1.1.4-1.12.amzn1 will be installed
+  --> Processing Dependency: aws-cli-plugin-cloudwatch-logs(python27) for package: awslogs-1.1.4-1.12.amzn1.noarch
+  --> Running transaction check
+  ---> Package aws-cli-plugin-cloudwatch-logs.noarch 0:1.4.6-1.17.amzn1 will be installed
+  --> Finished Dependency Resolution
+  
+  Dependencies Resolved
+  
+  ================================================================================
+   Package                         Arch    Version            Repository     Size
+  ================================================================================
+  Installing:
+   awslogs                         noarch  1.1.4-1.12.amzn1   amzn-main     9.2 k
+  Installing for dependencies:
+   aws-cli-plugin-cloudwatch-logs  noarch  1.4.6-1.17.amzn1   amzn-updates   72 k
+  
+  Transaction Summary
+  ================================================================================
+  Install  1 Package (+1 Dependent package)
+  
+  Total download size: 81 k
+  Installed size: 246 k
+  Downloading packages:
+  --------------------------------------------------------------------------------
+  Total                                              653 kB/s |  81 kB  00:00     
+  Running transaction check
+  Running transaction test
+  Transaction test succeeded
+  Running transaction
+    Installing : aws-cli-plugin-cloudwatch-logs-1.4.6-1.17.amzn1.noarch       1/2 
+    Installing : awslogs-1.1.4-1.12.amzn1.noarch                              2/2 
+    Verifying  : awslogs-1.1.4-1.12.amzn1.noarch                              1/2 
+    Verifying  : aws-cli-plugin-cloudwatch-logs-1.4.6-1.17.amzn1.noarch       2/2 
+  
+  Installed:
+    awslogs.noarch 0:1.1.4-1.12.amzn1                                             
+  
+  Dependency Installed:
+    aws-cli-plugin-cloudwatch-logs.noarch 0:1.4.6-1.17.amzn1                      
+  
+  Complete!
+  + cat
+  ++ curl -X PUT http://169.254.169.254/latest/api/token -H 'X-aws-ec2-metadata-token-ttl-seconds: 21600'
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                   Dload  Upload   Total   Spent    Left  Speed
+    0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    56  100    56    0     0  28000      0 --:--:-- --:--:-- --:--:-- 28000
+  + token=AQAAAJsr4zluOqa1TEklbOU79hnmltdLkB8cQ0tolL0AvCib3t89OQ==
+  ++ sed 's/.$//'
+  ++ curl -H 'X-aws-ec2-metadata-token: AQAAAJsr4zluOqa1TEklbOU79hnmltdLkB8cQ0tolL0AvCib3t89OQ==' -v 169.254.169.254/latest/meta-data/placement/availability-zone
+  *   Trying 169.254.169.254...
+  * TCP_NODELAY set
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                   Dload  Upload   Total   Spent    Left  Speed
+    0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Connected to 169.254.169.254 (169.254.169.254) port 80 (#0)
+  > GET /latest/meta-data/placement/availability-zone HTTP/1.1
+  > Host: 169.254.169.254
+  > User-Agent: curl/7.61.1
+  > Accept: */*
+  > X-aws-ec2-metadata-token: AQAAAJsr4zluOqa1TEklbOU79hnmltdLkB8cQ0tolL0AvCib3t89OQ==
+  > 
+  * HTTP 1.0, assume close after body
+  < HTTP/1.0 200 OK
+  < Accept-Ranges: bytes
+  < Content-Length: 11
+  < Content-Type: text/plain
+  < Date: Fri, 25 Jun 2021 07:36:42 GMT
+  < Last-Modified: Fri, 25 Jun 2021 07:36:29 GMT
+  < X-Aws-Ec2-Metadata-Token-Ttl-Seconds: 21600
+  < Connection: close
+  < Server: EC2ws
+  < 
+  { [11 bytes data]
+  100    11  100    11    0     0   5500      0 --:--:-- --:--:-- --:--:--  5500
+  * Closing connection 0
+  + region=ap-south-1
+  + sed -i -e 's/region = .*/region = ap-south-1/g' /etc/awslogs/awscli.conf
+  + /opt/elasticbeanstalk/bin/log-conf -n awslogs -l/var/log/awslogs.log
+[2021-06-25T07:36:42.472Z] INFO  [3091]  - [Initialization/AddonsBefore/InstallCWLAgent] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/addons/logstreaming/hooks/install.
+[2021-06-25T07:36:42.472Z] INFO  [3091]  - [Initialization/AddonsBefore] : Completed activity.
+[2021-06-25T07:36:42.472Z] INFO  [3091]  - [Initialization/PreInitStage0] : Starting activity...
+[2021-06-25T07:36:42.472Z] INFO  [3091]  - [Initialization/PreInitStage0/DownloadSourceBundle] : Starting activity...
+[2021-06-25T07:36:42.833Z] INFO  [3091]  - [Initialization/PreInitStage0/DownloadSourceBundle] : Completed activity. Result:
+  [2021-06-25T07:36:42.596Z] INFO  [3160]  : Application version will be saved to /opt/elasticbeanstalk/deploy/appsource.
+  [2021-06-25T07:36:42.596Z] INFO  [3160]  : Using manifest cache with deployment ID 1 and serial 1.
+  [2021-06-25T07:36:42.597Z] INFO  [3160]  : Attempting to download application source bundle to: '/opt/elasticbeanstalk/deploy/appsource/source_bundle'.
+  [2021-06-25T07:36:42.597Z] INFO  [3160]  : Using computed s3 key.
+  Version 2 of the Ruby SDK will enter maintenance mode as of November 20, 2020. To continue receiving service updates and new features, please upgrade to Version 3. More information can be found here: https://aws.amazon.com/blogs/developer/deprecation-schedule-for-aws-sdk-for-ruby-v2/
+  [2021-06-25T07:36:42.759Z] INFO  [3160]  : Downloading from bucket 'elasticbeanstalk-ap-south-1-215680092654' with key 'resources/environments/e-m44xgakxkp/_runtime/_versions/bye/Sample Application' and version '' to '/opt/elasticbeanstalk/deploy/appsource/source_bundle'.
+  [2021-06-25T07:36:42.811Z] INFO  [3160]  : Size: 4336, ETag: "f29338135f8a748309894665332344ac", Metadata: {"environmentid"=>"e-m44xgakxkp", "requestid"=>"d313708f-f180-469f-8e12-da8cbdf05884"}.
+  [2021-06-25T07:36:42.824Z] INFO  [3160]  : Downloaded size: 4336.
+  [2021-06-25T07:36:42.824Z] INFO  [3160]  : Successfully downloaded to '/opt/elasticbeanstalk/deploy/appsource/source_bundle'.
+[2021-06-25T07:36:42.833Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook] : Starting activity...
+[2021-06-25T07:36:42.833Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook/00logging.sh] : Starting activity...
+[2021-06-25T07:36:43.060Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook/00logging.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  + /opt/elasticbeanstalk/bin/log-conf -n eb-ecs-mgr -l/var/log/eb-ecs-mgr.log
+  + tee /opt/elasticbeanstalk/tasks/bundlelogs.d/ecs-agent.conf /opt/elasticbeanstalk/tasks/publishlogs.d/ecs-agent.conf /opt/elasticbeanstalk/tasks/systemtaillogs.d/ecs-agent.conf /opt/elasticbeanstalk/tasks/taillogs.d/ecs-agent.conf
+  + echo '/var/log/ecs/ecs-agent.log*'
+  /var/log/ecs/ecs-agent.log*
+  + tee /opt/elasticbeanstalk/tasks/bundlelogs.d/ecs-init.conf /opt/elasticbeanstalk/tasks/publishlogs.d/ecs-init.conf /opt/elasticbeanstalk/tasks/systemtaillogs.d/ecs-init.conf /opt/elasticbeanstalk/tasks/taillogs.d/ecs-init.conf
+  + echo '/var/log/ecs/ecs-init.log*'
+  /var/log/ecs/ecs-init.log*
+  + /opt/elasticbeanstalk/bin/log-conf -n docker -l/var/log/docker-events.log,/var/log/docker-ps.log
+  + /opt/elasticbeanstalk/bin/log-conf -n dockerdaemon -l/var/log/docker
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-stdouterr '-l/var/log/containers/*-stdouterr.log'
+[2021-06-25T07:36:43.060Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook/01packages.sh] : Starting activity...
+[2021-06-25T07:36:46.272Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook/01packages.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  + chkconfig cfn-hup on
+  + is_baked ecs_packages
+  + [[ -f /etc/elasticbeanstalk/baking_manifest/ecs_packages ]]
+  + true
+  + SET_LIMIT_SH=/etc/elasticbeanstalk/set-ulimit.sh
+  + grep -q /etc/elasticbeanstalk/set-ulimit.sh
+  + cat /etc/sysconfig/docker
+  + cat
+  ++ /opt/elasticbeanstalk/bin/get-config container -k docker_volume
+  + EB_CONFIG_DOCKER_VOLUME=/dev/xvdcz
+  + '[' -b /dev/xvdcz ']'
+  + is_docker_storage_options_configured
+  + '[' -f /etc/sysconfig/docker-storage ']'
+  + . /etc/sysconfig/docker-storage
+  ++ DOCKER_STORAGE_OPTIONS=
+  + '[' -n '' ']'
+  + service docker stop
+  Stopping docker: [  OK  ]
+  + rm -rf /var/lib/docker
+  + run_docker_storage_setup
+  + cat
+  ++ lsblk -o MOUNTPOINT -nd /dev/xvdcz
+  + '[' -n '' ']'
+  + docker-storage-setup
+  INFO: EXTRA_DOCKER_STORAGE_OPTIONS is deprecated, please use EXTRA_STORAGE_OPTIONS
+  INFO: Volume group backing root filesystem could not be determined
+  INFO: Device node /dev/xvdcz1 exists.
+    Physical volume "/dev/xvdcz1" successfully created.
+    Volume group "docker" successfully created
+    Using default stripesize 64.00 KiB.
+    Rounding up size to full physical extent 16.00 MiB
+    Logical volume "docker-pool" created.
+    Logical volume docker/docker-pool changed.
+  + service docker restart
+  Stopping docker: [FAILED]
+  Starting docker:	.[  OK  ]
+[2021-06-25T07:36:46.272Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook/02ecs.sh] : Starting activity...
+[2021-06-25T07:37:06.342Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook/02ecs.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  ++ /opt/elasticbeanstalk/bin/get-config container -k ecs_cluster
+  + EB_CONFIG_ECS_CLUSTER=awseb-Bye-env-m44xgakxkp
+  ++ /opt/elasticbeanstalk/bin/get-config container -k ecs_region
+  + EB_CONFIG_ECS_REGION=ap-south-1
+  ++ /opt/elasticbeanstalk/bin/get-config container -k support_files_dir
+  + EB_CONFIG_SUPPORT_FILES_DIR=/opt/elasticbeanstalk/containerfiles/support
+  + is_baked ecs_agent
+  + [[ -f /etc/elasticbeanstalk/baking_manifest/ecs_agent ]]
+  + true
+  + aws configure set default.output json
+  + aws configure set default.region ap-south-1
+  + echo ECS_ENABLE_TASK_ENI=false
+  + echo ECS_CLUSTER=awseb-Bye-env-m44xgakxkp
+  + grep -q 'ecs start/'
+  + initctl status ecs
+  + initctl start ecs
+  ecs start/running, process 3791
+  + TIMEOUT=120
+  ++ jq -r .ContainerInstanceArn
+  ++ curl http://localhost:51678/v1/metadata
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                   Dload  Upload   Total   Spent    Left  Speed
+    0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (7) Failed to connect to localhost port 51678: Connection refused
+  + INSTANCE_ARN=
+  + '[' -n '' ']'
+  + sleep 1
+  + TIMEOUT=119
+  + '[' 119 -le 0 ']'
+  ++ jq -r .ContainerInstanceArn
+  ++ curl http://localhost:51678/v1/metadata
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                   Dload  Upload   Total   Spent    Left  Speed
+    0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (7) Failed to connect to localhost port 51678: Connection refused
+  + INSTANCE_ARN=
+  + '[' -n '' ']'
+  + sleep 1
+  + TIMEOUT=118
+  + '[' 118 -le 0 ']'
+  ++ jq -r .ContainerInstanceArn
+  ++ curl http://localhost:51678/v1/metadata
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                   Dload  Upload   Total   Spent    Left  Speed
+    0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   226  100   226    0     0  56500      0 --:--:-- --:--:-- --:--:-- 56500
+  + INSTANCE_ARN=arn:aws:ecs:ap-south-1:215680092654:container-instance/awseb-Bye-env-m44xgakxkp/d7938ed6cc6c41ebba249b1b32525900
+  + '[' -n arn:aws:ecs:ap-south-1:215680092654:container-instance/awseb-Bye-env-m44xgakxkp/d7938ed6cc6c41ebba249b1b32525900 ']'
+  + '[' arn:aws:ecs:ap-south-1:215680092654:container-instance/awseb-Bye-env-m44xgakxkp/d7938ed6cc6c41ebba249b1b32525900 '!=' null ']'
+  + cp /opt/elasticbeanstalk/containerfiles/support/init/eb-ecs.conf /etc/init/
+  + cp /opt/elasticbeanstalk/containerfiles/support/init/eb-docker-events.conf /etc/init/
+  + grep -q running
+  + initctl start eb-docker-events
+[2021-06-25T07:37:06.343Z] INFO  [3091]  - [Initialization/PreInitStage0/PreInitHook] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/hooks/preinit.
+[2021-06-25T07:37:06.343Z] INFO  [3091]  - [Initialization/PreInitStage0] : Completed activity. Result:
+  Initialization - Command CMD-PreInit stage 0 completed
+[2021-06-25T07:37:06.343Z] INFO  [3091]  - [Initialization/AddonsAfter] : Starting activity...
+[2021-06-25T07:37:06.343Z] INFO  [3091]  - [Initialization/AddonsAfter] : Completed activity.
+[2021-06-25T07:37:06.343Z] INFO  [3091]  - [Initialization] : Completed activity. Result:
+  Initialization - Command CMD-PreInit succeeded
+[2021-06-25T07:37:54.632Z] INFO  [4047]  - [Application deployment Sample Application@1] : Starting activity...
+[2021-06-25T07:37:54.632Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsBefore] : Starting activity...
+[2021-06-25T07:37:54.632Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsBefore/ConfigCWLAgent] : Starting activity...
+[2021-06-25T07:37:54.633Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsBefore/ConfigCWLAgent/10-config.sh] : Starting activity...
+[2021-06-25T07:37:54.777Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsBefore/ConfigCWLAgent/10-config.sh] : Completed activity. Result:
+  Log streaming option setting is not specified, ignore cloudwatch logs setup.
+  
+  Disabled log streaming.
+[2021-06-25T07:37:54.777Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsBefore/ConfigCWLAgent] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/addons/logstreaming/hooks/config.
+[2021-06-25T07:37:54.777Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsBefore] : Completed activity.
+[2021-06-25T07:37:55.182Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0] : Starting activity...
+[2021-06-25T07:37:55.182Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/HealthdLogRotation] : Starting activity...
+[2021-06-25T07:37:55.186Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/HealthdLogRotation] : Completed activity.
+[2021-06-25T07:37:55.186Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/HealthdHTTPDLogging] : Starting activity...
+[2021-06-25T07:37:55.186Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/HealthdHTTPDLogging] : Completed activity.
+[2021-06-25T07:37:55.186Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/HealthdNginxLogging] : Starting activity...
+[2021-06-25T07:37:55.187Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/HealthdNginxLogging] : Completed activity.
+[2021-06-25T07:37:55.187Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild] : Starting activity...
+[2021-06-25T07:37:55.613Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild] : Starting activity...
+[2021-06-25T07:37:55.617Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild/prebuild_0_bye] : Starting activity...
+[2021-06-25T07:37:55.617Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild/prebuild_0_bye] : Completed activity.
+[2021-06-25T07:37:55.623Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild/prebuild_1_bye] : Starting activity...
+[2021-06-25T07:37:55.623Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild/prebuild_1_bye] : Completed activity.
+[2021-06-25T07:37:55.623Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild] : Completed activity.
+[2021-06-25T07:37:55.641Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPreBuild] : Completed activity.
+[2021-06-25T07:37:55.642Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook] : Starting activity...
+[2021-06-25T07:37:55.643Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook/00enable-eb-ecs.sh] : Starting activity...
+[2021-06-25T07:37:56.188Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook/00enable-eb-ecs.sh] : Completed activity. Result:
+  mv: cannot stat ‘/etc/init/eb-ecs.conf.disabled’: No such file or directory
+  Error response from daemon: No such image: 2ff4c694d4df:latest
+[2021-06-25T07:37:56.188Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook/01unzip.sh] : Starting activity...
+[2021-06-25T07:37:57.014Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook/01unzip.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  ++ /opt/elasticbeanstalk/bin/get-config container -k source_bundle
+  + EB_CONFIG_APP_SOURCE=/opt/elasticbeanstalk/deploy/appsource/source_bundle
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_deploy_dir
+  + EB_CONFIG_APP_CURRENT=/var/app/current
+  ++ /opt/elasticbeanstalk/bin/get-config container -k support_files_dir
+  + EB_SUPPORT_FILES=/opt/elasticbeanstalk/containerfiles/support
+  ++ /opt/elasticbeanstalk/bin/get-config container -k host_log_dir
+  + EB_CONFIG_DOCKER_LOG_HOST_DIR=/var/log/containers
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_staging_dir
+  + EB_CONFIG_APP_STAGING=/var/app/staging
+  + '[' -z /var/app/staging ']'
+  + rm -rf /var/app/staging
+  + mkdir -p /var/app/staging
+  ++ file -m /opt/elasticbeanstalk/containerfiles/support/beanstalk-magic -b --mime-type /opt/elasticbeanstalk/deploy/appsource/source_bundle
+  + APP_BUNDLE_TYPE=application/zip
+  + '[' application/zip = application/zip ']'
+  + unzip -o -d /var/app/staging /opt/elasticbeanstalk/deploy/appsource/source_bundle
+  Archive:  /opt/elasticbeanstalk/deploy/appsource/source_bundle
+    inflating: /var/app/staging/cron.yaml  
+     creating: /var/app/staging/php-app/
+    inflating: /var/app/staging/php-app/static.html  
+    inflating: /var/app/staging/php-app/index.php  
+    inflating: /var/app/staging/php-app/scheduled.php  
+    inflating: /var/app/staging/Dockerrun.aws.json  
+     creating: /var/app/staging/proxy/
+     creating: /var/app/staging/proxy/conf.d/
+    inflating: /var/app/staging/proxy/conf.d/default.conf  
+    inflating: /var/app/staging/.ebextensions/01-nginx-healthd.config  
+  ++ jq -r '.containerDefinitions[].name'
+  ++ cat /var/app/staging/Dockerrun.aws.json
+  + for CONTAINER in '`cat $EB_CONFIG_APP_STAGING/Dockerrun.aws.json | jq -r .containerDefinitions[].name`'
+  + CONTAINER_LOG_DIR=/var/log/containers/php-app
+  + mkdir -p /var/log/containers/php-app
+  + chmod 777 /var/log/containers/php-app
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-php-app '-l/var/log/containers/php-app/*.log' -r size=1M,rotate=5
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-php-app-rotated '-l/var/log/containers/php-app.log*' -t bundlelogs
+  + for CONTAINER in '`cat $EB_CONFIG_APP_STAGING/Dockerrun.aws.json | jq -r .containerDefinitions[].name`'
+  + CONTAINER_LOG_DIR=/var/log/containers/nginx-proxy
+  + mkdir -p /var/log/containers/nginx-proxy
+  + chmod 777 /var/log/containers/nginx-proxy
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-nginx-proxy '-l/var/log/containers/nginx-proxy/*.log' -r size=1M,rotate=5
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-nginx-proxy-rotated '-l/var/log/containers/nginx-proxy.log*' -t bundlelogs
+[2021-06-25T07:37:57.014Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook/02loopback-check.sh] : Starting activity...
+[2021-06-25T07:37:57.098Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook/02loopback-check.sh] : Completed activity. Result:
+  WARNING: the devicemapper storage-driver is deprecated, and will be removed in a future release.
+[2021-06-25T07:37:57.098Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/AppDeployPreHook] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/hooks/appdeploy/pre.
+[2021-06-25T07:37:57.098Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild] : Starting activity...
+[2021-06-25T07:37:57.508Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild] : Starting activity...
+[2021-06-25T07:37:57.511Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild/postbuild_0_bye] : Starting activity...
+[2021-06-25T07:37:57.739Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild/postbuild_0_bye/Command 01-healthd-configure] : Starting activity...
+[2021-06-25T07:37:57.744Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild/postbuild_0_bye/Command 01-healthd-configure] : Completed activity. Result:
+  /home/ec2-user/setup-healthd-appstat.sh: line 1: #!/bin/sh: No such file or directory
+  
+[2021-06-25T07:37:57.744Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild/postbuild_0_bye] : Completed activity.
+[2021-06-25T07:37:57.744Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild] : Completed activity.
+[2021-06-25T07:37:57.763Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/EbExtensionPostBuild] : Completed activity.
+[2021-06-25T07:37:57.763Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/InfraCleanEbExtension] : Starting activity...
+[2021-06-25T07:37:57.765Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0/InfraCleanEbExtension] : Completed activity. Result:
+  Cleaned ebextensions subdirectories from /var/app/staging.
+[2021-06-25T07:37:57.765Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage0] : Completed activity. Result:
+  Application deployment - Command CMD-Startup stage 0 completed
+[2021-06-25T07:37:57.765Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1] : Starting activity...
+[2021-06-25T07:37:57.765Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook] : Starting activity...
+[2021-06-25T07:37:57.767Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/00stop-task.sh] : Starting activity...
+[2021-06-25T07:37:57.772Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/00stop-task.sh] : Completed activity. Result:
+  + grep -q 'eb-ecs start/'
+  + initctl status eb-ecs
+[2021-06-25T07:37:57.772Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/01flip-dir.sh] : Starting activity...
+[2021-06-25T07:37:57.963Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/01flip-dir.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_deploy_dir
+  + EB_CONFIG_APP_CURRENT=/var/app/current
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_staging_dir
+  + EB_CONFIG_APP_STAGING=/var/app/staging
+  + '[' -z /var/app/staging ']'
+  + '[' -d /var/app/current ']'
+  + mv /var/app/staging /var/app/current
+  + nohup rm -rf /var/app/current.old
+[2021-06-25T07:37:57.963Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/02update-credentials.sh] : Starting activity...
+[2021-06-25T07:37:58.169Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/02update-credentials.sh] : Completed activity.
+[2021-06-25T07:37:58.169Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/03start-task.sh] : Starting activity...
+[2021-06-25T07:38:27.717Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/03start-task.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  + RETRY=0
+  + initctl start eb-ecs EB_EVENT_FILE=/tmp/eventsfile20210625-4047-s1gfim
+  eb-ecs start/running, process 4948
+[2021-06-25T07:38:27.717Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/04monitor_pids.sh] : Starting activity...
+[2021-06-25T07:38:27.963Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook/04monitor_pids.sh] : Completed activity. Result:
+  + /opt/elasticbeanstalk/bin/healthd-track-pidfile --name application --location /var/run/docker.pid
+[2021-06-25T07:38:27.963Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployEnactHook] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/hooks/appdeploy/enact.
+[2021-06-25T07:38:27.963Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployPostHook] : Starting activity...
+[2021-06-25T07:38:27.964Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployPostHook/00_clean_imgs.sh] : Starting activity...
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployPostHook/00_clean_imgs.sh] : Completed activity.
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/AppDeployPostHook] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/hooks/appdeploy/post.
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/PostInitHook] : Starting activity...
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1/PostInitHook] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/hooks/postinit.
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/StartupStage1] : Completed activity. Result:
+  Application deployment - Command CMD-Startup stage 1 completed
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsAfter] : Starting activity...
+[2021-06-25T07:38:29.121Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsAfter/ConfigLogRotation] : Starting activity...
+[2021-06-25T07:38:29.122Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsAfter/ConfigLogRotation/10-config.sh] : Starting activity...
+[2021-06-25T07:38:29.206Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsAfter/ConfigLogRotation/10-config.sh] : Completed activity. Result:
+  Disabled forced hourly log rotation.
+[2021-06-25T07:38:29.206Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsAfter/ConfigLogRotation] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/addons/logpublish/hooks/config.
+[2021-06-25T07:38:29.206Z] INFO  [4047]  - [Application deployment Sample Application@1/AddonsAfter] : Completed activity.
+[2021-06-25T07:38:29.206Z] INFO  [4047]  - [Application deployment Sample Application@1] : Completed activity. Result:
+  Application deployment - Command CMD-Startup succeeded
+[2021-06-25T07:45:46.012Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2] : Starting activity...
+[2021-06-25T07:45:46.013Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AddonsBefore] : Starting activity...
+[2021-06-25T07:45:46.013Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AddonsBefore/ConfigCWLAgent] : Starting activity...
+[2021-06-25T07:45:46.013Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AddonsBefore/ConfigCWLAgent/10-config.sh] : Starting activity...
+[2021-06-25T07:45:46.155Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AddonsBefore/ConfigCWLAgent/10-config.sh] : Completed activity. Result:
+  Log streaming option setting is not specified, ignore cloudwatch logs setup.
+  
+  Disabled log streaming.
+[2021-06-25T07:45:46.155Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AddonsBefore/ConfigCWLAgent] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/addons/logstreaming/hooks/config.
+[2021-06-25T07:45:46.155Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AddonsBefore] : Completed activity.
+[2021-06-25T07:45:46.556Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0] : Starting activity...
+[2021-06-25T07:45:46.556Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/DownloadSourceBundle] : Starting activity...
+[2021-06-25T07:45:46.924Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/DownloadSourceBundle] : Completed activity. Result:
+  [2021-06-25T07:45:46.683Z] INFO  [6079]  : Application version will be saved to /opt/elasticbeanstalk/deploy/appsource.
+  [2021-06-25T07:45:46.683Z] INFO  [6079]  : Using manifest cache with deployment ID 2 and serial 2.
+  [2021-06-25T07:45:46.683Z] INFO  [6079]  : Attempting to download application source bundle to: '/opt/elasticbeanstalk/deploy/appsource/source_bundle'.
+  [2021-06-25T07:45:46.683Z] INFO  [6079]  : Using computed s3 key.
+  Version 2 of the Ruby SDK will enter maintenance mode as of November 20, 2020. To continue receiving service updates and new features, please upgrade to Version 3. More information can be found here: https://aws.amazon.com/blogs/developer/deprecation-schedule-for-aws-sdk-for-ruby-v2/
+  [2021-06-25T07:45:46.848Z] INFO  [6079]  : Downloading from bucket 'elasticbeanstalk-ap-south-1-215680092654' with key 'resources/environments/e-m44xgakxkp/_runtime/_versions/bye/code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f' and version '' to '/opt/elasticbeanstalk/deploy/appsource/source_bundle'.
+  [2021-06-25T07:45:46.902Z] INFO  [6079]  : Size: 453, ETag: "69ffd2f6190ad8485e4f8ff8a458e365", Metadata: {"environmentid"=>"e-m44xgakxkp", "requestid"=>"fbf6a765-c774-45f9-b655-d01f3b2b125a"}.
+  [2021-06-25T07:45:46.915Z] INFO  [6079]  : Downloaded size: 453.
+  [2021-06-25T07:45:46.915Z] INFO  [6079]  : Successfully downloaded to '/opt/elasticbeanstalk/deploy/appsource/source_bundle'.
+[2021-06-25T07:45:46.924Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPreBuild] : Starting activity...
+[2021-06-25T07:45:47.333Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild] : Starting activity...
+[2021-06-25T07:45:47.333Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPreBuild/Infra-EmbeddedPreBuild] : Completed activity.
+[2021-06-25T07:45:47.350Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPreBuild] : Completed activity.
+[2021-06-25T07:45:47.350Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook] : Starting activity...
+[2021-06-25T07:45:47.350Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook/00enable-eb-ecs.sh] : Starting activity...
+[2021-06-25T07:45:47.950Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook/00enable-eb-ecs.sh] : Completed activity. Result:
+  mv: cannot stat ‘/etc/init/eb-ecs.conf.disabled’: No such file or directory
+[2021-06-25T07:45:47.950Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook/01unzip.sh] : Starting activity...
+[2021-06-25T07:45:48.763Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook/01unzip.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  ++ /opt/elasticbeanstalk/bin/get-config container -k source_bundle
+  + EB_CONFIG_APP_SOURCE=/opt/elasticbeanstalk/deploy/appsource/source_bundle
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_deploy_dir
+  + EB_CONFIG_APP_CURRENT=/var/app/current
+  ++ /opt/elasticbeanstalk/bin/get-config container -k support_files_dir
+  + EB_SUPPORT_FILES=/opt/elasticbeanstalk/containerfiles/support
+  ++ /opt/elasticbeanstalk/bin/get-config container -k host_log_dir
+  + EB_CONFIG_DOCKER_LOG_HOST_DIR=/var/log/containers
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_staging_dir
+  + EB_CONFIG_APP_STAGING=/var/app/staging
+  + '[' -z /var/app/staging ']'
+  + rm -rf /var/app/staging
+  + mkdir -p /var/app/staging
+  ++ file -m /opt/elasticbeanstalk/containerfiles/support/beanstalk-magic -b --mime-type /opt/elasticbeanstalk/deploy/appsource/source_bundle
+  + APP_BUNDLE_TYPE=application/zip
+  + '[' application/zip = application/zip ']'
+  + unzip -o -d /var/app/staging /opt/elasticbeanstalk/deploy/appsource/source_bundle
+  Archive:  /opt/elasticbeanstalk/deploy/appsource/source_bundle
+    inflating: /var/app/staging/Dockerrun.aws.json  
+  ++ jq -r '.containerDefinitions[].name'
+  ++ cat /var/app/staging/Dockerrun.aws.json
+  + for CONTAINER in '`cat $EB_CONFIG_APP_STAGING/Dockerrun.aws.json | jq -r .containerDefinitions[].name`'
+  + CONTAINER_LOG_DIR=/var/log/containers/client
+  + mkdir -p /var/log/containers/client
+  + chmod 777 /var/log/containers/client
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-client '-l/var/log/containers/client/*.log' -r size=1M,rotate=5
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-client-rotated '-l/var/log/containers/client.log*' -t bundlelogs
+  + for CONTAINER in '`cat $EB_CONFIG_APP_STAGING/Dockerrun.aws.json | jq -r .containerDefinitions[].name`'
+  + CONTAINER_LOG_DIR=/var/log/containers/backend
+  + mkdir -p /var/log/containers/backend
+  + chmod 777 /var/log/containers/backend
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-backend '-l/var/log/containers/backend/*.log' -r size=1M,rotate=5
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-backend-rotated '-l/var/log/containers/backend.log*' -t bundlelogs
+  + for CONTAINER in '`cat $EB_CONFIG_APP_STAGING/Dockerrun.aws.json | jq -r .containerDefinitions[].name`'
+  + CONTAINER_LOG_DIR=/var/log/containers/nginx
+  + mkdir -p /var/log/containers/nginx
+  + chmod 777 /var/log/containers/nginx
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-nginx '-l/var/log/containers/nginx/*.log' -r size=1M,rotate=5
+  + /opt/elasticbeanstalk/bin/log-conf -n applogs-nginx-rotated '-l/var/log/containers/nginx.log*' -t bundlelogs
+[2021-06-25T07:45:48.763Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook/02loopback-check.sh] : Starting activity...
+[2021-06-25T07:45:48.847Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook/02loopback-check.sh] : Completed activity. Result:
+  WARNING: the devicemapper storage-driver is deprecated, and will be removed in a future release.
+[2021-06-25T07:45:48.847Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/AppDeployPreHook] : Completed activity. Result:
+  Successfully execute hooks in directory /opt/elasticbeanstalk/hooks/appdeploy/pre.
+[2021-06-25T07:45:48.847Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPostBuild] : Starting activity...
+[2021-06-25T07:45:49.205Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild] : Starting activity...
+[2021-06-25T07:45:49.205Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPostBuild/Infra-EmbeddedPostBuild] : Completed activity.
+[2021-06-25T07:45:49.221Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/EbExtensionPostBuild] : Completed activity.
+[2021-06-25T07:45:49.221Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/InfraCleanEbextension] : Starting activity...
+[2021-06-25T07:45:49.222Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0/InfraCleanEbextension] : Completed activity. Result:
+  Cleaned ebextensions subdirectories from /var/app/staging.
+[2021-06-25T07:45:49.222Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage0] : Completed activity. Result:
+  Application update - Command CMD-AppDeploy stage 0 completed
+[2021-06-25T07:45:49.222Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1] : Starting activity...
+[2021-06-25T07:45:49.222Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook] : Starting activity...
+[2021-06-25T07:45:49.222Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/00stop-task.sh] : Starting activity...
+[2021-06-25T07:45:53.302Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/00stop-task.sh] : Completed activity. Result:
+  + grep -q 'eb-ecs start/'
+  + initctl status eb-ecs
+  + initctl stop eb-ecs EB_EVENT_FILE=/tmp/eventsfile20210625-6030-14fu8lj
+  eb-ecs stop/waiting
+[2021-06-25T07:45:53.302Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/01flip-dir.sh] : Starting activity...
+[2021-06-25T07:45:53.494Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/01flip-dir.sh] : Completed activity. Result:
+  + . /opt/elasticbeanstalk/hooks/common.sh
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_deploy_dir
+  + EB_CONFIG_APP_CURRENT=/var/app/current
+  ++ /opt/elasticbeanstalk/bin/get-config container -k app_staging_dir
+  + EB_CONFIG_APP_STAGING=/var/app/staging
+  + '[' -z /var/app/staging ']'
+  + '[' -d /var/app/current ']'
+  + mv /var/app/current /var/app/current.old
+  + mv /var/app/staging /var/app/current
+  + nohup rm -rf /var/app/current.old
+[2021-06-25T07:45:53.494Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/02update-credentials.sh] : Starting activity...
+[2021-06-25T07:45:53.699Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/02update-credentials.sh] : Completed activity.
+[2021-06-25T07:45:53.699Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/03start-task.sh] : Starting activity...
+[2021-06-25T07:46:02.974Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/03start-task.sh] : Activity execution failed, because: + . /opt/elasticbeanstalk/hooks/common.sh
+  + RETRY=0
+  + initctl start eb-ecs EB_EVENT_FILE=/tmp/eventsfile20210625-6030-14fu8lj
+  initctl: Job failed to start
+  + '[' -f /etc/elasticbeanstalk/.eb-ecs-start-no-retry ']'
+  + warn 'Failed to start ECS task, retrying...'
+  + echo 'Failed to start ECS task, retrying...'
+  Failed to start ECS task, retrying...
+  + eventHelper.py --msg 'Failed to start ECS task, retrying...' --severity WARN
+  + RETRY=1
+  + sleep 3
+  + '[' 1 -gt 1 ']'
+  + initctl start eb-ecs EB_EVENT_FILE=/tmp/eventsfile20210625-6030-14fu8lj
+  initctl: Job failed to start
+  + '[' -f /etc/elasticbeanstalk/.eb-ecs-start-no-retry ']'
+  + warn 'Failed to start ECS task, retrying...'
+  + echo 'Failed to start ECS task, retrying...'
+  Failed to start ECS task, retrying...
+  + eventHelper.py --msg 'Failed to start ECS task, retrying...' --severity WARN
+  + RETRY=2
+  + sleep 3
+  + '[' 2 -gt 1 ']'
+  + error_exit 'Failed to start ECS task after retrying 2 times.' 1
+  + error 'Failed to start ECS task after retrying 2 times.'
+  + echo 'Failed to start ECS task after retrying 2 times.'
+  Failed to start ECS task after retrying 2 times.
+  + eventHelper.py --msg 'Failed to start ECS task after retrying 2 times.' --severity ERROR
+  + exit 1 (ElasticBeanstalk::ExternalInvocationError)
+caused by: + . /opt/elasticbeanstalk/hooks/common.sh
+  + RETRY=0
+  + initctl start eb-ecs EB_EVENT_FILE=/tmp/eventsfile20210625-6030-14fu8lj
+  initctl: Job failed to start
+  + '[' -f /etc/elasticbeanstalk/.eb-ecs-start-no-retry ']'
+  + warn 'Failed to start ECS task, retrying...'
+  + echo 'Failed to start ECS task, retrying...'
+  Failed to start ECS task, retrying...
+  + eventHelper.py --msg 'Failed to start ECS task, retrying...' --severity WARN
+  + RETRY=1
+  + sleep 3
+  + '[' 1 -gt 1 ']'
+  + initctl start eb-ecs EB_EVENT_FILE=/tmp/eventsfile20210625-6030-14fu8lj
+  initctl: Job failed to start
+  + '[' -f /etc/elasticbeanstalk/.eb-ecs-start-no-retry ']'
+  + warn 'Failed to start ECS task, retrying...'
+  + echo 'Failed to start ECS task, retrying...'
+  Failed to start ECS task, retrying...
+  + eventHelper.py --msg 'Failed to start ECS task, retrying...' --severity WARN
+  + RETRY=2
+  + sleep 3
+  + '[' 2 -gt 1 ']'
+  + error_exit 'Failed to start ECS task after retrying 2 times.' 1
+  + error 'Failed to start ECS task after retrying 2 times.'
+  + echo 'Failed to start ECS task after retrying 2 times.'
+  Failed to start ECS task after retrying 2 times.
+  + eventHelper.py --msg 'Failed to start ECS task after retrying 2 times.' --severity ERROR
+  + exit 1 (Executor::NonZeroExitStatus)
+
+
+[2021-06-25T07:46:02.974Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook/03start-task.sh] : Activity failed.
+[2021-06-25T07:46:02.974Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1/AppDeployEnactHook] : Activity failed.
+[2021-06-25T07:46:02.974Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2/AppDeployStage1] : Activity failed.
+[2021-06-25T07:46:02.975Z] INFO  [6030]  - [Application update code-pipeline-1624607103060-BuildArtifact-040a044f-9b80-4aec-90ba-ca5a008b373f@2] : Completed activity. Result:
+  Application update - Command CMD-AppDeploy failed
+[2021-06-25T07:47:18.513Z] INFO  [6770]  - [CMD-BundleLogs] : Starting activity...
+[2021-06-25T07:47:18.513Z] INFO  [6770]  - [CMD-BundleLogs/AddonsBefore] : Starting activity...
+[2021-06-25T07:47:18.513Z] INFO  [6770]  - [CMD-BundleLogs/AddonsBefore] : Completed activity.
+[2021-06-25T07:47:18.514Z] INFO  [6770]  - [CMD-BundleLogs/BundleLogs] : Starting activity...
+[2021-06-25T07:47:18.514Z] INFO  [6770]  - [CMD-BundleLogs/BundleLogs/BundleLogs] : Starting activity...

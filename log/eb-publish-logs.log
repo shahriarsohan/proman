@@ -1,0 +1,3 @@
+2021-06-25 07:45:01,893 [INFO] (5917 MainThread) [clearStaleLogPublishingRecords.py-38] [root clearStaleLogPublishingRecords main] Clearing stale log publish records publish log task with batch id 3f959dfa-d589-11eb-b7cf-0af8b2cf8f6e
+2021-06-25 07:45:01,894 [INFO] (5917 MainThread) [file_tools.py-34] [root file_tools __init__] Created directory /tmp/.log-publish-records for recording published log file entries
+2021-06-25 07:45:01,894 [INFO] (5917 MainThread) [clearStaleLogPublishingRecords.py-48] [root clearStaleLogPublishingRecords main] Successfully cleared stale log publishing records
