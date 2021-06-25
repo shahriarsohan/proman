@@ -8,13 +8,6 @@
       "essential": false,
       "memory": 200
     },
-     {
-      "name": "backend",
-      "image": "sohan0077/proman_backend:latest",
-      "hostname": "backend",
-      "essential": false,
-      "memory":700
-    },
     {
       "name": "nginx",
       "image": "sohan0077/proman_nginx:latest",
@@ -27,7 +20,7 @@
         }
       ],
 
-      "links": ["client","backend"],
+      "links": ["client", "backend"],
       "memory": 100
     }
   ]
