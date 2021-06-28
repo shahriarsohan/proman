@@ -1,2 +1,0 @@
-2021-06-25 07:47:18,623 [INFO] (6775 MainThread) [bundleLogs.py-54] [root bundleLogs main] Starting bundle logs task with batch id 5f8c3a5f-4df5-48b7-b338-d98d7cf8148d
-2021-06-25 07:47:18,638 [INFO] (6775 MainThread) [upload_tools.py-364] [root upload_tools execute] Successfully archived file /var/log/ecs/ecs-init.log to /tmp/BundleLogs-5f8c3a5f-4df5-48b7-b338-d98d7cf8148d.zip
