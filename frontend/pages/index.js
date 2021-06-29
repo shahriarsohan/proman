@@ -25,6 +25,7 @@ const Home = (props) => {
         "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
       )
       .then((res) => {
+        console.log(res);
         console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
       });
   }, []);
@@ -36,9 +37,9 @@ const Home = (props) => {
       <PromotionalSlider />
       <SmallBanner />
       <Featuredcat />
-      {/* <Products p={props.trending.trending_qs} /> */}
+      <Products p={props.trending.trending_qs} />
       <MediumBanner />
-      {/* <BestSelling bestselling={props.bestselling.bestSelling_qs} /> */}
+      <BestSelling bestselling={props.bestselling.bestSelling_qs} />
       <FeaturedProducts featured={props.featured.featured_qs} />
       <Shop />
       <CountDownProducts />
@@ -53,14 +54,14 @@ const Home = (props) => {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+    "http://backend:8000/api/v1/products/trending"
   );
 
   const bestselling_res = await axios.get(
-    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/best-selling"
+    "http://backend:8000/api/v1/products/best-selling"
   );
   const featured_res = await axios.get(
-    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/featured"
+    "http://backend:8000/api/v1/products/featured"
   );
   const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
