@@ -128,7 +128,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3050",
     "http://localhost:3000",
     "http://localhost",
-    "http://127.0.0.1"
+    "http://127.0.0.1",
     "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com"
 ]
 
