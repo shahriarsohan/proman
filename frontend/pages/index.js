@@ -20,7 +20,7 @@ import { useEffect } from "react";
 
 const Home = (props) => {
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/v1/products/trending").then((res) => {
+    axios.get("/api/v1/products/trending").then((res) => {
       console.log(res);
       console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     });
@@ -50,25 +50,23 @@ const Home = (props) => {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios
-    .get("http://backend:8000/api/v1/products/trending")
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err.response.data);
-    });
-
-  const bestselling_res = await axios
-    .get("http://backend:8000/api/v1/products/best-selling")
+    .get("/api/v1/products/trending")
     .then((res) => {
       console.log(res);
     })
     .catch((err) => {
       console.log(err);
     });
-  const featured_res = await axios.get(
-    "http://backend:8000/api/v1/products/featured"
-  );
+
+  const bestselling_res = await axios
+    .get("/api/v1/products/best-selling")
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  const featured_res = await axios.get("/api/v1/products/featured");
   const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
   console.log(trending);
