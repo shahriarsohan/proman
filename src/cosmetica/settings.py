@@ -8,7 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'w^c1c-yo)rfej2v==3$35)p$4e2(11-h5xiy!&gs7)3en2!iwc'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'http://127.0.0.1',
+                 'http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com']
 
 
 SYSTEM_APPS = [
