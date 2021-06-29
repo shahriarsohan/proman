@@ -20,14 +20,10 @@ import { useEffect } from "react";
 
 const Home = (props) => {
   useEffect(() => {
-    axios
-      .get(
-        "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
-      )
-      .then((res) => {
-        console.log(res);
-        console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-      });
+    axios.get("http://backend:8000/api/v1/products/trending").then((res) => {
+      console.log(res);
+      console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    });
   }, []);
   // console.log(props.data);
   return (
