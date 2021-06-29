@@ -33,10 +33,10 @@ const Home = (props) => {
       <PromotionalSlider />
       <SmallBanner />
       <Featuredcat />
-      <Products p={props.trending.trending_qs} />
+      {/* <Products p={props.trending.trending_qs} /> */}
       <MediumBanner />
-      <BestSelling bestselling={props.bestselling.bestSelling_qs} />
-      <FeaturedProducts featured={props.featured.featured_qs} />
+      {/* <BestSelling bestselling={props.bestselling.bestSelling_qs} /> */}
+      {/* <FeaturedProducts featured={props.featured.featured_qs} /> */}
       <Shop />
       <CountDownProducts />
       <Service />
@@ -48,41 +48,31 @@ const Home = (props) => {
 };
 
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const trending_res = await axios
-    .get("/api/v1/products/trending")
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  //   // Fetch data from external API
+  const trending_res = await axios.get("/api/v1/products/trending");
 
-  const bestselling_res = await axios
-    .get("/api/v1/products/best-selling")
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  const featured_res = await axios.get("/api/v1/products/featured");
-  const bestselling = await bestselling_res.data;
-  const trending = await trending_res.data;
-  console.log(trending);
-  const featured = await featured_res.data;
+  //   // const bestselling_res = await axios
+  //   //   .get("/api/v1/products/best-selling")
+  //   //   .then((res) => {
+  //   //     console.log(res);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err);
+  //   //   });
+  //   // const featured_res = await axios.get("/api/v1/products/featured");
+  //   // const bestselling = await bestselling_res.data;
+  //   const trending = await trending_res.data;
+  console.log(trending_res);
+  //   // const featured = await featured_res.data;
 
-  if (!trending) {
-    return {
-      props: {
-        trending_null: true,
-      },
-    };
-  }
-  // Pass data to the page via props
-  return {
-    props: { trending: trending, bestselling: bestselling, featured: featured },
-  };
+  //   if (!trending) {
+  //     return {
+  //       props: {
+  //         trending_null: true,
+  //       },
+  //     };
+  //   }
+  //   // Pass data to the page via props
 }
 
 export default Home;
