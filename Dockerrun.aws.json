@@ -2,22 +2,22 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "client",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend",
-      "hostname": "client",
-      "essential": false,
-      "memory": 200
-    },
-    {
       "name": "backend",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest",
       "hostname": "backend",
       "essential": false,
       "memory": 500
     },
     {
+      "name": "client",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest",
+      "hostname": "client",
+      "essential": false,
+      "memory": 200
+    },
+    {
       "name": "nginx",
-      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx",
+      "image": "215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
@@ -27,7 +27,7 @@
         }
       ],
 
-      "links": ["client", "backend"],
+      "links": ["backend","client"],
       "memory": 100
     }
   ]
