@@ -11,5 +11,4 @@ COPY requirements.txt /var/app/requirements.txt
 RUN pip3 install -r requirements.txt
 COPY . /var/app/.
 
-CMD ["/var/app/runserver.sh"]
-
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
