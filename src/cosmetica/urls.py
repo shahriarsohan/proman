@@ -11,9 +11,9 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('auth/', include('rest_framework_social_oauth2.urls')),
 
-    path('api/v1/products/', include('products.api.urls')),
-    path('api/v1/address/', include('address.api.urls')),
-    path('api/v1/cart/', include('cart.api.urls')),
+    path('v1/products/', include('products.api.urls')),
+    path('v1/address/', include('address.api.urls')),
+    path('v1/cart/', include('cart.api.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
 
