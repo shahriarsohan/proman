@@ -49,13 +49,23 @@ const Home = (props) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const trending_res = await axios.get(
-    "http://backend:8000/api/v1/products/trending"
-  );
+  const trending_res = await axios
+    .get("http://backend:8000/api/v1/products/trending")
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+    });
 
-  const bestselling_res = await axios.get(
-    "http://backend:8000/api/v1/products/best-selling"
-  );
+  const bestselling_res = await axios
+    .get("http://backend:8000/api/v1/products/best-selling")
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   const featured_res = await axios.get(
     "http://backend:8000/api/v1/products/featured"
   );
