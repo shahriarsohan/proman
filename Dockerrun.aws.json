@@ -27,7 +27,6 @@
         }
       ],
 
-      "links": ["client", "backend"],
       "memory": 100
     }
   ]
