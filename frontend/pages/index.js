@@ -25,7 +25,7 @@ const Home = (props) => {
       console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     });
   }, []);
-  // console.log(props.data);
+  console.log(props.trending);
   return (
     <>
       <Navbar />
@@ -33,7 +33,7 @@ const Home = (props) => {
       <PromotionalSlider />
       <SmallBanner />
       <Featuredcat />
-      {/* <Products p={props.trending.trending_qs} /> */}
+      <Products p={props.trending} />
       <MediumBanner />
       {/* <BestSelling bestselling={props.bestselling.bestSelling_qs} /> */}
       {/* <FeaturedProducts featured={props.featured.featured_qs} /> */}
@@ -49,7 +49,9 @@ const Home = (props) => {
 
 export async function getServerSideProps() {
   //   // Fetch data from external API
-  const trending_res = await axios.get("/api/v1/products/trending");
+  const trending_res = await axios.get(
+    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+  );
 
   //   // const bestselling_res = await axios
   //   //   .get("/api/v1/products/best-selling")
@@ -61,17 +63,20 @@ export async function getServerSideProps() {
   //   //   });
   //   // const featured_res = await axios.get("/api/v1/products/featured");
   //   // const bestselling = await bestselling_res.data;
-  //   const trending = await trending_res.data;
-  console.log(trending_res);
+  const trending = await trending_res.data.trending_qs;
+  console.log(trending);
   //   // const featured = await featured_res.data;
 
-  //   if (!trending) {
-  //     return {
-  //       props: {
-  //         trending_null: true,
-  //       },
-  //     };
-  //   }
+  if (!trending) {
+    return {
+      props: {
+        trending_null: true,
+      },
+    };
+  }
+  return {
+    props: { trending: trending },
+  };
   //   // Pass data to the page via props
 }
 
