@@ -75,23 +75,23 @@ WSGI_APPLICATION = 'cosmetica.wsgi.application'
 AUTH_USER_MODEL = "users.NewUser"
 
 # if 'RDS_DB_NAME' in os.environ:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'promendb',
-        'USER': 'postgres',
-        'PASSWORD': 'sohanhas45',
-        'HOST': 'promendb.c2u4rsxhzesa.ap-south-1.rds.amazonaws.com',
-        'PORT': 5432,
-    }
-}
-# else:
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'promendb',
+#         'USER': 'postgres',
+#         'PASSWORD': 'sohanhas45',
+#         'HOST': 'promendb.c2u4rsxhzesa.ap-south-1.rds.amazonaws.com',
+#         'PORT': 5432,
 #     }
 # }
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
