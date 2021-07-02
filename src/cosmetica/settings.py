@@ -5,11 +5,11 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'w^c1c-yo)rfej2v==3$35)p$4e2(11-h5xiy!&gs7)3en2!iwc'
+SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'http://127.0.0.1',
-                 'http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com']
+                 'http://promen.ap-south-1.elasticbeanstalk.com']
 
 
 SYSTEM_APPS = [
@@ -78,11 +78,11 @@ if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'your_database_project_name',
-            'USER': 'your_postgres_username',
-            'PASSWORD': 'your_postgres_password',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'NAME': os.environ['NAME'],
+            'USER': os.environ['USER'],
+            'PASSWORD': os.environ['PASSWORD'],
+            'HOST': os.environ['HOST'],
+            'PORT': os.environ['PORT'],
         }
     }
 else:
@@ -130,7 +130,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost",
     "http://127.0.0.1",
-    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com"
+    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com",
+    "http://promen.ap-south-1.elasticbeanstalk.com"
 ]
 
 INTERNAL_IPS = [
@@ -206,3 +207,10 @@ OAUTH2_PROVIDER = {
     'OAUTH_SINGLE_ACCESS_TOKEN': True,
     'OAUTH_DELETE_EXPIRED': True
 }
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'email-smtp.ap-south-1.amazonaws.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'AKIATEN4JBHXIHS4RBHE'
+EMAIL_HOST_PASSWORD = 'BGXtZgYTuiY7IIPnBXMP3w0/PaM+lXoQbzzojbO4vLmC'
+EMAIL_USE_TLS = True

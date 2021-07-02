@@ -50,7 +50,7 @@ const Home = (props) => {
 export async function getServerSideProps() {
   //   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://new-env.eba-xduprarg.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+    "http://promen.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
   );
 
   //   // const bestselling_res = await axios
