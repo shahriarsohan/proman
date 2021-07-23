@@ -16,16 +16,9 @@ import CountDownProducts from "../src/components/Products/CountDownProducts";
 
 import Navigation from "../src/components/Navigation";
 import Featuredcat from "../src/components/featuredcat/featuredcat";
-import { useEffect } from "react";
 
 const Home = (props) => {
-  useEffect(() => {
-    axios.get("/api/v1/products/trending").then((res) => {
-      console.log(res);
-      console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-    });
-  }, []);
-  console.log(props.trending);
+  // console.log(props.data);
   return (
     <>
       <Navbar />
@@ -33,10 +26,10 @@ const Home = (props) => {
       <PromotionalSlider />
       <SmallBanner />
       <Featuredcat />
-      <Products p={props.trending} />
+      <Products p={props.trending.trending_qs} />
       <MediumBanner />
-      {/* <BestSelling bestselling={props.bestselling.bestSelling_qs} /> */}
-      {/* <FeaturedProducts featured={props.featured.featured_qs} /> */}
+      <BestSelling bestselling={props.bestselling.bestSelling_qs} />
+      <FeaturedProducts featured={props.featured.featured_qs} />
       <Shop />
       <CountDownProducts />
       <Service />
@@ -48,23 +41,21 @@ const Home = (props) => {
 };
 
 export async function getServerSideProps() {
+  // Fetch data from external API
   const trending_res = await axios.get(
-    "http://promen.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+    "http://127.0.0.1:8000/v1/products/trending"
   );
 
-  //   // const bestselling_res = await axios
-  //   //   .get("/api/v1/products/best-selling")
-  //   //   .then((res) => {
-  //   //     console.log(res);
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     console.log(err);
-  //   //   });
-  //   // const featured_res = await axios.get("/api/v1/products/featured");
-  //   // const bestselling = await bestselling_res.data;
-  const trending = await trending_res.data.trending_qs;
+  const bestselling_res = await axios.get(
+    "http://127.0.0.1:8000/v1/products/best-selling"
+  );
+  const featured_res = await axios.get(
+    "http://127.0.0.1:8000/v1/products/featured"
+  );
+  const bestselling = await bestselling_res.data;
+  const trending = await trending_res.data;
   console.log(trending);
-  //   // const featured = await featured_res.data;
+  const featured = await featured_res.data;
 
   if (!trending) {
     return {
@@ -73,10 +64,10 @@ export async function getServerSideProps() {
       },
     };
   }
+  // Pass data to the page via props
   return {
-    props: { trending: trending },
+    props: { trending: trending, bestselling: bestselling, featured: featured },
   };
-  //   // Pass data to the page via props
 }
 
 export default Home;

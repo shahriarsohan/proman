@@ -6,7 +6,7 @@ class test extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
 

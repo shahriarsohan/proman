@@ -30,7 +30,12 @@ const reducer = (state = initialState, action) => {
     case DELETE_FROM_CART_START:
       return { ...state, loading: true };
     case ADD_TO_CART:
-      return { ...state, add_to_cart_success: true, loading: false };
+      return {
+        ...state,
+        add_to_cart_success: true,
+        data: [...state.data, action.payload],
+        loading: false,
+      };
     case ADD_TO_CART_ERROR:
       return { ...state, error: action.payload, loading: false };
     default:

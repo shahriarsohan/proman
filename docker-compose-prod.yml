@@ -17,7 +17,7 @@ services:
   backend:
     image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest
     build:
-      context: ./src
+      context: ./backend
     command: gunicorn cosmetica.wsgi --bind 0.0.0.0:8000
     ports:
       - "8000:8000"

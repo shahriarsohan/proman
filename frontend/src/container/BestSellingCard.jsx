@@ -3,6 +3,7 @@ import axios from "axios";
 import { Modal } from "react-bootstrap";
 
 import QuickLookModal from "../container/QuickLookModal";
+import Link from "next/link";
 
 class BestSellingCard extends React.Component {
   state = {
@@ -17,7 +18,7 @@ class BestSellingCard extends React.Component {
     console.log(slug);
 
     axios
-      .get(`http://127.0.0.1:8000/api/v1/products/details/${slug}`)
+      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )
@@ -79,7 +80,9 @@ class BestSellingCard extends React.Component {
           </div>
           <div className="product-content">
             <h3>
-              <a href="product-details.html">{this.props.name}</a>
+              <Link href={`/details/${this.props.slug}`}>
+                {this.props.name}
+              </Link>
             </h3>
             <div className="product-price">
               <span className="old">${this.props.price}</span>

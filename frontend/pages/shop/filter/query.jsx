@@ -89,7 +89,7 @@ class AllListShop extends Component {
     }
     axios
       .get(
-        "http://127.0.0.1:8000/api/v1/products/product-filter/?limit=1&offset=0",
+        "http://127.0.0.1:8000/v1/products/product-filter/?limit=1&offset=0",
         {
           params: {
             query: this.state.query,

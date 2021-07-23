@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
+import { connect } from "react-redux";
+import { withRouter, NextRouter } from "next/router";
 
-import { GoogleLoginButton } from "react-social-login-buttons";
+import PhoneInput from "react-phone-number-input";
+import { Input } from "semantic-ui-react";
 
 import facebookLogin from "../../src/components/axios/facebookLogin";
 import googleLoginReq from "../../src/components/axios/googleLoginReq";
@@ -12,8 +12,16 @@ import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import Footer from "../../src/components/Footer/Footer";
 import Newsletter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
+import Image from "next/image";
+import Loader from "react-spinners/HashLoader";
+import { otpSend } from "../../src/store/actions/auth";
 
-export default class Login extends Component {
+class Login extends Component {
+  state = {
+    phoneNumber: null,
+    loading: false,
+  };
+
   responseFacebook = (response) => {
     console.log(response);
     facebookLogin(response.accessToken);
@@ -24,49 +32,126 @@ export default class Login extends Component {
     googleLoginReq(response.accessToken);
   };
 
+  sendOtp = (e) => {
+    e.preventDefault();
+    this.setState({ loading: true });
+    this.props.otpSend(this.state.phoneNumber);
+    // axios
+    //   .post("http://127.0.0.1:8000/auth/email/", {
+    //     email: this.state.email,
+    //   })
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       console.log(
+    //         this.props.router.push({
+    //           pathname: "/user/login/otp-verify",
+    //           query: { email: this.state.email },
+    //           asPath: "main",
+    //         })
+    //       );
+    //     }
+    //     this.setState({ loading: false });
+    //   })
+    //   .catch((err) => console.log(err));
+  };
+
+  handleChange = (e) => {
+    console.log(e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
+    console.log(this.state.phoneNumber);
+    console.log(this.props.successData);
+    if (this.props.successData.status === 200) {
+      this.props.router.push({
+        pathname: "/user/login/otp-verify",
+        query: {
+          pk: this.props.successData.data.pk,
+          phoneNumber: this.state.phoneNumber,
+        },
+        asPath: "main",
+      });
+    }
     return (
       <>
         <NavbarTwo />
+        {this.state.loading ? (
+          <div className="d-flex justify-content-center align-items-center pb-5">
+            <Loader
+              type="Puff"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              timeout={3000} //3 secs
+            />
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 d-none d-xl-block">
+              <div className="limiter">
+                <div className="container-login100">
+                  {/* <p
+                    style={{
+                      fontFamily: "Ubuntu",
+                      fontWeight: "bolder",
+                      fontSize: "24px",
+                    }}
+                  >
+                    Welcome to the world of Bewakoof! Enjoy
+                  </p> */}
+                  <Image
+                    width="auto"
+                    height="auto"
+                    src="/images/group-19-1617704502.webp"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="limiter">
+                <div
+                  className="container-login100"
+                  style={{ backgroundImage: 'url("images/bg-01.jpg")' }}
+                >
+                  <div className="wrap-lon100">
+                    {/* <div className="wrap-lon100"> */}
+                    <div className="phone-input">
+                      <PhoneInput
+                        placeholder="Enter phone number"
+                        country="BD"
+                        defaultCountry="BD"
+                        value={this.state.phoneNumber}
+                        name="phoneNumber"
+                        countries={["BD"]}
+                        // className="phonenumberinput"
+                        addInternationalOption={false}
+                        className="phonenumberinput"
+                        onChange={(e) => this.setState({ phoneNumber: e })}
+                        style={{ color: "black" }}
+                      />
+                    </div>
 
-        <section className="shop login section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6 offset-lg-3 col-12">
-                <div className="login-form">
-                  <h2>Login</h2>
-                  <p>Please register in order to checkout more quickly</p>
-                  {/* Form */}
-                  <div className="row">
-                    <div className="col-md-6 col-6">
-                      <FacebookLogin
-                        appId="188661309759475"
-                        fields="name,email,picture"
-                        callback={this.responseFacebook}
-                      />
+                    <div className="container-login100-form-btn m-t-17">
+                      <button
+                        onClick={this.sendOtp}
+                        type="submit"
+                        value="Submit"
+                        className="login100-form-btn"
+                      >
+                        Send otp
+                      </button>
                     </div>
-                    <div className="col-md-6 col-6">
-                      <GoogleLogin
-                        clientId="448045876292-4h78svvsdr86fbon1s6jlcqnf2sorjpd.apps.googleusercontent.com"
-                        render={(renderProps) => (
-                          <GoogleLoginButton
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                          />
-                        )}
-                        buttonText="Login"
-                        onSuccess={this.responseGoogle}
-                        // onFailure={responseGoogle}
-                        cookiePolicy={"single_host_origin"}
-                      />
-                    </div>
+                    {/* </div> */}
                   </div>
-                  ,{/*/ End Form */}
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
         <Service />
         <Newsletter />
@@ -75,3 +160,13 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    successData: state.auth.successData,
+    loading: state.auth.loading,
+    error: state.auth.error,
+  };
+};
+
+export default connect(mapStateToProps, { otpSend })(withRouter(Login));

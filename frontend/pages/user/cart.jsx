@@ -19,11 +19,11 @@ export default class cart extends Component {
     this.setState({ loading: true });
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
     axios
-      .get("http://127.0.0.1:8000/api/v1/cart/user-cart", config)
+      .get("http://127.0.0.1:8000/v1/cart/user-cart", config)
       .then((res) => {
         this.setState({ loading: false, cart: res.data });
       })
@@ -35,12 +35,12 @@ export default class cart extends Component {
   handleChange = (item) => {
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/v1/cart/add-to-order-item", item, config)
+      .post("http://127.0.0.1:8000/v1/cart/add-to-order-item", item, config)
       .then((res) => {
         console.log(res);
       })

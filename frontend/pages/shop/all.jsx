@@ -61,7 +61,7 @@ class AllListShop extends Component {
     console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/api/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}`
+        `http://127.0.0.1:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -384,7 +384,7 @@ class AllListShop extends Component {
 
 export async function getServerSideProps(context) {
   const details_qs = await axios.get(
-    `http://127.0.0.1:8000/api/v1/products/list-infinite/?limit=20&offset=0`
+    `http://127.0.0.1:8000/v1/products/list-infinite/?limit=20&offset=0`
   );
 
   const details = await details_qs.data.products;

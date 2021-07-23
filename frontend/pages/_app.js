@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 // import "semantic-ui-css/semantic.min.css";
 import "react-notifications/lib/notifications.css";
-
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "react-phone-number-input/style.css";
 
 import store from "../src/store";
@@ -36,61 +36,32 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/utils.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/magnific-popup.min.css" />
+
+        <link rel="stylesheet" href="/css/jquery.fancybox.min.css" />
+        <link rel="stylesheet" href="/css/themify-icons.css" />
+        <link rel="stylesheet" href="/css/nice-select.css" />
+        <link rel="stylesheet" href="/css/animate.css" />
+        <link rel="stylesheet" href="/css/flex-slider.min.css" />
+        <link rel="stylesheet" href="/css/owl-carousel.css" />
+        <link rel="stylesheet" href="/css/slicknav.min.css" />
+        <link rel="stylesheet" href="/css/reset.css" />
+        <link rel="stylesheet" href="/css/new.css" />
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        ></link>
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/magnific-popup.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/font-awesome.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/jquery.fancybox.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/themify-icons.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/niceselect.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/animate.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/flex-slider.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/owl-carousel.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/slicknav.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/reset.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/new.css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
 
         {/* tmart */}
 
-        <link
-          rel="stylesheet"
-          href="https://proman-static.s3.ap-south-1.amazonaws.com/css/core.css"
-        />
+        <link rel="stylesheet" href="/css/core.css" />
         <script
           type="module"
           src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
@@ -102,10 +73,6 @@ function MyApp({ Component, pageProps }) {
 
         {/* end tmart */}
 
-        <link href="../fonts/Themify/themify.woff" />
-        <link href="../fonts/Themify/themify.ttf" />
-        <link href="../fonts/Themify/themify.svg" />
-        <link href="../fonts/Themify/themify.svg" />
         <link
           rel="stylesheet"
           href="https://proman-static.s3.ap-south-1.amazonaws.com/css/responsive.css"
@@ -129,10 +96,18 @@ function MyApp({ Component, pageProps }) {
         <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/flex-slider.js"></script>
         <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/easing.js"></script>
         <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/active.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"
+        ></script>
+        <script src="https://proman-static.s3.ap-south-1.amazonaws.com/offcanvas.js"></script>
         <script
           src="https://kit.fontawesome.com/51af182525.js"
           crossorigin="anonymous"
         ></script>
+        <script src="/test.js"></script>
       </Head>
       <Component {...pageProps} />
     </Provider>

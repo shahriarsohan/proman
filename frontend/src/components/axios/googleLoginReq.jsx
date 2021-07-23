@@ -2,13 +2,13 @@ import axios from "axios";
 
 const facebookLogin = (accesstoken) => {
   axios
-    .post("http://127.0.0.1:8000/auth/convert-token", {
+    .post("http://127.0.0.1:8000/social/auth/convert-token/", {
       token: accesstoken,
       backend: "google-oauth2",
       grant_type: "convert_token",
-      client_id: "izLoYQ9jK6nQwLYZyVKG8onHGyFeyYv2UuBfyXkL",
+      client_id: "aWk4jv6U0XZOa0QYNRKZvgUMrNXyDKaJK5Awz2w2",
       client_secret:
-        "mFaakChnt6TUeHaUjJ7hbtXkmop2SMW3IbV7oS2laBZ3xp5xuDStQMQPKLzaEKMjHmIKPJ5IP8xOn5sd51JQhrv51NIUEX8HS2OmYOC20C8vkHcVG98d8mS8rN1PVjta",
+        "meJFBCbcRibH7PaAsCwnCBmX3FVeBfuNCj0nXuQUvp75WQcs4Mi8rmVEsF9BqXmqcRFOuzyzpPEIEGJgYKmr5eXIOlRrdZ92CAPJE9vai6G2g0nOhbyy8GM5odDtfBo4",
     })
     .then((res) => {
       localStorage.setItem("access_token", res.data.access_token);

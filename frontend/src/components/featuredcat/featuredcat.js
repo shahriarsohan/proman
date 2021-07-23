@@ -28,60 +28,60 @@ export default class featuredcat extends Component {
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
-                                <img src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/images/feature_2.jpg" />
+                                <img src="/images/movie.webp" />
                               </a>
                             </div>
-                            <span>T-Shirts</span>
+                            <span>Movie</span>
                           </li>
                         </div>
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
-                                <img src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/images/feature_1.jpg" />
+                                <img src="/images/games.webp" />
                               </a>
                             </div>
-                            <span>T-Shirts</span>
+                            <span>Game</span>
                           </li>
                         </div>
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
-                                <img src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/images/feature_2.jpg" />
+                                <img src="/images/life.webp" />
                               </a>
                             </div>
-                            <span>T-Shirts</span>
+                            <span>Life</span>
                           </li>
                         </div>
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
-                                <img src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/images/feature_1.jpg" />
+                                <img src="/images/sports.webp" />
                               </a>
                             </div>
-                            <span>T-Shirts</span>
+                            <span>Sports</span>
                           </li>
                         </div>
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
-                                <img src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/images/feature_2.jpg" />
+                                <img src="/images/trend.webp" />
                               </a>
                             </div>
-                            <span>T-Shirts</span>
+                            <span>Trend</span>
                           </li>
                         </div>
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
                               <a href="#">
-                                <img src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/tmart/images/feature_1.jpg" />
+                                <img src="/images/programming.webp" />
                               </a>
                             </div>
-                            <span>T-Shirts</span>
+                            <span>Programming</span>
                           </li>
                         </div>
                       </div>

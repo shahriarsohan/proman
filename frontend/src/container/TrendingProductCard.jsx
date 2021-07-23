@@ -28,12 +28,12 @@ class TrendingProductCard extends Component {
 
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_token"),
       },
     };
     // console.log(config);
     axios
-      .post("http://127.0.0.1:8000/api/v1/cart/add-to-cart", product, config)
+      .post("http://127.0.0.1:8000/v1/cart/add-to-cart", product, config)
       .then((res) => {
         this.props.fetchUserOrder(),
           this.setState({ order_added_success: true });
@@ -54,7 +54,7 @@ class TrendingProductCard extends Component {
     console.log(slug);
 
     axios
-      .get(`http://127.0.0.1:8000/api/v1/products/details/${slug}`)
+      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )
@@ -80,7 +80,7 @@ class TrendingProductCard extends Component {
         <div className="col-xl-3 col-lg-3 col-md-4 col-6">
           <div className="single-product">
             <div className="product-img">
-              <a href="product-details.html">
+              <Link href={`/details/${this.props.slug}`}>
                 <img
                   className="default-img"
                   src={
@@ -90,16 +90,16 @@ class TrendingProductCard extends Component {
                   }
                   alt={this.props.name}
                 />
-                <img
-                  className="hover-img"
-                  src={
-                    this.props.thumbnail
-                      ? `http://127.0.0.1:8000${this.props.thumbnail}`
-                      : "https://via.placeholder.com/550x750"
-                  }
-                  alt="#"
-                />
-              </a>
+                {/* <img
+                    className="hover-img"
+                    src={
+                      this.props.thumbnail
+                        ? `http://127.0.0.1:8000${this.props.thumbnail}`
+                        : "https://via.placeholder.com/550x750"
+                    }
+                    alt="#"
+                  /> */}
+              </Link>
               <div className="button-head">
                 <div className="product-action">
                   <a

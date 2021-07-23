@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import {
   FETCH_USER_CART,
   FETCH_USER_CART_ERROR,
@@ -15,19 +14,16 @@ export const fetchUserOrder = () => (dispatch) => {
   if (typeof localStorage !== "undefined") {
     var config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_token"),
       },
     };
   }
-
-  axios
-    .get("http://127.0.0.1:8000/api/v1/cart/user-cart", config)
-    .then((res) => {
-      dispatch({
-        type: FETCH_USER_CART,
-        payload: res.data,
-      });
+  axios.get("http://127.0.0.1:8000/v1/cart/user-cart", config).then((res) => {
+    dispatch({
+      type: FETCH_USER_CART,
+      payload: res.data,
     });
+  });
 };
 
 export const handleAddToCart = (data) => (dispatch) => {
@@ -38,23 +34,22 @@ export const handleAddToCart = (data) => (dispatch) => {
   if (typeof localStorage !== "undefined") {
     var config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_token"),
       },
     };
   }
-
   axios
-    .post("http://127.0.0.1:8000/api/v1/cart/add-to-cart", data, config)
+    .post("http://127.0.0.1:8000/v1/cart/add-to-cart", data, config)
     .then((res) => {
       dispatch({
         type: ADD_TO_CART,
-        payload: res.data,
+        payload: res.data.item,
       });
     })
     .catch((err) => {
       dispatch({
         type: ADD_TO_CART_ERROR,
-        data: err.response.data,
+        data: err.data,
       });
     });
 };
@@ -67,17 +62,13 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
   if (typeof localStorage !== "undefined") {
     var config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_token"),
       },
     };
   }
 
   axios
-    .post(
-      "http://127.0.0.1:8000/api/v1/cart/item-delete-from-cart",
-      data,
-      config
-    )
+    .post("http://127.0.0.1:8000/v1/cart/item-delete-from-cart", data, config)
     .then((res) => {
       dispatch({
         type: DELETE_FROM_CART,

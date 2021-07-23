@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { withRouter } from "next/router";
 
-import { GlassMagnifier } from "react-image-magnifiers";
 import ReactTooltip from "react-tooltip";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 import { handleAddToCart, fetchUserOrder } from "../../src/store/actions/cart";
 
@@ -16,6 +17,7 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import Navigation from "../../src/components/Navigation";
 // const
 
 class DetailsPage extends Component {
@@ -58,6 +60,8 @@ class DetailsPage extends Component {
     const { details, data, loading, error, add_to_cart_success } = this.props;
     console.log(add_to_cart_success);
     console.log(this.state.sizeError);
+    console.log(details.images);
+    console.log(this.state.activeImg);
 
     return (
       <>
@@ -73,31 +77,37 @@ class DetailsPage extends Component {
                 <div className="row">
                   <div className="col-lg-6 col-12">
                     {/* Product Slider */}
-                    <div id="content">
-                      <div id="featured_img">
-                        <GlassMagnifier
-                          imageSrc={this.state.activeImg}
-                          imageAlt="Example"
-                        />
-                      </div>
+                    <div className="product-gallery">
+                      {/* Images slider */}
+                      <div className="flexslider-thumbnails">
+                        <div class="col-md-10">
+                          <Zoom>
+                            <img
+                              src={this.state.activeImg}
+                              width="100%"
+                              id="ProductImg"
+                            />
+                          </Zoom>
 
-                      <div id="thumb_img" className="cf">
-                        {details.images.map((img) => {
-                          return (
-                            <figure onMouseMove={() => console.log("hello")}>
-                              <img
-                                className="active hover-zoom"
-                                onClick={() =>
-                                  this.setState({
-                                    activeImg: `http://127.0.0.1:8000${img.image}`,
-                                  })
-                                }
-                                src={`http://127.0.0.1:8000${img.image}`}
-                              />
-                            </figure>
-                          );
-                        })}
+                          <div class="small-imgs">
+                            {details.images.map((i) => {
+                              return (
+                                <img
+                                  src={`http://127.0.0.1:8000${i.image}`}
+                                  width="80%"
+                                  class="small-img"
+                                  onClick={() =>
+                                    this.setState({
+                                      activeImg: `http://127.0.0.1:8000${i.image}`,
+                                    })
+                                  }
+                                />
+                              );
+                            })}
+                          </div>
+                        </div>
                       </div>
+                      {/* End Images slider */}
                     </div>
                     {/* End Product slider */}
                   </div>
@@ -105,9 +115,7 @@ class DetailsPage extends Component {
                     <div className="product-des">
                       {/* Description */}
                       <div className="short">
-                        <h4 className="text-capitalize">
-                          {details.products.name}
-                        </h4>
+                        <h4>Nonstick Dishwasher PFOA</h4>
                         <div className="rating-main">
                           <ul className="rating">
                             <li>
@@ -120,37 +128,27 @@ class DetailsPage extends Component {
                               <i className="fa fa-star" />
                             </li>
                             <li>
-                              <i className="fa fa-star" />
-                            </li>
-                            <li>
-                              <i className="fa fa-star" />
-                            </li>
-                            {/* <li>
                               <i className="fa fa-star-half-o" />
                             </li>
                             <li className="dark">
                               <i className="fa fa-star-o" />
-                            </li> */}
+                            </li>
                           </ul>
                           <a href="#" className="total-review">
-                            (0) Review
+                            (102) Review
                           </a>
                         </div>
                         <p className="price">
-                          <span className="discount">
-                            {details.products.discount_price
-                              ? `৳ ${details.products.discount_price}`
-                              : ""}
-                          </span>
-                          <s>
-                            {details.products.price
-                              ? `৳ ${details.products.price}`
-                              : ""}
-                          </s>{" "}
+                          <span className="discount">$70.00</span>
+                          <s>$80.00</s>{" "}
                         </p>
-
                         <p className="description">
-                          {details.products.short_desc}
+                          eget velit. Donec ac tempus ante. Fusce ultricies
+                          massa massa. Fusce aliquam, purus eget sagittis
+                          vulputate, sapien libero hendrerit est, sed commodo
+                          augue nisi non neque. Lorem ipsum dolor sit amet,
+                          consectetur adipiscing elit. Sed tempor, lorem et
+                          placerat vestibulum, metus nisi posuere nisl, in
                         </p>
                       </div>
                       {/*/ End Description */}
@@ -392,7 +390,7 @@ class DetailsPage extends Component {
                               Description
                             </a>
                           </li>
-                          {/* <li className="nav-item">
+                          <li className="nav-item">
                             <a
                               className="nav-link"
                               data-toggle="tab"
@@ -401,7 +399,7 @@ class DetailsPage extends Component {
                             >
                               Reviews
                             </a>
-                          </li> */}
+                          </li>
                         </ul>
                         {/*/ End Tab Nav */}
                       </div>
@@ -664,8 +662,10 @@ class DetailsPage extends Component {
             </div>
           </div>
         </section>
+
         <NotificationContainer />
         <Footer />
+        <Navigation />
       </>
     );
   }
@@ -674,7 +674,7 @@ class DetailsPage extends Component {
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const details_qs = await axios.get(
-    `http://backend:8000/api/v1/products/details/${context.params.slug}`
+    `http://127.0.0.1:8000/v1/products/details/${context.params.slug}`
   );
 
   const details = await details_qs.data;

@@ -29,21 +29,21 @@ class checkout extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
     axios
-      .get("http://127.0.0.1:8000/api/v1/cart/payment", config)
+      .get("http://127.0.0.1:8000/v1/cart/payment", config)
       .then((res) => this.setState({ total_amount: res.data.total_amount }));
     axios
-      .get("http://127.0.0.1:8000/api/v1/address/create", config)
+      .get("http://127.0.0.1:8000/v1/address/create", config)
       .then((res) => {
         this.setState({ address_available: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
-    axios.get("http://127.0.0.1:8000/api/v1/address/list", config).then((res) =>
+    axios.get("http://127.0.0.1:8000/v1/address/list", config).then((res) =>
       this.setState({
         user_address: res.data.user_address,
         user_have_address: res.data.user_have_address,
@@ -54,7 +54,7 @@ class checkout extends Component {
   handleSubmitOrder = () => {
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
     const data = {
@@ -62,7 +62,7 @@ class checkout extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/v1/cart/order-confirm", data, config)
+      .post("http://127.0.0.1:8000/v1/cart/order-confirm", data, config)
       .then()
       .catch((error) => {
         this.setState({ error: error.response.data.error });
@@ -72,11 +72,11 @@ class checkout extends Component {
   handlePayment = () => {
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
     axios
-      .post("http://127.0.0.1:8000/api/v1/cart/test", {
+      .post("http://127.0.0.1:8000/v1/cart/test", {
         config,
         total_amount: this.state.total_amount,
       })
@@ -97,11 +97,11 @@ class checkout extends Component {
     };
     const config = {
       headers: {
-        authorization: "Bearer " + localStorage.getItem("access_token"),
+        authorization: "Token " + localStorage.getItem("access_Bearer"),
       },
     };
     axios
-      .post("http://127.0.0.1:8000/api/v1/address/create", data, config)
+      .post("http://127.0.0.1:8000/v1/address/create", data, config)
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         console.log(res.data);
@@ -152,8 +152,8 @@ class checkout extends Component {
                             const config = {
                               headers: {
                                 authorization:
-                                  "Bearer " +
-                                  localStorage.getItem("access_token"),
+                                  "Token " +
+                                  localStorage.getItem("access_Bearer"),
                               },
                             };
 
@@ -165,7 +165,7 @@ class checkout extends Component {
                             };
 
                             axios.put(
-                              `http://127.0.0.1:8000/api/v1/address/edit/${this.state.user_address.id}`,
+                              `http://127.0.0.1:8000/v1/address/edit/${this.state.user_address.id}`,
                               data,
                               config
                             );

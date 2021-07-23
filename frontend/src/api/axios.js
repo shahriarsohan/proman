@@ -3,8 +3,8 @@ import axios from "axios";
 const baseUrl = "http://127.0.0.1:8000/api/v1/";
 const headers = {};
 
-// if (localStorage.token) {
-//   headers.Authorization = `Bearer ${localStorage.token}`;
+// if (localStorage.Token) {
+//   headers.Authorization = `Token ${localStorage.Token}`;
 // }
 
 const axiosInstance = axios.create({

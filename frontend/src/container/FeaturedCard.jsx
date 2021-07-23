@@ -17,7 +17,7 @@ class FeaturedCard extends React.Component {
     console.log(slug);
 
     axios
-      .get(`http://127.0.0.1:8000/api/v1/products/details/${slug}`)
+      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )

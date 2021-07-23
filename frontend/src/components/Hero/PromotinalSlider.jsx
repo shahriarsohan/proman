@@ -8,32 +8,27 @@ class PromotionalSlider extends Component {
       {
         id: 1,
         title: "item #1",
-        image:
-          "https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png",
+        image: "/images/item1.png",
       },
       {
         id: 2,
         title: "item #2",
-        image:
-          "https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png",
+        image: "/images/item2.png",
       },
       {
         id: 3,
         title: "item #3",
-        image:
-          "https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png",
+        image: "/images/item3.png",
       },
       {
         id: 4,
         title: "item #4",
-        image:
-          "https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png",
+        image: "/images/item4.png",
       },
       {
         id: 5,
         title: "item #5",
-        image:
-          "https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png",
+        image: "/images/item5.png",
       },
     ],
   };
