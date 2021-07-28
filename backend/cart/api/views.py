@@ -47,11 +47,11 @@ class GET_CART_PRICING_DETAILS(views.APIView):
         print(order_qs)
         order_qs = order_qs
         print(order_qs)
-        order_total = order_qs.get_total()
-        print('ordeer total', order_qs.get_total())
+        order_total = order_qs.sub_total + order_qs.shipping
+        print('ordeer total', order_qs.total)
         print('product total', order_qs.get_total_product_price())
 
-        return Response({'order_total': order_total}, status=status.HTTP_200_OK)
+        return Response({'order_total': order_qs.sub_total}, status=status.HTTP_200_OK)
 
 
 class AddProductToCart(views.APIView):
@@ -69,6 +69,11 @@ class AddProductToCart(views.APIView):
         # if quantity is not None:
         #     order_item = Cart.objects.create(
         #         product=item, user=request.user, quantity=quantity, size=size, expires=False)
+        if item.discount_price:
+            total_price = quantity * item.discount_price
+        else:
+            total_price = quantity * item.price
+        print(total_price)
         order_item = Cart.objects.create(
             product=item, user=request.user, quantity=quantity, size=size, expires=False)
         serializer = CartSerailizers(order_item)
@@ -78,13 +83,16 @@ class AddProductToCart(views.APIView):
             order = order_qs[0]
             if not order.products.filter(product__id=order_item.id).exists():
                 order.products.add(order_item)
+                order.sub_total += total_price
+                order.save()
+
                 return Response({'item':  serializer.data}, status=status.HTTP_200_OK)
             else:
                 return Response({"msg": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             ordered_date = timezone.now()
             order = Order.objects.create(
-                user=request.user, ordered_date=ordered_date)
+                user=request.user, ordered_date=ordered_date, sub_total=total_price)
             order.products.add(order_item)
             return Response({'item':  serializer.data}, status=status.HTTP_200_OK)
 

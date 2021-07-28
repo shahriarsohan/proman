@@ -1,3 +1,5 @@
+// @refresh reset
+
 import React, { Component } from "react";
 import {
   Button,
@@ -17,6 +19,8 @@ import axios from "axios";
 // import { Form } from "react-bootstrap";
 import { withRouter } from "next/router";
 import { Formik, Field } from "formik";
+
+import Loader from "react-loader-spinner";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -64,20 +68,13 @@ const countryOptions = [
 
 class checkout extends Component {
   state = {
-    street_address: "",
-    apartment_address: "",
+    loading: null,
+    modalLoading: null,
+    errorMessage: null,
 
-    address_available: "",
-    sub_total_amount: "",
-    total_amount: "",
-    user_address: {},
+    shipping_address: {},
+
     user_have_address: null,
-    loading: false,
-    alternate_phone_number: "",
-    shipping_charge: 60,
-    payment_method: "",
-    error: "",
-    district: "",
 
     f_name: "",
     l_name: "",
@@ -87,74 +84,149 @@ class checkout extends Component {
     address: "",
     zip_code: "",
     email: "",
+    street_address: "",
     city_options: [
       { key: "af", value: "af", flag: "af", text: "Afghanistan" },
       { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
       { key: "al", value: "al", flag: "al", text: "Albania" },
     ],
+
+    sub_total_amount: 0,
+    shipping_charge: 0,
+    total_amount: 0,
+
     openAddressEditModal: null,
   };
 
   componentDidMount() {
+    // this.props.router.reload("/");
+
+    this.checkUserAddress();
+    // this.assosiateAddressToOrder();
+    // this.updateDeliveryCharge();
+    // this.updateOrderTotal();
+    // this.getOrderPricing();
+  }
+
+  checkUserAddress = () => {
     const config = {
       headers: {
         authorization: "Token " + localStorage.getItem("access_token"),
       },
     };
-    axios.get("http://127.0.0.1:8000/v1/cart/payment", config).then((res) =>
-      this.setState(
-        {
-          sub_total_amount: res.data.sub_total_amount,
-          total_amount: res.data.total_amount,
-        },
-        () => {
-          axios.post(
-            "http://127.0.0.1:8000/v1/orders/pricing-details",
+    this.setState({ loading: true });
+    axios
+      .get("http://127.0.0.1:8000/v1/address/user-address", config)
+      .then((res) => {
+        if (!res.data.user_have_address) {
+          this.props.router.push("/address/new");
+        } else {
+          this.setState(
             {
-              sub_total_amount: res.data.sub_total_amount,
+              loading: false,
+              user_have_address: res.data.user_have_address,
+              shipping_address: res.data.user_address,
             },
-            config
+            () => this.assosiateAddressToOrder()
           );
         }
-      )
-    );
+      });
+  };
 
-    axios.get("http://127.0.0.1:8000/v1/address/list", config).then((res) => {
-      this.setState(
-        {
-          user_address: res.data.user_address,
-          user_have_address: res.data.user_have_address,
-        },
-        () => {
-          if (!res.data.user_have_address) {
-            this.props.router.push("/address/new");
-          }
-        }
-      );
-      if (res.data.user_have_address) {
-        const region = res.data.user_address.region;
-        console.log(region);
-        const config = {
-          headers: {
-            authorization: "Token " + localStorage.getItem("access_token"),
-          },
-        };
-        axios.post(
-          "http://127.0.0.1:8000/v1/orders/update-shipping",
-          {
-            region,
-          },
-          config
-        );
-      }
-    });
-    console.log(
-      "asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-      this.state.sub_total_amount
-    );
-  }
+  assosiateAddressToOrder = () => {
+    const config = {
+      headers: {
+        authorization: "Token " + localStorage.getItem("access_token"),
+      },
+    };
+    this.setState({ loading: true });
+    const data = {
+      some: "thing",
+    };
+
+    axios
+      .post("http://127.0.0.1:8000/v1/orders/assosiate-to-order", data, config)
+      .then((res) =>
+        this.setState({ error: null, loading: false }, () =>
+          this.updateDeliveryCharge()
+        )
+      )
+      .catch((error) => console.log(error));
+  };
+
+  updateDeliveryCharge = () => {
+    this.setState({ loading: true });
+    const config = {
+      headers: {
+        authorization: "Token " + localStorage.getItem("access_token"),
+      },
+    };
+    const data = {
+      some: "thing",
+    };
+    axios
+      .post(
+        "http://127.0.0.1:8000/v1/orders/update-shipping-charge",
+        data,
+        config
+      )
+      .then((res) =>
+        this.setState({ error: null, loading: false }, () =>
+          this.updateOrderTotal()
+        )
+      )
+      .catch((err) => console.log(err));
+  };
+
+  updateOrderTotal = () => {
+    this.setState({ loading: true });
+    const config = {
+      headers: {
+        authorization: "Token " + localStorage.getItem("access_token"),
+      },
+    };
+    const data = {
+      some: "thing",
+    };
+    axios
+      .post("http://127.0.0.1:8000/v1/orders/update-order-total", data, config)
+      .then((res) =>
+        this.setState({ error: null, loading: false }, () =>
+          this.getOrderPricing()
+        )
+      )
+      .catch((err) => console.log(err));
+  };
+
+  getOrderPricing = () => {
+    this.setState({ loading: true });
+    const config = {
+      headers: {
+        authorization: "Token " + localStorage.getItem("access_token"),
+      },
+    };
+    const data = {
+      some: "thing",
+    };
+    axios
+      .post(
+        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
+        data,
+        config
+      )
+      .then((res) =>
+        this.setState({
+          loading: false,
+          sub_total_amount: res.data.order_sub_total,
+          total_amount: res.data.total_amount,
+          shipping_charge: res.data.shipping_charge,
+        })
+      )
+      .catch((err) => console.log(err));
+  };
 
   onChangeRegion = (e, data) => {
+    this.setState({ modalLoading: true });
     this.setState({ region: data.value }, () => {
       if (data.value === "dhaka") {
         this.setState(
@@ -171,6 +243,7 @@ class checkout extends Component {
                 authorization: "Token " + localStorage.getItem("access_token"),
               },
             };
+
             axios
               .post(
                 "http://127.0.0.1:8000/v1/orders/update-shipping",
@@ -183,6 +256,7 @@ class checkout extends Component {
                 this.setState({
                   msg: response.data.msg,
                   shipping_charge: 60,
+                  modalLoading: false,
                 });
               });
           }
@@ -213,7 +287,8 @@ class checkout extends Component {
               .then((response) => {
                 this.setState({
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 150,
+                  modalLoading: false,
                 });
               });
           }
@@ -245,6 +320,7 @@ class checkout extends Component {
                 this.setState({
                   msg: response.data.msg,
                   shipping_charge: 120,
+                  modalLoading: false,
                 });
               });
           }
@@ -276,6 +352,7 @@ class checkout extends Component {
                 this.setState({
                   msg: response.data.msg,
                   shipping_charge: 120,
+                  modalLoading: false,
                 });
               });
           }
@@ -307,6 +384,7 @@ class checkout extends Component {
                 this.setState({
                   msg: response.data.msg,
                   shipping_charge: 120,
+                  modalLoading: false,
                 });
               });
           }
@@ -339,6 +417,7 @@ class checkout extends Component {
                 this.setState({
                   msg: response.data.msg,
                   shipping_charge: 120,
+                  modalLoading: false,
                 });
               });
           }
@@ -357,450 +436,437 @@ class checkout extends Component {
                 authorization: "Token " + localStorage.getItem("access_token"),
               },
             };
-            axios.post(
-              "http://127.0.0.1:8000/v1/orders/update-shipping",
-              {
-                region: data.value,
-              },
-              config
-            );
+            axios
+              .post(
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                {
+                  region: data.value,
+                },
+                config
+              )
+              .then((response) => {
+                this.setState({
+                  msg: response.data.msg,
+                  shipping_charge: 120,
+                  modalLoading: false,
+                });
+              });
           }
         );
       } else if (data.value === "mymensingh") {
-        this.setState({
-          city_options: [
-            { key: "au", value: "au", flag: "au", text: "Australia" },
-            { key: "at", value: "at", flag: "at", text: "Austria" },
-          ],
-        });
+        this.setState(
+          {
+            city_options: [
+              { key: "au", value: "au", flag: "au", text: "Australia" },
+              { key: "at", value: "at", flag: "at", text: "Austria" },
+            ],
+          },
+          () => {
+            const config = {
+              headers: {
+                authorization: "Token " + localStorage.getItem("access_token"),
+              },
+            };
+            axios
+              .post(
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                {
+                  region: data.value,
+                },
+                config
+              )
+              .then((response) => {
+                this.setState({
+                  msg: response.data.msg,
+                  shipping_charge: 120,
+                  modalLoading: false,
+                });
+              });
+          }
+        );
       }
     });
-  };
-
-  onChangeCity = (e, data) => {
-    this.setState({
-      city: data.value,
-    });
-  };
-
-  onChangeArea = (e, data) => {
-    this.setState({
-      area: data.value,
-    });
-  };
-
-  handleSubmitOrder = () => {
-    const config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-    const data = {
-      payment_method: this.state.payment_method,
-    };
-
-    axios
-      .post("http://127.0.0.1:8000/v1/cart/order-confirm", data, config)
-      .then()
-      .catch((error) => {
-        this.setState({ error: error.response.data.error });
-      });
-  };
-
-  handlePayment = () => {
-    const config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-    axios
-      .post(
-        "http://127.0.0.1:8000/v1/cart/test",
-        {
-          sub_total_amount: this.state.sub_total_amount,
-        },
-        config
-      )
-      .then((res) => this.props.router.push(res.data.GatewayPageURL));
   };
 
   handleChange = (e) => {
     // console.log(e.target.value)
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const data = {
-      f_name: this.state.f_name,
-      l_name: this.state.l_name,
-      alternate_phone_number: this.state.alternate_phone_number,
-      email: this.state.email,
-      region: this.state.region,
-      city: this.state.city,
-      area: this.state.area,
-      street_address: this.state.street_address,
-      zip_code: this.state.zip_code,
-    };
-    const config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-    axios
-      .post("http://127.0.0.1:8000/v1/address/create", data, config)
-      .then((res) => {
-        // this.setState({ loading: false, cart: res.data });
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   render() {
-    const { user_address, user_have_address, street_address } = this.state;
-    console.log(this.state.street_address);
-
+    console.log(this.state.modalLoading);
     return (
       <>
         <NavbarTwo />
         <Modal
           onClose={() =>
-            this.setState({
-              openAddressEditModal: false,
-            })
+            this.setState(
+              {
+                openAddressEditModal: false,
+              },
+              this.getOrderPricing()
+            )
           }
           onOpen={() => setOpen(true)}
           open={this.state.openAddressEditModal}
         >
           <Modal.Content>
-            <Formik enableReinitialize={true} initialValues={user_address}>
-              {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                <Form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    this.setState({ loading: true });
-                    const config = {
-                      headers: {
-                        authorization:
-                          "Token " + localStorage.getItem("access_token"),
-                      },
-                    };
+            {this.state.modalLoading && (
+              <div
+                style={{
+                  // width: "100%vw",
+                  // height: "30vh",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Loader type="Circles" color="#00BFFF" height={80} width={80} />
+              </div>
+            )}
 
-                    const data = {
-                      f_name: values.f_name,
-                      l_name: values.l_name,
-                      alternate_phone_number: values.alternate_phone_number,
-                      email: values.email,
-                      region: this.state.region,
-                      city: this.state.city,
-                      area: this.state.area,
-                      street_address: this.state.street_address,
-                      zip_code: values.zip_code,
-                    };
+            <div className={this.state.modalLoading ? "d-none" : ""}>
+              <Formik
+                enableReinitialize={true}
+                initialValues={this.state.shipping_address}
+              >
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                }) => (
+                  <Form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      this.setState({ modalLoading: true });
+                      const config = {
+                        headers: {
+                          authorization:
+                            "Token " + localStorage.getItem("access_token"),
+                        },
+                      };
 
-                    axios.put(
-                      `http://127.0.0.1:8000/v1/address/edit/${this.state.user_address.id}`,
-                      data,
-                      config
-                    );
-                  }}
-                  className="form"
-                  method="post"
-                  action="#"
-                >
-                  <h3>Personal Information</h3>
-                  <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-6">
-                      <div className="form-group">
-                        <Field
-                          as={Form.Input}
-                          fluid
-                          value={values.f_name}
-                          onChange={handleChange("f_name")}
-                          label="Fisrt Name"
-                          name="f_name"
-                          placeholder="First Name"
-                        />
+                      const data = {
+                        f_name: values.f_name,
+                        l_name: values.l_name,
+                        alternate_phone_number: values.alternate_phone_number,
+                        email: values.email,
+                        region: this.state.region,
+                        city: this.state.city,
+                        area: this.state.area,
+                        street_address: this.state.street_address,
+                        zip_code: values.zip_code,
+                      };
+
+                      axios
+                        .put(
+                          `http://127.0.0.1:8000/v1/address/edit/${this.state.shipping_address.id}`,
+                          data,
+                          config
+                        )
+                        .then((res) =>
+                          this.setState(
+                            {
+                              modalLoading: false,
+                              openAddressEditModal: false,
+                            },
+                            () => this.getOrderPricing()
+                          )
+                        );
+                    }}
+                    className="form"
+                    method="post"
+                    action="#"
+                  >
+                    <h3>Personal Information</h3>
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-6">
+                        <div className="form-group">
+                          <Field
+                            as={Form.Input}
+                            fluid
+                            value={values.f_name}
+                            onChange={handleChange("f_name")}
+                            label="Fisrt Name"
+                            name="f_name"
+                            placeholder="First Name"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    {/* <div className="col-lg-6 col-md-6 col-12">
-                              <div className="form-group">
-                                <Field
-                                  as={Form.Input}
-                                  fluid
-                                  value={values.alternate_phone_number}
-                                  onChange={handleChange("alternate_phone_number")}
-                                  label="Phone Number"
-                                  name="alternate_phone_number"
-                                  placeholder="Phone Number"
-                                />
-                              </div>
-                            </div> */}
-                    <div className="col-lg-6 col-md-6 col-sm-6">
-                      <div className="form-group">
-                        <Field
-                          as={Form.Input}
-                          fluid
-                          value={values.l_name}
-                          onChange={handleChange("l_name")}
-                          label="Last Name"
-                          name="l_name"
-                          placeholder="Last Name"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-6">
+                      {/* <div className="col-lg-6 col-md-6 col-12">
                       <div className="form-group">
                         <Field
                           as={Form.Input}
                           fluid
                           value={values.alternate_phone_number}
                           onChange={handleChange("alternate_phone_number")}
-                          label="Alternate Phone Number"
+                          label="Phone Number"
                           name="alternate_phone_number"
-                          placeholder="Alternate Phone Number"
+                          placeholder="Phone Number"
                         />
                       </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-6">
-                      <div className="form-group">
-                        <Field
-                          as={Form.Input}
+                    </div> */}
+                      <div className="col-lg-6 col-md-6 col-sm-6">
+                        <div className="form-group">
+                          <Field
+                            as={Form.Input}
+                            fluid
+                            value={values.l_name}
+                            onChange={handleChange("l_name")}
+                            label="Last Name"
+                            name="l_name"
+                            placeholder="Last Name"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-6 col-6">
+                        <div className="form-group">
+                          <Field
+                            as={Form.Input}
+                            fluid
+                            value={values.alternate_phone_number}
+                            onChange={handleChange("alternate_phone_number")}
+                            label="Alternate Phone Number"
+                            name="alternate_phone_number"
+                            placeholder="Alternate Phone Number"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-6 col-6">
+                        <div className="form-group">
+                          <Field
+                            as={Form.Input}
+                            fluid
+                            value={values.email}
+                            onChange={handleChange("email")}
+                            label="Email"
+                            name="email"
+                            placeholder="Email"
+                          />
+                        </div>
+                      </div>
+                      <h3>Enter Proper Addresses</h3>
+                      <div className="col-lg-4 col-md-4 col-4">
+                        <Dropdown
+                          placeholder="Select Region"
                           fluid
-                          value={values.email}
-                          onChange={handleChange("email")}
-                          label="Email"
-                          name="email"
-                          placeholder="Email"
+                          search
+                          selection
+                          onChange={this.onChangeRegion}
+                          options={region}
                         />
                       </div>
-                    </div>
-                    <h3>Enter Proper Addresses</h3>
-                    <div className="col-lg-4 col-md-4 col-4">
+                      <div className="col-lg-4 col-md-4 col-4">
+                        <Dropdown
+                          placeholder="Select City"
+                          fluid
+                          search
+                          selection
+                          options={this.state.city_options}
+                        />
+                      </div>
+                      <div className="col-lg-4 col-md-4 col-4">
+                        <Dropdown
+                          placeholder="Select Area"
+                          fluid
+                          search
+                          selection
+                          options={countryOptions}
+                        />
+                      </div>
+
+                      <div className="col-lg-12 col-md-12 col-12 mt-3">
+                        <TextArea
+                          placeholder="Address"
+                          placeholder="Tell us more"
+                          value={this.state.street_address}
+                          onChange={this.handleChange}
+                          label="Address"
+                          name="street_address"
+                          placeholder="Address"
+                        />
+                      </div>
+
+                      <div className="col-lg-6 col-md-6 col-12">
+                        <div className="form-group">
+                          <label>
+                            Postal Code<span>*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="zip_code"
+                            placeholder
+                            name="zip_code"
+                            value={values.zip_code}
+                            onChange={handleChange("zip_code")}
+                          />
+                        </div>
+                      </div>
+                      {/* <div className="col-lg-6 col-md-6 col-12 mt-4">
                       <Dropdown
-                        placeholder="Select Region"
-                        fluid
-                        search
-                        selection
-                        onChange={this.onChangeRegion}
-                        options={region}
-                      />
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-4">
-                      <Dropdown
-                        placeholder="Select City"
-                        fluid
-                        search
-                        selection
-                        options={this.state.city_options}
-                      />
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-4">
-                      <Dropdown
-                        placeholder="Select Area"
+                        placeholder="Select Country"
                         fluid
                         search
                         selection
                         options={countryOptions}
                       />
-                    </div>
-
-                    <div className="col-lg-12 col-md-12 col-12 mt-3">
-                      <TextArea
-                        placeholder="Address"
-                        placeholder="Tell us more"
-                        value={this.state.street_address}
-                        onChange={this.handleChange}
-                        label="Address"
-                        name="street_address"
-                        placeholder="Address"
-                      />
-                    </div>
-
-                    <div className="col-lg-6 col-md-6 col-12">
-                      <div className="form-group">
-                        <label>
-                          Postal Code<span>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="zip_code"
-                          placeholder
-                          name="zip_code"
-                          value={values.zip_code}
-                          onChange={handleChange("zip_code")}
-                        />
+                    </div> */}
+                      <div className="col-12">
+                        <button className="btn" type="submit">
+                          Save
+                        </button>
                       </div>
                     </div>
-                    {/* <div className="col-lg-6 col-md-6 col-12 mt-4">
-                              <Dropdown
-                                placeholder="Select Country"
-                                fluid
-                                search
-                                selection
-                                options={countryOptions}
-                              />
-                            </div> */}
-                    <div className="col-12">
-                      <button className="btn" type="submit">
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </Form>
-              )}
-            </Formik>
+                  </Form>
+                )}
+              </Formik>
+            </div>
           </Modal.Content>
+
           <Modal.Actions>
-            {/* <Button onClick={() => setOpen(false)}>Save</Button> */}
             <Button
               negative
               onClick={() =>
-                this.setState({
-                  openAddressEditModal: false,
-                })
+                this.setState(
+                  {
+                    openAddressEditModal: false,
+                  },
+                  this.getOrderPricing()
+                )
               }
             >
               Cancel
             </Button>
           </Modal.Actions>
         </Modal>
+
         <section className="shop checkout section">
           <div className="container">
-            <div className="row">
-              <div className="col-md-7 col-12 mt-4">
-                {/* <p>Address List</p> */}
-
-                {user_have_address ? (
-                  <div className="row">
-                    <div className="col-md-6 col-6">
-                      <p>Shipping Address</p>
-                      <ul style={{ listStylePosition: "inside" }}>
-                        <li className="p-4" style={{ border: "2px solid red" }}>
-                          Coffee - A brewed drink prepared from roasted coffee
-                          beans, which are the seeds of berries from the Coffea
-                          plant
-                          <div style={{ float: "right", display: "flex" }}>
-                            {/* <input type="checkbox" /> */}
-                            <button
-                              onClick={() => {
-                                this.setState({
-                                  openAddressEditModal: true,
-                                });
-                              }}
-                              className="p-1 m-2"
-                            >
-                              <Icon name="edit outline"></Icon>
-                              Edit
-                            </button>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-md-6 col-6">
-                      <p>Billing Address</p>
-                      <ul style={{ listStylePosition: "inside" }}>
-                        <li className="p-4" style={{ border: "2px solid red" }}>
-                          Same as shipping address
-                          <div style={{ float: "right", display: "flex" }}>
-                            {/* <input type="checkbox" /> */}
-                            <button className="p-1 m-2">
-                              <Icon name="edit outline"></Icon>
-                              Edit
-                            </button>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <Message
-                      header="Changes in Service"
-                      content="We updated our privacy policy here to better service our customers. We recommend reviewing the changes."
-                    />
-                  </>
-                )}
+            {this.state.loading ? (
+              <div
+                style={{
+                  width: "100%vw",
+                  height: "30vh",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Loader type="Circles" color="#00BFFF" height={80} width={80} />
               </div>
-              <div className="col-lg-5 col-12">
-                <div className="order-details">
-                  {/* Order Widget */}
-                  <div className="single-widget">
-                    <h2>CART TOTALS</h2>
-                    <div className="content">
-                      <ul>
-                        <li>
-                          Sub Total<span>${this.state.sub_total_amount}</span>
-                        </li>
-                        <li>
-                          (+) Shipping<span>${this.state.shipping_charge}</span>
-                        </li>
-                        <li className="last">
-                          Total
-                          <span>${this.state.total_amount}</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  {/*/ End Order Widget */}
-                  {/* Order Widget */}
-                  <div className="single-widget">
-                    <h2>Payments</h2>
-                  </div>
-                  <div style={{ marginLeft: "50px" }} className="P-5">
-                    <Checkbox
-                      label="cash on delivery"
-                      value={this.state.payment_method}
-                      onChange={() =>
-                        this.setState({
-                          payment_method: "cash_on_delivery",
-                        })
-                      }
-                      toggle
-                    />
-
-                    <Checkbox
-                      label="card or mobile banking"
-                      value={this.state.card_or_mobile_banking}
-                      onChange={() =>
-                        this.setState({
-                          payment_method: "card_or_mobile_banking",
-                        })
-                      }
-                      toggle
-                    />
-                  </div>
-
-                  {/* </div>. */}
-                  {/*/ End Order Widget */}
-                  {/* Payment Method Widget */}
-                  <div className="single-widget payement">
-                    <div className="content">
-                      <img src="images/payment-method.png" alt="#" />
-                    </div>
-                  </div>
-                  {/*/ End Payment Method Widget */}
-                  {/* Button Widget */}
-                  {this.state.payment_method === "cash_on_delivery" ? (
-                    <div className="single-widget get-button">
-                      <div className="content">
-                        <div className="button">
-                          <a
-                            onClick={this.handleSubmitOrder}
-                            href="#"
-                            className="btn"
+            ) : (
+              <div className="row">
+                <div className="col-md-7 col-12 mt-4">
+                  {this.state.user_have_address ? (
+                    <div className="row">
+                      <div className="col-md-6 col-6">
+                        <p>Shipping Address</p>
+                        <ul style={{ listStylePosition: "inside" }}>
+                          <li
+                            className="p-4"
+                            style={{ border: "2px solid red" }}
                           >
-                            cofirm oder
-                          </a>
-                        </div>
+                            Coffee - A brewed drink prepared from roasted coffee
+                            beans, which are the seeds of berries from the
+                            Coffea plant
+                            <div style={{ float: "right", display: "flex" }}>
+                              <button
+                                onClick={() => {
+                                  this.setState({
+                                    openAddressEditModal: true,
+                                  });
+                                }}
+                                className="p-1 m-2"
+                              >
+                                <Icon name="edit outline"></Icon>
+                                Edit
+                              </button>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="col-md-6 col-6">
+                        <p>Billing Address</p>
+                        <ul style={{ listStylePosition: "inside" }}>
+                          <li
+                            className="p-4"
+                            style={{ border: "2px solid red" }}
+                          >
+                            Same as shipping address
+                            <div style={{ float: "right", display: "flex" }}>
+                              <button className="p-1 m-2">
+                                <Icon name="edit outline"></Icon>
+                                Edit
+                              </button>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   ) : (
-                    ""
+                    <>
+                      <Message
+                        header="Changes in Service"
+                        content="We updated our privacy policy here to better service our customers. We recommend reviewing the changes."
+                      />
+                    </>
                   )}
-                  {this.state.payment_method === "card_or_mobile_banking" ? (
+                </div>
+                <div className="col-lg-5 col-12">
+                  <div className="order-details">
+                    <div className="single-widget">
+                      <h2>CART TOTALS</h2>
+                      <div className="content">
+                        <ul>
+                          <li>
+                            Sub Total<span>${this.state.sub_total_amount}</span>
+                          </li>
+                          <li>
+                            (+) Shipping
+                            <span>${this.state.shipping_charge}</span>
+                          </li>
+                          <li className="last">
+                            Total
+                            <span>${this.state.total_amount}</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    {/* 
+            <div className="single-widget">
+              <h2>Payments</h2>
+            </div>
+            <div style={{ marginLeft: "50px" }} className="P-5">
+              <Checkbox
+                label="cash on delivery"
+                value={this.state.payment_method}
+                onChange={() =>
+                  this.setState({
+                    payment_method: "cash_on_delivery",
+                  })
+                }
+                toggle
+              />
+
+              <Checkbox
+                label="card or mobile banking"
+                value={this.state.card_or_mobile_banking}
+                onChange={() =>
+                  this.setState({
+                    payment_method: "card_or_mobile_banking",
+                  })
+                }
+                toggle
+              />
+            </div> */}
+
+                    <div className="single-widget payement">
+                      <div className="content">
+                        <img src="/images/ssl-logo-1.png" alt="#" />
+                      </div>
+                    </div>
+
                     <div className="single-widget get-button">
                       <div className="content">
                         <div className="button">
@@ -814,14 +880,10 @@ class checkout extends Component {
                         </div>
                       </div>
                     </div>
-                  ) : (
-                    ""
-                  )}
-
-                  {/*/ End Button Widget */}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
 

@@ -42,46 +42,50 @@ class Order(models.Model):
         total = 0
         for order_item in self.products.all():
             total += order_item.get_final_price()
+            self.sub_total = total
+            self.save()
         if self.coupon:
             coupon_qs = Coupon.objects.get(code__iexact=self.coupon)
             if coupon_qs:
                 coupon_amount = coupon_qs.discount_amount
-                total = total - coupon_amount
-                print('total', total)
+                discount = self.sub_total - coupon_amount
+                self.sub_total = discount
+                self.save()
+                print('tasdasdotal', total)
         print(total)
         return total
 
     def get_total(self):
-        total = self.get_total_product_price()
+        total = 2000
         # if self.address:
-        region = self.address.region
-        print(region)
-        if region is not None:
-            if region == 'dhaka':
-                self.shipping = 60
-                self.save()
-            elif region == 'rajshahi':
-                self.shipping = 120
-                self.save()
-            elif region == 'rangpur':
-                self.shipping = 120
-                self.save()
-            elif region == 'chattogram':
-                self.shipping = 120
-                self.save()
-            elif region == 'khulna':
-                self.shipping = 120
-                self.save()
-            elif region == 'shylhet':
-                self.shipping = 120
-                self.save()
-            elif region == 'barishal':
-                self.shipping = 120
-                self.save()
-            else:
-                self.shipping = 60
-                self.save()
-        total = total + self.shipping
+        # region = self.address.region
+        # print(region)
+        # if region is not None:
+        #     if region == 'dhaka':
+        #         self.shipping = 60
+        #         self.save()
+        #     elif region == 'rajshahi':
+        #         self.shipping = 120
+        #         self.save()
+        #     elif region == 'rangpur':
+        #         self.shipping = 120
+        #         self.save()
+        #     elif region == 'chattogram':
+        #         self.shipping = 120
+        #         self.save()
+        #     elif region == 'khulna':
+        #         self.shipping = 120
+        #         self.save()
+        #     elif region == 'shylhet':
+        #         self.shipping = 120
+        #         self.save()
+        #     elif region == 'barishal':
+        #         self.shipping = 120
+        #         self.save()
+        #     else:
+        #         self.shipping = 60
+        #         self.save()
+        # total = total + self.shipping
         return total
 
     def update_total(self):

@@ -57,7 +57,7 @@ class Cart extends Component {
       .post("http://127.0.0.1:8000/v1/coupon/validate-coupon", data, config)
       .then((res) => {
         console.log(res.data);
-        this.props.fetchUserCartPricing();
+        this.setState({}, () => this.props.fetchUserCartPricing());
       });
   };
 

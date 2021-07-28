@@ -20,6 +20,7 @@ class GetUserAddress(views.APIView):
             return response.Response({'user_have_address': False})
 
 
+
 class AddressEditView(generics.UpdateAPIView):
     queryset = Address.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

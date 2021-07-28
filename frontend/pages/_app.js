@@ -8,6 +8,7 @@ import "react-phone-number-input/style.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import store from "../src/store";
 import "../styles/globals.css";

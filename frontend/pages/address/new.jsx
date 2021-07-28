@@ -58,6 +58,7 @@ class NewAddress extends Component {
     city: "",
     area: "",
     street_address: "",
+    loading: null,
 
     city_options: [
       { key: "af", value: "af", flag: "af", text: "Afghanistan" },
@@ -179,6 +180,7 @@ class NewAddress extends Component {
         <section className="shop checkout section container p-4">
           <p>Create Address</p>
           <Form
+            loading={this.state.loading}
             onSubmit={this.handleSubmit}
             className="form"
             method="post"
