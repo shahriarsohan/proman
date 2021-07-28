@@ -29,12 +29,13 @@ THIRD_PARTY_APPS = [
     'rest_framework_social_oauth2',
     'drfpasswordless',
     'phone_login',
-    'phonenumber_field'
+    'phonenumber_field',
 
 ]
 
 
-LOCAL_APPS = ['products', 'users', 'wishlist', 'orders', 'address', 'cart']
+LOCAL_APPS = ['products', 'users', 'wishlist',
+              'orders', 'address', 'cart', 'coupon']
 
 INSTALLED_APPS = SYSTEM_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -79,6 +80,17 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cwxrlpdo',
+#         'USER': 'cwxrlpdo',
+#         'PASSWORD': 'H0dL5ndcKk1LsEOst5TwnKjDCB0RQ-Ww',
+#         'HOST': 'rosie.db.elephantsql.com',
+#         'PORT': '5432',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {

@@ -1,39 +1,53 @@
 import React from "react";
+import Image from "next/image";
+import { Carousel } from "react-responsive-carousel";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 
+import Slider from "react-slick";
+
+var settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: true,
+};
 export const HeroSlider = () => {
+  console.log(isMobile);
   return (
-    <section className="hero-slider mb-5">
-      {/* Single Slider */}
-      <div className="single-slider">
-        <div className="container">
-          <div className="row no-gutters">
-            <div className="col-lg-9 offset-lg-3 col-12">
-              <div className="text-inner">
-                <div className="row">
-                  <div className="col-lg-7 col-12">
-                    <div className="hero-text">
-                      <h1>
-                        <span>UP TO 50% OFF </span>Shirt For Man
-                      </h1>
-                      <p>
-                        Maboriosam in a nesciung eget magnae <br /> dapibus
-                        disting tloctio in the find it pereri <br /> odiy
-                        maboriosm.
-                      </p>
-                      <div className="button">
-                        <a href="#" className="btn">
-                          Shop Now!
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <>
+      <section className="hro-slider mb-5">
+        <Slider {...settings}>
+          <div>
+            <img
+              height="100%"
+              width="100%"
+              src="/images/cover-real-desktop.png"
+            />
           </div>
-        </div>
-      </div>
-      {/*/ End Single Slider */}
-    </section>
+          <div>
+            <img height="100%" width="100%" src="/images/cover-real-2.png" />
+          </div>
+          <div>
+            <img height="100%" width="100%" src="/images/cover-real-2.png" />
+          </div>
+          <div>
+            <img height="100%" width="100%" src="/images/cover-real-3.png" />
+          </div>
+          <div>
+            <img height="100%" width="100%" src="/images/cover-real-4.png" />
+          </div>
+          <div>
+            <img height="100%" width="100%" src="/images/cover-real-5.png" />
+          </div>
+        </Slider>
+      </section>
+    </>
   );
 };

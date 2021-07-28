@@ -8,6 +8,12 @@ import {
   DELETE_FROM_CART_ERROR,
   DELETE_FROM_CART_START,
   ADD_TO_CART_START,
+  FETCH_PRICING_DETAILS_STATRT,
+  FETCH_PRICING_DETAILS_SUCCESS,
+  FETCH_PRICING_DETAILS_ERROR,
+  APPLY_COUPON_START,
+  APPLY_COUPON_SUCCESS,
+  APPLY_COUPON_ERROR,
 } from "./cartTypes";
 
 export const fetchUserOrder = () => (dispatch) => {
@@ -24,6 +30,27 @@ export const fetchUserOrder = () => (dispatch) => {
       payload: res.data,
     });
   });
+};
+
+export const fetchUserCartPricing = () => (dispatch) => {
+  dispatch({
+    type: FETCH_PRICING_DETAILS_STATRT,
+  });
+  if (typeof localStorage !== "undefined") {
+    var config = {
+      headers: {
+        authorization: "Token " + localStorage.getItem("access_token"),
+      },
+    };
+  }
+  axios
+    .get("http://127.0.0.1:8000/v1/cart/cart-pricing-details", config)
+    .then((res) => {
+      dispatch({
+        type: FETCH_PRICING_DETAILS_SUCCESS,
+        payload: res.data,
+      });
+    });
 };
 
 export const handleAddToCart = (data) => (dispatch) => {
@@ -81,4 +108,11 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
         payload: err.data,
       });
     });
+};
+
+export const applyCoupon = (data) => (dispatch) => {
+  dispatch({
+    type: APPLY_COUPON_START,
+  });
+  axios.post;
 };

@@ -22,7 +22,6 @@ class UserCartListApiView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        print(user)
         queryset = Cart.objects.filter(
             user=user, expires=False).order_by('-timestamp')
         return queryset
@@ -36,6 +35,23 @@ class CartDeleteApi(generics.DestroyAPIView):
         user = request.user
         qs = Cart.objects.get(id=id, user=user).delete()
         return response.Response(status=status.HTTP_200_OK)
+
+
+class GET_CART_PRICING_DETAILS(views.APIView):
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        total = 0
+        amount_saved = 0
+        cart_qs = Cart.objects.filter(user=user, expires=False)
+        order_qs = Order.objects.filter(user=user, ordered=False).first()
+        print(order_qs)
+        order_qs = order_qs
+        print(order_qs)
+        order_total = order_qs.get_total()
+        print('ordeer total', order_qs.get_total())
+        print('product total', order_qs.get_total_product_price())
+
+        return Response({'order_total': order_total}, status=status.HTTP_200_OK)
 
 
 class AddProductToCart(views.APIView):
@@ -62,7 +78,6 @@ class AddProductToCart(views.APIView):
             order = order_qs[0]
             if not order.products.filter(product__id=order_item.id).exists():
                 order.products.add(order_item)
-
                 return Response({'item':  serializer.data}, status=status.HTTP_200_OK)
             else:
                 return Response({"msg": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
@@ -79,6 +94,7 @@ class ItemDeleteFromCart(views.APIView):
         item = request.data.get('id', None)
         user = request.user
         print(item)
+
         if item is None:
             return Response({'msg': 'Something went wrong'}, status=status.HTTP_404_NOT_FOUND)
         item_qs = get_object_or_404(Cart, id=item)
@@ -86,6 +102,7 @@ class ItemDeleteFromCart(views.APIView):
             user_qs = Cart.objects.get(id=item)
             if user_qs.user == request.user:
                 user_qs.delete()
+
             else:
                 return Response({'msg': 'Invalid Token'})
             return Response({'msg': 'item removed from cart'}, status=status.HTTP_200_OK)
@@ -107,11 +124,16 @@ class PlusQuantity(views.APIView):
 class PaymentView(views.APIView):
     def get(self, request, *args, **kwargs):
         order_qs = Order.objects.get(user=request.user, ordered=False)
-        address_qs = Address.objects.filter(user=request.user)
+        address_qs = Address.objects.get(user=request.user)
         if address_qs:
-            serializer = AddressSerializer(address_qs, many=True)
-            return response.Response({'address_qs': serializer.data, "total_amount": order_qs.get_total()})
-        return response.Response({"total_amount": order_qs.get_total()})
+            serializer = AddressSerializer(address_qs)
+            return response.Response({'address_qs': serializer.data, "sub_total_amount": order_qs.get_total_product_price(), "total_amount": order_qs.get_total()})
+        return response.Response({"sub_total_amount": order_qs.get_total_product_price(), "total_amount": order_qs.get_total()})
+
+
+class ApplyCoupon(views.APIView):
+    def post(self, request, *args, **kwargs):
+        coupon = request.data.get('coupon_code')
 
 
 class CreateRecentActivity(views.APIView):
@@ -157,11 +179,18 @@ class OrdercofirmApiView(views.APIView):
 class SslCommerzTest(views.APIView):
 
     def post(self, request, *args, **kwargs):
+
+        user = request.user
+        order_qs = Order.objects.filter(user=user, ordered=False).first()
+
+        order_total = order_qs.total
+        print(order_total)
+
         settings = {'store_id': 'cosme607fe49547c5b',
                     'store_pass': 'cosme607fe49547c5b@ssl', 'issandbox': True}
         sslcz = SSLCOMMERZ(settings)
         post_body = {}
-        post_body['total_amount'] = request.data.get('total_amount')
+        post_body['total_amount'] = order_total
         post_body['currency'] = "BDT"
         post_body['tran_id'] = "12345"
         post_body['success_url'] = "https://www.youtube.com/results?search_query=sslcommerz+python"

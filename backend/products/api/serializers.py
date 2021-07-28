@@ -49,4 +49,6 @@ class ProductsSerializer(serializers.ModelSerializer):
             'xl_size',
             'xxl_size',
 
+            'product_delivery_time'
+
         ]

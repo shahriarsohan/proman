@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     UserCartListApiView,
     AddProductToCart,
+    GET_CART_PRICING_DETAILS,
     SslCommerzTest,
     SslCommerzTestIPN,
     GetStatus,
@@ -17,6 +18,7 @@ from .views import (
 urlpatterns = [
     path('user-cart', UserCartListApiView.as_view()),
     path('add-to-cart', AddProductToCart.as_view()),
+    path('cart-pricing-details', GET_CART_PRICING_DETAILS.as_view()),
     path('item-delete-from-cart', ItemDeleteFromCart.as_view()),
     path('create-recent-activity', ItemDeleteFromCart.as_view()),
     path('delete-from-cart/<id>', CartDeleteApi.as_view()),

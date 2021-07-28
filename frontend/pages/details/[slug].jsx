@@ -7,6 +7,8 @@ import ReactTooltip from "react-tooltip";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
+import moment from "moment";
+
 import { handleAddToCart, fetchUserOrder } from "../../src/store/actions/cart";
 
 import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
@@ -60,8 +62,17 @@ class DetailsPage extends Component {
     const { details, data, loading, error, add_to_cart_success } = this.props;
     console.log(add_to_cart_success);
     console.log(this.state.sizeError);
-    console.log(details.images);
+    console.log(details);
     console.log(this.state.activeImg);
+
+    var myDate = new Date(
+      new Date().getTime() +
+        details.products.product_delivery_time * 24 * 60 * 60 * 1000
+    );
+
+    console.log(myDate);
+
+    const expected_delivery_date = moment(myDate).format("MMMM Do");
 
     return (
       <>
@@ -115,8 +126,10 @@ class DetailsPage extends Component {
                     <div className="product-des">
                       {/* Description */}
                       <div className="short">
-                        <h4>Nonstick Dishwasher PFOA</h4>
-                        <div className="rating-main">
+                        <h4 className="text-capitalize">
+                          {details.products.name}
+                        </h4>
+                        {/* <div className="rating-main">
                           <ul className="rating">
                             <li>
                               <i className="fa fa-star" />
@@ -137,18 +150,20 @@ class DetailsPage extends Component {
                           <a href="#" className="total-review">
                             (102) Review
                           </a>
-                        </div>
-                        <p className="price">
-                          <span className="discount">$70.00</span>
-                          <s>$80.00</s>{" "}
-                        </p>
+                        </div> */}
+                        {details.products.discount_price ? (
+                          <p className="price">
+                            <span className="discount">$70.00</span>
+                            <s>$80.00</s>{" "}
+                          </p>
+                        ) : (
+                          <p className="price">
+                            {/* <span className="discount">$70.00</span> */}
+                            <s>$80.00</s>{" "}
+                          </p>
+                        )}
                         <p className="description">
-                          eget velit. Donec ac tempus ante. Fusce ultricies
-                          massa massa. Fusce aliquam, purus eget sagittis
-                          vulputate, sapien libero hendrerit est, sed commodo
-                          augue nisi non neque. Lorem ipsum dolor sit amet,
-                          consectetur adipiscing elit. Sed tempor, lorem et
-                          placerat vestibulum, metus nisi posuere nisl, in
+                          {details.products.short_desc}
                         </p>
                       </div>
                       {/*/ End Description */}
@@ -363,12 +378,31 @@ class DetailsPage extends Component {
                             <i className="fa fa-compress" />
                           </a>
                         </div>
-                        <p className="cat">
-                          Category :<a href="#">Clothing</a>
+                        <p className="cat text-capitalize">
+                          Category :<a href="#">{details.products.category}</a>
                         </p>
                         <p className="availability">
                           Availability : 180 Products In Stock
                         </p>
+                        <div className="details-page-more-details">
+                          <img
+                            width="20px"
+                            height="20px"
+                            src="/images/icons8-delivery.gif"
+                          />
+                          <p>
+                            Order now to get delivery by{" "}
+                            <strong>{expected_delivery_date}</strong>
+                          </p>
+                        </div>
+                        <div className="details-page-more-details">
+                          <img
+                            width="20px"
+                            height="20px"
+                            src="/images/icons8-cash-in-hand-90.png"
+                          />
+                          <p>Cash on Delivery is available.</p>
+                        </div>
                       </div>
                       {/*/ End Product Buy */}
                     </div>
@@ -410,23 +444,17 @@ class DetailsPage extends Component {
                           id="description"
                           role="tabpanel"
                         >
-                          <div className="tab-single">
+                          <div className="tab-single p-3">
                             <div className="row">
                               <div className="col-12">
                                 <div className="single-des">
                                   <p>
-                                    simply dummy text of the printing and
-                                    typesetting industry. Lorem Ipsum has been
-                                    the industry's standard dummy text ever
-                                    since the 1500s, when an unknown printer
-                                    took a galley of type and scrambled it to
-                                    make a type specimen book. It has survived
-                                    not only five centuries, but also the leap
-                                    into electronic typesetting, remaining
-                                    essentially unchanged. It was popularised in
-                                    the 1960s with the release of Letraset
-                                    sheets containing Lorem Ipsum passages, and
-                                    more recently with deskto
+                                    PRODUCT DESCRIPTION Get your Cattitude on
+                                    fleek with this Purrfect Cat Women's
+                                    Boyfriend T-shirt. Pair this Tee with high
+                                    waste denims and boots for a chic look. Add
+                                    sunglasses for glam. Country of Origin :
+                                    India
                                   </p>
                                 </div>
                                 <div className="single-des">
@@ -479,12 +507,12 @@ class DetailsPage extends Component {
                                   </div>
                                   {/* Single Rating */}
                                   <div className="single-rating">
-                                    <div className="rating-author">
+                                    {/* <div className="rating-author">
                                       <img
                                         src="https://via.placeholder.com/200x200"
                                         alt="#"
                                       />
-                                    </div>
+                                    </div> */}
                                     <div className="rating-des">
                                       <h6>Naimur Rahman</h6>
                                       <div className="ratings">
@@ -519,136 +547,7 @@ class DetailsPage extends Component {
                                   </div>
                                   {/*/ End Single Rating */}
                                   {/* Single Rating */}
-                                  <div className="single-rating">
-                                    <div className="rating-author">
-                                      <img
-                                        src="https://via.placeholder.com/200x200"
-                                        alt="#"
-                                      />
-                                    </div>
-                                    <div className="rating-des">
-                                      <h6>Advin Geri</h6>
-                                      <div className="ratings">
-                                        <ul className="rating">
-                                          <li>
-                                            <i className="fa fa-star" />
-                                          </li>
-                                          <li>
-                                            <i className="fa fa-star" />
-                                          </li>
-                                          <li>
-                                            <i className="fa fa-star" />
-                                          </li>
-                                          <li>
-                                            <i className="fa fa-star" />
-                                          </li>
-                                          <li>
-                                            <i className="fa fa-star" />
-                                          </li>
-                                        </ul>
-                                        <div className="rate-count">
-                                          (<span>5.0</span>)
-                                        </div>
-                                      </div>
-                                      <p>
-                                        Duis tincidunt mauris ac aliquet congue.
-                                        Donec vestibulum consequat cursus.
-                                        Aliquam pellentesque nulla dolor, in
-                                        imperdiet.
-                                      </p>
-                                    </div>
-                                  </div>
-                                  {/*/ End Single Rating */}
                                 </div>
-                                {/* Review */}
-                                <div className="comment-review">
-                                  <div className="add-review">
-                                    <h5>Add A Review</h5>
-                                    <p>
-                                      Your email address will not be published.
-                                      Required fields are marked
-                                    </p>
-                                  </div>
-                                  <h4>Your Rating</h4>
-                                  <div className="review-inner">
-                                    <div className="ratings">
-                                      <ul className="rating">
-                                        <li>
-                                          <i className="fa fa-star" />
-                                        </li>
-                                        <li>
-                                          <i className="fa fa-star" />
-                                        </li>
-                                        <li>
-                                          <i className="fa fa-star" />
-                                        </li>
-                                        <li>
-                                          <i className="fa fa-star" />
-                                        </li>
-                                        <li>
-                                          <i className="fa fa-star" />
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                {/*/ End Review */}
-                                {/* Form */}
-                                <form
-                                  className="form"
-                                  method="post"
-                                  action="mail/mail.php"
-                                >
-                                  <div className="row">
-                                    <div className="col-lg-6 col-12">
-                                      <div className="form-group">
-                                        <label>
-                                          Your Name<span>*</span>
-                                        </label>
-                                        <input
-                                          type="text"
-                                          name="name"
-                                          required="required"
-                                          placeholder
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6 col-12">
-                                      <div className="form-group">
-                                        <label>
-                                          Your Email<span>*</span>
-                                        </label>
-                                        <input
-                                          type="email"
-                                          name="email"
-                                          required="required"
-                                          placeholder
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-12 col-12">
-                                      <div className="form-group">
-                                        <label>
-                                          Write a review<span>*</span>
-                                        </label>
-                                        <textarea
-                                          name="message"
-                                          rows={6}
-                                          placeholder
-                                          defaultValue={""}
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-12 col-12">
-                                      <div className="form-group button5">
-                                        <button type="submit" className="btn">
-                                          Submit
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </form>
-                                {/*/ End Form */}
                               </div>
                             </div>
                           </div>

@@ -4,16 +4,12 @@ from address.models import Address
 
 
 class AddressSerializer(serializers.ModelSerializer):
-
+    zip_code = serializers.CharField(
+        required=False, allow_null=True, allow_blank=True)
+    alternate_phone_number = serializers.CharField(
+        required=False, allow_null=True, allow_blank=True)
     user = serializers.CharField(read_only=True)
 
     class Meta:
         model = Address
-        fields = [
-            'id',
-            'user',
-            'phone_number',
-            'street_address',
-            'zip',
-            'district',
-        ]
+        fields = ('__all__')

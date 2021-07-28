@@ -40,11 +40,12 @@ class MakeAddressApiView(generics.ListCreateAPIView):
         return response.Response({"msg": "Not found"})
 
     def create(self, request, *args, **kwargs):
+        print(request.data)
         user = request.user
         serializer = AddressSerializer(data=request.data)
         print(serializer)
         if serializer.is_valid():
             serializer.save(user=user)
-            print(serializer)
+            print(serializer.data)
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
-        return response.Response({"msg": "error"})
+        return response.Response({"msg": "error"}, status=status.HTTP_400_BAD_REQUEST)

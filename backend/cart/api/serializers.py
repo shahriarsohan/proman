@@ -7,6 +7,10 @@ from cart.models import Cart
 class CartSerailizers(serializers.ModelSerializer):
 
     product = serializers.SerializerMethodField()
+    get_total_item_price = serializers.IntegerField()
+    get_total_discount_item_price = serializers.IntegerField()
+    get_amount_saved = serializers.IntegerField()
+    get_final_price = serializers.IntegerField()
 
     class Meta:
         model = Cart

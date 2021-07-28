@@ -28,6 +28,7 @@ class ProductAdmin(admin.ModelAdmin):
                  'l_size',
                  'xl_size',
                  'xxl_size',
+                 'product_delivery_time'
              ),
              'classes': ('collapse',),
          },

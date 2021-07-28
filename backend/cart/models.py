@@ -50,8 +50,8 @@ class Cart(models.Model):
     # def __str__(self):
     #     return f"{self.user.email} ordered {self.product}"
 
-    # def get_total_item_price(self):
-    #     return self.quantity * self.product.price
+    def get_total_item_price(self):
+        return self.quantity * self.product.price
 
     def get_total_discount_item_price(self):
         return self.quantity * self.product.discount_price

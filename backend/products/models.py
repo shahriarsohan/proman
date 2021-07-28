@@ -47,6 +47,8 @@ class Products(models.Model):
     xl_size = models.BooleanField(default=True)
     xxl_size = models.BooleanField(default=True)
 
+    product_delivery_time = models.IntegerField(default=2)
+
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'

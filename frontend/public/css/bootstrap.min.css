@@ -4926,7 +4926,7 @@ fieldset:disabled .btn {
   padding: 0.75rem;
   word-wrap: break-word;
 }
-.modal-open {
+/* .modal-open {
   overflow: hidden;
 }
 .modal-open .modal {
@@ -5206,7 +5206,7 @@ fieldset:disabled .btn {
   .modal-fullscreen-xxl-down .modal-footer {
     border-radius: 0;
   }
-}
+} */
 .tooltip {
   position: absolute;
   z-index: 1080;
