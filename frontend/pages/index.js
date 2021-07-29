@@ -2,7 +2,7 @@ import axios from "axios";
 
 import FeaturedProducts from "../src/components/Featured/FeaturedProducts";
 import Footer from "../src/components/Footer/Footer";
-import { HeroSlider } from "../src/components/Hero/HeroSlider";
+import HeroSlider from "../src/components/Hero/HeroSlider";
 import PromotionalSlider from "../src/components/Hero/PromotinalSlider";
 import SmallBanner from "../src/components/Hero/SmallBanner";
 import Navbar from "../src/components/Navbar/Navbar";
@@ -16,14 +16,18 @@ import CountDownProducts from "../src/components/Products/CountDownProducts";
 
 import Navigation from "../src/components/Navigation";
 import Featuredcat from "../src/components/featuredcat/featuredcat";
+import Cart from "../src/components/SideCart/Cart";
 
 const Home = (props) => {
   // console.log(props.data);
   return (
     <>
       <Navbar />
+
       <HeroSlider />
+
       <PromotionalSlider />
+
       <SmallBanner />
       <Featuredcat />
       <Products p={props.trending.trending_qs} />

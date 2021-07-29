@@ -100,6 +100,7 @@ class AddProductToCart(views.APIView):
 class ItemDeleteFromCart(views.APIView):
     def post(self, request, *args, **kwargs):
         item = request.data.get('id', None)
+        quantity = request.data.get('quantity', None)
         user = request.user
         print(item)
 
@@ -107,10 +108,17 @@ class ItemDeleteFromCart(views.APIView):
             return Response({'msg': 'Something went wrong'}, status=status.HTTP_404_NOT_FOUND)
         item_qs = get_object_or_404(Cart, id=item)
         if item_qs:
-            user_qs = Cart.objects.get(id=item)
+
+            user_qs = Cart.objects.filter(id=item).first()
+            price_to_reduce = 0
+            quantity = user_qs.quantity
+            price_to_reduce = quantity * user_qs.product.discount_price
             if user_qs.user == request.user:
                 user_qs.delete()
-
+                order_qs = Order.objects.filter(
+                    user=user, ordered=False).first()
+                order_qs.sub_total = order_qs.sub_total - price_to_reduce
+                order_qs.save()
             else:
                 return Response({'msg': 'Invalid Token'})
             return Response({'msg': 'item removed from cart'}, status=status.HTTP_200_OK)

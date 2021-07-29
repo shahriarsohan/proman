@@ -20,6 +20,8 @@ import {
   NotificationManager,
 } from "react-notifications";
 import Navigation from "../../src/components/Navigation";
+import Cart from "../../src/components/SideCart/Cart";
+import { openSideBar, closeSideBar } from "../../src/store/actions/cartSideBar";
 // const
 
 class DetailsPage extends Component {
@@ -48,6 +50,7 @@ class DetailsPage extends Component {
     console.log(data);
     this.props.handleAddToCart(data);
     this.props.fetchUserOrder();
+    this.props.openSideBar();
   };
 
   handlePlusQuantity = () => {
@@ -81,6 +84,7 @@ class DetailsPage extends Component {
         {add_to_cart_success
           ? NotificationManager.success("success message")
           : ""}
+
         <section className="shop single section">
           <div className="container">
             <div className="row">
@@ -560,9 +564,12 @@ class DetailsPage extends Component {
               </div>
             </div>
           </div>
+          {this.props.cartSideBarOpenTwo && (
+            <Cart close={this.props.closeSideBar} />
+          )}
         </section>
 
-        <NotificationContainer />
+        {/* <NotificationContainer /> */}
         <Footer />
         <Navigation />
       </>
@@ -598,9 +605,13 @@ const mapStateToProps = (state) => {
     loading: state.cart.loading,
     error: state.cart.error,
     add_to_cart_success: state.cart.add_to_cart_success,
+    cartSideBarOpenTwo: state.cartsidebar.sideOpen,
   };
 };
 
-export default connect(mapStateToProps, { handleAddToCart, fetchUserOrder })(
-  withRouter(DetailsPage)
-);
+export default connect(mapStateToProps, {
+  handleAddToCart,
+  fetchUserOrder,
+  openSideBar,
+  closeSideBar,
+})(withRouter(DetailsPage));

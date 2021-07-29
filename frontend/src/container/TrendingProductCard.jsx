@@ -102,7 +102,7 @@ class TrendingProductCard extends Component {
               </Link>
               <div className="button-head">
                 <div className="product-action">
-                  <a
+                  {/* <a
                     data-toggle="modal"
                     // data-target="#exampleModal"
                     title="Quick View"
@@ -113,15 +113,15 @@ class TrendingProductCard extends Component {
                       className=" ti-eye"
                     />
                     <span>Quick Shop</span>
-                  </a>
+                  </a> */}
                   <a title="Wishlist" href="#">
                     <i className=" ti-heart " />
                     <span>Add to Wishlist</span>
                   </a>
-                  <a title="Compare" href="#">
+                  {/* <a title="Compare" href="#">
                     <i className="ti-bar-chart-alt" />
                     <span>Add to Compare</span>
-                  </a>
+                  </a> */}
                 </div>
                 {/* <div className="product-action-2">
                   <button
@@ -151,7 +151,7 @@ class TrendingProductCard extends Component {
           </div>
         </div>
 
-        {modal && (
+        {/* {modal && (
           <Modal onHide={this.onHide} show={true}>
             <Modal.Body>
               <QuickLookModal
@@ -160,7 +160,7 @@ class TrendingProductCard extends Component {
               />
             </Modal.Body>
           </Modal>
-        )}
+        )} */}
         <NotificationContainer />
       </>
     );

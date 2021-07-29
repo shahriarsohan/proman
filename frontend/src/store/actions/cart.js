@@ -14,7 +14,10 @@ import {
   APPLY_COUPON_START,
   APPLY_COUPON_SUCCESS,
   APPLY_COUPON_ERROR,
+  OPEN_SIDEBAR_CART,
 } from "./cartTypes";
+
+import { openCartSideBar } from "./cartSideBar";
 
 export const fetchUserOrder = () => (dispatch) => {
   if (typeof localStorage !== "undefined") {

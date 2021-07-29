@@ -15,6 +15,7 @@ import {
 import { fetchUserOrder } from "../../store/actions/cart";
 
 import { handleDeleteFromCart } from "../../store/actions/cart";
+import { openSideBar } from "../../store/actions/cartSideBar";
 
 const override = css`
   display: block;
@@ -26,13 +27,6 @@ class Navbar extends Component {
   componentDidMount() {
     this.props.fetchCart();
   }
-
-  handleDelete = (id) => {
-    const data = {
-      id: id,
-    };
-    this.props.deleteItem(data);
-  };
 
   toggleSideBar = () => {
     this.setState({
@@ -225,76 +219,13 @@ class Navbar extends Component {
                         </a>
                       </div>
                       <div className="sinlge-bar shopping">
-                        <a href="#" className="single-icon">
+                        <a
+                          onClick={() => this.props.openSideBarCart()}
+                          className="single-icon"
+                        >
                           <i className="ti-bag" />{" "}
                           <span className="total-count">{cart.length}</span>
                         </a>
-                        {/* Shopping Item */}
-                        <div className="shopping-item">
-                          <div className="dropdown-cart-header">
-                            <span>{cart.length} Items</span>
-                            <Link href="/user/cart">View Cart</Link>
-                          </div>
-                          <ul className="shopping-list">
-                            {cart
-                              ? cart.map((c) => {
-                                  return (
-                                    <li>
-                                      <a
-                                        className="remove"
-                                        title="Remove this item"
-                                        onClick={() => {
-                                          this.handleDelete(c.id);
-                                        }}
-                                      >
-                                        <i className="fa fa-remove" />
-                                      </a>
-                                      {/* <button
-                                      onClick={() => {
-                                        handleDelete(c);
-                                      }}
-                                    >
-                                      <i className="fa fa-remove" />
-                                    </button> */}
-                                      <a className="cart-img" href="#">
-                                        <img
-                                          src={
-                                            c.product.thumbnail
-                                              ? `http://127.0.0.1:8000${c.product.thumbnail}`
-                                              : "https://via.placeholder.com/70x70"
-                                          }
-                                          alt="#"
-                                        />
-                                      </a>
-                                      <h4>
-                                        <a href="#">{c.product.name}</a>
-                                      </h4>
-                                      <p className="quantity">
-                                        {c.quantity}x -{" "}
-                                        <span className="amount">
-                                          $
-                                          {c.product.discount_price
-                                            ? c.product.discount_price
-                                            : c.product.price}
-                                        </span>
-                                      </p>
-                                    </li>
-                                  );
-                                })
-                              : ""}
-                          </ul>
-
-                          <div className="bottom">
-                            <div className="total">
-                              <span>Total</span>
-                              <span className="total-amount">$134.00</span>
-                            </div>
-                            <Link href="/user/checkout" className="btn animate">
-                              Checkout
-                            </Link>
-                          </div>
-                        </div>
-                        {/*/ End Shopping Item */}
                       </div>
                     </div>
                   </div>
@@ -589,6 +520,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
+    openSideBarCart: () => dispatch(openSideBar()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

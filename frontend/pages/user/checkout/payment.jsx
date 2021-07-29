@@ -47,6 +47,7 @@ class Payment extends Component {
     return (
       <div>
         <NavbarTwo />
+
         <section className="shop checkout section container p-4">
           <div className="row">
             <div className="col-md-7 col-12">
