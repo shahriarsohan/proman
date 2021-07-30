@@ -78,10 +78,23 @@ class FeaturedCard extends React.Component {
             <h3>
               <a href="product-details.html">{this.props.name}</a>
             </h3>
-            <div className="product-price">
-              <span className="old">${this.props.price}</span>
-              <span>${this.props.discount_price}</span>
-            </div>
+            {this.props.discount_price ? (
+              <div className="product-price">
+                <span style={{ marginRight: "10px" }}>
+                  ${this.props.discount_price}
+                  <span style={{ marginLeft: "10px" }} className="old">
+                    ${this.props.price}
+                  </span>
+                </span>
+                <span style={{ float: "right", color: "red" }}>-10%</span>
+              </div>
+            ) : (
+              <div className="product-price">
+                <span style={{ marginLeft: "10px" }} className="old">
+                  ${this.props.price}
+                </span>
+              </div>
+            )}
           </div>
         </div>
         {this.state.modal && (

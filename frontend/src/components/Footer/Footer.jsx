@@ -57,10 +57,7 @@ export default class Footer extends Component {
                     <div className="single-footer about">
                       <div className="logo">
                         <a href="index.html">
-                          <img
-                            src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png"
-                            alt="#"
-                          />
+                          <img src="/images/proman-logo-two.png" alt="#" />
                         </a>
                       </div>
                       <p className="text">
@@ -186,7 +183,7 @@ export default class Footer extends Component {
                     </div>
                     <div className="col-lg-6 col-12">
                       <div className="right">
-                        <img src="images/payments.png" alt="#" />
+                        <img src="/images/ssl-logo-1.png" alt="#" />
                       </div>
                     </div>
                   </div>

@@ -28,6 +28,7 @@ import Footer from "../../src/components/Footer/Footer";
 import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
+import Link from "next/link";
 
 const region = [
   { key: "dhaka", value: "dhaka", text: "Dhaka" },
@@ -870,13 +871,11 @@ class checkout extends Component {
                     <div className="single-widget get-button">
                       <div className="content">
                         <div className="button">
-                          <a
-                            onClick={this.handlePayment}
-                            href="#"
-                            className="btn"
-                          >
-                            Procced to payment
-                          </a>
+                          <Link href="/user/checkout/payment">
+                            <a onClick={this.handlePayment} className="btn">
+                              Procced to payment
+                            </a>
+                          </Link>
                         </div>
                       </div>
                     </div>

@@ -1,0 +1,106 @@
+import React, { Component } from "react";
+
+export default class SideNav extends Component {
+  state = { openDropdown: false };
+
+  render() {
+    return (
+      <div
+        style={{ width: "250px", display: "flex", flexDirection: "column" }}
+        id="mySidenav"
+        className="sidenav"
+      >
+        {/* <a onClick={this.toggleSideBar} className="closebtn">
+              ×
+            </a> */}
+        {/* <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a> */}
+        <div className="sideNav-welcome-text">
+          <h4>Welcome</h4>
+          <p>Login/Signup</p>
+        </div>
+        <hr />
+        <div className="main-cat">
+          <h4>Shop</h4>
+
+          <div className="mobile-sidebar">
+            <ul className="sidebar-items">
+              <a>About</a>
+              <a>Services</a>
+              <a>Clients</a>
+              <a>Contact</a>
+              <div className="dropdown-button">
+                <a
+                  onClick={() =>
+                    this.setState({ openDropdown: !this.state.openDropdown })
+                  }
+                >
+                  Dropdown
+                </a>
+                <i class="fa fa-caret-down"></i>
+              </div>
+
+              <div
+                class={
+                  this.state.openDropdown
+                    ? "dropdown1-container-active"
+                    : "dropdown1-container"
+                }
+              >
+                <a>Link 1</a>
+                <a>Link 2</a>
+                <a>Link 3</a>
+              </div>
+              <a>Search</a>
+            </ul>
+          </div>
+        </div>
+
+        <div className="main-cat">
+          <h4>Contact us</h4>
+
+          <div className="mobile-sidebar">
+            <ul className="sidebar-items">
+              <a>Clients</a>
+              <a>Contact</a>
+              <div className="dropdown-button">
+                <a>Dropdown</a>
+                <i class="fa fa-caret-down"></i>
+              </div>
+
+              <div
+                class={
+                  this.state.openDropdown
+                    ? "dropdown1-container-active"
+                    : "dropdown1-container"
+                }
+              >
+                <a>Link 1</a>
+                <a>Link 2</a>
+                <a>Link 3</a>
+              </div>
+              <a>Search</a>
+            </ul>
+          </div>
+        </div>
+
+        <div className="sidebar-social-icon">
+          <a href="">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+    );
+  }
+}

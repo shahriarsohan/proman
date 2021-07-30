@@ -140,13 +140,27 @@ class TrendingProductCard extends Component {
                   {this.props.name}
                 </Link>
               </h3>
-              <div className="product-price">
-                <span>{`${
-                  this.props.discount_price
-                    ? `৳ ${this.props.discount_price}`
-                    : `৳ ${this.props.price}`
-                }`}</span>
-              </div>
+              {this.props.discount_price ? (
+                <div className="product-price">
+                  <span style={{ marginRight: "10px" }}>
+                    ${this.props.discount_price}
+                    <span style={{ marginLeft: "10px" }} className="old">
+                      ${this.props.price}
+                    </span>
+                  </span>
+                  <span
+                    style={{ float: "right", color: "red", fontWeight: "bold" }}
+                  >
+                    -10%
+                  </span>
+                </div>
+              ) : (
+                <div className="product-price">
+                  <span style={{ marginLeft: "10px" }} className="old">
+                    ${this.props.price}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

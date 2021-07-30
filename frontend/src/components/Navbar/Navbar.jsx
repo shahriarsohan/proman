@@ -16,6 +16,7 @@ import { fetchUserOrder } from "../../store/actions/cart";
 
 import { handleDeleteFromCart } from "../../store/actions/cart";
 import { openSideBar } from "../../store/actions/cartSideBar";
+import SideNav from "./SideNav";
 
 const override = css`
   display: block;
@@ -24,6 +25,10 @@ const override = css`
 `;
 
 class Navbar extends Component {
+  state = {
+    openSearch: false,
+  };
+
   componentDidMount() {
     this.props.fetchCart();
   }
@@ -39,56 +44,7 @@ class Navbar extends Component {
     console.log(cart);
     return (
       <>
-        {this.props.sidebar && (
-          <div
-            style={{ width: "300px", display: "flex", flexDirection: "column" }}
-            id="mySidenav"
-            className="sidenav"
-          >
-            {/* <a onClick={this.toggleSideBar} className="closebtn">
-              ×
-            </a> */}
-            {/* <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a> */}
-
-            <div className="search-box">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search.."
-              />
-              <button className="search-button">
-                <i class="material-icons">search</i>
-              </button>
-            </div>
-            <div className="mobile-sidebar">
-              <ul className="sidebar-items">
-                <li className="sidebar-item">New Arrivals</li>
-                <li className="sidebar-item">Trending</li>
-                <li className="sidebar-item">Accessories</li>
-                <li className="sidebar-item">Sunglass</li>
-                <li className="sidebar-item">Best Selling</li>
-                <li className="sidebar-item">T-shirt</li>
-              </ul>
-            </div>
-            <div className="sidebar-social-icon">
-              <a href="">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="">
-                <i class="fab fa-github"></i>
-              </a>
-            </div>
-          </div>
-        )}
+        {this.props.sidebar && <SideNav />}
         {isBrowser && (
           <header className="header shop">
             {/* <HashLoader color="#39a6a3" loading={true} css={override} size={50} /> */}
@@ -490,19 +446,78 @@ class Navbar extends Component {
           </header>
         )}
         {isMobile && (
-          <div className="search-bar-top">
-            <div className="search-bar">
-              <form>
-                <input
-                  name="search"
-                  placeholder="Search Products Here....."
-                  type="search"
-                />
-                <button className="btnn">
-                  <i className="ti-search" />
-                </button>
-              </form>
-            </div>
+          <div className="search-bar-top m-2">
+            {this.state.openSearch ? (
+              <div className="search-bar-close">
+                <div className="search-bar">
+                  <form>
+                    <input
+                      name="search"
+                      placeholder="Search Products Here....."
+                      type="search"
+                    />
+                    <button className="btnn">
+                      <i className="ti-search" />
+                    </button>
+                  </form>
+                </div>
+                <div>
+                  <img
+                    onClick={() => this.setState({ openSearch: false })}
+                    width="15px"
+                    height="15px"
+                    src="/images/close.png"
+                    alt="close"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div className="sinlge-bar shopping">
+                  <a
+                    onClick={() => this.props.openSideBarCart()}
+                    className="single-icon"
+                  >
+                    <img
+                      width="30px"
+                      height="30px"
+                      src="/images/cart-nav.png"
+                      alt="logo"
+                    />
+                    <span className="total-count">{cart.length}</span>
+                  </a>
+                  <img
+                    onClick={() => this.setState({ openSearch: true })}
+                    style={{ marginLeft: "7px" }}
+                    width="30px"
+                    height="30px"
+                    src="/images/search.png"
+                  />
+                </div>
+
+                <div className="nav-icon p-2 ml-3">
+                  <div className="logo">
+                    <a>
+                      <img
+                        width="70px"
+                        height="50px"
+                        src="/images/proman-logo-two.png"
+                        alt="logo"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div className="nav-icon p-2 ml-3">
+                  <img width="30px" height="30px" src="/images/menu.png" />
+                </div>
+              </div>
+            )}
           </div>
         )}
       </>

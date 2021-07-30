@@ -133,3 +133,13 @@ class GetProductsBasedOnQuery(generics.ListAPIView):
             'products': serializer.data,
             'hasMore': is_there_more_query(request)
         })
+
+
+class GetNewProducts(views.APIView):
+    def get(self, request, *args, **kwargs):
+        featured_queryset = Products.objects.filter().order_by(
+            '-timestamp')[:10]
+        print('featured_queryset', featured_queryset)
+        featured_queryset_serializer = ProductsSerializer(
+            featured_queryset, many=True)
+        return Response({'new_qs': featured_queryset_serializer.data}, status=status.HTTP_200_OK)

@@ -10,63 +10,93 @@ class Navigation extends Component {
     console.log(this.props.sidebar);
     return (
       <div className="d-block d-sm-block d-md-none d-lg-none">
-        <nav className="mobile-bottom-nav">
-          <div className="mobile-bottom-nav__item mobile-bottom-nav__item">
-            <Link href="/">
-              <div className="mobile-bottom-nav__item-content">
-                <i className="material-icons">home</i>
-              </div>
-            </Link>
-          </div>
-          <div className="mobile-bottom-nav__item">
-            <Link href="/">
-              <div className="mobile-bottom-nav__item-content">
-                <i className="material-icons">accessibility</i>
-              </div>
-            </Link>
-          </div>
-          <div
-            style={{ background: "#39a6a3", borderRadius: "20px" }}
-            className="mobile-bottom-nav__item"
-          >
-            <Link href="/">
-              <div className="mobile-bottom-nav__item-content">
-                <i
-                  style={{ borderRadius: "20px", fontSize: "30px" }}
-                  className="material-icons"
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <nav className="mobile-bottom-nav">
+            <div className="mobile-bottom-nav__item mobile-bottom-nav__item">
+              <Link href="/">
+                <div className="mobile-bottom-nav__item-content">
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="/images/home.png"
+                    alt=""
+                  />
+                </div>
+              </Link>
+            </div>
+            <div className="mobile-bottom-nav__item">
+              <Link href="/">
+                <div className="mobile-bottom-nav__item-content">
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="/images/shop.png"
+                    alt=""
+                  />
+                </div>
+              </Link>
+            </div>
+            <div className="mobile-bottom-nav__item">
+              <Link href="/">
+                <div className="mobile-bottom-nav__item-content">
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="/images/sale-promotion.png"
+                    alt=""
+                  />
+                </div>
+              </Link>
+            </div>
+            <div className="mobile-bottom-nav__item">
+              <Link href="/user/cart">
+                <div className="mobile-bottom-nav__item-content">
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="/images/cart.png"
+                    alt=""
+                  />
+                </div>
+              </Link>
+            </div>
+            {this.props.sidebar ? (
+              <div className="mobile-bottom-nav__item">
+                <div
+                  onClick={this.props.openSideBar}
+                  className="mobile-bottom-nav__item-content"
                 >
-                  campaign
-                </i>
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="/images/hide.png"
+                    alt=""
+                  />
+                </div>
               </div>
-            </Link>
-          </div>
-          <div className="mobile-bottom-nav__item">
-            <Link href="/user/cart">
-              <div className="mobile-bottom-nav__item-content">
-                <i className="material-icons">shopping_cart</i>
+            ) : (
+              <div className="mobile-bottom-nav__item">
+                <div
+                  onClick={this.props.closeSideBar}
+                  className="mobile-bottom-nav__item-content"
+                >
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="/images/show.png"
+                    alt=""
+                  />
+                </div>
               </div>
-            </Link>
-          </div>
-          {this.props.sidebar ? (
-            <div className="mobile-bottom-nav__item">
-              <div
-                onClick={this.props.openSideBar}
-                className="mobile-bottom-nav__item-content"
-              >
-                <i class="material-icons">close</i>
-              </div>
-            </div>
-          ) : (
-            <div className="mobile-bottom-nav__item">
-              <div
-                onClick={this.props.closeSideBar}
-                className="mobile-bottom-nav__item-content"
-              >
-                <i class="material-icons">apps</i>
-              </div>
-            </div>
-          )}
-        </nav>
+            )}
+          </nav>
+        </div>
       </div>
     );
   }

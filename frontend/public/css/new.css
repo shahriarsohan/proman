@@ -2384,12 +2384,12 @@ Version:1.0
   margin-top: 15px;
 }
 .shop.single .product-des .price s {
-  color: #333;
+  color: #939c9e;
 }
 .shop.single .product-des .price span {
   display: inline-block;
   margin-right: 15px;
-  color: #39a6a3;
+  /* color: #39a6a3; */
 }
 .shop.single .product-des .product-buy {
   margin-top: 40px;
@@ -2474,15 +2474,7 @@ Version:1.0
 .shop.single .product-des .size ul li:last-child {
   margin-right: 0;
 }
-.shop.single .product-des .size ul li a {
-  display: block;
-  height: 30px;
-  width: 36px;
-  border: 1px solid #eee;
-  text-align: center;
-  line-height: 30px;
-  font-size: 14px;
-}
+
 .shop.single .product-des .size ul li a:hover {
   color: #39a6a3;
 }
@@ -4772,4 +4764,3 @@ Version:1.0
 .sample-slider {
   height: "510px";
 }
-

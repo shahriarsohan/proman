@@ -26,7 +26,7 @@ const override = css`
   border-color: red;
 `;
 
-class NavbarTwo extends React.Component {
+class NavbarDetails extends React.Component {
   componentDidMount() {
     this.props.fetchCart();
   }
@@ -40,7 +40,7 @@ class NavbarTwo extends React.Component {
 
   render() {
     const { cart, loading, error } = this.props;
-    console.log(isMobile);
+    console.log(this.props.route);
     return (
       <>
         {this.props.sidebar && (
@@ -94,44 +94,33 @@ class NavbarTwo extends React.Component {
           </div>
         )}
         {isMobile ? (
-          <div className="search-bar-top m-2">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div className="sinlge-bar shopping">
-                <a
-                  onClick={() => this.props.openSideBarCart()}
-                  className="single-icon"
-                >
-                  <img
-                    width="30px"
-                    height="30px"
-                    src="/images/cart-nav.png"
-                    alt="logo"
-                  />
-                  <span className="total-count">{cart.length}</span>
-                </a>
+          <div className="mobie-nav">
+            <div className="back-button">
+              <div onClick={() => this.props.route()}>
+                <img
+                  width="30px"
+                  height="30px"
+                  src="/images/back.png"
+                  alt="back"
+                />
               </div>
-
-              <div className="nav-icon p-2 ml-3">
-                <div className="logo">
-                  <a href="index.html">
-                    <img
-                      width="70px"
-                      height="50px"
-                      src="/images/proman-logo-two.png"
-                      alt="logo"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div className="nav-icon p-2 ml-3">
-                <img width="30px" height="30px" src="/images/menu.png" />
-              </div>
+            </div>
+            <div className="product-name">
+              <p>{this.props.name}</p>
+            </div>
+            <div className="sinlge-bar shopping">
+              <a
+                //   onClick={() => this.props.openSideBarCart()}
+                className="single-icon"
+              >
+                <img
+                  width="30px"
+                  height="30px"
+                  src="/images/cart-nav.png"
+                  alt="logo"
+                />
+                <span className="total-count">{cart.length}</span>
+              </a>
             </div>
           </div>
         ) : (
@@ -432,4 +421,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavbarTwo);
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarDetails);
