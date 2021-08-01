@@ -81,24 +81,19 @@ class TrendingProductCard extends Component {
           <div className="single-product">
             <div className="product-img">
               <Link href={`/details/${this.props.slug}`}>
-                <img
-                  className="default-img"
-                  src={
-                    this.props.thumbnail
-                      ? `http://127.0.0.1:8000${this.props.thumbnail}`
-                      : "https://via.placeholder.com/550x750"
-                  }
-                  alt={this.props.name}
-                />
-                {/* <img
-                    className="hover-img"
+                <a>
+                  <img
+                    className="default-img"
                     src={
                       this.props.thumbnail
                         ? `http://127.0.0.1:8000${this.props.thumbnail}`
                         : "https://via.placeholder.com/550x750"
                     }
-                    alt="#"
-                  /> */}
+                    alt={this.props.name}
+                  />
+
+                  {this.props.bogo && <span className="bogo">BOGO</span>}
+                </a>
               </Link>
               <div className="button-head">
                 <div className="product-action">

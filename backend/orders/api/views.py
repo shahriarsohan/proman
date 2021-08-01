@@ -135,3 +135,5 @@ class GetTotalPricing(views.APIView):
             total_amount = order_sub_total + order_qs.shipping
 
             return response.Response({"order_sub_total": order_sub_total, "shipping_charge": shipping_charge, "total_amount": total_amount}, status=status.HTTP_200_OK)
+        else:
+            return response.Response(status=status.HTTP_404_NOT_FOUND)

@@ -19,6 +19,7 @@ import HashLoader from "react-spinners/HashLoader";
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 import { closeSideBar, openSideBar } from "../../store/actions/cartSideBar";
 import Cart from "../SideCart/Cart";
+import SideNav from "./SideNav";
 
 const override = css`
   display: block;
@@ -43,56 +44,7 @@ class NavbarDetails extends React.Component {
     console.log(this.props.route);
     return (
       <>
-        {this.props.sidebar && (
-          <div
-            style={{ width: "300px", display: "flex", flexDirection: "column" }}
-            id="mySidenav"
-            className="sidenav"
-          >
-            {/* <a onClick={this.toggleSideBar} className="closebtn">
-              ×
-            </a> */}
-            {/* <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a> */}
-
-            <div className="search-box">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search.."
-              />
-              <button className="search-button">
-                <i class="material-icons">search</i>
-              </button>
-            </div>
-            <div className="mobile-sidebar">
-              <ul className="sidebar-items">
-                <li className="sidebar-item">New Arrivals</li>
-                <li className="sidebar-item">Trending</li>
-                <li className="sidebar-item">Accessories</li>
-                <li className="sidebar-item">Sunglass</li>
-                <li className="sidebar-item">Best Selling</li>
-                <li className="sidebar-item">T-shirt</li>
-              </ul>
-            </div>
-            <div className="sidebar-social-icon">
-              <a href="">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="">
-                <i class="fab fa-github"></i>
-              </a>
-            </div>
-          </div>
-        )}
+        {this.props.sidebar && <SideNav />}
         {isMobile ? (
           <div className="mobie-nav">
             <div className="back-button">

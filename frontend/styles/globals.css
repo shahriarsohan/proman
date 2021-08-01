@@ -4467,3 +4467,38 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
 .dropdown-button i {
   margin-right: 20px;
 }
+
+.bogo {
+  background-color: #39a3a6;
+  display: inline-block;
+  font-size: 11px;
+  color: #fff;
+  right: 20px;
+  top: 20px;
+  padding: 1px 16px;
+  font-weight: 700;
+  border-radius: 0;
+  text-align: center;
+  position: absolute;
+  text-transform: uppercase;
+  border-radius: 30px;
+  height: 26px;
+  line-height: 24px;
+}
+
+.bogo-label {
+  float: left;
+  max-width: 100%;
+  padding: 5px 7px;
+  font-size: 9px;
+  color: white;
+  text-transform: uppercase;
+  background-color: #39a3a6;
+  border: 1px solid #39a3a6;
+  line-height: normal;
+  margin-top: 20px;
+}
+
+.bogo-label-top {
+  display: flex;
+}

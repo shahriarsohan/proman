@@ -82,7 +82,7 @@ class DetailsPage extends Component {
         details.products.product_delivery_time * 24 * 60 * 60 * 1000
     );
 
-    console.log(this.props.router);
+    console.log(details);
 
     const expected_delivery_date = moment(myDate).format("MMMM Do");
 
@@ -188,6 +188,13 @@ class DetailsPage extends Component {
                                 </p>
                                 <h6>Incl. taxes</h6>
                               </>
+                            )}
+                          </div>
+                          <div className="bogo-label-top">
+                            {details.products.buy_one_get_one ? (
+                              <div className="bogo-label">BUY 1 GET 1 FREE</div>
+                            ) : (
+                              ""
                             )}
                           </div>
                           <hr />
@@ -339,53 +346,59 @@ class DetailsPage extends Component {
                         {/*/ End Size */}
                         {/* Product Buy */}
                         <div className="product-buy">
-                          <div className="quantity">
-                            <h6>Quantity :</h6>
-                            {/* Input Order */}
-                            <div className="input-group">
-                              <div className="button minus">
-                                {this.state.quantity !== 1 ? (
+                          {details.products.buy_one_get_one ? (
+                            ""
+                          ) : (
+                            <div className="quantity">
+                              <h6>Quantity :</h6>
+                              {/* Input Order */}
+                              <div className="input-group">
+                                <div className="button minus">
+                                  {this.state.quantity !== 1 ? (
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary btn-number"
+                                      data-type="minus"
+                                      data-field="quant[1]"
+                                    >
+                                      <i
+                                        onClick={() =>
+                                          this.handleMinusQuantity()
+                                        }
+                                        className="ti-minus"
+                                      />
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <input
+                                  type="text"
+                                  name="quant[5]"
+                                  className="input-number"
+                                  data-min={1}
+                                  data-max={20}
+                                  value={this.state.quantity}
+                                />
+                                <div className="button plus">
                                   <button
-                                    type="button"
+                                    type="submit"
                                     className="btn btn-primary btn-number"
-                                    data-type="minus"
+                                    data-type="plus"
                                     data-field="quant[1]"
                                   >
                                     <i
-                                      onClick={() => this.handleMinusQuantity()}
-                                      className="ti-minus"
+                                      onClick={() =>
+                                        this.handlePlusQuantity(details.id)
+                                      }
+                                      className="ti-plus"
                                     />
                                   </button>
-                                ) : (
-                                  ""
-                                )}
+                                </div>
                               </div>
-                              <input
-                                type="text"
-                                name="quant[5]"
-                                className="input-number"
-                                data-min={1}
-                                data-max={20}
-                                value={this.state.quantity}
-                              />
-                              <div className="button plus">
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary btn-number"
-                                  data-type="plus"
-                                  data-field="quant[1]"
-                                >
-                                  <i
-                                    onClick={() =>
-                                      this.handlePlusQuantity(details.id)
-                                    }
-                                    className="ti-plus"
-                                  />
-                                </button>
-                              </div>
+                              {/*/ End Input Order */}
                             </div>
-                            {/*/ End Input Order */}
-                          </div>
+                          )}
                           <div className="add-to-cart">
                             <span
                               data-tip="Specify Size"
@@ -802,6 +815,13 @@ class DetailsPage extends Component {
                               <h6>Incl. taxes</h6>
                             </>
                           )}
+                          <div className="bogo-label-top">
+                            {details.products.buy_one_get_one ? (
+                              <div className="bogo-label">BUY 1 GET 1 FREE</div>
+                            ) : (
+                              ""
+                            )}
+                          </div>
                           <p className="description">
                             {details.products.short_desc}
                           </p>
@@ -943,53 +963,59 @@ class DetailsPage extends Component {
                         {/*/ End Size */}
                         {/* Product Buy */}
                         <div className="product-buy">
-                          <div className="quantity">
-                            <h6>Quantity :</h6>
-                            {/* Input Order */}
-                            <div className="input-group">
-                              <div className="button minus">
-                                {this.state.quantity !== 1 ? (
+                          {this.props.details.products.buy_one_get_one ? (
+                            ""
+                          ) : (
+                            <div className="quantity">
+                              <h6>Quantity :</h6>
+                              {/* Input Order */}
+                              <div className="input-group">
+                                <div className="button minus">
+                                  {/* {this.state.quantity !== 1 ? (
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-number"
+                                data-type="minus"
+                                data-field="quant[1]"
+                              >
+                                <i
+                                  onClick={() =>
+                                    this.handleMinusQuantity()
+                                  }
+                                  className="ti-minus"
+                                />
+                              </button>
+                            ) : (
+                              ""
+                            )} */}
+                                </div>
+                                <input
+                                  type="text"
+                                  name="quant[5]"
+                                  className="input-number"
+                                  data-min={1}
+                                  data-max={20}
+                                  value={this.state.quantity}
+                                />
+                                <div className="button plus">
                                   <button
-                                    type="button"
+                                    type="submit"
                                     className="btn btn-primary btn-number"
-                                    data-type="minus"
+                                    data-type="plus"
                                     data-field="quant[1]"
                                   >
                                     <i
-                                      onClick={() => this.handleMinusQuantity()}
-                                      className="ti-minus"
+                                      onClick={() =>
+                                        this.handlePlusQuantity(details.id)
+                                      }
+                                      className="ti-plus"
                                     />
                                   </button>
-                                ) : (
-                                  ""
-                                )}
+                                </div>
                               </div>
-                              <input
-                                type="text"
-                                name="quant[5]"
-                                className="input-number"
-                                data-min={1}
-                                data-max={20}
-                                value={this.state.quantity}
-                              />
-                              <div className="button plus">
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary btn-number"
-                                  data-type="plus"
-                                  data-field="quant[1]"
-                                >
-                                  <i
-                                    onClick={() =>
-                                      this.handlePlusQuantity(details.id)
-                                    }
-                                    className="ti-plus"
-                                  />
-                                </button>
-                              </div>
+                              {/*/ End Input Order */}
                             </div>
-                            {/*/ End Input Order */}
-                          </div>
+                          )}
                           <div className="add-to-cart">
                             <span
                               data-tip="Specify Size"
@@ -1332,7 +1358,7 @@ export async function getServerSideProps(context) {
 
   const details = await details_qs.data;
   const newProducts = await new_qs.data;
-  console.log("newProducts =>", newProducts);
+  console.log("details =>", details.buy_one_get_one);
 
   if (!details) {
     return {

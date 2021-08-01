@@ -40,16 +40,11 @@ class CartDeleteApi(generics.DestroyAPIView):
 class GET_CART_PRICING_DETAILS(views.APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
-        total = 0
-        amount_saved = 0
-        cart_qs = Cart.objects.filter(user=user, expires=False)
         order_qs = Order.objects.filter(user=user, ordered=False).first()
         print(order_qs)
         order_qs = order_qs
         print(order_qs)
-        order_total = order_qs.sub_total + order_qs.shipping
         print('ordeer total', order_qs.total)
-        print('product total', order_qs.get_total_product_price())
 
         return Response({'order_total': order_qs.sub_total}, status=status.HTTP_200_OK)
 
@@ -66,16 +61,51 @@ class AddProductToCart(views.APIView):
             return Response({"msg": "Something went wrong"}, status=status.HTTP_404_NOT_FOUND)
 
         item = get_object_or_404(Products, slug=slug)
-        # if quantity is not None:
-        #     order_item = Cart.objects.create(
-        #         product=item, user=request.user, quantity=quantity, size=size, expires=False)
+
         if item.discount_price:
             total_price = quantity * item.discount_price
         else:
             total_price = quantity * item.price
-        print(total_price)
+        if item.buy_one_get_one == True:
+            print('quantity 1')
+            bogo_cart = Cart.objects.filter(
+                user=request.user, buy_one_get_one=True)
+            length = 1 + len(bogo_cart)
+            print('length', length)
+            if length == 2:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            elif length == 4:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            elif length == 6:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            elif length == 8:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            elif length == 10:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            elif length == 12:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            elif length == 14:
+                print('length / 2', length / 2)
+                print('blaaaaaaaaaaa')
+                total_price = 0
+            else:
+                total_price = item.discount_price
+
+        print('total_price', total_price)
         order_item = Cart.objects.create(
-            product=item, user=request.user, quantity=quantity, size=size, expires=False)
+            product=item, user=request.user, quantity=quantity, size=size, expires=False, buy_one_get_one=item.buy_one_get_one)
         serializer = CartSerailizers(order_item)
         order_item.save()
         order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -108,11 +138,46 @@ class ItemDeleteFromCart(views.APIView):
             return Response({'msg': 'Something went wrong'}, status=status.HTTP_404_NOT_FOUND)
         item_qs = get_object_or_404(Cart, id=item)
         if item_qs:
-
             user_qs = Cart.objects.filter(id=item).first()
             price_to_reduce = 0
             quantity = user_qs.quantity
-            price_to_reduce = quantity * user_qs.product.discount_price
+            if item_qs.buy_one_get_one:
+                bogo_cart = Cart.objects.filter(
+                    user=request.user, buy_one_get_one=True
+                )
+                length = 1 + len(bogo_cart)
+                if length == 2:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                elif length == 4:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                elif length == 6:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                elif length == 8:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                elif length == 10:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                elif length == 12:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                elif length == 14:
+                    print('length / 2', length / 2)
+                    print('blaaaaaaaaaaa')
+                    price_to_reduce = 0
+                else:
+                    price_to_reduce = quantity * user_qs.product.discount_price
+            else:
+                price_to_reduce = quantity * user_qs.product.discount_price
             if user_qs.user == request.user:
                 user_qs.delete()
                 order_qs = Order.objects.filter(

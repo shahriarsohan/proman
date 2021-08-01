@@ -45,7 +45,7 @@ class ProductAdmin(admin.ModelAdmin):
          ),
         ('Availability Information',
          {
-             'fields':  ('quantity_in_stock', 'out_of_stock'),
+             'fields':  ('quantity_in_stock', 'out_of_stock', 'buy_one_get_one'),
          },
          ),
     )

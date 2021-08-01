@@ -47,6 +47,9 @@ class Products(models.Model):
     xl_size = models.BooleanField(default=True)
     xxl_size = models.BooleanField(default=True)
 
+    buy_one_get_one = models.BooleanField(default = False)
+
+
     product_delivery_time = models.IntegerField(default=2)
 
     class Meta:
