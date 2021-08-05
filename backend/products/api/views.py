@@ -83,7 +83,23 @@ def is_there_more(request):
 def infinte_scroll(request):
     limit = request.GET.get('limit')
     offset = request.GET.get('offset')
-    return Products.objects.all()[int(offset): int(offset) + int(limit)]
+    cat = request.query_params.get('cat')
+    # size = request.query_params.get('size')
+    # print(size)
+    print('cat', cat)
+    if cat is None:
+        return Products.objects.all()[int(offset): int(offset) + int(limit)]
+    else:
+        filter_kwargs = {
+            'category__icontains': cat,
+            # 's_size__iexact': size,
+            # 'm_size__iexact': size,
+            # 'l_size__iexact': size,
+            # 'xl_size__iexact': size,
+            # 'xxl_size__iexact': size,
+        }
+
+        return Products.objects.filter(**filter_kwargs)[int(offset): int(offset) + int(limit)]
 
 
 class ProductsInfiniteScrollView(generics.ListAPIView):
@@ -143,3 +159,59 @@ class GetNewProducts(views.APIView):
         featured_queryset_serializer = ProductsSerializer(
             featured_queryset, many=True)
         return Response({'new_qs': featured_queryset_serializer.data}, status=status.HTTP_200_OK)
+
+
+class GetTrendingProducts(views.APIView):
+    def get(self, request, *args, **kwargs):
+        featured_queryset = Products.objects.filter(trending=True).order_by(
+            '-timestamp')[:3]
+        print('featured_queryset', featured_queryset)
+        featured_queryset_serializer = ProductsSerializer(
+            featured_queryset, many=True)
+        return Response({'new_qs': featured_queryset_serializer.data}, status=status.HTTP_200_OK)
+
+
+def infinte_scroll_cat(request):
+    limit = request.GET.get('limit')
+    offset = request.GET.get('offset')
+    query = request.GET.get('cat')
+    # print(query)
+    size = request.GET.get('size')
+
+    filter_kwargs = {
+        'category__icontains': query,
+        # 's_size__iexact': size,
+        # 'm_size__iexact': size,
+        # 'l_size__iexact': size,
+        # 'xl_size__iexact': size,
+        # 'xxl_size__iexact': size,
+    }
+
+    return Products.objects.filter(**filter_kwargs)[int(offset): int(offset) + int(limit)]
+
+
+def is_there_more_cat(request):
+    offset = request.GET.get('offset')
+    query = request.query_params.get('cat')
+    filter_kwargs = {
+        'category__icontains': query,
+    }
+    if int(offset) > Products.objects.filter(**filter_kwargs).count():
+        return False
+    return True
+
+
+class GetProductsBasedOnCat(generics.ListAPIView):
+    serializer_class = ProductsSerializer
+
+    def get_queryset(self, **kwargs):
+        qs = infinte_scroll_cat(self.request)
+        return qs
+
+    def list(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        serializer = ProductsSerializer(qs, many=True)
+        return Response({
+            'products': serializer.data,
+            'hasMore': is_there_more_cat(request)
+        })

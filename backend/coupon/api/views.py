@@ -19,7 +19,6 @@ class ValidateCoupon(views.APIView):
             coupon_qs = Coupon.objects.get(
                 code=coupone_code, active=True, valid_from__lte=now, valid_to__gte=now)
             if coupon_qs:
-                print(coupon_qs.valid_to)
                 coupon_used_before = False
                 order_qs = Order.objects.filter(
                     user=user, coupon=coupon_qs.code)

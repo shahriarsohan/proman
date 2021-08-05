@@ -51,8 +51,7 @@ class Order(models.Model):
                 discount = self.sub_total - coupon_amount
                 self.sub_total = discount
                 self.save()
-                print('tasdasdotal', total)
-        print(total)
+            return self.sub_total
         return total
 
     def get_total(self):

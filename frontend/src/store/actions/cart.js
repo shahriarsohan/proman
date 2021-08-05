@@ -15,6 +15,9 @@ import {
   APPLY_COUPON_SUCCESS,
   APPLY_COUPON_ERROR,
   OPEN_SIDEBAR_CART,
+  COMBO_ADD_TO_CART_START,
+  COMBO_ADD_TO_CART,
+  COMBO_ADD_TO_CART_ERROR,
 } from "./cartTypes";
 
 import { openCartSideBar } from "./cartSideBar";
@@ -82,6 +85,13 @@ export const handleAddToCart = (data) => (dispatch) => {
         data: err.data,
       });
     });
+};
+
+export const handleComboAddToCart = (data) => (dispatch) => {
+  console.log("data", data);
+  dispatch({
+    type: COMBO_ADD_TO_CART_START,
+  });
 };
 
 export const handleDeleteFromCart = (data) => (dispatch) => {

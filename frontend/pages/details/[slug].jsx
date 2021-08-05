@@ -27,6 +27,9 @@ import { isMobile } from "react-device-detect";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 import PopularProducts from "../../src/components/Products/NewProducts";
 import MultipleRows from "../../src/components/Products/NewProductsTwo";
+
+import ShareButton from "./shareButton";
+
 class DetailsPage extends Component {
   state = {
     size: "",
@@ -66,6 +69,25 @@ class DetailsPage extends Component {
 
   handleMinusQuantity = () => {
     this.setState({ quantity: this.state.quantity - 1 });
+  };
+
+  handleShareButton = () => {
+    // Check if navigator.share is supported by the browser
+    if (navigator.share) {
+      console.log("Congrats! Your browser supports Web Share API");
+      navigator
+        .share({
+          url: `https://share.toogoodtogo.com/store/1006/milestones/meals-saved/`,
+        })
+        .then(() => {
+          console.log("Sharing successfull");
+        })
+        .catch(() => {
+          console.log("Sharing failed");
+        });
+    } else {
+      console.log("Sorry! Your browser does not support Web Share API");
+    }
   };
 
   render() {
@@ -109,6 +131,8 @@ class DetailsPage extends Component {
                         {/* Images slider */}
                         <div className="flexslider-thumbnails">
                           <div class="col-md-10">
+                            {/* <ShareButton /> */}
+
                             <Zoom>
                               <img
                                 src={this.state.activeImg}
@@ -116,6 +140,23 @@ class DetailsPage extends Component {
                                 id="ProductImg"
                               />
                             </Zoom>
+                            <div
+                              onClick={this.handleShareButton}
+                              className="share-button"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 100 100"
+                              >
+                                <path d="M75 64c-4.8 0-9.1 2.3-11.8 5.8L38.9 55.7c1.5-3.7 1.5-7.8 0-11.5l24.3-14.1c2.7 3.5 7 5.8 11.8 5.8 8.3 0 15-6.7 15-15s-6.7-15-15-15-15 6.7-15 15c0 2 .4 4 1.1 5.7L36.8 40.8C34 37.3 29.8 35 25 35c-8.3 0-15 6.7-15 15s6.7 15 15 15c4.8 0 9.1-2.3 11.8-5.8l24.3 14.1C60.4 75 60 77 60 79c0 8.3 6.7 15 15 15s15-6.7 15-15-6.7-15-15-15zm0-54c6.1 0 11 4.9 11 11s-4.9 11-11 11-11-4.9-11-11 4.9-11 11-11zM25 61c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11zm50 29c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" />
+                                <path
+                                  fill="#00F"
+                                  d="M1644-510v1684H-140V-510h1784m8-8H-148v1700h1800V-518z"
+                                />
+                              </svg>
+                            </div>
 
                             <div class="small-imgs">
                               {details.images.map((i) => {

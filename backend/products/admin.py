@@ -28,7 +28,9 @@ class ProductAdmin(admin.ModelAdmin):
                  'l_size',
                  'xl_size',
                  'xxl_size',
-                 'product_delivery_time'
+                 'product_delivery_time',
+                 'combo_offer',
+                 'combo_amount'
              ),
              'classes': ('collapse',),
          },

@@ -4,10 +4,12 @@ from django.db.models.signals import pre_save
 from passwordless.utils import unique_slug_generator
 
 CATEGORY_CHOICES = (
-    ('hair_care', 'hair_care'),
-    ('skin_care', 'skin_care'),
-    ('hair_oil', 'hair_oil'),
-    ('face_oil', 'face_oil'),
+    ('Movie', 'Movie'),
+    ('Game', 'Game'),
+    ('Life', 'Life'),
+    ('Sports', 'Sports'),
+    ('Programming', 'Programming'),
+    ('Trend', 'Trend'),
 )
 
 
@@ -47,10 +49,11 @@ class Products(models.Model):
     xl_size = models.BooleanField(default=True)
     xxl_size = models.BooleanField(default=True)
 
-    buy_one_get_one = models.BooleanField(default = False)
-
+    buy_one_get_one = models.BooleanField(default=False)
 
     product_delivery_time = models.IntegerField(default=2)
+    combo_offer = models.BooleanField(default = False)
+    combo_amount = models.PositiveIntegerField(default = 500)
 
     class Meta:
         verbose_name = 'Product'

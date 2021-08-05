@@ -167,9 +167,7 @@ class Cart extends Component {
                 </div>
                 <div className="action-buttons">
                   <Link href="/user/cart">
-                    <a className="view-cart-button" href="#">
-                      Cart
-                    </a>
+                    <a className="view-cart-button">Cart</a>
                   </Link>
                   <Link href="/user/checkout">
                     <a className="checkout-button">Checkout</a>

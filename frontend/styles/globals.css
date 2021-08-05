@@ -1,3 +1,7 @@
+* {
+  font-family: "Ubuntu";
+}
+
 @media (min-width: 992px) {
   .custom-col-md-12 {
     float: left;
@@ -4348,10 +4352,10 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   align-items: center;
   width: 100%;
   z-index: 1000;
-  height: 51px;
+  max-height: 56px;
   text-align: center;
   border-bottom: 1px solid #a2a2a2;
-  background-color: #f4f4f4;
+  background: #fff;
 }
 
 .product-info {
@@ -4501,4 +4505,71 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
 
 .bogo-label-top {
   display: flex;
+}
+
+.share-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  padding: 8px;
+  border-radius: 50%;
+  background-color: white;
+  color: #000;
+}
+
+.address-box {
+  border: 5px solid red;
+  border-radius: 20px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.4);
+  font-family: "Ubuntu";
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.address-box p {
+  line-height: 5px;
+}
+
+.product-content .product-head {
+  font-size: 12px;
+  color: rgb(45, 45, 45);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: normal;
+  margin: 0px;
+  overflow: hidden;
+  text-transform: capitalize;
+}
+
+.coupon-activated {
+  display: flex;
+  padding: 20px;
+  border: 2px solid #39a3a6;
+  background: #39a2a679;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coupon-activation-error {
+  display: flex;
+  padding: 20px;
+  border: 2px solid #a63939;
+  background: #b8040479;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.single-shorter-filter {
+  display: inline-block;
+  margin-right: 10px;
+  float: right;
+  position: absolute;
+  right: 0;
+}
+
+.filter-head {
+  display: flex;
+  justify-content: space-between;
 }

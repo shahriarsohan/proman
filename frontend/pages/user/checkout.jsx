@@ -765,14 +765,26 @@ class checkout extends Component {
                         <p>Shipping Address</p>
                         <ul style={{ listStylePosition: "inside" }}>
                           <li
-                            className="p-4"
-                            style={{ border: "2px solid red" }}
+                            onClick={() => {
+                              this.setState({
+                                openAddressEditModal: true,
+                              });
+                            }}
+                            className="p-4 address-box"
                           >
-                            Coffee - A brewed drink prepared from roasted coffee
-                            beans, which are the seeds of berries from the
-                            Coffea plant
+                            <p>{this.state.shipping_address.f_name}</p>
+                            <p>
+                              {
+                                this.state.shipping_address
+                                  .alternate_phone_number
+                              }
+                            </p>
+                            <p>{this.state.shipping_address.region}</p>
+                            <p>{this.state.shipping_address.city}</p>
+                            <p>{this.state.shipping_address.area}</p>
+                            <p>{this.state.shipping_address.zip_code}</p>
                             <div style={{ float: "right", display: "flex" }}>
-                              <button
+                              {/* <button
                                 onClick={() => {
                                   this.setState({
                                     openAddressEditModal: true,
@@ -782,18 +794,15 @@ class checkout extends Component {
                               >
                                 <Icon name="edit outline"></Icon>
                                 Edit
-                              </button>
+                              </button> */}
                             </div>
                           </li>
                         </ul>
                       </div>
-                      <div className="col-md-6 col-6">
+                      <div className="col-md-6 col-6 ">
                         <p>Billing Address</p>
                         <ul style={{ listStylePosition: "inside" }}>
-                          <li
-                            className="p-4"
-                            style={{ border: "2px solid red" }}
-                          >
+                          <li className="p-4 address-box">
                             Same as shipping address
                             <div style={{ float: "right", display: "flex" }}>
                               <button className="p-1 m-2">

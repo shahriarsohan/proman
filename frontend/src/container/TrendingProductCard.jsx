@@ -130,7 +130,7 @@ class TrendingProductCard extends Component {
               </div>
             </div>
             <div className="product-content text-capitalize">
-              <h3>
+              <h3 className="product-head">
                 <Link href={`/details/${this.props.slug}`}>
                   {this.props.name}
                 </Link>
@@ -138,9 +138,11 @@ class TrendingProductCard extends Component {
               {this.props.discount_price ? (
                 <div className="product-price">
                   <span style={{ marginRight: "10px" }}>
-                    ${this.props.discount_price}
+                    <img width="15px" height="15px" src="/images/taka.png" />
+                    {this.props.discount_price}
                     <span style={{ marginLeft: "10px" }} className="old">
-                      ${this.props.price}
+                      <img width="15px" height="15px" src="/images/taka.png" />
+                      {this.props.price}
                     </span>
                   </span>
                   <span
@@ -152,7 +154,8 @@ class TrendingProductCard extends Component {
               ) : (
                 <div className="product-price">
                   <span style={{ marginLeft: "10px" }} className="old">
-                    ${this.props.price}
+                    <img width="15px" height="15px" src="/images/taka.png" />
+                    {this.props.price}
                   </span>
                 </div>
               )}

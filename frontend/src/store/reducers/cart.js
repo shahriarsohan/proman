@@ -19,6 +19,7 @@ const initialState = {
   add_to_cart_success: null,
   total_price: 0,
   total_saving: 0,
+  cart_total: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -51,7 +52,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         total_price: action.payload.order_total,
-        total_saving: action.payload.amount_saved,
+        total_saving: action.payload.savings,
+        cart_total: action.payload.cart_total,
       };
     default:
       return state;

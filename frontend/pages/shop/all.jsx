@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 
 import axios from "axios";
-import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 
-import Footer from "../../src/components/Footer/Footer";
 import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
-import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
-import Service from "../../src/components/Service/Service";
 import ShopListSingle from "../../src/components/ShopList/ShopListSingle";
 import ShopGirdSingle from "../../src/components/ShopList/ShopGirdSingle";
 import Navigation from "../../src/components/Navigation";
+import Link from "next/link";
+import { withRouter } from "next/router";
+import {
+  isMobile,
+  isBrowser,
+  MobileView,
+  BrowserView,
+} from "react-device-detect";
+import Cart from "../../src/components/SideCart/Cart";
 
 class AllListShop extends Component {
   constructor(props) {
@@ -20,11 +25,17 @@ class AllListShop extends Component {
       products: [],
       hasMore: true,
       offset: 1,
-      limit: 12,
+      limit: 1,
       list: false,
       sort: "",
       min: 0,
       max: 0,
+
+      cat: "",
+      size: "",
+      trendingProducts: [],
+
+      openFilterSideBar: false,
     };
 
     if (typeof window !== "undefined") {
@@ -54,14 +65,26 @@ class AllListShop extends Component {
     if (this.props.details) {
       this.setState({ products: this.props.details, loading: false });
     }
+    this.loadTrendingProducts();
   }
+
+  loadTrendingProducts = () => {
+    console.log("ok.................");
+    axios
+      .get("http://127.0.0.1:8000/v1/products/trending-products")
+      .then((res) => {
+        this.setState({
+          trendingProducts: res.data.new_qs,
+        });
+      });
+  };
 
   loadProducts = () => {
     this.setState({ loading: true });
     console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}`
+        `http://127.0.0.1:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -86,6 +109,10 @@ class AllListShop extends Component {
       this.state.products.sort((a, b) => a.price - b.price);
     });
   }
+
+  opeFilterSidebar = () => {
+    this.setState({ openFilterSideBar: !this.state.openFilterSideBar });
+  };
 
   sortByPriceDesc() {
     this.setState((prevState) => {
@@ -114,49 +141,179 @@ class AllListShop extends Component {
     }
   };
 
+  handleUpdateSize = (e) => {
+    this.setState({ size: e.target.innerHTML }, () => this.updateProducts());
+  };
+
+  handleUpdateCat = (e) => {
+    this.setState({ cat: e.target.innerHTML, offset: 0 }, () =>
+      this.updateProducts()
+    );
+  };
+
+  updateProducts = (e) => {
+    axios
+      .get(
+        `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
+      )
+      .then((res) => {
+        const newProducts = res.data.products;
+        const hasMore = res.data.hasMore;
+        console.log(hasMore);
+
+        this.setState(
+          {
+            hasMore: hasMore,
+            loading: false,
+            products: newProducts,
+            offset: this.state.offset + this.state.limit,
+          },
+          () => {
+            this.props.router.push(
+              {
+                pathname: "/shop/all",
+                query: {
+                  cat: this.state.cat,
+                  // size: this.state.size,
+                },
+              },
+              undefined,
+              { shallow: true }
+            );
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ loading: false });
+      });
+  };
+
+  // handleUpdateSize = (e) => {
+  //   console.log(e);
+  //   axios
+  //     .get(
+  //       `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${e.target.innerHTML}`
+  //     )
+  //     .then((res) => {
+  //       const newProducts = res.data.products;
+  //       const hasMore = res.data.hasMore;
+  //       console.log(hasMore);
+
+  //       this.setState(
+  //         {
+  //           hasMore: hasMore,
+  //           loading: false,
+  //           products: newProducts,
+  //           offset: this.state.offset + this.state.limit,
+  //         },
+  //         () => {
+  //           this.props.router.push({
+  //             pathname: "/shop/all",
+  //             query: {
+  //               size: e.target.innerHTML,
+  //             },
+  //           });
+  //         }
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       this.setState({ loading: false });
+  //     });
+  // };
+
   render() {
-    console.log(this.props.details);
-    console.log(this.state.limit);
+    // console.log(this.props.details);
+    console.log(this.state.cat);
+    console.log(this.state.size);
     return (
       <>
         <NavbarTwo />
-        <section className="product-area shop-sidebar shop-list shop section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-3 col-md-4 col-12">
-                <div className="shop-sidebar">
-                  {/* Single Widget */}
-                  <div className="single-widget category">
-                    <h3 className="title">Categories</h3>
-                    <ul className="categor-list">
-                      <li>
-                        <a href="#">T-shirts</a>
-                      </li>
-                      <li>
-                        <a href="#">jacket</a>
-                      </li>
-                      <li>
-                        <a href="#">jeans</a>
-                      </li>
-                      <li>
-                        <a href="#">sweatshirts</a>
-                      </li>
-                      <li>
-                        <a href="#">trousers</a>
-                      </li>
-                      <li>
-                        <a href="#">kitwears</a>
-                      </li>
-                      <li>
-                        <a href="#">accessories</a>
-                      </li>
-                    </ul>
-                  </div>
-                  {/*/ End Single Widget */}
-                  {/* Shop By Price */}
-                  <div className="single-widget range">
+        {this.state.openFilterSideBar && (
+          <div className="show-sidebar-cart">
+            <aside id="sidebar-cart">
+              {/* <div className="filter-head"> */}
+              <a
+                onClick={() => this.opeFilterSidebar()}
+                className="close-button"
+              >
+                <span>X</span>
+              </a>
+              {/* </div> */}
+              <div className="container-fluid mt-4">
+                <div className="row">
+                  <div className="col-lg-3 col-md-4 col-12">
+                    <div className="shop-sidebar">
+                      {/* Single Widget */}
+                      <div className="single-widget category">
+                        <h3 className="title">Categories</h3>
+                        <ul className="categor-list">
+                          <li>
+                            <a
+                              onClick={(e) => this.handleUpdateCat(e)}
+                              value="Movie"
+                              name="cat"
+                            >
+                              Movie
+                            </a>
+                          </li>
+
+                          <li>
+                            <a
+                              onClick={(e) => this.handleUpdateCat(e)}
+                              value="Game"
+                              name="cat"
+                            >
+                              Game
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              onClick={(e) => this.handleUpdateCat(e)}
+                              value="Life"
+                              name="cat"
+                            >
+                              Life
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              onClick={(e) => this.handleUpdateCat(e)}
+                              value="Sports"
+                              name="cat"
+                            >
+                              Sports
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              onClick={(e) => this.handleUpdateCat(e)}
+                              value="Trend"
+                              name="cat"
+                            >
+                              Trend
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              onClick={(e) => this.handleUpdateCat(e)}
+                              value="Programming"
+                              name="cat"
+                            >
+                              Programming
+                            </a>
+                          </li>
+                          {/* <li>
+                        <Link href="/shop/filter/cat?=Game">Game</Link>
+                      </li> */}
+                        </ul>
+                      </div>
+                      {/*/ End Single Widget */}
+                      {/* Shop By Price */}
+                      {/* <div className="single-widget range">
                     <h3 className="title">Shop by Price</h3>
-                    {/* <div className="price-filter">
+                    <div className="price-filter">
                       <div className="price-filter-inner">
                         <div id="slider-range" />
                         <div className="price_slider_amount">
@@ -167,132 +324,99 @@ class AllListShop extends Component {
                               type="text"
                               id="amount"
                               name="price"
-                              // placeholder="Add Your Price"
+                              placeholder="Add Your Price"
                             />
                           </div>
                         </div>
                       </div>
-                    </div> */}
-                    <ul className="check-box-list">
+                    </div>
+                    <ul className="categor-list">
                       <li>
-                        <label className="checkbox-inline" htmlFor={1}>
-                          <input name="news" id={1} type="checkbox" />
-                          $200 - $250
-                          <span className="count">(3)</span>
-                        </label>
+                        <a
+                          onClick={(e) => this.handleUpdateSize(e)}
+                          value="M"
+                          name="size"
+                        >
+                          L
+                        </a>
                       </li>
                       <li>
-                        <label className="checkbox-inline" htmlFor={2}>
-                          <input name="news" id={2} type="checkbox" />
-                          $50 - $100<span className="count">(5)</span>
-                        </label>
+                        <a
+                          onClick={(e) => this.handleUpdateSize(e)}
+                          value="L"
+                          name="size"
+                        >
+                          M
+                        </a>
                       </li>
+
                       <li>
-                        <label className="checkbox-inline" htmlFor={3}>
-                          <input name="news" id={3} type="checkbox" />
-                          $100 - $250<span className="count">(8)</span>
-                        </label>
+                        <Link href="/shop/filter/cat?=Game">Game</Link>
                       </li>
                     </ul>
                   </div>
-                  {/*/ End Shop By Price */}
-                  {/* Single Widget */}
-                  <div className="single-widget recent-post">
-                    <h3 className="title">Recent post</h3>
-                    {/* Single Post */}
-                    <div className="single-post first">
-                      <div className="image">
-                        <img src="https://via.placeholder.com/75x75" alt="#" />
+
+             */}
+
+                      {/*/ End Shop By Price */}
+                      {/* Single Widget */}
+                      <div
+                        style={{ padding: "10px" }}
+                        className="single-widget recent-post"
+                      >
+                        <h3 className="title">Trending Product</h3>
+                        {/* Single Post */}
+                        {this.state.trendingProducts &&
+                          this.state.trendingProducts.map((product) => {
+                            return (
+                              <div className="single-post first">
+                                <div className="image">
+                                  <img
+                                    src={
+                                      product.thumbnail
+                                        ? `http://127.0.0.1:8000${product.thumbnail}`
+                                        : "https://via.placeholder.com/550x750"
+                                    }
+                                  />
+                                </div>
+                                <div className="content">
+                                  <h5 style={{ textTransform: "capitalize" }}>
+                                    <Link href={`/details/${product.slug}`}>
+                                      <a>{product.name}</a>
+                                    </Link>
+                                  </h5>
+                                  <div style={{ display: "flex" }}>
+                                    <p className="price">
+                                      {" "}
+                                      <img
+                                        width="15px"
+                                        height="15px"
+                                        src="/images/taka.png"
+                                      />
+                                      {product.discount_price
+                                        ? product.discount_price
+                                        : product.price}
+                                    </p>
+                                    <p className="price old-price">
+                                      {" "}
+                                      <img
+                                        width="15px"
+                                        height="15px"
+                                        src="/images/taka.png"
+                                      />
+                                      <del>{product.price}</del>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+
+                        {/* End Single Post */}
                       </div>
-                      <div className="content">
-                        <h5>
-                          <a href="#">Girls Dress</a>
-                        </h5>
-                        <p className="price">$99.50</p>
-                        <ul className="reviews">
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li>
-                            <i className="ti-star" />
-                          </li>
-                          <li>
-                            <i className="ti-star" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End Single Post */}
-                    {/* Single Post */}
-                    <div className="single-post first">
-                      <div className="image">
-                        <img src="https://via.placeholder.com/75x75" alt="#" />
-                      </div>
-                      <div className="content">
-                        <h5>
-                          <a href="#">Women Clothings</a>
-                        </h5>
-                        <p className="price">$99.50</p>
-                        <ul className="reviews">
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li>
-                            <i className="ti-star" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End Single Post */}
-                    {/* Single Post */}
-                    <div className="single-post first">
-                      <div className="image">
-                        <img src="https://via.placeholder.com/75x75" alt="#" />
-                      </div>
-                      <div className="content">
-                        <h5>
-                          <a href="#">Man Tshirt</a>
-                        </h5>
-                        <p className="price">$99.50</p>
-                        <ul className="reviews">
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End Single Post */}
-                  </div>
-                  {/*/ End Single Widget */}
-                  {/* Single Widget */}
-                  <div className="single-widget category">
+                      {/*/ End Single Widget */}
+                      {/* Single Widget */}
+                      {/* <div className="single-widget category">
                     <h3 className="title">Manufacturers</h3>
                     <ul className="categor-list">
                       <li>
@@ -311,10 +435,265 @@ class AllListShop extends Component {
                         <a href="#">zara</a>
                       </li>
                     </ul>
+                  </div> */}
+                      {/*/ End Single Widget */}
+                    </div>
                   </div>
-                  {/*/ End Single Widget */}
                 </div>
               </div>
+            </aside>
+            <div id="sidebar-cart-curtain" />
+          </div>
+        )}
+        <section className="product-area shop-sidebar shop-list shop section">
+          <div className="container">
+            <div className="row">
+              {isBrowser && (
+                <div className="col-lg-3 col-md-4 col-12">
+                  <div className="shop-sidebar">
+                    {/* Single Widget */}
+                    <div className="single-widget category">
+                      <h3 className="title">Categories</h3>
+                      <ul className="categor-list">
+                        <li>
+                          <a
+                            onClick={(e) => this.handleUpdateCat(e)}
+                            value="Movie"
+                            name="cat"
+                          >
+                            Movie
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            onClick={(e) => this.handleUpdateCat(e)}
+                            value="Game"
+                            name="cat"
+                          >
+                            Game
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            onClick={(e) => this.handleUpdateCat(e)}
+                            value="Life"
+                            name="cat"
+                          >
+                            Life
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            onClick={(e) => this.handleUpdateCat(e)}
+                            value="Sports"
+                            name="cat"
+                          >
+                            Sports
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            onClick={(e) => this.handleUpdateCat(e)}
+                            value="Trend"
+                            name="cat"
+                          >
+                            Trend
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            onClick={(e) => this.handleUpdateCat(e)}
+                            value="Programming"
+                            name="cat"
+                          >
+                            Programming
+                          </a>
+                        </li>
+                        {/* <li>
+                        <Link href="/shop/filter/cat?=Game">Game</Link>
+                      </li> */}
+                      </ul>
+                    </div>
+                    {/*/ End Single Widget */}
+                    {/* Shop By Price */}
+                    {/* <div className="single-widget range">
+                    <h3 className="title">Shop by Price</h3>
+                    <div className="price-filter">
+                      <div className="price-filter-inner">
+                        <div id="slider-range" />
+                        <div className="price_slider_amount">
+                          <div className="label-input">
+                            <span>Range:</span>
+                            <input
+                              onChange={(e) => console.log(e.target)}
+                              type="text"
+                              id="amount"
+                              name="price"
+                              placeholder="Add Your Price"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <ul className="categor-list">
+                      <li>
+                        <a
+                          onClick={(e) => this.handleUpdateSize(e)}
+                          value="M"
+                          name="size"
+                        >
+                          L
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          onClick={(e) => this.handleUpdateSize(e)}
+                          value="L"
+                          name="size"
+                        >
+                          M
+                        </a>
+                      </li>
+
+                      <li>
+                        <Link href="/shop/filter/cat?=Game">Game</Link>
+                      </li>
+                    </ul>
+                  </div>
+
+             */}
+
+                    {/*/ End Shop By Price */}
+                    {/* Single Widget */}
+                    <div className="single-widget recent-post">
+                      <h3 className="title">Recent post</h3>
+                      {/* Single Post */}
+                      <div className="single-post first">
+                        <div className="image">
+                          <img
+                            src="https://via.placeholder.com/75x75"
+                            alt="#"
+                          />
+                        </div>
+                        <div className="content">
+                          <h5>
+                            <a href="#">Girls Dress</a>
+                          </h5>
+                          <p className="price">$99.50</p>
+                          <ul className="reviews">
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li>
+                              <i className="ti-star" />
+                            </li>
+                            <li>
+                              <i className="ti-star" />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      {/* End Single Post */}
+                      {/* Single Post */}
+                      <div className="single-post first">
+                        <div className="image">
+                          <img
+                            src="https://via.placeholder.com/75x75"
+                            alt="#"
+                          />
+                        </div>
+                        <div className="content">
+                          <h5>
+                            <a href="#">Women Clothings</a>
+                          </h5>
+                          <p className="price">$99.50</p>
+                          <ul className="reviews">
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li>
+                              <i className="ti-star" />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      {/* End Single Post */}
+                      {/* Single Post */}
+                      <div className="single-post first">
+                        <div className="image">
+                          <img
+                            src="https://via.placeholder.com/75x75"
+                            alt="#"
+                          />
+                        </div>
+                        <div className="content">
+                          <h5>
+                            <a href="#">Man Tshirt</a>
+                          </h5>
+                          <p className="price">$99.50</p>
+                          <ul className="reviews">
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                            <li className="yellow">
+                              <i className="ti-star" />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      {/* End Single Post */}
+                    </div>
+                    {/*/ End Single Widget */}
+                    {/* Single Widget */}
+                    {/* <div className="single-widget category">
+                    <h3 className="title">Manufacturers</h3>
+                    <ul className="categor-list">
+                      <li>
+                        <a href="#">Forever</a>
+                      </li>
+                      <li>
+                        <a href="#">giordano</a>
+                      </li>
+                      <li>
+                        <a href="#">abercrombie</a>
+                      </li>
+                      <li>
+                        <a href="#">ecko united</a>
+                      </li>
+                      <li>
+                        <a href="#">zara</a>
+                      </li>
+                    </ul>
+                  </div> */}
+                    {/*/ End Single Widget */}
+                  </div>
+                </div>
+              )}
               {/* {this.state.list ? ( */}
               <div className="col-lg-9 col-md-8 col-12">
                 <div className="row">
@@ -342,19 +721,36 @@ class AllListShop extends Component {
                             <option value="desc">Z- A</option>
                           </select>
                         </div>
+                        {isMobile && (
+                          <div
+                            onClick={() =>
+                              this.setState({
+                                openFilterSideBar:
+                                  !this.state.openFilterSideBar,
+                              })
+                            }
+                            className="single-shorter-filter"
+                          >
+                            <img
+                              src="/images/filter.png"
+                              width="20px"
+                              height="20px"
+                            />
+                          </div>
+                        )}
                       </div>
-                      <ul className="view-mode">
-                        <li>
+                      {/* <ul className="view-mode">
+                        <li className={this.state.list ? "" : "active"}>
                           <a onClick={() => this.setState({ list: false })}>
                             <i className="fa fa-th-large" />
                           </a>
                         </li>
-                        <li className="active">
+                        <li className={this.state.list ? "active" : ""}>
                           <a onClick={() => this.setState({ list: true })}>
                             <i className="fa fa-th-list" />
                           </a>
                         </li>
-                      </ul>
+                      </ul> */}
                     </div>
                     {/*/ End Shop Top */}
                   </div>
@@ -383,8 +779,16 @@ class AllListShop extends Component {
 }
 
 export async function getServerSideProps(context) {
+  console.log("cat =>", context.query.cat);
+
   const details_qs = await axios.get(
-    `http://127.0.0.1:8000/v1/products/list-infinite/?limit=20&offset=0`
+    `http://127.0.0.1:8000/v1/products/list-infinite/?limit=1&offset=0`,
+    {
+      params: {
+        cat: context.query.cat,
+        size: context.query.size,
+      },
+    }
   );
 
   const details = await details_qs.data.products;
@@ -402,4 +806,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default AllListShop;
+export default withRouter(AllListShop);

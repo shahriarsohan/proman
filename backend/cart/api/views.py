@@ -1,3 +1,4 @@
+from coupon.models import Coupon
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -41,12 +42,25 @@ class GET_CART_PRICING_DETAILS(views.APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         order_qs = Order.objects.filter(user=user, ordered=False).first()
+        coupon_qs = order_qs.coupon
+        savings = 0
+        print(coupon_qs)
+        if coupon_qs:
+            discount_amount = Coupon.objects.get(code__iexact=coupon_qs)
+            if discount_amount:
+                savings = savings + discount_amount.discount_amount
+        cart_total = 0
+
+        cart_qs = Cart.objects.filter(user=user, expires=False)
+        for product in cart_qs:
+            total = product.product.price
+            cart_total += total
+            if product.product.discount_price:
+                save = product.product.price - product.product.discount_price
+                savings += save
         print(order_qs)
         order_qs = order_qs
-        print(order_qs)
-        print('ordeer total', order_qs.total)
-
-        return Response({'order_total': order_qs.sub_total}, status=status.HTTP_200_OK)
+        return Response({'cart_total': cart_total, 'order_total': order_qs.get_total_product_price(), 'savings': savings}, status=status.HTTP_200_OK)
 
 
 class AddProductToCart(views.APIView):
@@ -146,31 +160,31 @@ class ItemDeleteFromCart(views.APIView):
                     user=request.user, buy_one_get_one=True
                 )
                 length = 1 + len(bogo_cart)
-                if length == 2:
+                if length == 1:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0
-                elif length == 4:
+                elif length == 3:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0
-                elif length == 6:
+                elif length == 5:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0
-                elif length == 8:
+                elif length == 7:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0
-                elif length == 10:
+                elif length == 9:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0
-                elif length == 12:
+                elif length == 11:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0
-                elif length == 14:
+                elif length == 13:
                     print('length / 2', length / 2)
                     print('blaaaaaaaaaaa')
                     price_to_reduce = 0

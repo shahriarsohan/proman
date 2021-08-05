@@ -13,10 +13,13 @@ import {
   handleDeleteFromCart,
   fetchUserCartPricing,
 } from "../../src/store/actions/cart";
+import Link from "next/link";
 
 class Cart extends Component {
   state = {
     coupon: "",
+    couponActivated: false,
+    couponActivatedError: false,
   };
 
   componentDidMount() {
@@ -57,8 +60,15 @@ class Cart extends Component {
       .post("http://127.0.0.1:8000/v1/coupon/validate-coupon", data, config)
       .then((res) => {
         console.log(res.data);
-        this.setState({}, () => this.props.fetchUserCartPricing());
-      });
+        this.setState({ couponActivated: true }, () =>
+          this.props.fetchUserCartPricing()
+        );
+      })
+      .catch((err) =>
+        this.setState({
+          couponActivatedError: true,
+        })
+      );
   };
 
   handlePayment = () => {};
@@ -81,41 +91,60 @@ class Cart extends Component {
                   </div>
                   <div className="cart_list_wrap">
                     <div className="cart_responsive">
-                      {this.props.cart.map((item) => {
+                      {cart.map((item) => {
                         return (
                           <div className="tr_item">
                             <div className="td_item item_img">
                               <img src="https://i.ibb.co/vQHXcYb/b68912b3426baa0b1f4c410a02174879.jpg" />
                             </div>
                             <div className="td_item item_name">
-                              <label className="main">
-                                {item.product.name}
+                              <label
+                                style={{
+                                  textTransform: "capitalize",
+                                  fontFamily: "Ubuntu",
+                                }}
+                                className="main"
+                              >
+                                <Link href={`/details/${item.product.slug}`}>
+                                  {item.product.name}
+                                </Link>
                               </label>
-                              <label className="sub">Ref. 007891987</label>
+                              {/* <label className="sub">Ref. 007891987</label> */}
                             </div>
                             <div className="td_item item_color">
-                              <label>Blue</label>
+                              <label>Qty :{item.quantity} </label>
                             </div>
-                            {/* <div className="td_item item_qty">
-                        <select>
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                          <option value={4}>4</option>
-                          <option value={5}>5</option>
-                          <option value="more">More</option>
-                        </select>
-                      </div> */}
-                            <div className="td_item item_color">
-                              <label>Blue</label>
+
+                            <div
+                              style={{ textTransform: "uppercase" }}
+                              className="td_item item_color"
+                            >
+                              <label>
+                                <strong>{item.size}</strong>
+                              </label>
                             </div>
                             {item.product.discount_price ? (
                               <div className="td_item item_price">
-                                <label>$ {item.product.discount_price}</label>
+                                <label>
+                                  {" "}
+                                  <img
+                                    width="15px"
+                                    height="15px"
+                                    src="/images/taka.png"
+                                  />{" "}
+                                  {item.product.discount_price * item.quantity}
+                                </label>
                               </div>
                             ) : (
                               <div className="td_item item_price">
-                                <label>$ {item.product.price}</label>
+                                <label>
+                                  <img
+                                    width="15px"
+                                    height="15px"
+                                    src="/images/taka.png"
+                                  />
+                                  {item.product.price * item.quantity}
+                                </label>
                               </div>
                             )}
                             <div className="td_item item_remove">
@@ -127,14 +156,23 @@ class Cart extends Component {
                     </div>
                     <div className="footer-cart">
                       <div className="back_cart">
-                        <a href="#back">
-                          <span className="material-icons">west</span>
-                          Back to Shop
-                        </a>
+                        <Link href="/shop/all">
+                          <a>
+                            <span className="material-icons">west</span>
+                            Back to Shop
+                          </a>
+                        </Link>
                       </div>
                       <div className="subtotal">
-                        <label>Subtotal: </label>
-                        <strong>$2451.00</strong>
+                        <strong>
+                          Total ={" "}
+                          <img
+                            width="15px"
+                            height="15px"
+                            src="/images/taka.png"
+                          />
+                          {this.props.total}
+                        </strong>
                       </div>
                     </div>
                   </div>
@@ -145,31 +183,60 @@ class Cart extends Component {
               <div className="right">
                 <ul>
                   <li></li>
-                  <li>
-                    Shipping<span>Free</span>
-                  </li>
-                  <li>
-                    You Save<span>$20.00</span>
-                  </li>
-                  <li>
-                    You Save<span>$20.00</span>
-                  </li>
-                  <li>
-                    You Save<span>$20.00</span>
-                  </li>
-                  <li>
-                    You Save<span>$20.00</span>
-                  </li>
-                  <li>
-                    You Save<span>$20.00</span>
-                  </li>
 
+                  <li>
+                    Cart Total
+                    <span>
+                      <img width="15px" height="15px" src="/images/taka.png" />
+                      {this.props.cart_total}.00
+                    </span>
+                  </li>
+                  <li>
+                    Discount
+                    <span>
+                      {" "}
+                      <img width="15px" height="15px" src="/images/taka.png" />-
+                      {this.props.total_saving}.00
+                    </span>
+                  </li>
+                  <li>
+                    Sub Total
+                    <span>
+                      {" "}
+                      <img width="15px" height="15px" src="/images/taka.png" />
+                      {this.props.total}.00
+                    </span>
+                  </li>
+                  {/* <li>
+                    You Save<span>$20.00</span>
+                  </li>
+                  <li>
+                    You Save<span>$20.00</span>
+                  </li> */}
+                  <h5
+                    style={{
+                      padding: "10px",
+                      textAlign: "center",
+                      fontFamily: "Ubuntu",
+                      color: "green",
+                      fontWeight: "600",
+                      justifyContent: "center",
+                    }}
+                  >
+                    You saved{" "}
+                    <img width="15px" height="15px" src="/images/taka.png" />
+                    {this.props.total_saving}
+                  </h5>
                   <li className="last">
-                    You Pay<span>${this.props.total}</span>
+                    You Pay
+                    <span>
+                      <img width="15px" height="15px" src="/images/taka.png" />
+                      {this.props.total}
+                    </span>
                   </li>
                 </ul>
                 <div className="d-flex">
-                  <div className="d-flex  ">
+                  <div className="d-flex">
                     <form
                       className="d-flex justify-content-center align-items-center coupon-input"
                       onSubmit={this.handleSubmit}
@@ -191,14 +258,37 @@ class Cart extends Component {
                     </form>
                   </div>
                 </div>
+                {this.state.couponActivated && (
+                  <div className="coupon-activated">
+                    <img
+                      width="30px"
+                      height="30px"
+                      src="/images/grinning.png"
+                      alt="success"
+                    />
+                    <h4>Yeee! Coupon Activated</h4>
+                  </div>
+                )}
+
+                {this.state.couponActivatedError && (
+                  <div className="coupon-activation-error">
+                    <img
+                      width="30px"
+                      height="30px"
+                      src="/images/face.png"
+                      alt="success"
+                    />
+                    <h4>Crap! Used Already</h4>
+                  </div>
+                )}
 
                 <div className="button5">
                   <a href="/user/checkout" className="btn">
                     Checkout
                   </a>
-                  <a href="#" className="btn">
-                    Continue shopping
-                  </a>
+                  <Link href="/shop/all">
+                    <a className="btn">Continue shopping</a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -219,6 +309,8 @@ const mapStateToProps = (state) => {
     loading: state.cart.loading,
     error: state.cart.error,
     total: state.cart.total_price,
+    total_saving: state.cart.total_saving,
+    cart_total: state.cart.cart_total,
   };
 };
 

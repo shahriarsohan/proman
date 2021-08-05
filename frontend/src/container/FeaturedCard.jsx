@@ -3,6 +3,7 @@ import axios from "axios";
 import { Modal } from "react-bootstrap";
 
 import QuickLookModal from "../container/QuickLookModal";
+import Link from "next/link";
 
 class FeaturedCard extends React.Component {
   state = {
@@ -50,40 +51,27 @@ class FeaturedCard extends React.Component {
             </a>
             <div className="button-head">
               <div className="product-action">
-                <a
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                  title="Quick View"
-                  href="#"
-                >
-                  <i
-                    onClick={() => this.showModalwithInfo(this.props.slug)}
-                    className=" ti-eye"
-                  />
-                  <span>Quick Shop</span>
-                </a>
                 <a title="Wishlist" href="#">
                   <i className=" ti-heart " />
                   <span>Add to Wishlist</span>
                 </a>
               </div>
-              <div className="product-action-2">
-                <a title="Add to cart" href="#">
-                  Add to cart
-                </a>
-              </div>
             </div>
           </div>
           <div className="product-content">
-            <h3>
-              <a href="product-details.html">{this.props.name}</a>
+            <h3 className="product-head">
+              <Link href={`/details/${this.props.slug}`}>
+                {this.props.name}
+              </Link>
             </h3>
             {this.props.discount_price ? (
               <div className="product-price">
                 <span style={{ marginRight: "10px" }}>
-                  ${this.props.discount_price}
+                  <img width="15px" height="15px" src="/images/taka.png" />
+                  {this.props.discount_price}
                   <span style={{ marginLeft: "10px" }} className="old">
-                    ${this.props.price}
+                    <img width="15px" height="15px" src="/images/taka.png" />
+                    {this.props.price}
                   </span>
                 </span>
                 <span style={{ float: "right", color: "red" }}>-10%</span>
@@ -91,7 +79,8 @@ class FeaturedCard extends React.Component {
             ) : (
               <div className="product-price">
                 <span style={{ marginLeft: "10px" }} className="old">
-                  ${this.props.price}
+                  <img width="15px" height="15px" src="/images/taka.png" />
+                  {this.props.price}
                 </span>
               </div>
             )}
