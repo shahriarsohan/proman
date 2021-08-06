@@ -1,20 +1,17 @@
-from coupon.models import Coupon
-from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
-
-from rest_framework import generics, views, permissions, status
-from rest_framework import response
-from rest_framework.response import Response
-from address.api.serializers import AddressSerializer
-
-from address.models import Address
-from products.models import Products
-from cart.models import Cart, RecentlyView
-from orders.models import Order
-from .serializers import CartSerailizers
-
 from sslcommerz_lib import SSLCOMMERZ
+from .serializers import CartSerailizers
+from orders.models import Order
+from cart.models import Cart, RecentlyView
+from products.models import Products
+from address.models import Address
+from address.api.serializers import AddressSerializer
+from rest_framework.response import Response
+from rest_framework import response
+from rest_framework import generics, views, permissions, status
+from django.utils import timezone
+from django.shortcuts import get_object_or_404
+from django.http.response import JsonResponse
+from coupon.models import Coupon
 
 
 class UserCartListApiView(generics.ListAPIView):
@@ -45,11 +42,16 @@ class GET_CART_PRICING_DETAILS(views.APIView):
         coupon_qs = order_qs.coupon
         savings = 0
         print(coupon_qs)
+
         if coupon_qs:
             discount_amount = Coupon.objects.get(code__iexact=coupon_qs)
             if discount_amount:
                 savings = savings + discount_amount.discount_amount
         cart_total = 0
+
+        if order_qs.free_delivery:
+            print('free_delivery')
+            savings = savings + 60
 
         cart_qs = Cart.objects.filter(user=user, expires=False)
         for product in cart_qs:
@@ -60,6 +62,7 @@ class GET_CART_PRICING_DETAILS(views.APIView):
                 savings += save
         print(order_qs)
         order_qs = order_qs
+
         return Response({'cart_total': cart_total, 'order_total': order_qs.get_total_product_price(), 'savings': savings}, status=status.HTTP_200_OK)
 
 
@@ -128,6 +131,9 @@ class AddProductToCart(views.APIView):
             if not order.products.filter(product__id=order_item.id).exists():
                 order.products.add(order_item)
                 order.sub_total += total_price
+                if order.sub_total >= 1000:
+                    order.free_delivery = True
+                    order.save()
                 order.save()
 
                 return Response({'item':  serializer.data}, status=status.HTTP_200_OK)
@@ -192,11 +198,15 @@ class ItemDeleteFromCart(views.APIView):
                     price_to_reduce = quantity * user_qs.product.discount_price
             else:
                 price_to_reduce = quantity * user_qs.product.discount_price
+
             if user_qs.user == request.user:
                 user_qs.delete()
                 order_qs = Order.objects.filter(
                     user=user, ordered=False).first()
                 order_qs.sub_total = order_qs.sub_total - price_to_reduce
+                if order_qs.sub_total <= 1000:
+                    order_qs.free_delivery = False
+                    order_qs.save()
                 order_qs.save()
             else:
                 return Response({'msg': 'Invalid Token'})
@@ -252,9 +262,9 @@ class OrdercofirmApiView(views.APIView):
         order_qs = Order.objects.filter(user=user, ordered=False).first()
         print(order_qs)
         payment_method = request.data.get('payment_method', None)
-        address_qs = Address.objects.filter(user=request.user).first()
-        if not address_qs:
-            return response.Response({'error': 'Please Enter A valid Address'}, status=status.HTTP_400_BAD_REQUEST)
+        # address_qs = Address.objects.filter(user=request.user).first()
+        # if not address_qs:
+        #     return response.Response({'error': 'Please Enter A valid Address'}, status=status.HTTP_400_BAD_REQUEST)
         cart_qs = Cart.objects.filter(user=request.user)
         if cart_qs:
             for q in cart_qs:
@@ -265,7 +275,7 @@ class OrdercofirmApiView(views.APIView):
             print('ok')
             order_qs.ordered = True
             order_qs.payment_method = payment_method
-            order_qs.address = address_qs
+            # order_qs.address = address_qs
             order_qs.save()
         print(order_qs)
         return response.Response(status=status.HTTP_200_OK)
@@ -276,6 +286,7 @@ class SslCommerzTest(views.APIView):
     def post(self, request, *args, **kwargs):
 
         user = request.user
+        print(user)
         order_qs = Order.objects.filter(user=user, ordered=False).first()
 
         order_total = order_qs.total

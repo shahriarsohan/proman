@@ -8,13 +8,7 @@ import ShopGirdSingle from "../../src/components/ShopList/ShopGirdSingle";
 import Navigation from "../../src/components/Navigation";
 import Link from "next/link";
 import { withRouter } from "next/router";
-import {
-  isMobile,
-  isBrowser,
-  MobileView,
-  BrowserView,
-} from "react-device-detect";
-import Cart from "../../src/components/SideCart/Cart";
+import { isMobile, isBrowser } from "react-device-detect";
 
 class AllListShop extends Component {
   constructor(props) {
@@ -568,105 +562,51 @@ class AllListShop extends Component {
                     {/* Single Widget */}
                     <div className="single-widget recent-post">
                       <h3 className="title">Recent post</h3>
-                      {/* Single Post */}
-                      <div className="single-post first">
-                        <div className="image">
-                          <img
-                            src="https://via.placeholder.com/75x75"
-                            alt="#"
-                          />
-                        </div>
-                        <div className="content">
-                          <h5>
-                            <a href="#">Girls Dress</a>
-                          </h5>
-                          <p className="price">$99.50</p>
-                          <ul className="reviews">
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li>
-                              <i className="ti-star" />
-                            </li>
-                            <li>
-                              <i className="ti-star" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      {/* End Single Post */}
-                      {/* Single Post */}
-                      <div className="single-post first">
-                        <div className="image">
-                          <img
-                            src="https://via.placeholder.com/75x75"
-                            alt="#"
-                          />
-                        </div>
-                        <div className="content">
-                          <h5>
-                            <a href="#">Women Clothings</a>
-                          </h5>
-                          <p className="price">$99.50</p>
-                          <ul className="reviews">
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li>
-                              <i className="ti-star" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      {/* End Single Post */}
-                      {/* Single Post */}
-                      <div className="single-post first">
-                        <div className="image">
-                          <img
-                            src="https://via.placeholder.com/75x75"
-                            alt="#"
-                          />
-                        </div>
-                        <div className="content">
-                          <h5>
-                            <a href="#">Man Tshirt</a>
-                          </h5>
-                          <p className="price">$99.50</p>
-                          <ul className="reviews">
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                            <li className="yellow">
-                              <i className="ti-star" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      {/* End Single Post */}
+                      {this.state.trendingProducts &&
+                        this.state.trendingProducts.map((product) => {
+                          return (
+                            <div className="single-post first">
+                              <div className="image">
+                                <img
+                                  src={
+                                    product.thumbnail
+                                      ? `http://127.0.0.1:8000${product.thumbnail}`
+                                      : "https://via.placeholder.com/550x750"
+                                  }
+                                />
+                              </div>
+                              <div className="content">
+                                <h5 style={{ textTransform: "capitalize" }}>
+                                  <Link href={`/details/${product.slug}`}>
+                                    <a>{product.name}</a>
+                                  </Link>
+                                </h5>
+                                <div style={{ display: "flex" }}>
+                                  <p className="price">
+                                    {" "}
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />
+                                    {product.discount_price
+                                      ? product.discount_price
+                                      : product.price}
+                                  </p>
+                                  <p className="price old-price">
+                                    {" "}
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />
+                                    <del>{product.price}</del>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                     </div>
                     {/*/ End Single Widget */}
                     {/* Single Widget */}

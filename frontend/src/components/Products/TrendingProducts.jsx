@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import ContentLoader, { Facebook } from "react-content-loader";
 
 import TrendingProductCard from "../../container/TrendingProductCard";
 
 export default class TrendingProducts extends Component {
   render() {
     const { p } = this.props;
+    console.log(p);
     return (
       <div className="product-area section">
         <div className="container">

@@ -97,6 +97,7 @@ class checkout extends Component {
     total_amount: 0,
 
     openAddressEditModal: null,
+    agree: false,
   };
 
   componentDidMount() {
@@ -490,7 +491,6 @@ class checkout extends Component {
   };
 
   handleChange = (e) => {
-    // console.log(e.target.value)
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
@@ -772,7 +772,14 @@ class checkout extends Component {
                             }}
                             className="p-4 address-box"
                           >
-                            <p>{this.state.shipping_address.f_name}</p>
+                            {this.state.shipping_address.l_name ? (
+                              <p>
+                                {this.state.shipping_address.f_name}{" "}
+                                {this.state.shipping_address.l_name}
+                              </p>
+                            ) : (
+                              <p>{this.state.shipping_address.f_name}</p>
+                            )}
                             <p>
                               {
                                 this.state.shipping_address
@@ -805,10 +812,10 @@ class checkout extends Component {
                           <li className="p-4 address-box">
                             Same as shipping address
                             <div style={{ float: "right", display: "flex" }}>
-                              <button className="p-1 m-2">
+                              {/* <button className="p-1 m-2">
                                 <Icon name="edit outline"></Icon>
                                 Edit
-                              </button>
+                              </button> */}
                             </div>
                           </li>
                         </ul>
@@ -830,15 +837,40 @@ class checkout extends Component {
                       <div className="content">
                         <ul>
                           <li>
-                            Sub Total<span>${this.state.sub_total_amount}</span>
+                            Sub Total
+                            <span>
+                              {" "}
+                              <img
+                                width="15px"
+                                height="15px"
+                                src="/images/taka.png"
+                              />
+                              {this.state.sub_total_amount}
+                            </span>
                           </li>
                           <li>
                             (+) Shipping
-                            <span>${this.state.shipping_charge}</span>
+                            <span>
+                              {" "}
+                              <img
+                                width="15px"
+                                height="15px"
+                                src="/images/taka.png"
+                              />
+                              {this.state.shipping_charge}
+                            </span>
                           </li>
                           <li className="last">
                             Total
-                            <span>${this.state.total_amount}</span>
+                            <span>
+                              {" "}
+                              <img
+                                width="15px"
+                                height="15px"
+                                src="/images/taka.png"
+                              />
+                              {this.state.total_amount}
+                            </span>
                           </li>
                         </ul>
                       </div>
@@ -877,13 +909,29 @@ class checkout extends Component {
                       </div>
                     </div>
 
+                    <div className="terms-aggrement">
+                      <input
+                        onChange={() =>
+                          this.setState({ agree: !this.state.agree })
+                        }
+                        className="agree-checkbox"
+                        type="checkbox"
+                      />
+                      I Read and agree to the Terms & Conditions,Privacy Policy
+                      and Return Refund Policy
+                    </div>
+
                     <div className="single-widget get-button">
                       <div className="content">
                         <div className="button">
                           <Link href="/user/checkout/payment">
-                            <a onClick={this.handlePayment} className="btn">
+                            <button
+                              disabled={!this.state.agree}
+                              onClick={this.handlePayment}
+                              className="btn"
+                            >
                               Procced to payment
-                            </a>
+                            </button>
                           </Link>
                         </div>
                       </div>

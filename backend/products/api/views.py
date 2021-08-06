@@ -161,10 +161,10 @@ class GetNewProducts(views.APIView):
         return Response({'new_qs': featured_queryset_serializer.data}, status=status.HTTP_200_OK)
 
 
-class GetTrendingProducts(views.APIView):
+class GetTrendingProductsTwo(views.APIView):
     def get(self, request, *args, **kwargs):
         featured_queryset = Products.objects.filter(trending=True).order_by(
-            '-timestamp')[:3]
+            '-timestamp')[:4]
         print('featured_queryset', featured_queryset)
         featured_queryset_serializer = ProductsSerializer(
             featured_queryset, many=True)

@@ -1,3 +1,9 @@
+:root {
+  --primary: #08d9d6;
+  --secondary-black: #252a34;
+  --redis: #ff2e63;
+  --white: #ffffff;
+}
 * {
   font-family: "Ubuntu";
 }
@@ -1360,7 +1366,7 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
 
 .search-bar .btnn:hover {
   color: #fff;
-  background: #39a6a3;
+  background: var(--primary);
 }
 
 .hro-slider {
@@ -4519,13 +4525,14 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
 }
 
 .address-box {
-  border: 5px solid red;
-  border-radius: 20px;
+  border: 3px solid var(--primary);
+  border-radius: 0px;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.4);
   font-family: "Ubuntu";
   text-transform: capitalize;
-  font-weight: 600;
+  font-weight: 400;
+  box-shadow: 20px;
 }
 
 .address-box p {
@@ -4541,6 +4548,7 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   margin: 0px;
   overflow: hidden;
   text-transform: capitalize;
+  font-weight: 400;
 }
 
 .coupon-activated {
@@ -4572,4 +4580,17 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
 .filter-head {
   display: flex;
   justify-content: space-between;
+}
+
+.terms-aggrement {
+  padding: 10px 30px;
+}
+
+.terms-aggrement p {
+  font-weight: 400;
+}
+
+.terms-aggrement .agree-checkbox {
+  margin-left: 20px;
+  margin-right: 5px;
 }

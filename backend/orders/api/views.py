@@ -78,37 +78,42 @@ class UpdateDeliveryCharge(views.APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
         order_qs = Order.objects.filter(user=user, ordered=False).first()
+
         address_qs = Address.objects.get(user=user)
-        if order_qs:
-            if address_qs:
-                region = address_qs.region
-                print(region)
-                if region is not None:
-                    if region == 'dhaka':
-                        order_qs.shipping = 60
-                        order_qs.save()
-                    elif region == 'rajshahi':
-                        order_qs.shipping = 150
-                        order_qs.save()
-                    elif region == 'rangpur':
-                        order_qs.shipping = 100
-                        order_qs.save()
-                    elif region == 'chattogram':
-                        order_qs.shipping = 100
-                        order_qs.save()
-                    elif region == 'khulna':
-                        order_qs.shipping = 100
-                        order_qs.save()
-                    elif region == 'shylhet':
-                        order_qs.shipping = 100
-                        order_qs.save()
-                    elif region == 'barishal':
-                        order_qs.shipping = 100
-                        order_qs.save()
-                    else:
-                        order_qs.shipping = 60
-                        order_qs.save()
-                return response.Response({"msg": "Shipping charge updated"}, status=status.HTTP_200_OK)
+        if not order_qs.free_delivery:
+            if order_qs:
+                if address_qs:
+                    region = address_qs.region
+                    print(region)
+                    if region is not None:
+                        if region == 'dhaka':
+                            order_qs.shipping = 60
+                            order_qs.save()
+                        elif region == 'rajshahi':
+                            order_qs.shipping = 150
+                            order_qs.save()
+                        elif region == 'rangpur':
+                            order_qs.shipping = 100
+                            order_qs.save()
+                        elif region == 'chattogram':
+                            order_qs.shipping = 100
+                            order_qs.save()
+                        elif region == 'khulna':
+                            order_qs.shipping = 100
+                            order_qs.save()
+                        elif region == 'shylhet':
+                            order_qs.shipping = 100
+                            order_qs.save()
+                        elif region == 'barishal':
+                            order_qs.shipping = 100
+                            order_qs.save()
+                        else:
+                            order_qs.shipping = 60
+                            order_qs.save()
+                    return response.Response({"msg": "Shipping charge updated"}, status=status.HTTP_200_OK)
+        if order_qs.free_delivery:
+            order_qs.shipping = 0
+            order_qs.save()
         return response.Response({"msg": "Something went wrong"})
 
 

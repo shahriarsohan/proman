@@ -1,3 +1,4 @@
+from passwordless.utils import unique_order_id_generator
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save
@@ -19,6 +20,7 @@ class DeliveryCharge(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_id = models.CharField(max_length=64, blank=True, null=True)
     products = models.ManyToManyField(Cart)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
@@ -33,6 +35,7 @@ class Order(models.Model):
     shipping = models.IntegerField(default=60)
     payment_method = models.CharField(max_length=50, blank=True, null=True)
     payment_number = models.CharField(max_length=100, blank=True, null=True)
+    free_delivery = models.BooleanField(default=False)
     being_delivered = models.BooleanField(default=False)
     received = models.BooleanField(default=False)
     refund_requested = models.BooleanField(default=False)
@@ -96,6 +99,13 @@ class Order(models.Model):
         self.save()
         return c
 
+
+def pre_save_create_order_id(sender, instance, *args, **kwargs):
+    if not instance.order_id:
+        instance.order_id = unique_order_id_generator(instance)
+
+
+pre_save.connect(pre_save_create_order_id, sender=Order)
 
 # def pre_save_address_signal(sender, instance, *args, **kwargs):
 #     if not instance.address:

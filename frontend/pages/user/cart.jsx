@@ -26,6 +26,14 @@ class Cart extends Component {
     this.props.fetchUserCartPricing();
   }
 
+  handleDelete = (id) => {
+    const data = {
+      id: id,
+    };
+    this.props.handleDeleteFromCart(data);
+    this.props.fetchUserCartPricing();
+  };
+
   handleChange = (item) => {
     const config = {
       headers: {
@@ -75,7 +83,7 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.props;
-    console.log(this.state.coupon);
+    console.log(cart);
     return (
       <>
         <NavbarTwo />
@@ -84,99 +92,111 @@ class Cart extends Component {
           <div className="row mt-2 mb-2">
             <div className="col-md-8">
               <div className="cart_wrapper">
-                <div className="cart_lists">
-                  <div className="cart_title">
-                    <span className="material-icons-outlined">local_mall</span>
-                    Your Shopping Cart
-                  </div>
-                  <div className="cart_list_wrap">
-                    <div className="cart_responsive">
-                      {cart.map((item) => {
-                        return (
-                          <div className="tr_item">
-                            <div className="td_item item_img">
-                              <img src="https://i.ibb.co/vQHXcYb/b68912b3426baa0b1f4c410a02174879.jpg" />
-                            </div>
-                            <div className="td_item item_name">
-                              <label
-                                style={{
-                                  textTransform: "capitalize",
-                                  fontFamily: "Ubuntu",
-                                }}
-                                className="main"
-                              >
-                                <Link href={`/details/${item.product.slug}`}>
-                                  {item.product.name}
-                                </Link>
-                              </label>
-                              {/* <label className="sub">Ref. 007891987</label> */}
-                            </div>
-                            <div className="td_item item_color">
-                              <label>Qty :{item.quantity} </label>
-                            </div>
+                {cart.length !== 0 ? (
+                  <div className="cart_lists">
+                    <div className="cart_title">
+                      <span className="material-icons-outlined">
+                        local_mall
+                      </span>
+                      Your Shopping Cart
+                    </div>
+                    <div className="cart_list_wrap">
+                      <div className="cart_responsive">
+                        {cart.map((item) => {
+                          return (
+                            <div className="tr_item">
+                              <div className="td_item item_img">
+                                <img src="https://i.ibb.co/vQHXcYb/b68912b3426baa0b1f4c410a02174879.jpg" />
+                              </div>
+                              <div className="td_item item_name">
+                                <label
+                                  style={{
+                                    textTransform: "capitalize",
+                                    fontFamily: "Ubuntu",
+                                  }}
+                                  className="main"
+                                >
+                                  <Link href={`/details/${item.product.slug}`}>
+                                    {item.product.name}
+                                  </Link>
+                                </label>
+                                {/* <label className="sub">Ref. 007891987</label> */}
+                              </div>
+                              <div className="td_item item_color">
+                                <label>Qty :{item.quantity} </label>
+                              </div>
 
-                            <div
-                              style={{ textTransform: "uppercase" }}
-                              className="td_item item_color"
-                            >
-                              <label>
-                                <strong>{item.size}</strong>
-                              </label>
-                            </div>
-                            {item.product.discount_price ? (
-                              <div className="td_item item_price">
+                              <div
+                                style={{ textTransform: "uppercase" }}
+                                className="td_item item_color"
+                              >
                                 <label>
-                                  {" "}
-                                  <img
-                                    width="15px"
-                                    height="15px"
-                                    src="/images/taka.png"
-                                  />{" "}
-                                  {item.product.discount_price * item.quantity}
+                                  <strong>{item.size}</strong>
                                 </label>
                               </div>
-                            ) : (
-                              <div className="td_item item_price">
-                                <label>
-                                  <img
-                                    width="15px"
-                                    height="15px"
-                                    src="/images/taka.png"
-                                  />
-                                  {item.product.price * item.quantity}
-                                </label>
+                              {item.product.discount_price ? (
+                                <div className="td_item item_price">
+                                  <label>
+                                    {" "}
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />{" "}
+                                    {item.product.discount_price *
+                                      item.quantity}
+                                  </label>
+                                </div>
+                              ) : (
+                                <div className="td_item item_price">
+                                  <label>
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />
+                                    {item.product.price * item.quantity}
+                                  </label>
+                                </div>
+                              )}
+                              <div className="td_item item_remove">
+                                <span
+                                  onClick={() => this.handleDelete(item.id)}
+                                  className="material-icons"
+                                >
+                                  close
+                                </span>
                               </div>
-                            )}
-                            <div className="td_item item_remove">
-                              <span className="material-icons">close</span>
                             </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="footer-cart">
-                      <div className="back_cart">
-                        <Link href="/shop/all">
-                          <a>
-                            <span className="material-icons">west</span>
-                            Back to Shop
-                          </a>
-                        </Link>
+                          );
+                        })}
                       </div>
-                      <div className="subtotal">
-                        <strong>
-                          Total ={" "}
-                          <img
-                            width="15px"
-                            height="15px"
-                            src="/images/taka.png"
-                          />
-                          {this.props.total}
-                        </strong>
+                      <div className="footer-cart">
+                        <div className="back_cart">
+                          <Link href="/shop/all">
+                            <a>
+                              <span className="material-icons">west</span>
+                              Back to Shop
+                            </a>
+                          </Link>
+                        </div>
+                        <div className="subtotal">
+                          <strong>
+                            Total ={" "}
+                            <img
+                              width="15px"
+                              height="15px"
+                              src="/images/taka.png"
+                            />
+                            {this.props.total}
+                          </strong>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <li>empty</li>
+                )}
               </div>
             </div>
             <div className="col-md-4">

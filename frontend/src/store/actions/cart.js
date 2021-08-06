@@ -30,12 +30,19 @@ export const fetchUserOrder = () => (dispatch) => {
       },
     };
   }
-  axios.get("http://127.0.0.1:8000/v1/cart/user-cart", config).then((res) => {
-    dispatch({
-      type: FETCH_USER_CART,
-      payload: res.data,
+  axios
+    .get("http://127.0.0.1:8000/v1/cart/user-cart", config)
+    .then((res) => {
+      dispatch({
+        type: FETCH_USER_CART,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: FETCH_USER_CART_ERROR,
+      });
     });
-  });
 };
 
 export const fetchUserCartPricing = () => (dispatch) => {
@@ -55,6 +62,11 @@ export const fetchUserCartPricing = () => (dispatch) => {
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
         payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: FETCH_PRICING_DETAILS_ERROR,
       });
     });
 };

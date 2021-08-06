@@ -39,6 +39,14 @@
 
 
 /*---------------------------------------------*/
+
+:root{
+  --primary: #08d9d6;
+  --secondary-black: #252a34;
+  --redis: #ff2e63;
+  --white: #ffffff;
+}
+
 input {
 	outline: none;
 	border: none;
@@ -207,7 +215,7 @@ iframe {
   border-radius: 10px;
   top: 0;
   left: 0;
-  background: #39a6a3;
+  background: var(--primary);
 
   opacity: 0;
   -webkit-transition: all 0.4s;
@@ -375,7 +383,7 @@ iframe {
   border-radius: 10px;
   top: 0;
   left: 0;
-  background: #39a6a3;
+  background: var(--primary);
   opacity: 0;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
