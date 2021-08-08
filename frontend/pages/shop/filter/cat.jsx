@@ -53,7 +53,7 @@ class AllListShop extends Component {
     console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/api/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
+        `http://192.168.0.8:8000/api/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
         {
           params: {
             query: this.state.query,
@@ -95,7 +95,7 @@ class AllListShop extends Component {
     console.log(this.state.query);
     axios
       .get(
-        "http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0",
+        "http://192.168.0.8:8000/v1/products/product-filter-cat/?limit=1&offset=0",
         {
           params: {
             query: this.state.query,

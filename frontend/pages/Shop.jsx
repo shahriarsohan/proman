@@ -16,7 +16,7 @@ export default class Shop extends Component {
     this.setState({ loading: true });
 
     axios
-      .get("http://127.0.0.1:8000/v1/products/list")
+      .get("http://192.168.0.8:8000/v1/products/list")
       .then((res) =>
         this.setState({ loading: false, products: res.data.skin_care_qs })
       );

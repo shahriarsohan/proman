@@ -31,7 +31,7 @@ export const fetchUserOrder = () => (dispatch) => {
     };
   }
   axios
-    .get("http://127.0.0.1:8000/v1/cart/user-cart", config)
+    .get("http://192.168.0.8:8000/v1/cart/user-cart", config)
     .then((res) => {
       dispatch({
         type: FETCH_USER_CART,
@@ -57,7 +57,7 @@ export const fetchUserCartPricing = () => (dispatch) => {
     };
   }
   axios
-    .get("http://127.0.0.1:8000/v1/cart/cart-pricing-details", config)
+    .get("http://192.168.0.8:8000/v1/cart/cart-pricing-details", config)
     .then((res) => {
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
@@ -84,7 +84,7 @@ export const handleAddToCart = (data) => (dispatch) => {
     };
   }
   axios
-    .post("http://127.0.0.1:8000/v1/cart/add-to-cart", data, config)
+    .post("http://192.168.0.8:8000/v1/cart/add-to-cart", data, config)
     .then((res) => {
       dispatch({
         type: ADD_TO_CART,
@@ -120,7 +120,7 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
   }
 
   axios
-    .post("http://127.0.0.1:8000/v1/cart/item-delete-from-cart", data, config)
+    .post("http://192.168.0.8:8000/v1/cart/item-delete-from-cart", data, config)
     .then((res) => {
       dispatch({
         type: DELETE_FROM_CART,

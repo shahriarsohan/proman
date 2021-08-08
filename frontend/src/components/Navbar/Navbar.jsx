@@ -492,13 +492,6 @@ class Navbar extends Component {
                     />
                     <span className="total-count">{cart.length}</span>
                   </a>
-                  <img
-                    onClick={() => this.setState({ openSearch: true })}
-                    style={{ marginLeft: "7px" }}
-                    width="30px"
-                    height="30px"
-                    src="/images/search.png"
-                  />
                 </div>
 
                 <div className="nav-icon p-2 ml-3">
@@ -514,7 +507,13 @@ class Navbar extends Component {
                   </div>
                 </div>
                 <div className="nav-icon p-2 ml-3">
-                  <img width="30px" height="30px" src="/images/menu.png" />
+                  <img
+                    onClick={() => this.setState({ openSearch: true })}
+                    style={{ marginLeft: "7px" }}
+                    width="30px"
+                    height="30px"
+                    src="/images/search.png"
+                  />
                 </div>
               </div>
             )}

@@ -1,19 +1,26 @@
-import React, { Component } from "react";
-
 import axios from "axios";
+import React, { Component } from "react";
+import Link from "next/link";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
-import ShopListSingle from "../../src/components/ShopList/ShopListSingle";
 import ShopGirdSingle from "../../src/components/ShopList/ShopGirdSingle";
 import Navigation from "../../src/components/Navigation";
-import Link from "next/link";
-import { withRouter } from "next/router";
 import { isMobile, isBrowser } from "react-device-detect";
+import { withRouter } from "next/router";
 
-class AllListShop extends Component {
+const style = {
+  height: 30,
+  border: "1px solid green",
+  margin: 6,
+  padding: 8,
+};
+
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      items: Array.from({ length: 20 }),
       error: false,
       loading: false,
       products: [],
@@ -65,7 +72,7 @@ class AllListShop extends Component {
   loadTrendingProducts = () => {
     console.log("ok.................");
     axios
-      .get("http://127.0.0.1:8000/v1/products/trending-products")
+      .get("http://192.168.0.8:8000/v1/products/trending-products")
       .then((res) => {
         this.setState({
           trendingProducts: res.data.new_qs,
@@ -78,7 +85,7 @@ class AllListShop extends Component {
     console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
+        `http://192.168.0.8:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -148,7 +155,7 @@ class AllListShop extends Component {
   updateProducts = (e) => {
     axios
       .get(
-        `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
+        `http://192.168.0.8:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -183,44 +190,17 @@ class AllListShop extends Component {
       });
   };
 
-  // handleUpdateSize = (e) => {
-  //   console.log(e);
-  //   axios
-  //     .get(
-  //       `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${e.target.innerHTML}`
-  //     )
-  //     .then((res) => {
-  //       const newProducts = res.data.products;
-  //       const hasMore = res.data.hasMore;
-  //       console.log(hasMore);
-
-  //       this.setState(
-  //         {
-  //           hasMore: hasMore,
-  //           loading: false,
-  //           products: newProducts,
-  //           offset: this.state.offset + this.state.limit,
-  //         },
-  //         () => {
-  //           this.props.router.push({
-  //             pathname: "/shop/all",
-  //             query: {
-  //               size: e.target.innerHTML,
-  //             },
-  //           });
-  //         }
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       this.setState({ loading: false });
-  //     });
-  // };
+  fetchMoreData = () => {
+    // a fake async api call like which sends
+    // 20 more records in 1.5 secs
+    setTimeout(() => {
+      this.setState({
+        items: this.state.items.concat(Array.from({ length: 20 })),
+      });
+    }, 1500);
+  };
 
   render() {
-    // console.log(this.props.details);
-    console.log(this.state.cat);
-    console.log(this.state.size);
     return (
       <>
         <NavbarTwo />
@@ -299,58 +279,56 @@ class AllListShop extends Component {
                             </a>
                           </li>
                           {/* <li>
-                        <Link href="/shop/filter/cat?=Game">Game</Link>
-                      </li> */}
+                      <Link href="/shop/filter/cat?=Game">Game</Link>
+                    </li> */}
                         </ul>
                       </div>
                       {/*/ End Single Widget */}
                       {/* Shop By Price */}
                       {/* <div className="single-widget range">
-                    <h3 className="title">Shop by Price</h3>
-                    <div className="price-filter">
-                      <div className="price-filter-inner">
-                        <div id="slider-range" />
-                        <div className="price_slider_amount">
-                          <div className="label-input">
-                            <span>Range:</span>
-                            <input
-                              onChange={(e) => console.log(e.target)}
-                              type="text"
-                              id="amount"
-                              name="price"
-                              placeholder="Add Your Price"
-                            />
-                          </div>
+                  <h3 className="title">Shop by Price</h3>
+                  <div className="price-filter">
+                    <div className="price-filter-inner">
+                      <div id="slider-range" />
+                      <div className="price_slider_amount">
+                        <div className="label-input">
+                          <span>Range:</span>
+                          <input
+                            onChange={(e) => console.log(e.target)}
+                            type="text"
+                            id="amount"
+                            name="price"
+                            placeholder="Add Your Price"
+                          />
                         </div>
                       </div>
                     </div>
-                    <ul className="categor-list">
-                      <li>
-                        <a
-                          onClick={(e) => this.handleUpdateSize(e)}
-                          value="M"
-                          name="size"
-                        >
-                          L
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          onClick={(e) => this.handleUpdateSize(e)}
-                          value="L"
-                          name="size"
-                        >
-                          M
-                        </a>
-                      </li>
-
-                      <li>
-                        <Link href="/shop/filter/cat?=Game">Game</Link>
-                      </li>
-                    </ul>
                   </div>
-
-             */}
+                  <ul className="categor-list">
+                    <li>
+                      <a
+                        onClick={(e) => this.handleUpdateSize(e)}
+                        value="M"
+                        name="size"
+                      >
+                        L
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        onClick={(e) => this.handleUpdateSize(e)}
+                        value="L"
+                        name="size"
+                      >
+                        M
+                      </a>
+                    </li>
+                    <li>
+                      <Link href="/shop/filter/cat?=Game">Game</Link>
+                    </li>
+                  </ul>
+                </div>
+           */}
 
                       {/*/ End Shop By Price */}
                       {/* Single Widget */}
@@ -368,7 +346,7 @@ class AllListShop extends Component {
                                   <img
                                     src={
                                       product.thumbnail
-                                        ? `http://127.0.0.1:8000${product.thumbnail}`
+                                        ? `http://192.168.0.8:8000${product.thumbnail}`
                                         : "https://via.placeholder.com/550x750"
                                     }
                                   />
@@ -411,25 +389,25 @@ class AllListShop extends Component {
                       {/*/ End Single Widget */}
                       {/* Single Widget */}
                       {/* <div className="single-widget category">
-                    <h3 className="title">Manufacturers</h3>
-                    <ul className="categor-list">
-                      <li>
-                        <a href="#">Forever</a>
-                      </li>
-                      <li>
-                        <a href="#">giordano</a>
-                      </li>
-                      <li>
-                        <a href="#">abercrombie</a>
-                      </li>
-                      <li>
-                        <a href="#">ecko united</a>
-                      </li>
-                      <li>
-                        <a href="#">zara</a>
-                      </li>
-                    </ul>
-                  </div> */}
+                  <h3 className="title">Manufacturers</h3>
+                  <ul className="categor-list">
+                    <li>
+                      <a href="#">Forever</a>
+                    </li>
+                    <li>
+                      <a href="#">giordano</a>
+                    </li>
+                    <li>
+                      <a href="#">abercrombie</a>
+                    </li>
+                    <li>
+                      <a href="#">ecko united</a>
+                    </li>
+                    <li>
+                      <a href="#">zara</a>
+                    </li>
+                  </ul>
+                </div> */}
                       {/*/ End Single Widget */}
                     </div>
                   </div>
@@ -442,6 +420,7 @@ class AllListShop extends Component {
         <section className="product-area shop-sidebar shop-list shop section">
           <div className="container">
             <div className="row">
+              <p>{this.state.hasMore}</p>
               {isBrowser && (
                 <div className="col-lg-3 col-md-4 col-12">
                   <div className="shop-sidebar">
@@ -505,58 +484,56 @@ class AllListShop extends Component {
                           </a>
                         </li>
                         {/* <li>
-                        <Link href="/shop/filter/cat?=Game">Game</Link>
-                      </li> */}
+                      <Link href="/shop/filter/cat?=Game">Game</Link>
+                    </li> */}
                       </ul>
                     </div>
                     {/*/ End Single Widget */}
                     {/* Shop By Price */}
                     {/* <div className="single-widget range">
-                    <h3 className="title">Shop by Price</h3>
-                    <div className="price-filter">
-                      <div className="price-filter-inner">
-                        <div id="slider-range" />
-                        <div className="price_slider_amount">
-                          <div className="label-input">
-                            <span>Range:</span>
-                            <input
-                              onChange={(e) => console.log(e.target)}
-                              type="text"
-                              id="amount"
-                              name="price"
-                              placeholder="Add Your Price"
-                            />
-                          </div>
+                  <h3 className="title">Shop by Price</h3>
+                  <div className="price-filter">
+                    <div className="price-filter-inner">
+                      <div id="slider-range" />
+                      <div className="price_slider_amount">
+                        <div className="label-input">
+                          <span>Range:</span>
+                          <input
+                            onChange={(e) => console.log(e.target)}
+                            type="text"
+                            id="amount"
+                            name="price"
+                            placeholder="Add Your Price"
+                          />
                         </div>
                       </div>
                     </div>
-                    <ul className="categor-list">
-                      <li>
-                        <a
-                          onClick={(e) => this.handleUpdateSize(e)}
-                          value="M"
-                          name="size"
-                        >
-                          L
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          onClick={(e) => this.handleUpdateSize(e)}
-                          value="L"
-                          name="size"
-                        >
-                          M
-                        </a>
-                      </li>
-
-                      <li>
-                        <Link href="/shop/filter/cat?=Game">Game</Link>
-                      </li>
-                    </ul>
                   </div>
-
-             */}
+                  <ul className="categor-list">
+                    <li>
+                      <a
+                        onClick={(e) => this.handleUpdateSize(e)}
+                        value="M"
+                        name="size"
+                      >
+                        L
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        onClick={(e) => this.handleUpdateSize(e)}
+                        value="L"
+                        name="size"
+                      >
+                        M
+                      </a>
+                    </li>
+                    <li>
+                      <Link href="/shop/filter/cat?=Game">Game</Link>
+                    </li>
+                  </ul>
+                </div>
+           */}
 
                     {/*/ End Shop By Price */}
                     {/* Single Widget */}
@@ -570,7 +547,7 @@ class AllListShop extends Component {
                                 <img
                                   src={
                                     product.thumbnail
-                                      ? `http://127.0.0.1:8000${product.thumbnail}`
+                                      ? `http://192.168.0.8:8000${product.thumbnail}`
                                       : "https://via.placeholder.com/550x750"
                                   }
                                 />
@@ -611,25 +588,25 @@ class AllListShop extends Component {
                     {/*/ End Single Widget */}
                     {/* Single Widget */}
                     {/* <div className="single-widget category">
-                    <h3 className="title">Manufacturers</h3>
-                    <ul className="categor-list">
-                      <li>
-                        <a href="#">Forever</a>
-                      </li>
-                      <li>
-                        <a href="#">giordano</a>
-                      </li>
-                      <li>
-                        <a href="#">abercrombie</a>
-                      </li>
-                      <li>
-                        <a href="#">ecko united</a>
-                      </li>
-                      <li>
-                        <a href="#">zara</a>
-                      </li>
-                    </ul>
-                  </div> */}
+                  <h3 className="title">Manufacturers</h3>
+                  <ul className="categor-list">
+                    <li>
+                      <a href="#">Forever</a>
+                    </li>
+                    <li>
+                      <a href="#">giordano</a>
+                    </li>
+                    <li>
+                      <a href="#">abercrombie</a>
+                    </li>
+                    <li>
+                      <a href="#">ecko united</a>
+                    </li>
+                    <li>
+                      <a href="#">zara</a>
+                    </li>
+                  </ul>
+                </div> */}
                     {/*/ End Single Widget */}
                   </div>
                 </div>
@@ -680,17 +657,17 @@ class AllListShop extends Component {
                         )}
                       </div>
                       {/* <ul className="view-mode">
-                        <li className={this.state.list ? "" : "active"}>
-                          <a onClick={() => this.setState({ list: false })}>
-                            <i className="fa fa-th-large" />
-                          </a>
-                        </li>
-                        <li className={this.state.list ? "active" : ""}>
-                          <a onClick={() => this.setState({ list: true })}>
-                            <i className="fa fa-th-list" />
-                          </a>
-                        </li>
-                      </ul> */}
+                      <li className={this.state.list ? "" : "active"}>
+                        <a onClick={() => this.setState({ list: false })}>
+                          <i className="fa fa-th-large" />
+                        </a>
+                      </li>
+                      <li className={this.state.list ? "active" : ""}>
+                        <a onClick={() => this.setState({ list: true })}>
+                          <i className="fa fa-th-list" />
+                        </a>
+                      </li>
+                    </ul> */}
                     </div>
                     {/*/ End Shop Top */}
                   </div>
@@ -698,20 +675,22 @@ class AllListShop extends Component {
                 <div className="row">
                   {this.state.products
                     ? this.state.products.map((product) => {
-                        if (this.state.list) {
-                          return <ShopListSingle product={product} />;
-                        } else {
-                          return <ShopGirdSingle product={product} />;
-                        }
+                        return <ShopGirdSingle product={product} />;
                       })
                     : ""}
+                  <InfiniteScroll
+                    dataLength={this.state.products.length}
+                    next={this.loadProducts}
+                    hasMore={true}
+                    loader={<h4>Loading...</h4>}
+                  ></InfiniteScroll>
                 </div>
               </div>
               {/* ) : ( */}
             </div>
           </div>
         </section>
-        <Navigation />
+        {/* <Navigation /> */}
         {/* <Footer /> */}
       </>
     );
@@ -722,7 +701,7 @@ export async function getServerSideProps(context) {
   console.log("cat =>", context.query.cat);
 
   const details_qs = await axios.get(
-    `http://127.0.0.1:8000/v1/products/list-infinite/?limit=1&offset=0`,
+    `http://192.168.0.8:8000/v1/products/list-infinite/?limit=4&offset=0`,
     {
       params: {
         cat: context.query.cat,
@@ -746,4 +725,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default withRouter(AllListShop);
+export default withRouter(App);

@@ -37,7 +37,7 @@ class Login extends Component {
     this.setState({ loading: true });
     this.props.otpSend(this.state.phoneNumber);
     // axios
-    //   .post("http://127.0.0.1:8000/auth/email/", {
+    //   .post("http://192.168.0.8:8000/auth/email/", {
     //     email: this.state.email,
     //   })
     //   .then((res) => {

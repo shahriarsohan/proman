@@ -10,6 +10,8 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 import moment from "moment";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
 
 import { handleAddToCart, fetchUserOrder } from "../../src/store/actions/cart";
 
@@ -23,24 +25,100 @@ import { openSideBar, closeSideBar } from "../../src/store/actions/cartSideBar";
 
 // const
 import Breadcrumb from "react-bootstrap/Breadcrumb";
-import { isMobile } from "react-device-detect";
+import { isMobile, isBrowser } from "react-device-detect";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 import PopularProducts from "../../src/components/Products/NewProducts";
-import MultipleRows from "../../src/components/Products/NewProductsTwo";
-
-import ShareButton from "./shareButton";
 
 class DetailsPage extends Component {
   state = {
     size: "",
-    activeImg: `http://127.0.0.1:8000${this.props.details.images[0].image}`,
+    activeImg: `http://192.168.0.8:8000${this.props.details.images[0].image}`,
     quantity: 1,
     sizeError: null,
+    isMobile: null,
+    isBrowser: null,
+
+    photoIndex: 0,
+    isOpen: false,
+    images: [],
+    index: 0,
   };
 
-  // componentDidMount() {
+  componentDidMount() {
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
 
-  // }
+    if (this.props.details.images) {
+      console.log("images//////////");
+      this.props.details.images.map((img) => {
+        const src = `http://192.168.0.8:8000${img.image}`;
+        this.setState((state) => {
+          const list = state.images.push(src);
+          console.log(list);
+        });
+      });
+    }
+  }
+
+  componentWillMount() {}
+
+  captions = [
+    <div className="product-deslaimer">
+      <h5
+        style={{
+          color: "rgba(14,14,14,.67)",
+          textTransform: "uppercase",
+        }}
+      >
+        Disclaimer
+      </h5>
+      <div className="disclaimer-images">
+        <div className="disclaimer-image">
+          <img
+            width="50px"
+            height="50px"
+            src="/images/iron.png"
+            alt="Do not iron directly on prints."
+          />
+        </div>
+        <div className="disclaimer-image">
+          <img
+            width="40px"
+            height="40px"
+            src="/images/washing-machine.png"
+            alt="Do not iron directly on prints."
+          />
+        </div>
+        <div className="disclaimer-image">
+          <img
+            width="50px"
+            height="50px"
+            src="/images/drying-clothes.png"
+            alt="Do not iron directly on prints."
+          />
+        </div>
+        <div className="disclaimer-image">
+          <img
+            width="50px"
+            height="50px"
+            src="/images/bleach.png"
+            alt="Do not iron directly on prints."
+          />
+        </div>
+        <div className="disclaimer-image">
+          <img
+            width="50px"
+            height="50px"
+            src="https://images.bewakoof.com/web/Do-not-wrink-2x-1528457334.png"
+            alt="Do not iron directly on prints."
+          />
+        </div>
+      </div>
+    </div>,
+  ];
 
   handleChangeSize = (e) => {
     console.log(e.value);
@@ -97,32 +175,51 @@ class DetailsPage extends Component {
     console.log(this.state.sizeError);
 
     console.log(details.products.discount_price);
-    console.log(this.state.activeImg);
+    console.log(this.state.size);
 
     var myDate = new Date(
       new Date().getTime() +
         details.products.product_delivery_time * 24 * 60 * 60 * 1000
     );
 
-    console.log(details);
-
     const expected_delivery_date = moment(myDate).format("MMMM Do");
+    const { photoIndex, isOpen, images } = this.state;
 
+    console.log(images);
     return (
       <>
         <NavbarDetailsPage
           route={this.props.router.back}
           name={details.products.name}
+          isMobile={this.state.isMobile}
         />
         <ReactTooltip />
         {add_to_cart_success
           ? NotificationManager.success("success message")
           : ""}
-
+        {isOpen && (
+          <Lightbox
+            mainSrc={images[photoIndex]}
+            nextSrc={images[(photoIndex + 1) % images.length]}
+            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+            onCloseRequest={() => this.setState({ isOpen: false })}
+            imageCaption={this.captions[this.state.photoIndex]}
+            onMovePrevRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + images.length - 1) % images.length,
+              })
+            }
+            onMoveNextRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + 1) % images.length,
+              })
+            }
+          />
+        )}
         {isMobile ? (
           <section className="shop single section">
             <div className="container">
-              <div className="row mt-3">
+              <div className="row mt-4">
                 <div className="col-12">
                   <div className="row">
                     <div className="col-lg-6 col-12">
@@ -133,13 +230,12 @@ class DetailsPage extends Component {
                           <div class="col-md-10">
                             {/* <ShareButton /> */}
 
-                            <Zoom>
-                              <img
-                                src={this.state.activeImg}
-                                width="100%"
-                                id="ProductImg"
-                              />
-                            </Zoom>
+                            <img
+                              src={this.state.activeImg}
+                              width="80%"
+                              id="ProductImg"
+                              onClick={() => this.setState({ isOpen: true })}
+                            />
                             <div
                               onClick={this.handleShareButton}
                               className="share-button"
@@ -162,12 +258,12 @@ class DetailsPage extends Component {
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://127.0.0.1:8000${i.image}`}
+                                    src={`http://192.168.0.8:8000${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://127.0.0.1:8000${i.image}`,
+                                        activeImg: `http://192.168.0.8:8000${i.image}`,
                                       })
                                     }
                                   />
@@ -778,24 +874,25 @@ class DetailsPage extends Component {
                         {/* Images slider */}
                         <div className="flexslider-thumbnails">
                           <div class="col-md-10">
-                            <Zoom>
-                              <img
-                                src={this.state.activeImg}
-                                width="100%"
-                                id="ProductImg"
-                              />
-                            </Zoom>
+                            {/* <Zoom> */}
+                            <img
+                              onClick={() => this.setState({ isOpen: true })}
+                              src={this.state.activeImg}
+                              width="100%"
+                              id="ProductImg"
+                            />
+                            {/* </Zoom> */}
 
                             <div class="small-imgs">
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://127.0.0.1:8000${i.image}`}
+                                    src={`http://192.168.0.8:8000${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://127.0.0.1:8000${i.image}`,
+                                        activeImg: `http://192.168.0.8:8000${i.image}`,
                                       })
                                     }
                                   />
@@ -1390,11 +1487,11 @@ class DetailsPage extends Component {
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const details_qs = await axios.get(
-    `http://127.0.0.1:8000/v1/products/details/${context.params.slug}`
+    `http://192.168.0.8:8000/v1/products/details/${context.params.slug}`
   );
 
   const new_qs = await axios.get(
-    `http://127.0.0.1:8000/v1/products/new-products`
+    `http://192.168.0.8:8000/v1/products/new-products`
   );
 
   const details = await details_qs.data;

@@ -33,7 +33,7 @@ class TrendingProductCard extends Component {
     };
     // console.log(config);
     axios
-      .post("http://127.0.0.1:8000/v1/cart/add-to-cart", product, config)
+      .post("http://192.168.0.8:8000/v1/cart/add-to-cart", product, config)
       .then((res) => {
         this.props.fetchUserOrder(),
           this.setState({ order_added_success: true });
@@ -54,7 +54,7 @@ class TrendingProductCard extends Component {
     console.log(slug);
 
     axios
-      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
+      .get(`http://192.168.0.8:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )
@@ -86,7 +86,7 @@ class TrendingProductCard extends Component {
                     className="default-img"
                     src={
                       this.props.thumbnail
-                        ? `http://127.0.0.1:8000${this.props.thumbnail}`
+                        ? `http://192.168.0.8:8000${this.props.thumbnail}`
                         : "https://via.placeholder.com/550x750"
                     }
                     alt={this.props.name}

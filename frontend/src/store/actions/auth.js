@@ -15,7 +15,7 @@ export const otpSend = (phoneNumber) => (dispatch) => {
   });
 
   axios
-    .post("http://127.0.0.1:8000/phone_login/generate/", {
+    .post("http://192.168.0.8:8000/phone_login/generate/", {
       phone_number: phoneNumber,
     })
     .then((res) => {
@@ -38,7 +38,7 @@ export const otpVerify = (data) => (dispatch) => {
   });
 
   axios
-    .post("http://127.0.0.1:8000/phone_login/validate/", data)
+    .post("http://192.168.0.8:8000/phone_login/validate/", data)
     .then((res) => {
       dispatch({
         type: OTP_SEND_SUCCESS,

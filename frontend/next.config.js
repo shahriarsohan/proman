@@ -7,7 +7,7 @@ module.exports = {
       "image.shutterstock.com",
       "wpthemesgrid.com",
       "images.unsplash.com",
-      "127.0.0.1:8000",
+      "192.168.0.8:8000",
       "192.168.0.8:8000",
       "proman-static.s3.ap-south-1.amazonaws.com",
       "via.placeholder.com",

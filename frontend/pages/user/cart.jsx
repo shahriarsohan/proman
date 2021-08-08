@@ -42,7 +42,7 @@ class Cart extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/cart/add-to-order-item", item, config)
+      .post("http://192.168.0.8:8000/v1/cart/add-to-order-item", item, config)
       .then((res) => {
         console.log(res);
       })
@@ -65,7 +65,7 @@ class Cart extends Component {
       coupon: this.state.coupon,
     };
     axios
-      .post("http://127.0.0.1:8000/v1/coupon/validate-coupon", data, config)
+      .post("http://192.168.0.8:8000/v1/coupon/validate-coupon", data, config)
       .then((res) => {
         console.log(res.data);
         this.setState({ couponActivated: true }, () =>
@@ -195,7 +195,9 @@ class Cart extends Component {
                     </div>
                   </div>
                 ) : (
-                  <li>empty</li>
+                  <div className="empty-cart">
+                    <img src="/images/empty-cart.png" />
+                  </div>
                 )}
               </div>
             </div>

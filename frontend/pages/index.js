@@ -47,14 +47,14 @@ const Home = (props) => {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/trending"
+    "http://192.168.0.8:8000/v1/products/trending"
   );
 
   const bestselling_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/best-selling"
+    "http://192.168.0.8:8000/v1/products/best-selling"
   );
   const featured_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/featured"
+    "http://192.168.0.8:8000/v1/products/featured"
   );
   const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;

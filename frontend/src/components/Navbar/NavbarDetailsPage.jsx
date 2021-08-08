@@ -5,16 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { css } from "@emotion/react";
 
-import { Breadcrumb } from "semantic-ui-react";
-
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
-
-import HashLoader from "react-spinners/HashLoader";
+import { isMobile } from "react-device-detect";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 import { closeSideBar, openSideBar } from "../../store/actions/cartSideBar";
@@ -41,25 +32,26 @@ class NavbarDetails extends React.Component {
 
   render() {
     const { cart, loading, error } = this.props;
-    console.log(this.props.route);
+    console.log("isMobile", isMobile);
     return (
       <>
         {this.props.sidebar && <SideNav />}
-        {isMobile ? (
+        {this.props.isMobile ? (
           <div className="mobie-nav">
             <div className="back-button">
               <div onClick={() => this.props.route()}>
                 <img
-                  width="30px"
-                  height="30px"
-                  src="/images/back.png"
-                  alt="back"
+                  width="40px"
+                  height="40px"
+                  src="/images/nav-back.png"
+                  alt="nav-back"
                 />
               </div>
+              <div className="details-title">
+                <p>{this.props.name}</p>
+              </div>
             </div>
-            <div className="product-name">
-              <p>{this.props.name}</p>
-            </div>
+
             <div className="sinlge-bar shopping">
               <a
                 //   onClick={() => this.props.openSideBarCart()}

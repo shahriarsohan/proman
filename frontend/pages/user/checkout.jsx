@@ -118,7 +118,7 @@ class checkout extends Component {
     };
     this.setState({ loading: true });
     axios
-      .get("http://127.0.0.1:8000/v1/address/user-address", config)
+      .get("http://192.168.0.8:8000/v1/address/user-address", config)
       .then((res) => {
         if (!res.data.user_have_address) {
           this.props.router.push("/address/new");
@@ -147,7 +147,11 @@ class checkout extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/assosiate-to-order", data, config)
+      .post(
+        "http://192.168.0.8:8000/v1/orders/assosiate-to-order",
+        data,
+        config
+      )
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.updateDeliveryCharge()
@@ -168,7 +172,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://127.0.0.1:8000/v1/orders/update-shipping-charge",
+        "http://192.168.0.8:8000/v1/orders/update-shipping-charge",
         data,
         config
       )
@@ -191,7 +195,11 @@ class checkout extends Component {
       some: "thing",
     };
     axios
-      .post("http://127.0.0.1:8000/v1/orders/update-order-total", data, config)
+      .post(
+        "http://192.168.0.8:8000/v1/orders/update-order-total",
+        data,
+        config
+      )
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.getOrderPricing()
@@ -212,7 +220,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
+        "http://192.168.0.8:8000/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -248,7 +256,7 @@ class checkout extends Component {
 
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -280,7 +288,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -312,7 +320,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -344,7 +352,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -376,7 +384,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -409,7 +417,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -440,7 +448,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -471,7 +479,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "http://192.168.0.8:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -562,7 +570,7 @@ class checkout extends Component {
 
                       axios
                         .put(
-                          `http://127.0.0.1:8000/v1/address/edit/${this.state.shipping_address.id}`,
+                          `http://192.168.0.8:8000/v1/address/edit/${this.state.shipping_address.id}`,
                           data,
                           config
                         )
