@@ -45,7 +45,7 @@ class NavbarTwo extends React.Component {
     return (
       <>
         {this.props.sidebar && <SideNav />}
-        {isMobile ? (
+        {this.props.isMobile ? (
           <div className="search-bar-top m-2">
             <div
               style={{

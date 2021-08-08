@@ -12,6 +12,8 @@ import {
   FETCH_PRICING_DETAILS_ERROR,
 } from "../actions/cartTypes";
 
+// Sun Aug 08 2021 21:40:43 GMT+0600 (Bangladesh Standard Time)
+
 const initialState = {
   data: [],
   loading: true,

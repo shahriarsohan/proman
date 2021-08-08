@@ -1,9 +1,13 @@
+import { withRouter } from "next/router";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { logout } from "../../store/actions/auth";
 
-export default class SideNav extends Component {
+class SideNav extends Component {
   state = { openDropdown: false };
 
   render() {
+    console.log(this.props.isAuthenticated);
     return (
       <div
         style={{ width: "250px", display: "flex", flexDirection: "column" }}
@@ -19,7 +23,23 @@ export default class SideNav extends Component {
             <a href="#">Contact</a> */}
         <div className="sideNav-welcome-text">
           <h4>Welcome</h4>
-          <p>Login/Signup</p>
+          {!this.props.isAuthenticated ? (
+            <p
+              onClick={() =>
+                this.props.router.push({
+                  pathname: "/user/login/",
+                  query: {
+                    redirectURL: this.props.router.asPath,
+                  },
+                  asPath: "main",
+                })
+              }
+            >
+              Login/Signup
+            </p>
+          ) : (
+            <p onClick={() => this.props.logout()}>Logout</p>
+          )}
         </div>
         <hr />
         <div className="main-cat">
@@ -104,3 +124,11 @@ export default class SideNav extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+export default withRouter(connect(mapStateToProps, { logout })(SideNav));

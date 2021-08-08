@@ -27,7 +27,14 @@ class Verify extends Component {
   render() {
     console.log(this.state.otp);
     const { query } = this.props.router;
-    console.log(query);
+    console.log(this.state.status);
+
+    if (this.props.status === 200) {
+      if (this.props.router.query.redirect) {
+        this.props.router.push(this.props.router.query.redirect);
+      }
+    }
+
     return (
       <>
         <NavbarTwo />
@@ -105,4 +112,11 @@ class Verify extends Component {
   }
 }
 
-export default connect(null, { otpVerify })(withRouter(Verify));
+const mapStateToProps = (state) => {
+  console.log(state.auth.status);
+  return {
+    status: state.auth.status,
+  };
+};
+
+export default connect(mapStateToProps, { otpVerify })(withRouter(Verify));

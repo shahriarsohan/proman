@@ -15,12 +15,23 @@ import Service from "../../src/components/Service/Service";
 import Image from "next/image";
 import Loader from "react-spinners/HashLoader";
 import { otpSend } from "../../src/store/actions/auth";
+import Navigation from "../../src/components/Navigation";
+import { isBrowser, isMobile } from "react-device-detect";
 
 class Login extends Component {
   state = {
     phoneNumber: null,
     loading: false,
+    redirectUrl: "",
   };
+
+  componentDidMount() {
+    if (this.props.router) {
+      this.setState({
+        redirectUrl: this.props.router.query.redirectURL,
+      });
+    }
+  }
 
   responseFacebook = (response) => {
     console.log(response);
@@ -63,19 +74,21 @@ class Login extends Component {
   render() {
     console.log(this.state.phoneNumber);
     console.log(this.props.successData);
+    console.log(this.props.router);
     if (this.props.successData.status === 200) {
       this.props.router.push({
         pathname: "/user/login/otp-verify",
         query: {
           pk: this.props.successData.data.pk,
           phoneNumber: this.state.phoneNumber,
+          redirect: this.state.redirectUrl,
         },
         asPath: "main",
       });
     }
     return (
       <>
-        <NavbarTwo />
+        <NavbarTwo isMobile={isMobile} />
         {this.state.loading ? (
           <div className="d-flex justify-content-center align-items-center pb-5">
             <Loader
@@ -89,73 +102,114 @@ class Login extends Component {
         ) : (
           ""
         )}
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6 d-none d-xl-block">
-              <div className="limiter">
-                <div className="container-login100">
-                  {/* <p
-                    style={{
-                      fontFamily: "Ubuntu",
-                      fontWeight: "bolder",
-                      fontSize: "24px",
-                    }}
-                  >
-                    Welcome to the world of Bewakoof! Enjoy
-                  </p> */}
-                  <Image
+
+        {isBrowser ? (
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6 col-lg-6 col-sm-12">
+                {/* <p
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: "bolder",
+                fontSize: "24px",
+              }}
+            >
+              Welcome to the world of Bewakoof! Enjoy
+            </p> */}
+                <div
+                  style={{ width: "100%", display: "flex", padding: "20px" }}
+                >
+                  <img
                     width="auto"
                     height="auto"
-                    src="/images/group-19-1617704502.webp"
+                    src="/images/keagan-henman-Won79_9oUEk-unsplash.jpg"
                   />
                 </div>
               </div>
-            </div>
-            <div className="col-md-6">
-              <div className="limiter">
-                <div
-                  className="container-login100"
-                  style={{ backgroundImage: 'url("images/bg-01.jpg")' }}
-                >
-                  <div className="wrap-lon100">
-                    {/* <div className="wrap-lon100"> */}
-                    <div className="phone-input">
-                      <PhoneInput
-                        placeholder="Enter phone number"
-                        country="BD"
-                        defaultCountry="BD"
-                        value={this.state.phoneNumber}
-                        name="phoneNumber"
-                        countries={["BD"]}
-                        // className="phonenumberinput"
-                        addInternationalOption={false}
-                        className="phonenumberinput"
-                        onChange={(e) => this.setState({ phoneNumber: e })}
-                        style={{ color: "black" }}
-                      />
-                    </div>
+              <div className="col-md-6 col-lg-6 col-sm-12">
+                {/* <div className="wrap-lon100"> */}
+                <div style={{ width: "100%", padding: "20px" }}>
+                  <div className="phone-input">
+                    <PhoneInput
+                      placeholder="Enter phone number"
+                      country="BD"
+                      defaultCountry="BD"
+                      value={this.state.phoneNumber}
+                      name="phoneNumber"
+                      countries={["BD"]}
+                      // className="phonenumberinput"
+                      addInternationalOption={false}
+                      className="phonenumberinput"
+                      onChange={(e) => this.setState({ phoneNumber: e })}
+                      style={{ color: "black" }}
+                    />
+                  </div>
 
-                    <div className="container-login100-form-btn m-t-17">
-                      <button
-                        onClick={this.sendOtp}
-                        type="submit"
-                        value="Submit"
-                        className="login100-form-btn"
-                      >
-                        Send otp
-                      </button>
-                    </div>
+                  <div className="container-login100-form-btn m-t-17">
+                    <button
+                      onClick={this.sendOtp}
+                      type="submit"
+                      value="Submit"
+                      className="login100-form-btn"
+                    >
+                      Send otp
+                    </button>
                     {/* </div> */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="container-fluid">
+            <div className="row login-signup-body">
+              <div className="col-md-6">
+                <div className="login-mob-img-wrap">
+                  <img
+                    style={{ borderRadius: "2px" }}
+                    width="auto"
+                    height="auto"
+                    src="/images/keagan-henman-Won79_9oUEk-unsplash.jpg"
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="log-sign-mob-wrap slideFromBottomLogin">
+                  <div className="log-sign-mob-body">
+                    <PhoneInput
+                      placeholder="Enter phone number"
+                      country="BD"
+                      defaultCountry="BD"
+                      value={this.state.phoneNumber}
+                      name="phoneNumber"
+                      countries={["BD"]}
+                      // className="phonenumberinput"
+                      addInternationalOption={false}
+                      className="phonenumberinput"
+                      onChange={(e) => this.setState({ phoneNumber: e })}
+                      style={{ color: "black" }}
+                    />
+                  </div>
+                  <div className="container-login100-form-btn m-t-17">
+                    <button
+                      onClick={this.sendOtp}
+                      type="submit"
+                      value="Submit"
+                      className="login100-form-btn"
+                    >
+                      Send otp
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
-        <Service />
+        {/* <Service /> */}
         <Newsletter />
         <Footer />
+        <Navigation />
       </>
     );
   }

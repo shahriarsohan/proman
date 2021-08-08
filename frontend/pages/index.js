@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { connect } from "react-redux";
 import FeaturedProducts from "../src/components/Featured/FeaturedProducts";
 import Footer from "../src/components/Footer/Footer";
 import HeroSlider from "../src/components/Hero/HeroSlider";
@@ -18,31 +18,44 @@ import Navigation from "../src/components/Navigation";
 import Featuredcat from "../src/components/featuredcat/featuredcat";
 import Cart from "../src/components/SideCart/Cart";
 
-const Home = (props) => {
-  // console.log(props.data);
-  return (
-    <>
-      <Navbar />
+import * as actions from "../src/store/actions/auth";
+import { useEffect } from "react";
+import { Component } from "react";
+import { withRouter } from "next/router";
 
-      <HeroSlider />
+class Home extends Component {
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
 
-      <PromotionalSlider />
+  render() {
+    console.log(this.props.router);
+    return (
+      <>
+        <Navbar />
 
-      <SmallBanner />
-      <Featuredcat />
-      <Products p={props.trending.trending_qs} />
-      <MediumBanner />
-      <BestSelling bestselling={props.bestselling.bestSelling_qs} />
-      <FeaturedProducts featured={props.featured.featured_qs} />
-      <Shop />
-      <CountDownProducts />
-      <Service />
-      <NewsLetter />
-      <Footer />
-      <Navigation />
-    </>
-  );
-};
+        <HeroSlider />
+
+        <PromotionalSlider />
+
+        <SmallBanner />
+        <Featuredcat />
+        <Products p={this.props.trending.trending_qs} />
+        <MediumBanner />
+        <BestSelling bestselling={this.props.bestselling.bestSelling_qs} />
+        <FeaturedProducts featured={this.props.featured.featured_qs} />
+        <Shop />
+        <CountDownProducts />
+        <Service />
+        <NewsLetter />
+        <Footer />
+        <Navigation />
+      </>
+    );
+  }
+}
+
+// console.log(props.data);
 
 export async function getServerSideProps() {
   // Fetch data from external API
@@ -74,4 +87,16 @@ export async function getServerSideProps() {
   };
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

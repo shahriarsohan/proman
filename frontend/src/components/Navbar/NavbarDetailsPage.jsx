@@ -336,7 +336,7 @@ class NavbarDetails extends React.Component {
           </header>
         )}
         {this.props.cartSideBarOpenTwo && (
-          <Cart close={this.props.closeSideBar} />
+          <Cart slug={this.props.slug} close={this.props.closeSideBar} />
         )}
       </>
     );

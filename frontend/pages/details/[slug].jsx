@@ -185,13 +185,14 @@ class DetailsPage extends Component {
     const expected_delivery_date = moment(myDate).format("MMMM Do");
     const { photoIndex, isOpen, images } = this.state;
 
-    console.log(images);
+    console.log(this.props.router);
     return (
       <>
         <NavbarDetailsPage
           route={this.props.router.back}
           name={details.products.name}
           isMobile={this.state.isMobile}
+          slug={details.products.slug}
         />
         <ReactTooltip />
         {add_to_cart_success
@@ -232,7 +233,7 @@ class DetailsPage extends Component {
 
                             <img
                               src={this.state.activeImg}
-                              width="80%"
+                              width="100%"
                               id="ProductImg"
                               onClick={() => this.setState({ isOpen: true })}
                             />

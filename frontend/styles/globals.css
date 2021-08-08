@@ -4895,16 +4895,6 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   text-transform: capitalize;
 }
 
-.fluid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  font-family: Arial;
-  line-height: 1.3;
-  font-size: 16px;
-}
-
 .fluid__instructions {
   flex: 0 0 auto;
   margin: 0 20px;
@@ -4915,13 +4905,13 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   margin: 0 20px;
 }
 
-a {
+/* a {
   color: black;
 }
 
 a:hover {
   color: #666;
-}
+} */
 
 .code {
   font-family: Courier New, Courier, monospace;
@@ -4995,4 +4985,41 @@ a:hover {
 
 .ril-caption ril__caption {
   background-color: white;
+}
+
+.login-signup-body {
+  margin-top: 55px;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.login-mob-img-wrap {
+  display: flex;
+}
+
+.slideFromBottomLogin {
+  animation: slideupLogin 0.3s linear;
+}
+
+.log-sign-mob-body {
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.log-sign-mob-wrap {
+  margin-top: -25px;
+  width: 100%;
+  border-radius: 30px 30px 0 0;
+  border-top: 0.1px solid #cecece;
+  background-color: #fff;
+  padding: 20px;
+  transform: translateZ(0);
 }
