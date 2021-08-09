@@ -9,6 +9,16 @@ from coupon.models import Coupon
 
 User = settings.AUTH_USER_MODEL
 
+order_status = (
+    ('created', 'Created'),
+    ('failed', 'Failed'),
+    ('cash_on_delivery', 'Cash on delivery'),
+    ('online_payment', 'Online payment'),
+    ('shipped', 'Shipped'),
+    ('refund', 'Refund'),
+    ('confirm', 'Confirm'),
+)
+
 
 class DeliveryCharge(models.Model):
     location = models.CharField(max_length=64)
@@ -28,6 +38,8 @@ class Order(models.Model):
     sub_total = models.IntegerField(default=0, blank=True, null=True)
     total = models.IntegerField(blank=True, null=True)
     ordered = models.BooleanField(default=False)
+    order_status = models.CharField(
+        max_length=64, blank=True, null=True, choices=order_status)
     address = models.ForeignKey(
         Address, on_delete=models.SET_NULL, blank=True, null=True)
     delivery_charge = models.ForeignKey(

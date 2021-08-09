@@ -2,27 +2,29 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, NextRouter } from "next/router";
 
-import PhoneInput from "react-phone-number-input";
-import { Input } from "semantic-ui-react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
+
+import { Message } from "semantic-ui-react";
+
+import "semantic-ui-css/semantic.min.css";
 
 import facebookLogin from "../../src/components/axios/facebookLogin";
 import googleLoginReq from "../../src/components/axios/googleLoginReq";
 
-import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
-import Footer from "../../src/components/Footer/Footer";
-import Newsletter from "../../src/components/NewsLetter/NewsLetter";
-import Service from "../../src/components/Service/Service";
 import Image from "next/image";
 import Loader from "react-spinners/HashLoader";
 import { otpSend } from "../../src/store/actions/auth";
 import Navigation from "../../src/components/Navigation";
 import { isBrowser, isMobile } from "react-device-detect";
+import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 
 class Login extends Component {
   state = {
     phoneNumber: null,
-    loading: false,
     redirectUrl: "",
+    isMobile: null,
+    isBrowser: null,
   };
 
   componentDidMount() {
@@ -30,6 +32,12 @@ class Login extends Component {
       this.setState({
         redirectUrl: this.props.router.query.redirectURL,
       });
+    }
+
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
     }
   }
 
@@ -45,25 +53,7 @@ class Login extends Component {
 
   sendOtp = (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
-    this.props.otpSend(this.state.phoneNumber);
-    // axios
-    //   .post("http://192.168.0.8:8000/auth/email/", {
-    //     email: this.state.email,
-    //   })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       console.log(
-    //         this.props.router.push({
-    //           pathname: "/user/login/otp-verify",
-    //           query: { email: this.state.email },
-    //           asPath: "main",
-    //         })
-    //       );
-    //     }
-    //     this.setState({ loading: false });
-    //   })
-    //   .catch((err) => console.log(err));
+    this.props.otpSend("+" + this.state.phoneNumber);
   };
 
   handleChange = (e) => {
@@ -73,13 +63,13 @@ class Login extends Component {
 
   render() {
     console.log(this.state.phoneNumber);
-    console.log(this.props.successData);
+    console.log(this.props.data.status);
     console.log(this.props.router);
-    if (this.props.successData.status === 200) {
+    if (this.props.data.status === 200) {
       this.props.router.push({
         pathname: "/user/login/otp-verify",
         query: {
-          pk: this.props.successData.data.pk,
+          pk: this.props.data.data.pk,
           phoneNumber: this.state.phoneNumber,
           redirect: this.state.redirectUrl,
         },
@@ -88,20 +78,11 @@ class Login extends Component {
     }
     return (
       <>
-        <NavbarTwo isMobile={isMobile} />
-        {this.state.loading ? (
-          <div className="d-flex justify-content-center align-items-center pb-5">
-            <Loader
-              type="Puff"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              timeout={3000} //3 secs
-            />
-          </div>
-        ) : (
-          ""
-        )}
+        <NavbarDetailsPage
+          route={this.props.router.back}
+          isMobile={this.state.isMobile}
+          name="Signin/Register"
+        />
 
         {isBrowser ? (
           <div className="container">
@@ -131,20 +112,37 @@ class Login extends Component {
                 <div style={{ width: "100%", padding: "20px" }}>
                   <div className="phone-input">
                     <PhoneInput
-                      placeholder="Enter phone number"
-                      country="BD"
-                      defaultCountry="BD"
+                      country={"us"}
                       value={this.state.phoneNumber}
-                      name="phoneNumber"
-                      countries={["BD"]}
-                      // className="phonenumberinput"
-                      addInternationalOption={false}
-                      className="phonenumberinput"
                       onChange={(e) => this.setState({ phoneNumber: e })}
-                      style={{ color: "black" }}
+                      country="bd"
+                      disableDropdown={true}
+                      countryCodeEditable={false}
+                      prefix="+"
                     />
                   </div>
-
+                  {this.props.data.reason && (
+                    <Message>
+                      <Message.Header>Changes in Service</Message.Header>
+                      <p>
+                        We updated our privacy policy here to better service our
+                        customers. We recommend reviewing the changes.
+                      </p>
+                    </Message>
+                  )}
+                  {this.props.loading ? (
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                        timeout={3000} //3 secs
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div className="container-login100-form-btn m-t-17">
                     <button
                       onClick={this.sendOtp}
@@ -175,21 +173,38 @@ class Login extends Component {
               </div>
               <div className="col-md-6">
                 <div className="log-sign-mob-wrap slideFromBottomLogin">
-                  <div className="log-sign-mob-body">
-                    <PhoneInput
-                      placeholder="Enter phone number"
-                      country="BD"
-                      defaultCountry="BD"
-                      value={this.state.phoneNumber}
-                      name="phoneNumber"
-                      countries={["BD"]}
-                      // className="phonenumberinput"
-                      addInternationalOption={false}
-                      className="phonenumberinput"
-                      onChange={(e) => this.setState({ phoneNumber: e })}
-                      style={{ color: "black" }}
-                    />
+                  <div className="d-flex justify-content-center align-items-center">
+                    <div className="log-sign-mob-body">
+                      <PhoneInput
+                        country={"us"}
+                        value={this.state.phoneNumber}
+                        onChange={(e) => this.setState({ phoneNumber: e })}
+                        country="bd"
+                        disableDropdown={true}
+                        countryCodeEditable={false}
+                        prefix="+"
+                      />
+                    </div>
                   </div>
+
+                  {this.props.data.reason && (
+                    <Message negative>
+                      <p>{this.props.data.reason.phone_number}</p>
+                    </Message>
+                  )}
+                  {this.props.loading ? (
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                        timeout={3000} //3 secs
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div className="container-login100-form-btn m-t-17">
                     <button
                       onClick={this.sendOtp}
@@ -197,7 +212,7 @@ class Login extends Component {
                       value="Submit"
                       className="login100-form-btn"
                     >
-                      Send otp
+                      Send OTP
                     </button>
                   </div>
                 </div>
@@ -207,8 +222,8 @@ class Login extends Component {
         )}
 
         {/* <Service /> */}
-        <Newsletter />
-        <Footer />
+        {/* <Newsletter /> */}
+        {/* <Footer /> */}
         <Navigation />
       </>
     );
@@ -217,10 +232,10 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    successData: state.auth.successData,
-    loading: state.auth.loading,
     error: state.auth.error,
+    data: state.auth.data || 400,
+    loading: state.auth.loading,
   };
 };
 
-export default connect(mapStateToProps, { otpSend })(withRouter(Login));
+export default withRouter(connect(mapStateToProps, { otpSend })(Login));

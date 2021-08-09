@@ -5,6 +5,7 @@ import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import Footer from "../../src/components/Footer/Footer";
 import Newsletter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
+import { isMobile } from "react-device-detect";
 
 import { Checkbox } from "semantic-ui-react";
 import { connect } from "react-redux";
@@ -14,16 +15,24 @@ import {
   fetchUserCartPricing,
 } from "../../src/store/actions/cart";
 import Link from "next/link";
+import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 
 class Cart extends Component {
   state = {
     coupon: "",
     couponActivated: false,
     couponActivatedError: false,
+    isMobile: null,
+    isBrowser: null,
   };
 
   componentDidMount() {
     this.props.fetchUserCartPricing();
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
   }
 
   handleDelete = (id) => {
@@ -86,10 +95,14 @@ class Cart extends Component {
     console.log(cart);
     return (
       <>
-        <NavbarTwo />
+        <NavbarDetailsPage
+          // route={this.props.router.back}
+          name="Verify OTP"
+          isMobile={this.state.isMobile}
+        />
         <div className="container">
           {/* Shopping Summery */}
-          <div className="row mt-2 mb-2">
+          <div className="row mb-2">
             <div className="col-md-8">
               <div className="cart_wrapper">
                 {cart.length !== 0 ? (

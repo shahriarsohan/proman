@@ -133,12 +133,15 @@ class UpdateTotal(views.APIView):
 class GetTotalPricing(views.APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
-        order_qs = Order.objects.filter(user=user, ordered=False).first()
-        if order_qs:
-            order_sub_total = order_qs.sub_total
-            shipping_charge = order_qs.shipping
-            total_amount = order_sub_total + order_qs.shipping
+        if(user.is_authenticated):
+            order_qs = Order.objects.filter(user=user, ordered=False).first()
+            if order_qs:
+                order_sub_total = order_qs.sub_total
+                shipping_charge = order_qs.shipping
+                total_amount = order_sub_total + order_qs.shipping
 
-            return response.Response({"order_sub_total": order_sub_total, "shipping_charge": shipping_charge, "total_amount": total_amount}, status=status.HTTP_200_OK)
+                return response.Response({"order_sub_total": order_sub_total, "shipping_charge": shipping_charge, "total_amount": total_amount}, status=status.HTTP_200_OK)
+            else:
+                return response.Response(status=status.HTTP_404_NOT_FOUND)
         else:
-            return response.Response(status=status.HTTP_404_NOT_FOUND)
+            return response.Response({'msg': 'false'}, status=status.HTTP_200_OK)

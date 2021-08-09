@@ -37,7 +37,7 @@ class NavbarDetails extends React.Component {
       <>
         {this.props.sidebar && <SideNav />}
         {this.props.isMobile ? (
-          <div className="mobie-nav">
+          <div className="mobie-nav mb-5">
             <div className="back-button">
               <div onClick={() => this.props.route()}>
                 <img

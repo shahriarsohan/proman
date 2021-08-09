@@ -4,9 +4,9 @@ import { withRouter } from "next/router";
 import Link from "next/link";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
-import axios from "axios";
 
 import LoginModal from "../LoginModal/login";
+import axiosInstance from "../../api/axios";
 
 class Cart extends Component {
   state = {
@@ -22,20 +22,9 @@ class Cart extends Component {
 
   getOrderPricing = () => {
     this.setState({ loading: true });
-    const config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-    const data = {
-      some: "thing",
-    };
-    axios
-      .post(
-        "http://192.168.0.8:8000/v1/orders/order-pricing-details",
-        data,
-        config
-      )
+
+    axiosInstance
+      .post("http://192.168.0.8:8000/v1/orders/order-pricing-details")
       .then((res) =>
         this.setState({
           loading: false,
@@ -58,8 +47,7 @@ class Cart extends Component {
   render() {
     console.log(this.props.router.asPath);
 
-    const token = localStorage.getItem("access_token");
-    console.log(token);
+    console.log(this.props.authError);
     return (
       <>
         <div className="show-sidebar-cart">
@@ -71,7 +59,7 @@ class Cart extends Component {
               <h2>
                 Shopping Bag <span className="count">2</span>
               </h2>
-              {!token ? (
+              {this.props.authError === "false" ? (
                 // <div className="img-align">
                 <button
                   onClick={() =>
@@ -88,7 +76,7 @@ class Cart extends Component {
                   Login
                 </button>
               ) : // </div>
-              this.props.cart.length === 0 ? (
+              this.props.cart === undefined ? (
                 <div className="img-align">
                   <img
                     width="150px"
@@ -209,7 +197,8 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart.data,
+    cart: state.cart.data.cart_qs,
+    authError: state.cart.data.msg,
   };
 };
 

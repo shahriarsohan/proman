@@ -13,16 +13,26 @@ from django.shortcuts import get_object_or_404
 from django.http.response import JsonResponse
 from coupon.models import Coupon
 
+from rest_framework.authentication import TokenAuthentication
 
-class UserCartListApiView(generics.ListAPIView):
-    serializer_class = CartSerailizers
-    permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Cart.objects.filter(
-            user=user, expires=False).order_by('-timestamp')
-        return queryset
+class UserCartListApiView(views.APIView):
+    authentication_classes = [TokenAuthentication, ]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        print(user)
+        print(request.user.is_authenticated)
+        if request.user.is_authenticated:
+            queryset = Cart.objects.filter(
+                user=user, expires=False).order_by('-timestamp')
+            if queryset:
+                serializer = CartSerailizers(queryset, many=True)
+                return response.Response({'cart_qs': serializer.data}, status=status.HTTP_200_OK)
+            else:
+                return response.Response({'msg': 'nothing'}, status=status.HTTP_200_OK)
+        else:
+            return response.Response({'msg': 'false'}, status=status.HTTP_200_OK)
 
 
 class CartDeleteApi(generics.DestroyAPIView):
@@ -142,7 +152,7 @@ class AddProductToCart(views.APIView):
         else:
             ordered_date = timezone.now()
             order = Order.objects.create(
-                user=request.user, ordered_date=ordered_date, sub_total=total_price)
+                user=request.user, ordered_date=ordered_date, sub_total=total_price, order_status='created')
             order.products.add(order_item)
             return Response({'item':  serializer.data}, status=status.HTTP_200_OK)
 

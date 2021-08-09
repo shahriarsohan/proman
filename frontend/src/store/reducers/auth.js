@@ -6,7 +6,7 @@ const initialState = {
   error: null,
   loading: false,
   status: null,
-  successData: [],
+  data: [],
 };
 
 const authStart = (state, action) => {
@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => {
       return authStart(state, action);
     case actionTypes.OTP_SEND_SUCCESS:
       return {
-        successData: action.payload,
+        data: action.payload,
         loading: false,
         status: action.status,
       };
@@ -71,7 +71,7 @@ export default reducer;
 // } from "../actions/actionTypes";
 
 // const initialState = {
-//   successData: [],
+//   data: [],
 //   loading: null,
 //   error: "",
 // };
@@ -81,12 +81,12 @@ export default reducer;
 //     case OTP_SEND_START:
 //       return { ...state, loading: true, error: "" };
 //     case OTP_SEND_SUCCESS:
-//       return { ...state, loading: false, successData: action.payload };
+//       return { ...state, loading: false, data: action.payload };
 //     case OTP_SEND_SUCCESS:
 //       return {
 //         ...state,
 //         loading: false,
-//         successData: [],
+//         data: [],
 //         error: action.payload,
 //       };
 //     default:

@@ -180,7 +180,9 @@ class Navbar extends Component {
                           className="single-icon"
                         >
                           <i className="ti-bag" />{" "}
-                          <span className="total-count">{cart.length}</span>
+                          <span className="total-count">
+                            {cart === undefined ? "" : cart.length}
+                          </span>
                         </a>
                       </div>
                     </div>
@@ -490,7 +492,9 @@ class Navbar extends Component {
                       src="/images/cart-nav.png"
                       alt="logo"
                     />
-                    <span className="total-count">{cart.length}</span>
+                    <span className="total-count">
+                      {cart === undefined ? "" : cart.length}
+                    </span>
                   </a>
                 </div>
 
@@ -524,8 +528,10 @@ class Navbar extends Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state.cart);
   return {
-    cart: state.cart.data,
+    authError: state.cart.data.msg,
+    cart: state.cart.data.cart_qs,
     sidebar: state.sidebar.sideOpen,
   };
 };

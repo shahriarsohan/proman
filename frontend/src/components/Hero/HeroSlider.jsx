@@ -13,6 +13,7 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   arrows: true,
+  autoPlay: true,
 };
 
 class HeroSlider extends Component {

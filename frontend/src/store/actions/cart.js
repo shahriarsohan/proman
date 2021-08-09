@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from "../../api/axios";
+
 import {
   FETCH_USER_CART,
   FETCH_USER_CART_ERROR,
@@ -20,22 +21,15 @@ import {
   COMBO_ADD_TO_CART_ERROR,
 } from "./cartTypes";
 
-import { openCartSideBar } from "./cartSideBar";
-
 export const fetchUserOrder = () => (dispatch) => {
-  if (typeof localStorage !== "undefined") {
-    var config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-  }
   axios
-    .get("http://192.168.0.8:8000/v1/cart/user-cart", config)
+    .get("http://192.168.0.8:8000/v1/cart/user-cart")
     .then((res) => {
+      console.log(res.data);
       dispatch({
         type: FETCH_USER_CART,
         payload: res.data,
+        error: res.data.msg,
       });
     })
     .catch((err) => {
@@ -49,15 +43,9 @@ export const fetchUserCartPricing = () => (dispatch) => {
   dispatch({
     type: FETCH_PRICING_DETAILS_STATRT,
   });
-  if (typeof localStorage !== "undefined") {
-    var config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-  }
+
   axios
-    .get("http://192.168.0.8:8000/v1/cart/cart-pricing-details", config)
+    .get("http://192.168.0.8:8000/v1/cart/cart-pricing-details")
     .then((res) => {
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
@@ -75,16 +63,9 @@ export const handleAddToCart = (data) => (dispatch) => {
   dispatch({
     type: ADD_TO_CART_START,
   });
-  console.log(data);
-  if (typeof localStorage !== "undefined") {
-    var config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-  }
+
   axios
-    .post("http://192.168.0.8:8000/v1/cart/add-to-cart", data, config)
+    .post("http://192.168.0.8:8000/v1/cart/add-to-cart", data)
     .then((res) => {
       dispatch({
         type: ADD_TO_CART,
@@ -111,16 +92,8 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
     type: DELETE_FROM_CART_START,
   });
 
-  if (typeof localStorage !== "undefined") {
-    var config = {
-      headers: {
-        authorization: "Token " + localStorage.getItem("access_token"),
-      },
-    };
-  }
-
   axios
-    .post("http://192.168.0.8:8000/v1/cart/item-delete-from-cart", data, config)
+    .post("http://192.168.0.8:8000/v1/cart/item-delete-from-cart", data)
     .then((res) => {
       dispatch({
         type: DELETE_FROM_CART,

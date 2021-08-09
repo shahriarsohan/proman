@@ -44,7 +44,31 @@ export const checkAuthTimeout = (expirationTime) => {
   };
 };
 
+// export const otpSend = (phoneNumber) => (dispatch) => {
+//   dispatch({
+//     type: AUTH_START,
+//   });
+
+//   axios
+//     .post("http://192.168.0.8:8000/phone_login/generate/", {
+//       phone_number: phoneNumber,
+//     })
+//     .then((res) => {
+//       dispatch({
+//         type: OTP_SEND_SUCCESS,
+//         payload: res,
+//       });
+//     })
+//     .catch((err) =>
+//       dispatch({
+//         type: OTP_SEND_ERROR,
+//         payload: err.data,
+//       })
+//     );
+// };
+
 export const otpSend = (phoneNumber) => (dispatch) => {
+  console.log(phoneNumber);
   dispatch({
     type: AUTH_START,
   });
@@ -69,7 +93,7 @@ export const otpSend = (phoneNumber) => (dispatch) => {
 
 export const otpVerify = (data) => (dispatch) => {
   dispatch({
-    type: OTP_VERIFY_START,
+    type: AUTH_START,
   });
 
   axios

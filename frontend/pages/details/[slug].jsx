@@ -6,7 +6,6 @@ import { withRouter } from "next/router";
 import { Popup } from "semantic-ui-react";
 
 import ReactTooltip from "react-tooltip";
-import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 import moment from "moment";
@@ -20,7 +19,6 @@ import Footer from "../../src/components/Footer/Footer";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { NotificationManager } from "react-notifications";
 import Navigation from "../../src/components/Navigation";
-import Cart from "../../src/components/SideCart/Cart";
 import { openSideBar, closeSideBar } from "../../src/store/actions/cartSideBar";
 
 // const

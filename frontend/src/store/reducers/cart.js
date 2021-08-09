@@ -27,7 +27,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER_CART:
-      return { ...state, data: action.payload, loading: false };
+      return {
+        ...state,
+        data: action.payload,
+        loading: false,
+      };
     case DELETE_FROM_CART:
       return Object.assign({}, state, {
         data: [...state.data.filter((item) => item.id !== action.payload)],
