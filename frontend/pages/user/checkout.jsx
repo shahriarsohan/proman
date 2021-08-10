@@ -98,17 +98,41 @@ class checkout extends Component {
 
     openAddressEditModal: null,
     agree: false,
+    lol: "",
   };
 
   componentDidMount() {
     // this.props.router.reload("/");
-
-    this.checkUserAddress();
+    this.createOrder();
+    // this.checkUserAddress();
     // this.assosiateAddressToOrder();
     // this.updateDeliveryCharge();
     // this.updateOrderTotal();
     // this.getOrderPricing();
   }
+
+  createOrder = () => {
+    const config = {
+      headers: {
+        authorization: "Token " + localStorage.getItem("access_token"),
+      },
+    };
+
+    const data = {
+      s: "s",
+    };
+
+    axios
+      .post("http://192.168.0.8:8000/v1/orders/create-new-order", data, config)
+      .then((res) => {
+        this.setState({ lol: "data" }, () => {
+          this.checkUserAddress();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   checkUserAddress = () => {
     const config = {

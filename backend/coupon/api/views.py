@@ -2,6 +2,7 @@ from django.utils import timezone
 
 from rest_framework import views, response, status
 
+from cart.models import FinalCart
 from orders.models import Order
 from coupon.models import Coupon
 
@@ -20,14 +21,15 @@ class ValidateCoupon(views.APIView):
                 code=coupone_code, active=True, valid_from__lte=now, valid_to__gte=now)
             if coupon_qs:
                 coupon_used_before = False
-                order_qs = Order.objects.filter(
-                    user=user, coupon=coupon_qs.code)
-                for q in order_qs:
-                    if q.coupon == coupone_code:
-                        coupon_used_before = True
+                order_qs = FinalCart.objects.filter(
+                    user=user, expires=False).first()
+
+                if order_qs.coupon == coupone_code:
+                    coupon_used_before = True
                 if coupon_used_before:
                     return response.Response({'msg': 'coupon_used_before'}, status=status.HTTP_400_BAD_REQUEST)
-                apply_coupon = Order.objects.filter(user=user).first()
+                apply_coupon = FinalCart.objects.filter(
+                    user=user, expires=False).first()
                 if apply_coupon:
                     print('workinmgggggggg')
                     apply_coupon.coupon = coupon_qs.code
@@ -36,4 +38,4 @@ class ValidateCoupon(views.APIView):
                 else:
                     pass
                 print(order_qs)
-        return response.Response({'msg': 'OK'}, status=status.HTTP_200_OK)
+            return response.Response({'msg': 'OK'}, status=status.HTTP_200_OK)

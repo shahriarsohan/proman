@@ -61,7 +61,9 @@ class DetailsPage extends Component {
     }
   }
 
-  componentWillMount() {}
+  componentWillUnmount() {
+    this.props.closeSideBar();
+  }
 
   captions = [
     <div className="product-deslaimer">

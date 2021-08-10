@@ -17,6 +17,7 @@ import {
 const initialState = {
   data: [],
   loading: true,
+  pricingLoader: false,
   error: "",
   add_to_cart_success: null,
   total_price: 0,
@@ -52,11 +53,11 @@ const reducer = (state = initialState, action) => {
       return { ...state, error: action.payload, loading: false };
 
     case FETCH_PRICING_DETAILS_STATRT:
-      return { ...state, loading: true };
+      return { ...state, pricingLoader: true };
     case FETCH_PRICING_DETAILS_SUCCESS:
       return {
         ...state,
-        loading: false,
+        pricingLoader: false,
         total_price: action.payload.order_total,
         total_saving: action.payload.savings,
         cart_total: action.payload.cart_total,

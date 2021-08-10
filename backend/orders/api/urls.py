@@ -1,12 +1,25 @@
-from .views import GetTotalPricing, SavePricingDetails, SaveShippingCharge, AssosiateOrderWithOrder, UpdateDeliveryCharge, UpdateTotal
+from .views import (
+    CreateOrderApiView,
+    GetTotalPricing,
+    SavePricingDetails,
+    SaveShippingCharge,
+    AssosiateOrderWithOrder,
+    UpdateDeliveryCharge,
+    UpdateTotal,
+    SslCommerzTest,
+    OrdercofirmApiView
+)
 from django.urls import path
 
 
 urlpatterns = [
-    # path('pricing-details', SavePricingDetails.as_view()),
+    path('create-new-order', CreateOrderApiView.as_view()),
+    path('pricing-details', SavePricingDetails.as_view()),
     path('update-shipping', SaveShippingCharge.as_view()),
     path('assosiate-to-order', AssosiateOrderWithOrder.as_view()),
     path('update-shipping-charge', UpdateDeliveryCharge.as_view()),
     path('update-order-total', UpdateTotal.as_view()),
-    path('order-pricing-details', GetTotalPricing.as_view())
+    path('order-pricing-details', GetTotalPricing.as_view()),
+    path('ssl-payment', SslCommerzTest.as_view()),
+    path('order-confirm', OrdercofirmApiView.as_view()),
 ]

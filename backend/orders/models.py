@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 
 from address.models import Address
-from cart.models import Cart
+from cart.models import FinalCart
 from coupon.models import Coupon
 
 User = settings.AUTH_USER_MODEL
@@ -31,7 +31,8 @@ class DeliveryCharge(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=64, blank=True, null=True)
-    products = models.ManyToManyField(Cart)
+    products = models.ForeignKey(
+        FinalCart, on_delete=models.CASCADE, blank=True, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     coupon = models.CharField(max_length=20, blank=True, null=True)

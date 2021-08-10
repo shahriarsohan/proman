@@ -26,10 +26,11 @@ export const fetchUserOrder = () => (dispatch) => {
     .get("http://192.168.0.8:8000/v1/cart/user-cart")
     .then((res) => {
       console.log(res.data);
+      dispatch(fetchUserCartPricing());
       dispatch({
         type: FETCH_USER_CART,
         payload: res.data,
-        error: res.data.msg,
+        // error: res.data.msg,
       });
     })
     .catch((err) => {
@@ -50,9 +51,11 @@ export const fetchUserCartPricing = () => (dispatch) => {
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
         payload: res.data,
+        cart_total: res.data.cart_total,
       });
     })
     .catch((err) => {
+      console.log("errorrrrrrrrrrrrrr", err);
       dispatch({
         type: FETCH_PRICING_DETAILS_ERROR,
       });
@@ -67,15 +70,10 @@ export const handleAddToCart = (data) => (dispatch) => {
   axios
     .post("http://192.168.0.8:8000/v1/cart/add-to-cart", data)
     .then((res) => {
+      dispatch(fetchUserCartPricing());
       dispatch({
         type: ADD_TO_CART,
         payload: res.data.item,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: ADD_TO_CART_ERROR,
-        data: err.data,
       });
     });
 };
@@ -88,6 +86,7 @@ export const handleComboAddToCart = (data) => (dispatch) => {
 };
 
 export const handleDeleteFromCart = (data) => (dispatch) => {
+  console.log(data.id);
   dispatch({
     type: DELETE_FROM_CART_START,
   });
@@ -95,6 +94,7 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
   axios
     .post("http://192.168.0.8:8000/v1/cart/item-delete-from-cart", data)
     .then((res) => {
+      dispatch(fetchUserCartPricing());
       dispatch({
         type: DELETE_FROM_CART,
         payload: data.id,

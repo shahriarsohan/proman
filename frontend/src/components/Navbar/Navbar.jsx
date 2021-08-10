@@ -531,7 +531,7 @@ const mapStateToProps = (state) => {
   console.log(state.cart);
   return {
     authError: state.cart.data.msg,
-    cart: state.cart.data.cart_qs,
+    cart: state.cart.data,
     sidebar: state.sidebar.sideOpen,
   };
 };

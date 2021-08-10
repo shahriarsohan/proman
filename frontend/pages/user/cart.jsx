@@ -6,6 +6,8 @@ import Footer from "../../src/components/Footer/Footer";
 import Newsletter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
 import { isMobile } from "react-device-detect";
+import LoadingOverlay from "react-loading-overlay";
+import HashLoader from "react-spinners/HashLoader";
 
 import { Checkbox } from "semantic-ui-react";
 import { connect } from "react-redux";
@@ -114,6 +116,15 @@ class Cart extends Component {
                       Your Shopping Cart
                     </div>
                     <div className="cart_list_wrap">
+                      <div>
+                        <LoadingOverlay
+                          active={
+                            this.props.loading || this.props.pricingLoader
+                          }
+                          spinner={<HashLoader color="#08d9d6" />}
+                        ></LoadingOverlay>
+                      </div>
+
                       <div className="cart_responsive">
                         {cart.map((item) => {
                           return (
@@ -239,7 +250,7 @@ class Cart extends Component {
                     <span>
                       {" "}
                       <img width="15px" height="15px" src="/images/taka.png" />
-                      {this.props.total}.00
+                      {this.props.cart_total}.00
                     </span>
                   </li>
                   {/* <li>
@@ -266,7 +277,7 @@ class Cart extends Component {
                     You Pay
                     <span>
                       <img width="15px" height="15px" src="/images/taka.png" />
-                      {this.props.total}
+                      {this.props.cart_total}
                     </span>
                   </li>
                 </ul>
@@ -339,6 +350,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.cart);
   return {
     cart: state.cart.data,
     loading: state.cart.loading,
@@ -346,6 +358,7 @@ const mapStateToProps = (state) => {
     total: state.cart.total_price,
     total_saving: state.cart.total_saving,
     cart_total: state.cart.cart_total,
+    pricingLoader: state.cart.pricingLoader,
   };
 };
 

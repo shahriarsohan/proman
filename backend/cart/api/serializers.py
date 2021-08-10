@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from products.api.serializers import ProductsSerializer
-from cart.models import Cart
+from cart.models import Cart, FinalCart
 
 
 class CartSerailizers(serializers.ModelSerializer):
@@ -18,3 +18,9 @@ class CartSerailizers(serializers.ModelSerializer):
 
     def get_product(self, obj):
         return ProductsSerializer(obj.product).data
+
+
+class FinalCartSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = FinalCart
+        fields = ('__all__')

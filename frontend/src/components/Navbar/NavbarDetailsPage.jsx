@@ -32,7 +32,7 @@ class NavbarDetails extends React.Component {
 
   render() {
     const { cart, loading, error } = this.props;
-    console.log("isMobile", isMobile);
+    console.log("cart", cart);
     return (
       <>
         {this.props.sidebar && <SideNav />}
@@ -191,7 +191,9 @@ class NavbarDetails extends React.Component {
                             className="single-icon"
                           >
                             <i className="ti-bag" />{" "}
-                            <span className="total-count">{cart.length}</span>
+                            <span className="total-count">
+                              {/* {cart. === undefined ? "" : cart.length} */}
+                            </span>
                           </a>
                         </div>
                         {/*/ End Shopping Item */}

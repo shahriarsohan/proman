@@ -37,6 +37,7 @@
     "react-image-magnify": "^2.7.4",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loader-spinner": "^4.0.0",
+    "react-loading-overlay": "^1.0.1",
     "react-medium-image-zoom": "^4.3.4",
     "react-moment": "^1.1.1",
     "react-multi-carousel": "^2.6.3",

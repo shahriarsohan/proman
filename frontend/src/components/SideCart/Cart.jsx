@@ -2,50 +2,75 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
+import HashLoader from "react-spinners/HashLoader";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 
-import LoginModal from "../LoginModal/login";
-import axiosInstance from "../../api/axios";
+import LoadingOverlay from "react-loading-overlay";
+import axios from "../../api/axios";
 
 class Cart extends Component {
   state = {
     sub_total_amount: 0,
     shipping_charge: 0,
     total_amount: 0,
+    loading: false,
   };
 
   componentDidMount() {
     this.props.fetchCart();
-    this.getOrderPricing();
+    // this.getOrderPricing();
   }
-
-  getOrderPricing = () => {
-    this.setState({ loading: true });
-
-    axiosInstance
-      .post("http://192.168.0.8:8000/v1/orders/order-pricing-details")
-      .then((res) =>
-        this.setState({
-          loading: false,
-          sub_total_amount: res.data.order_sub_total,
-          total_amount: res.data.total_amount,
-          shipping_charge: res.data.shipping_charge,
-        })
-      )
-      .catch((err) => console.log(err));
-  };
 
   handleDelete = (id) => {
     const data = {
       id: id,
     };
     this.props.deleteItem(data);
-    this.getOrderPricing();
+  };
+
+  plusQuantity = (id) => {
+    this.setState({
+      loading: true,
+    });
+    const data = {
+      id: id,
+    };
+    axios
+      .post("/cart/plus-quantity", data)
+      .then((res) =>
+        this.setState(
+          {
+            loading: false,
+          },
+          this.props.fetchCart()
+        )
+      )
+      .catch((err) => console.log(err));
+  };
+
+  minusQuantity = (id) => {
+    this.setState({
+      loading: true,
+    });
+    const data = {
+      id: id,
+    };
+    axios
+      .post("/cart/minus-quantity", data)
+      .then((res) =>
+        this.setState(
+          {
+            loading: false,
+          },
+          this.props.fetchCart()
+        )
+      )
+      .catch((err) => console.log(err));
   };
 
   render() {
-    console.log(this.props.router.asPath);
+    console.log(this.props.cart);
 
     console.log(this.props.authError);
     return (
@@ -59,6 +84,19 @@ class Cart extends Component {
               <h2>
                 Shopping Bag <span className="count">2</span>
               </h2>
+              {/* {this.props.loading && ( */}
+              <div>
+                <LoadingOverlay
+                  active={
+                    this.props.loading ||
+                    this.props.pricingLoader ||
+                    this.state.loading
+                  }
+                  spinner={<HashLoader />}
+                ></LoadingOverlay>
+              </div>
+
+              {/* )} */}
               {this.props.authError === "false" ? (
                 // <div className="img-align">
                 <button
@@ -76,7 +114,7 @@ class Cart extends Component {
                   Login
                 </button>
               ) : // </div>
-              this.props.cart === undefined ? (
+              this.props.cart.length === 0 ? (
                 <div className="img-align">
                   <img
                     width="150px"
@@ -88,6 +126,7 @@ class Cart extends Component {
                 <div>
                   <ul className="products">
                     {this.props.cart.map((c) => {
+                      console.log(c.product.thumbnail);
                       return (
                         <li className="product">
                           <a href="#" className="product-link">
@@ -105,41 +144,33 @@ class Cart extends Component {
                               <h3>{c.product.name}</h3>
                               <span className="qty-price">
                                 <span className="qty">
-                                  <form name="qty-form" id="qty-form-1">
-                                    <button
-                                      className="minus-button"
-                                      id="minus-button-1"
-                                      onClick={() => console.log("minus")}
-                                    >
-                                      -
-                                    </button>
-                                    <input
-                                      type="number"
-                                      id="qty-input-3"
-                                      className="qty-input"
-                                      step={1}
-                                      min={1}
-                                      max={1000}
-                                      name="qty-input"
-                                      defaultValue={c.quantity}
-                                      pattern="[0-9]*"
-                                      title="Quantity"
-                                      inputMode="numeric"
-                                    />
-                                    <button
-                                      className="plus-button"
-                                      id="plus-button-1"
-                                      onClick={() => console.log("plus")}
-                                    >
-                                      +
-                                    </button>
-                                    <input
-                                      type="hidden"
-                                      name="item-price"
-                                      id="item-price-3"
-                                      defaultValue={12.0}
-                                    />
-                                  </form>
+                                  <button
+                                    className="minus-button"
+                                    onClick={() => this.minusQuantity(c.id)}
+                                  >
+                                    -
+                                  </button>
+                                  <input
+                                    type="number"
+                                    id="qty-input-3"
+                                    className="qty-input"
+                                    step={1}
+                                    min={1}
+                                    max={1000}
+                                    name="qty-input"
+                                    defaultValue={c.quantity}
+                                    value={c.quantity}
+                                    pattern="[0-9]*"
+                                    title="Quantity"
+                                    inputMode="numeric"
+                                    disabled
+                                  />
+                                  <button
+                                    className="plus-button"
+                                    onClick={() => this.plusQuantity(c.id)}
+                                  >
+                                    +
+                                  </button>
                                 </span>
                                 <span className="price">
                                   $
@@ -166,7 +197,7 @@ class Cart extends Component {
                     <div className="subtotal">
                       <span className="label">Subtotal:</span>{" "}
                       <span className="amount">
-                        ${this.state.sub_total_amount}
+                        ${this.props.sub_total_amount}
                       </span>
                     </div>
                     {/* <div class="shipping">
@@ -197,8 +228,11 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart.data.cart_qs,
+    cart: state.cart.data,
+    loading: state.cart.loading,
+    pricingLoader: state.cart.pricingLoader,
     authError: state.cart.data.msg,
+    sub_total_amount: state.cart.cart_total,
   };
 };
 
