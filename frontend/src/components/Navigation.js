@@ -7,7 +7,7 @@ import { closeSideBar, openSideBar } from "../store/actions/sideBar";
 
 class Navigation extends Component {
   render() {
-    console.log(this.props.sidebar);
+    //console.log(this.props.sidebar);
     return (
       <div className="d-block d-sm-block d-md-none d-lg-none">
         <div

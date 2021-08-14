@@ -25,7 +25,7 @@ const responsive = {
 export default class PopularProducts extends Component {
   render() {
     const { bestselling } = this.props;
-    console.log(bestselling);
+    //console.log(bestselling);
     return (
       <div className="product-area most-popular section">
         <div className="container">

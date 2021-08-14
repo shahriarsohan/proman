@@ -15,7 +15,7 @@ class BestSellingCard extends React.Component {
 
   showModalwithInfo = (slug) => {
     this.setState({ modal: !this.state.modal });
-    console.log(slug);
+    // //console.log(slug);
 
     axios
       .get(`http://192.168.0.8:8000/v1/products/details/${slug}`)
@@ -34,7 +34,7 @@ class BestSellingCard extends React.Component {
   render() {
     const { img, slug, name, price, discount_price } = this.props;
 
-    console.log(img);
+    // //console.log(img);
     return (
       <>
         <div className="single-product">

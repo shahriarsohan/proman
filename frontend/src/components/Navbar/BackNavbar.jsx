@@ -36,7 +36,7 @@ class NavbarDetails extends React.Component {
 
   render() {
     const { cart, loading, error } = this.props;
-    console.log("isMobile", isMobile);
+    //console.log("isMobile", isMobile);
     return (
       <>
         {this.props.sidebar && <SideNav />}

@@ -15,7 +15,7 @@ const override = css`
 class Navbar extends Component {
   render() {
     const { cart } = this.props;
-    console.log(cart);
+    //console.log(cart);
     return (
       <div>
         <div className="page-wrapper">

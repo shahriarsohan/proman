@@ -18,7 +18,7 @@ const settings = {
 
 class HeroSlider extends Component {
   render() {
-    console.log(this.props.cartSideBarOpenTwo);
+    //console.log(this.props.cartSideBarOpenTwo);
     return (
       <>
         <section className="hro-slider mb-5">
@@ -56,7 +56,7 @@ class HeroSlider extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  //console.log(state);
   return {
     cartSideBarOpenTwo: state.cartsidebar.sideOpen,
   };

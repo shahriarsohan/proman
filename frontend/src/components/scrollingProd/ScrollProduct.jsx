@@ -25,7 +25,7 @@ const list = [
 // One item component
 // selected prop will be passed
 const MenuItem = ({ text, selected }) => {
-  console.log(text);
+  //console.log(text);
   return <div className={`menu-item ${selected ? "active" : ""}`}>{text}</div>;
 };
 

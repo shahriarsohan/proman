@@ -14,7 +14,7 @@ const facebookLogin = (accesstoken) => {
       localStorage.setItem("access_token", res.data.access_token);
       var now = new Date();
       var expire_date = new Date(now.getTime() + res.data.expires_in * 1000);
-      console.log(expire_date);
+      //console.log(expire_date);
       localStorage.setItem("expires_in", expire_date);
       localStorage.setItem("refresh_token", res.data.refresh_token);
     });

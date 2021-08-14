@@ -31,7 +31,7 @@ class TrendingProductCard extends Component {
         authorization: "Token " + localStorage.getItem("access_token"),
       },
     };
-    // console.log(config);
+    // //console.log(config);
     axios
       .post("http://192.168.0.8:8000/v1/cart/add-to-cart", product, config)
       .then((res) => {
@@ -51,7 +51,7 @@ class TrendingProductCard extends Component {
 
   showModalwithInfo = (slug) => {
     this.setState({ modal: !this.state.modal });
-    console.log(slug);
+    //console.log(slug);
 
     axios
       .get(`http://192.168.0.8:8000/v1/products/details/${slug}`)
@@ -69,8 +69,8 @@ class TrendingProductCard extends Component {
 
   render() {
     const { modal, order_added_success, order_added_error } = this.state;
-    console.log(order_added_success);
-    console.log(this.props);
+    //console.log(order_added_success);
+    //console.log(this.props);
     return (
       <>
         {order_added_success

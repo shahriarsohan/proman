@@ -1,4 +1,5 @@
 import axios from "axios";
+import customAxios from "../../api/axios";
 
 import {
   OTP_SEND_START,
@@ -68,7 +69,7 @@ export const checkAuthTimeout = (expirationTime) => {
 // };
 
 export const otpSend = (phoneNumber) => (dispatch) => {
-  console.log(phoneNumber);
+  //console.log(phoneNumber);
   dispatch({
     type: AUTH_START,
   });
@@ -91,7 +92,8 @@ export const otpSend = (phoneNumber) => (dispatch) => {
     );
 };
 
-export const otpVerify = (data) => (dispatch) => {
+export const otpVerify = (data, router) => (dispatch) => {
+  //console.log(router);
   dispatch({
     type: AUTH_START,
   });
@@ -101,13 +103,23 @@ export const otpVerify = (data) => (dispatch) => {
     .then((res) => {
       const token = res.data.token;
       const status = res.data.status;
-      console.log(status);
+      //console.log(status);
       const data = res.data;
       const expirationDate = new Date(new Date().getTime() + 3600 * 10000);
-      localStorage.setItem("access_token", token);
+      const tokenset = localStorage.setItem("access_token", token);
       localStorage.setItem("expires_in", expirationDate);
       dispatch(authSuccess(token, status, data));
       dispatch(checkAuthTimeout(3600));
+      customAxios.defaults.headers.common["Authorization"] = `Token ${token}`;
+      const setToken = localStorage.getItem("access_token");
+      console.log("setToken", setToken);
+      if (status === 200) {
+        if (router.query.redirect) {
+          router.push(router.query.redirect);
+        } else {
+          router.push("/");
+        }
+      }
     })
     .catch((err) => {
       dispatch(authFail(err));

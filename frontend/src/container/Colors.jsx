@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Colors extends Component {
   render() {
     const { colors } = this.props;
-    console.log(colors);
+    //console.log(colors);
     return (
       <div className="colors">
         {colors.map((color, index) => (

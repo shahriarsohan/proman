@@ -15,7 +15,7 @@ class FeaturedCard extends React.Component {
 
   showModalwithInfo = (slug) => {
     this.setState({ modal: !this.state.modal });
-    console.log(slug);
+    //console.log(slug);
 
     axios
       .get(`http://192.168.0.8:8000/v1/products/details/${slug}`)

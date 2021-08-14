@@ -1,4 +1,5 @@
 import axios from "../../api/axios";
+import { openSideBar } from "./cartSideBar";
 
 import {
   FETCH_USER_CART,
@@ -13,19 +14,15 @@ import {
   FETCH_PRICING_DETAILS_SUCCESS,
   FETCH_PRICING_DETAILS_ERROR,
   APPLY_COUPON_START,
-  APPLY_COUPON_SUCCESS,
-  APPLY_COUPON_ERROR,
-  OPEN_SIDEBAR_CART,
   COMBO_ADD_TO_CART_START,
   COMBO_ADD_TO_CART,
-  COMBO_ADD_TO_CART_ERROR,
 } from "./cartTypes";
 
 export const fetchUserOrder = () => (dispatch) => {
   axios
     .get("http://192.168.0.8:8000/v1/cart/user-cart")
     .then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       dispatch(fetchUserCartPricing());
       dispatch({
         type: FETCH_USER_CART,
@@ -55,7 +52,7 @@ export const fetchUserCartPricing = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log("errorrrrrrrrrrrrrr", err);
+      //console.log("errorrrrrrrrrrrrrr", err);
       dispatch({
         type: FETCH_PRICING_DETAILS_ERROR,
       });
@@ -71,6 +68,7 @@ export const handleAddToCart = (data) => (dispatch) => {
     .post("http://192.168.0.8:8000/v1/cart/add-to-cart", data)
     .then((res) => {
       dispatch(fetchUserCartPricing());
+      dispatch(openSideBar());
       dispatch({
         type: ADD_TO_CART,
         payload: res.data.item,
@@ -79,14 +77,14 @@ export const handleAddToCart = (data) => (dispatch) => {
 };
 
 export const handleComboAddToCart = (data) => (dispatch) => {
-  console.log("data", data);
+  //console.log("data", data);
   dispatch({
     type: COMBO_ADD_TO_CART_START,
   });
 };
 
 export const handleDeleteFromCart = (data) => (dispatch) => {
-  console.log(data.id);
+  //console.log(data.id);
   dispatch({
     type: DELETE_FROM_CART_START,
   });

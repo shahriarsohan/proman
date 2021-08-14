@@ -42,12 +42,12 @@ class Login extends Component {
   }
 
   responseFacebook = (response) => {
-    console.log(response);
+    //console.log(response);
     facebookLogin(response.accessToken);
   };
 
   responseGoogle = (response) => {
-    console.log(response);
+    //console.log(response);
     googleLoginReq(response.accessToken);
   };
 
@@ -57,14 +57,14 @@ class Login extends Component {
   };
 
   handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
-    console.log(this.state.phoneNumber);
-    console.log(this.props.data.status);
-    console.log(this.props.router);
+    //console.log(this.state.phoneNumber);
+    //console.log(this.props.data.status);
+    //console.log(this.props.router);
     if (this.props.data.status === 200) {
       this.props.router.push({
         pathname: "/user/login/otp-verify",

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const facebookLogin = (accesstoken) => {
-  console.log(accesstoken);
+  //console.log(accesstoken);
   axios
     .post("http://192.168.0.8:8000/auth/convert-token", {
       token: accesstoken,

@@ -32,7 +32,7 @@ class NavbarDetails extends React.Component {
 
   render() {
     const { cart, loading, error } = this.props;
-    console.log("cart", cart);
+    // //console.log("cart", cart);
     return (
       <>
         {this.props.sidebar && <SideNav />}

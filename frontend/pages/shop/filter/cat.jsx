@@ -40,17 +40,17 @@ class AllListShop extends Component {
           document.documentElement.clientHeight
         ) {
           this.loadProducts();
-          console.log("loading");
+          //console.log("loading");
         }
       };
     } else {
-      console.log("loading");
+      //console.log("loading");
     }
   }
 
   loadProducts = () => {
     this.setState({ loading: true });
-    console.log("loading prod");
+    //console.log("loading prod");
     axios
       .get(
         `http://192.168.0.8:8000/api/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
@@ -63,7 +63,7 @@ class AllListShop extends Component {
       .then((res) => {
         const newProducts = res.data.products;
         const hasMore = res.data.hasMore;
-        console.log(hasMore);
+        //console.log(hasMore);
 
         this.setState({
           hasMore: hasMore,
@@ -73,13 +73,13 @@ class AllListShop extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         this.setState({ loading: false });
       });
   };
 
   componentWillMount() {
-    console.log(
+    //console.log(
       "queryyyyyyyyy",
       this.props.router.query[Object.keys(this.props.router.query)[0]]
     );
@@ -92,7 +92,7 @@ class AllListShop extends Component {
     if (!this.state.query) {
       Router.push("/");
     }
-    console.log(this.state.query);
+    //console.log(this.state.query);
     axios
       .get(
         "http://192.168.0.8:8000/v1/products/product-filter-cat/?limit=1&offset=0",
@@ -105,7 +105,7 @@ class AllListShop extends Component {
       .then((res) => {
         const newProducts = res.data.products;
         const hasMore = res.data.hasMore;
-        console.log(hasMore);
+        //console.log(hasMore);
 
         this.setState({
           hasMore: hasMore,
@@ -115,13 +115,13 @@ class AllListShop extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         this.setState({ loading: false });
       });
   }
 
   render() {
-    console.log(this.state.query);
+    //console.log(this.state.query);
 
     return (
       <>

@@ -68,7 +68,7 @@ class NewAddress extends Component {
   };
 
   handleChange = (e) => {
-    // console.log(e.target.value)
+    // //console.log(e.target.value)
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -163,13 +163,13 @@ class NewAddress extends Component {
       .post("http://192.168.0.8:8000/v1/address/create", data, config)
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
-        console.log(res);
+        //console.log(res);
         if (res.status === 201) {
           this.props.router.push("/user/checkout");
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

@@ -29,7 +29,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.props.router);
+    //console.log(this.props.router);
     return (
       <>
         <Navbar />
@@ -55,7 +55,7 @@ class Home extends Component {
   }
 }
 
-// console.log(props.data);
+// //console.log(props.data);
 
 export async function getServerSideProps() {
   // Fetch data from external API
@@ -71,7 +71,7 @@ export async function getServerSideProps() {
   );
   const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
-  console.log(trending);
+  //console.log(trending);
   const featured = await featured_res.data;
 
   if (!trending) {

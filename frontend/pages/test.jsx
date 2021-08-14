@@ -13,7 +13,7 @@ class test extends Component {
     axios
       .post("http://192.168.0.8:8000/api/v1/cart/test")
       .then((res) => this.props.router.push(res.data.GatewayPageURL))
-      .catch((err) => console.log(err));
+      .catch((err) => //console.log(err));
   }
 
   render() {

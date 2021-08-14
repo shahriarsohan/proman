@@ -7,7 +7,7 @@ class SideNav extends Component {
   state = { openDropdown: false };
 
   render() {
-    console.log(this.props.isAuthenticated);
+    //console.log(this.props.isAuthenticated);
     return (
       <div
         style={{ width: "250px", display: "flex", flexDirection: "column" }}

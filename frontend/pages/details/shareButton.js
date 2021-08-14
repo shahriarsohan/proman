@@ -4,19 +4,19 @@ class App extends React.Component {
   handleShareButton = () => {
     // Check if navigator.share is supported by the browser
     if (navigator.share) {
-      console.log("Congrats! Your browser supports Web Share API");
+      //console.log("Congrats! Your browser supports Web Share API");
       navigator
         .share({
           url: `https://share.toogoodtogo.com/store/1006/milestones/meals-saved/`,
         })
         .then(() => {
-          console.log("Sharing successfull");
+          //console.log("Sharing successfull");
         })
         .catch(() => {
-          console.log("Sharing failed");
+          //console.log("Sharing failed");
         });
     } else {
-      console.log("Sorry! Your browser does not support Web Share API");
+      //console.log("Sorry! Your browser does not support Web Share API");
     }
   };
   render() {

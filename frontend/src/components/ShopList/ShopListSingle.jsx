@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 const ShopListSingle = ({ product }) => {
-  console.log(product);
+  //console.log(product);
   return (
     <div className="col-12">
       <div className="row">

@@ -51,11 +51,11 @@ class App extends React.Component {
           document.documentElement.clientHeight
         ) {
           this.loadProducts();
-          console.log("loading");
+          //console.log("loading");
         }
       };
     } else {
-      console.log("loading");
+      //console.log("loading");
     }
   }
 
@@ -70,7 +70,7 @@ class App extends React.Component {
   }
 
   loadTrendingProducts = () => {
-    console.log("ok.................");
+    //console.log("ok.................");
     axios
       .get("http://192.168.0.8:8000/v1/products/trending-products")
       .then((res) => {
@@ -82,7 +82,7 @@ class App extends React.Component {
 
   loadProducts = () => {
     this.setState({ loading: true });
-    console.log("loading prod");
+    //console.log("loading prod");
     axios
       .get(
         `http://192.168.0.8:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
@@ -90,7 +90,7 @@ class App extends React.Component {
       .then((res) => {
         const newProducts = res.data.products;
         const hasMore = res.data.hasMore;
-        console.log(hasMore);
+        //console.log(hasMore);
 
         this.setState({
           hasMore: hasMore,
@@ -100,7 +100,7 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         this.setState({ loading: false });
       });
   };
@@ -160,7 +160,7 @@ class App extends React.Component {
       .then((res) => {
         const newProducts = res.data.products;
         const hasMore = res.data.hasMore;
-        console.log(hasMore);
+        //console.log(hasMore);
 
         this.setState(
           {
@@ -185,7 +185,7 @@ class App extends React.Component {
         );
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         this.setState({ loading: false });
       });
   };
@@ -294,7 +294,7 @@ class App extends React.Component {
                         <div className="label-input">
                           <span>Range:</span>
                           <input
-                            onChange={(e) => console.log(e.target)}
+                            onChange={(e) => //console.log(e.target)}
                             type="text"
                             id="amount"
                             name="price"
@@ -499,7 +499,7 @@ class App extends React.Component {
                         <div className="label-input">
                           <span>Range:</span>
                           <input
-                            onChange={(e) => console.log(e.target)}
+                            onChange={(e) => //console.log(e.target)}
                             type="text"
                             id="amount"
                             name="price"
@@ -698,7 +698,7 @@ class App extends React.Component {
 }
 
 export async function getServerSideProps(context) {
-  console.log("cat =>", context.query.cat);
+  //console.log("cat =>", context.query.cat);
 
   const details_qs = await axios.get(
     `http://192.168.0.8:8000/v1/products/list-infinite/?limit=4&offset=0`,

@@ -70,9 +70,9 @@ class Cart extends Component {
   };
 
   render() {
-    console.log(this.props.cart);
+    //console.log(this.props.cart);
 
-    console.log(this.props.authError);
+    //console.log(this.props.authError);
     return (
       <>
         <div className="show-sidebar-cart">
@@ -126,7 +126,7 @@ class Cart extends Component {
                 <div>
                   <ul className="products">
                     {this.props.cart.map((c) => {
-                      console.log(c.product.thumbnail);
+                      //console.log(c.product.thumbnail);
                       return (
                         <li className="product">
                           <a href="#" className="product-link">

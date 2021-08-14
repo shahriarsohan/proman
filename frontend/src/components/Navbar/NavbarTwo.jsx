@@ -41,7 +41,7 @@ class NavbarTwo extends React.Component {
 
   render() {
     const { cart, loading, error } = this.props;
-    console.log(isMobile);
+    //console.log(isMobile);
     return (
       <>
         {this.props.sidebar && <SideNav />}

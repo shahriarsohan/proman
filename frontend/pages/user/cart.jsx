@@ -20,13 +20,17 @@ import Link from "next/link";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 
 class Cart extends Component {
-  state = {
-    coupon: "",
-    couponActivated: false,
-    couponActivatedError: false,
-    isMobile: null,
-    isBrowser: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      coupon: "",
+      couponActivated: false,
+      couponActivatedError: false,
+      isMobile: null,
+      isBrowser: null,
+    };
+    this.setState({ coupon: "" });
+  }
 
   componentDidMount() {
     this.props.fetchUserCartPricing();
@@ -55,13 +59,13 @@ class Cart extends Component {
     axios
       .post("http://192.168.0.8:8000/v1/cart/add-to-order-item", item, config)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
       })
       .catch((err) => console.log(err.response.data));
   };
 
   handleChange = (e) => {
-    // console.log(e.target.value)
+    // //console.log(e.target.value)
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -78,7 +82,7 @@ class Cart extends Component {
     axios
       .post("http://192.168.0.8:8000/v1/coupon/validate-coupon", data, config)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({ couponActivated: true }, () =>
           this.props.fetchUserCartPricing()
         );
@@ -94,7 +98,7 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.props;
-    console.log(cart);
+    //console.log(cart);
     return (
       <>
         <NavbarDetailsPage
@@ -350,7 +354,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.cart);
+  //console.log(state.cart);
   return {
     cart: state.cart.data,
     loading: state.cart.loading,

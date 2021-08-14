@@ -29,28 +29,15 @@ class Verify extends Component {
     e.preventDefault();
     const data = {
       otp: this.state.otp,
-
       pk: this.props.router.query.pk,
     };
-    this.props.otpVerify(data);
+    const router = this.props.router;
+    this.props.otpVerify(data, router);
   };
 
   render() {
-    console.log(this.state.otp);
-    const { query } = this.props.router;
-    console.log(this.state.status);
-
-    const token = localStorage.getItem("access_token");
-
-    if (token) {
-      this.props.router.push("/");
-    }
-
-    if (this.props.status === 200) {
-      if (this.props.router.query.redirect) {
-        this.props.router.push(this.props.router.query.redirect);
-      }
-    }
+    // const { query } = this.props.router;
+    //console.log(this.props.error);
 
     return (
       <>
@@ -97,7 +84,7 @@ class Verify extends Component {
                     color: "#39a6a3",
                   }}
                 >
-                  {query.phoneNumber}
+                  {this.props.router.query.phoneNumber}
                 </p>
                 <hr />
               </div>
@@ -141,7 +128,7 @@ class Verify extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.auth.status);
+  //console.log(state.auth.status);
   return {
     status: state.auth.status,
     error: state.auth.error,

@@ -21,18 +21,18 @@ function MyApp({ Component, pageProps }) {
   const authCheckState = () => {
     const token = localStorage.getItem("access_token");
     if (token === undefined) {
-      console.log("logging in 1");
+      //console.log("logging in 1");
       localStorage.removeItem("access_token");
       localStorage.removeItem("expires_in");
     } else {
       const expirationDate = new Date(localStorage.getItem("expires_in"));
       if (expirationDate <= new Date()) {
-        console.log(expirationDate);
+        //console.log(expirationDate);
         localStorage.removeItem("access_token");
         localStorage.removeItem("expires_in");
-        console.log("logging in 2");
+        //console.log("logging in 2");
       } else {
-        console.log("logging in 3");
+        //console.log("logging in 3");
       }
     }
   };

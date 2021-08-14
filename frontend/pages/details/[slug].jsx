@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+import axios from "../../src/api/axios";
 import { withRouter } from "next/router";
 
 import { Popup } from "semantic-ui-react";
@@ -30,7 +30,7 @@ import PopularProducts from "../../src/components/Products/NewProducts";
 class DetailsPage extends Component {
   state = {
     size: "",
-    activeImg: `http://192.168.0.8:8000${this.props.details.images[0].image}`,
+    activeImg: "",
     quantity: 1,
     sizeError: null,
     isMobile: null,
@@ -40,9 +40,16 @@ class DetailsPage extends Component {
     isOpen: false,
     images: [],
     index: 0,
+    token: "",
   };
 
+  componentWillMount() {
+    console.log("component will mount");
+    axios.get("products/new-products");
+  }
+
   componentDidMount() {
+    axios.get("products/new-products");
     if (isMobile) {
       this.setState({ isMobile: true, isBrowser: false });
     } else {
@@ -50,15 +57,19 @@ class DetailsPage extends Component {
     }
 
     if (this.props.details.images) {
-      console.log("images//////////");
+      //console.log("images//////////");
       this.props.details.images.map((img) => {
         const src = `http://192.168.0.8:8000${img.image}`;
         this.setState((state) => {
           const list = state.images.push(src);
-          console.log(list);
+          //console.log(list);
         });
       });
     }
+  }
+
+  componentDidUpdate(prevProps, nextProps) {
+    console.log("component did update");
   }
 
   componentWillUnmount() {
@@ -121,7 +132,7 @@ class DetailsPage extends Component {
   ];
 
   handleChangeSize = (e) => {
-    console.log(e.value);
+    //console.log(e.value);
     this.setState({
       size: e.target.value,
     });
@@ -135,10 +146,21 @@ class DetailsPage extends Component {
       quantity: this.state.quantity,
     };
 
-    console.log(data);
+    //console.log(data);
     this.props.handleAddToCart(data);
     this.props.fetchUserOrder();
-    this.props.openSideBar();
+    // this.props.openSideBar();
+  };
+
+  redirectToLogin = () => {
+    //console.log("redirecting");
+    this.props.router.push({
+      pathname: "/user/login/",
+      query: {
+        redirectURL: this.props.router.asPath,
+      },
+      asPath: "main",
+    });
   };
 
   handlePlusQuantity = () => {
@@ -152,30 +174,39 @@ class DetailsPage extends Component {
   handleShareButton = () => {
     // Check if navigator.share is supported by the browser
     if (navigator.share) {
-      console.log("Congrats! Your browser supports Web Share API");
+      //console.log("Congrats! Your browser supports Web Share API");
       navigator
         .share({
           url: `https://share.toogoodtogo.com/store/1006/milestones/meals-saved/`,
         })
         .then(() => {
-          console.log("Sharing successfull");
+          //console.log("Sharing successfull");
         })
         .catch(() => {
-          console.log("Sharing failed");
+          //console.log("Sharing failed");
         });
     } else {
-      console.log("Sorry! Your browser does not support Web Share API");
+      //console.log("Sorry! Your browser does not support Web Share API");
     }
   };
 
   render() {
-    const { details, data, loading, error, add_to_cart_success, new_qs } =
-      this.props;
-    console.log(add_to_cart_success);
-    console.log(this.state.sizeError);
+    const {
+      details,
+      data,
+      loading,
+      error,
+      add_to_cart_success,
+      new_qs,
+      images,
+    } = this.props;
+    // //console.log("imagessssssssssssssssssss", images);
 
-    console.log(details.products.discount_price);
-    console.log(this.state.size);
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
+
+    // //console.log(token);
 
     var myDate = new Date(
       new Date().getTime() +
@@ -183,9 +214,8 @@ class DetailsPage extends Component {
     );
 
     const expected_delivery_date = moment(myDate).format("MMMM Do");
-    const { photoIndex, isOpen, images } = this.state;
+    const { photoIndex, isOpen } = this.state;
 
-    console.log(this.props.router);
     return (
       <>
         <NavbarDetailsPage
@@ -232,7 +262,11 @@ class DetailsPage extends Component {
                             {/* <ShareButton /> */}
 
                             <img
-                              src={this.state.activeImg}
+                              src={
+                                this.state.activeImg
+                                  ? this.state.activeImg
+                                  : `http://192.168.0.8:8000/${details.products.thumbnail}`
+                              }
                               width="100%"
                               id="ProductImg"
                               onClick={() => this.setState({ isOpen: true })}
@@ -311,7 +345,9 @@ class DetailsPage extends Component {
                             {details.products.discount_price ? (
                               <>
                                 <p className="price">
-                                  <span className="discount">$70.00</span>
+                                  <span className="discount">
+                                    ${details.products.discount_price}
+                                  </span>
                                   <s>${details.products.price}</s>{" "}
                                   <h6 style={{ fontWeight: "normal" }}>
                                     Incl. taxes
@@ -484,59 +520,53 @@ class DetailsPage extends Component {
                         {/*/ End Size */}
                         {/* Product Buy */}
                         <div className="product-buy">
-                          {details.products.buy_one_get_one ? (
-                            ""
-                          ) : (
-                            <div className="quantity">
-                              <h6>Quantity :</h6>
-                              {/* Input Order */}
-                              <div className="input-group">
-                                <div className="button minus">
-                                  {this.state.quantity !== 1 ? (
-                                    <button
-                                      type="button"
-                                      className="btn btn-primary btn-number"
-                                      data-type="minus"
-                                      data-field="quant[1]"
-                                    >
-                                      <i
-                                        onClick={() =>
-                                          this.handleMinusQuantity()
-                                        }
-                                        className="ti-minus"
-                                      />
-                                    </button>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                                <input
-                                  type="text"
-                                  name="quant[5]"
-                                  className="input-number"
-                                  data-min={1}
-                                  data-max={20}
-                                  value={this.state.quantity}
-                                />
-                                <div className="button plus">
+                          <div className="quantity">
+                            <h6>Quantity :</h6>
+                            {/* Input Order */}
+                            <div className="input-group">
+                              <div className="button minus">
+                                {this.state.quantity !== 1 ? (
                                   <button
-                                    type="submit"
+                                    type="button"
                                     className="btn btn-primary btn-number"
-                                    data-type="plus"
+                                    data-type="minus"
                                     data-field="quant[1]"
                                   >
                                     <i
-                                      onClick={() =>
-                                        this.handlePlusQuantity(details.id)
-                                      }
-                                      className="ti-plus"
+                                      onClick={() => this.handleMinusQuantity()}
+                                      className="ti-minus"
                                     />
                                   </button>
-                                </div>
+                                ) : (
+                                  ""
+                                )}
                               </div>
-                              {/*/ End Input Order */}
+                              <input
+                                type="text"
+                                name="quant[5]"
+                                className="input-number"
+                                data-min={1}
+                                data-max={20}
+                                value={this.state.quantity}
+                              />
+                              <div className="button plus">
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary btn-number"
+                                  data-type="plus"
+                                  data-field="quant[1]"
+                                >
+                                  <i
+                                    onClick={() =>
+                                      this.handlePlusQuantity(details.id)
+                                    }
+                                    className="ti-plus"
+                                  />
+                                </button>
+                              </div>
                             </div>
-                          )}
+                            {/*/ End Input Order */}
+                          </div>
                           <div className="add-to-cart">
                             <span
                               data-tip="Specify Size"
@@ -547,8 +577,11 @@ class DetailsPage extends Component {
                               <button
                                 data-tip
                                 data-for="registerTip"
-                                onClick={() =>
-                                  this.onSubmitCart(details.products.slug)
+                                onClick={
+                                  token === null
+                                    ? () => this.redirectToLogin()
+                                    : () =>
+                                        this.onSubmitCart(details.products.slug)
                                 }
                                 className="btn"
                                 disabled={this.state.size === "" ? true : false}
@@ -878,7 +911,11 @@ class DetailsPage extends Component {
                             {/* <Zoom> */}
                             <img
                               onClick={() => this.setState({ isOpen: true })}
-                              src={this.state.activeImg}
+                              src={
+                                this.state.activeImg
+                                  ? this.state.activeImg
+                                  : `http://192.168.0.8:8000/${details.products.thumbnail}`
+                              }
                               width="100%"
                               id="ProductImg"
                             />
@@ -938,7 +975,9 @@ class DetailsPage extends Component {
                           {details.products.discount_price ? (
                             <>
                               <p className="price">
-                                <span className="discount">$70.00</span>
+                                <span className="discount">
+                                  ${details.products.discount_price}
+                                </span>
                                 <s>${details.products.price}</s>{" "}
                                 <h6 style={{ fontWeight: "normal" }}>
                                   Incl. taxes
@@ -1110,23 +1149,23 @@ class DetailsPage extends Component {
                               {/* Input Order */}
                               <div className="input-group">
                                 <div className="button minus">
-                                  {/* {this.state.quantity !== 1 ? (
-                              <button
-                                type="button"
-                                className="btn btn-primary btn-number"
-                                data-type="minus"
-                                data-field="quant[1]"
-                              >
-                                <i
-                                  onClick={() =>
-                                    this.handleMinusQuantity()
-                                  }
-                                  className="ti-minus"
-                                />
-                              </button>
-                            ) : (
-                              ""
-                            )} */}
+                                  {this.state.quantity !== 1 ? (
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary btn-number"
+                                      data-type="minus"
+                                      data-field="quant[1]"
+                                    >
+                                      <i
+                                        onClick={() =>
+                                          this.handleMinusQuantity()
+                                        }
+                                        className="ti-minus"
+                                      />
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
                                 <input
                                   type="text"
@@ -1165,8 +1204,11 @@ class DetailsPage extends Component {
                               <button
                                 data-tip
                                 data-for="registerTip"
-                                onClick={() =>
-                                  this.onSubmitCart(details.products.slug)
+                                onClick={
+                                  token === null
+                                    ? () => this.redirectToLogin()
+                                    : () =>
+                                        this.onSubmitCart(details.products.slug)
                                 }
                                 className="btn"
                                 disabled={this.state.size === "" ? true : false}
@@ -1487,17 +1529,23 @@ class DetailsPage extends Component {
 
 export async function getServerSideProps(context) {
   // Fetch data from external API
-  const details_qs = await axios.get(
-    `http://192.168.0.8:8000/v1/products/details/${context.params.slug}`
-  );
+  const details_qs = await axios.get(`products/details/${context.params.slug}`);
 
-  const new_qs = await axios.get(
-    `http://192.168.0.8:8000/v1/products/new-products`
-  );
+  const new_qs = await axios.get(`products/new-products`);
 
   const details = await details_qs.data;
   const newProducts = await new_qs.data;
-  console.log("details =>", details.buy_one_get_one);
+  //console.log("details =>", details.buy_one_get_one);
+
+  const images = [];
+  if (details.images) {
+    details.images.map((img) => {
+      const src = `http://192.168.0.8:8000${img.image}`;
+      images.push(src);
+    });
+  }
+
+  //console.log("images", images);
 
   if (!details) {
     return {
@@ -1508,7 +1556,7 @@ export async function getServerSideProps(context) {
   }
   // Pass data to the page via props
   return {
-    props: { details: details, new_qs: newProducts },
+    props: { details: details, new_qs: newProducts, images: images },
   };
 }
 

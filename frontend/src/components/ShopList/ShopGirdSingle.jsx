@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 const ShopGirdSingle = ({ product }) => {
-  console.log(product);
+  //console.log(product);
   return (
     <div className="col-xl-3 col-lg-3 col-md-4 col-6">
       <div className="single-product">

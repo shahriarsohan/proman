@@ -41,7 +41,7 @@ class Navbar extends Component {
 
   render() {
     const { cart } = this.props;
-    console.log(cart);
+    //console.log(cart);
     return (
       <>
         {this.props.sidebar && <SideNav />}
@@ -528,7 +528,7 @@ class Navbar extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.cart);
+  //console.log(state.cart);
   return {
     authError: state.cart.data.msg,
     cart: state.cart.data,

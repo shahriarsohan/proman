@@ -130,7 +130,7 @@ class checkout extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -526,7 +526,7 @@ class checkout extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
-    console.log(this.state.modalLoading);
+    //console.log(this.state.modalLoading);
     return (
       <>
         <NavbarTwo />

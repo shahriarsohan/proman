@@ -5,10 +5,15 @@ const headers = {};
 
 const ISSERVER = typeof window === "undefined";
 if (!ISSERVER) {
+  //console.log("ISSERVER");
   var token = localStorage.getItem("access_token");
-  if (token) {
-    headers.Authorization = `Token ${token}`;
-  }
+}
+
+console.log("token", token);
+console.log("headers", headers);
+
+if (token) {
+  headers.Authorization = `Token ${token}`;
 }
 
 const axiosInstance = axios.create({

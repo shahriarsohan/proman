@@ -39,17 +39,17 @@ class AllListShop extends Component {
           document.documentElement.clientHeight
         ) {
           this.loadProducts();
-          console.log("loading");
+          //console.log("loading");
         }
       };
     } else {
-      console.log("loading");
+      //console.log("loading");
     }
   }
 
   loadProducts = () => {
     this.setState({ loading: true });
-    console.log("loading prod");
+    //console.log("loading prod");
     axios
       .get(
         `http://192.168.0.8:8000/api/v1/products/product-filter/?limit=${this.state.limit}&offset=${this.state.offset}`,
@@ -62,7 +62,7 @@ class AllListShop extends Component {
       .then((res) => {
         const newProducts = res.data.products;
         const hasMore = res.data.hasMore;
-        console.log(hasMore);
+        //console.log(hasMore);
 
         this.setState({
           hasMore: hasMore,
@@ -72,7 +72,7 @@ class AllListShop extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         this.setState({ loading: false });
       });
   };
@@ -99,7 +99,7 @@ class AllListShop extends Component {
       .then((res) => {
         const newProducts = res.data.products;
         const hasMore = res.data.hasMore;
-        console.log(hasMore);
+        //console.log(hasMore);
 
         this.setState({
           hasMore: hasMore,
@@ -109,13 +109,13 @@ class AllListShop extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         this.setState({ loading: false });
       });
   }
 
   render() {
-    console.log(this.state.query);
+    //console.log(this.state.query);
 
     return (
       <>
