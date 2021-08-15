@@ -164,6 +164,7 @@ class Overview extends Component {
                               this.setState({
                                 loading: false,
                                 success: true,
+                                error: [],
                               });
                             })
                             .catch((err) => {
@@ -181,6 +182,9 @@ class Overview extends Component {
                             label="First name"
                             placeholder="First name"
                             onChange={handleChange("f_name")}
+                            error={
+                              this.state.error ? this.state.error.f_name : ""
+                            }
                           />
                           <Field
                             as={Form.Input}
@@ -188,6 +192,9 @@ class Overview extends Component {
                             value={values.l_name}
                             placeholder="Last name"
                             onChange={handleChange("l_name")}
+                            error={
+                              this.state.error ? this.state.error.l_name : ""
+                            }
                           />
                         </Form.Group>
                         {/* <Field
@@ -203,10 +210,7 @@ class Overview extends Component {
                           value={values.email}
                           onChange={handleChange("email")}
                           label="Email"
-                          error={{
-                            content: "Please enter a valid email address",
-                            pointing: "below",
-                          }}
+                          error={this.state.error ? this.state.error.email : ""}
                           placeholder="joe@schmoe.com"
                         />
                         {this.state.success && (
@@ -214,15 +218,6 @@ class Overview extends Component {
                             <Message.Header>
                               <p className="text-center">
                                 Profile Edited Successfully
-                              </p>
-                            </Message.Header>
-                          </Message>
-                        )}
-                        {this.state.error.length !== 0 && (
-                          <Message negative>
-                            <Message.Header>
-                              <p className="text-center">
-                                {this.state.error.email}
                               </p>
                             </Message.Header>
                           </Message>
