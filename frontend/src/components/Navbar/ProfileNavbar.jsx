@@ -9,16 +9,12 @@ import { isMobile } from "react-device-detect";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 import { closeSideBar, openSideBar } from "../../store/actions/cartSideBar";
+import { showOptions, closeOptions } from "../../store/actions/navbar";
+
 import Cart from "../SideCart/Cart";
 import SideNav from "./SideNav";
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
-
-class NavbarDetails extends React.Component {
+class ProfileNavbar extends React.Component {
   componentDidMount() {
     this.props.fetchCart();
   }
@@ -31,13 +27,13 @@ class NavbarDetails extends React.Component {
   };
 
   render() {
-    const { cart, loading, error } = this.props;
+    const { cart, loading, error, showDropdown } = this.props;
     // //console.log("cart", cart);
     return (
       <>
         {this.props.sidebar && <SideNav />}
         {this.props.isMobile ? (
-          <div style={{ marginBottom: "20px" }} className="mobie-nav mb-5">
+          <div className="mobie-nav mb-5">
             <div className="back-button">
               <div onClick={() => this.props.route()}>
                 <img
@@ -53,17 +49,13 @@ class NavbarDetails extends React.Component {
             </div>
 
             <div className="sinlge-bar shopping">
-              <a
-                //   onClick={() => this.props.openSideBarCart()}
-                className="single-icon"
-              >
+              <a onClick={() => this.props.show()} className="single-icon">
                 <img
                   width="30px"
                   height="30px"
-                  src="/images/cart-nav.png"
+                  src="/images/options.png"
                   alt="logo"
                 />
-                <span className="total-count">{cart.length}</span>
               </a>
             </div>
           </div>
@@ -355,6 +347,7 @@ const mapStateToProps = (state) => {
     error: state.cart.error,
     sidebar: state.sidebar.sideOpen,
     cartSideBarOpenTwo: state.cartsidebar.sideOpen,
+    option: state.navOptions.showOption,
   };
 };
 
@@ -364,7 +357,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
     openSideBarCart: () => dispatch(openSideBar()),
     closeSideBar: () => dispatch(closeSideBar()),
+    show: () => dispatch(showOptions()),
+    hide: () => dispatch(closeOptions()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavbarDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileNavbar);

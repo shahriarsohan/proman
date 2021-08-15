@@ -168,10 +168,7 @@ class Navbar extends Component {
                       </div>
                       <div className="sinlge-bar">
                         <a href="#" className="single-icon">
-                          <i
-                            className="fa fa-user-circle-o"
-                            aria-hidden="true"
-                          />
+                          <i class="far fa-user"></i>
                         </a>
                       </div>
                       <div className="sinlge-bar shopping">

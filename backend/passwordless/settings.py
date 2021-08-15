@@ -30,12 +30,14 @@ THIRD_PARTY_APPS = [
     'drfpasswordless',
     'phone_login',
     'phonenumber_field',
+    'django_celery_beat',
+    'django_celery_results'
 
 ]
 
 
 LOCAL_APPS = ['products', 'users', 'wishlist',
-              'orders', 'address', 'cart', 'coupon']
+              'orders', 'address', 'cart', 'coupon', 'userprofile']
 
 INSTALLED_APPS = SYSTEM_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -130,6 +132,7 @@ PASSWORDLESS_AUTH = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CELERY_CACHE_BACKEND = 'default'
 
 CACHES = {
     'default': {
@@ -221,3 +224,8 @@ SENDSMS_AUTH_TOKEN = '85a46f82d8dacf858c00e5b050bb78fd'
 
 SENDSMS_TWILIO_ACCOUNT_SID = 'ACdbffa1399e452a35e0773b665e01309a'
 SENDSMS_TWILIO_AUTH_TOKEN = '85a46f82d8dacf858c00e5b050bb78fd'
+
+
+BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_TASK_TRACK_STARTED = True

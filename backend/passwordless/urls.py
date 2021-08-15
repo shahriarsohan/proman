@@ -19,6 +19,7 @@ urlpatterns = [
     path('v1/address/', include('address.api.urls')),
     path('v1/coupon/', include('coupon.api.urls')),
     path('v1/orders/', include('orders.api.urls')),
+    path('v1/profile/', include('userprofile.api.urls')),
     path('v1/cart/', include('cart.api.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

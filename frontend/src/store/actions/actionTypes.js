@@ -18,3 +18,10 @@ export const AUTH_START = "AUTH_START";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAIL = "AUTH_FAIL";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
+
+export const SHOW_OPTION = "SHOW_OPTION";
+export const HIDE_OPTION = "HIDE_OPTION";
+
+export const PROFILE_FETCH_START = "PROFILE_FETCH_START";
+export const PROFILE_EDIT_SUCCESS = "PROFILE_EDIT_SUCCESS";
+export const PROFILE_EDIT_ERROR = "PROFILE_EDIT_ERROR";

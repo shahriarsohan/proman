@@ -5023,3 +5023,21 @@ a:hover {
   padding: 20px;
   transform: translateZ(0);
 }
+
+/* profilesection */
+
+.option-list {
+  margin-bottom: 300px;
+}
+
+.profile-section {
+  margin-top: 5px;
+  border: 0.5 solid black;
+  width: 100%;
+}
+
+.user-info {
+  padding: 10px;
+}
+
+/*x profilesection */
