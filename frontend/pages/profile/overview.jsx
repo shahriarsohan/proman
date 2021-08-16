@@ -217,7 +217,7 @@ class Overview extends Component {
                           <Message positive>
                             <Message.Header>
                               <p className="text-center">
-                                Profile Edited Successfully
+                                Profile Updated Successfully
                               </p>
                             </Message.Header>
                           </Message>

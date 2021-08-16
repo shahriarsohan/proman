@@ -164,16 +164,9 @@ class NewAddress extends Component {
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         //console.log(res);
-        // if (res.status === 201) {
-        //   this.props.router.push("/user/checkout");
-        // }
-        console.log(res.status);
-        console.log(this.props.router);
-        // if (this.props.router.query.redirectURL) {
-        this.props.router.push(this.props.router.query.redirectURL);
-        // } else {
-        // this.props.router.push("/");
-        // }
+        if (res.status === 201) {
+          this.props.router.push("/profile/address");
+        }
       })
       .catch((err) => {
         //console.log(err);
@@ -181,7 +174,6 @@ class NewAddress extends Component {
   };
 
   render() {
-    console.log("redirect url", this.props.router.query.redirectURL);
     return (
       <>
         <NavbarTwo />

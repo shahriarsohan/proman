@@ -10,6 +10,8 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import { withRouter } from "next/router";
+import axiosInstance from "../api/axios";
 
 class TrendingProductCard extends Component {
   state = {
@@ -33,7 +35,7 @@ class TrendingProductCard extends Component {
     };
     // //console.log(config);
     axios
-      .post("http://192.168.0.8:8000/v1/cart/add-to-cart", product, config)
+      .post("http://192.168.1.108:8000/v1/cart/add-to-cart", product, config)
       .then((res) => {
         this.props.fetchUserOrder(),
           this.setState({ order_added_success: true });
@@ -54,7 +56,7 @@ class TrendingProductCard extends Component {
     //console.log(slug);
 
     axios
-      .get(`http://192.168.0.8:8000/v1/products/details/${slug}`)
+      .get(`http://192.168.1.108:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )
@@ -67,10 +69,42 @@ class TrendingProductCard extends Component {
     this.setState({ modal: false });
   };
 
+  redirectToLogin = () => {
+    //console.log("redirecting");
+    this.props.router.push({
+      pathname: "/user/login/",
+      query: {
+        redirectURL: this.props.router.asPath,
+      },
+      asPath: "main",
+    });
+  };
+
+  onSubmitCart = (slug) => {
+    this.setState({
+      loading: false,
+    });
+
+    axiosInstance
+      .post("/wishlist/add", {
+        slug: slug,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const { modal, order_added_success, order_added_error } = this.state;
     //console.log(order_added_success);
-    //console.log(this.props);
+    console.log(this.props.router);
+
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
     return (
       <>
         {order_added_success
@@ -86,7 +120,7 @@ class TrendingProductCard extends Component {
                     className="default-img"
                     src={
                       this.props.thumbnail
-                        ? `http://192.168.0.8:8000${this.props.thumbnail}`
+                        ? `http://192.168.1.108:8000${this.props.thumbnail}`
                         : "https://via.placeholder.com/550x750"
                     }
                     alt={this.props.name}
@@ -109,7 +143,14 @@ class TrendingProductCard extends Component {
                     />
                     <span>Quick Shop</span>
                   </a> */}
-                  <a title="Wishlist" href="#">
+                  <a
+                    title="Wishlist"
+                    onClick={
+                      token === null
+                        ? () => this.redirectToLogin()
+                        : () => this.onSubmitCart(this.props.slug)
+                    }
+                  >
                     <i className=" ti-heart " />
                     <span>Add to Wishlist</span>
                   </a>
@@ -179,4 +220,6 @@ class TrendingProductCard extends Component {
   }
 }
 
-export default connect(null, { fetchUserOrder })(TrendingProductCard);
+export default connect(null, { fetchUserOrder })(
+  withRouter(TrendingProductCard)
+);

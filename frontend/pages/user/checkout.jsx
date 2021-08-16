@@ -145,7 +145,13 @@ class checkout extends Component {
       .get("http://192.168.0.8:8000/v1/address/user-address", config)
       .then((res) => {
         if (!res.data.user_have_address) {
-          this.props.router.push("/address/new");
+          this.props.router.push({
+            pathname: "/address/new",
+            query: {
+              redirectURL: this.props.router.asPath,
+            },
+            asPath: "main",
+          });
         } else {
           this.setState(
             {

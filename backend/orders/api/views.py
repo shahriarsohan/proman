@@ -1,3 +1,4 @@
+from orders.api.serializers import OrderSerailizers
 from django.utils import timezone
 from orders.models import Order
 from address.models import Address
@@ -5,6 +6,18 @@ from rest_framework import generics, views, permissions, status, response
 from rest_framework.response import Response
 from cart.models import Cart, FinalCart
 from sslcommerz_lib import SSLCOMMERZ
+
+
+class GetUserOrder(views.APIView):
+    def get(self, request, *args, **kwargs):
+        qs = Order.objects.filter(user=request.user)
+        print(qs)
+        if qs:
+            serializer = OrderSerailizers(qs, many=True)
+            print(serializer)
+            return Response(serializer.data)
+        else:
+            return Response({'msg': 'something went wrong'})
 
 
 class CreateOrderApiView(views.APIView):

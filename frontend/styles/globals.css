@@ -5040,4 +5040,87 @@ a:hover {
   padding: 10px;
 }
 
+.user-dont-have-address {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-dont-have-address-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.capsule {
+  font-size: 12px;
+  padding: 4px 12px;
+  display: inline-block;
+  border-radius: 24px;
+  background-color: #eff0f5;
+  max-width: 150px;
+}
+
+.orders {
+  background-color: #fff;
+}
+
+.order {
+  margin-bottom: 5px;
+  border: 1px solid #c7c7c77c;
+}
+
+.order-info-head {
+  padding: 20px;
+  background-color: rgb(243, 237, 237);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-cart-item {
+  padding: 20px;
+  border-bottom: 1px solid #9393964d;
+}
+
+.order-cart-items {
+  padding: 10px;
+}
+.cart-item-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-info-head p {
+  line-height: 5px;
+}
+
+.order-date {
+  color: #757575;
+  font-size: 11px;
+}
+
+.cart-item-info__name {
+  color: rgb(26, 24, 24);
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.cart-item-info__size {
+  text-transform: uppercase;
+}
+
+.order-status {
+  font-size: 12px;
+  padding: 4px 12px;
+  display: inline-block;
+  border-radius: 24px;
+  background-color: #939396;
+  max-width: 150px;
+  text-transform: uppercase;
+}
+
 /*x profilesection */

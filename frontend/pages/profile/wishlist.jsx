@@ -15,6 +15,7 @@ import {
   Segment,
   Image,
 } from "semantic-ui-react";
+import axiosInstance from "../../src/api/axios";
 
 import ProfileNavbar from "../../src/components/Navbar/ProfileNavbar";
 
@@ -22,15 +23,34 @@ class WishList extends Component {
   state = {
     isMobile: null,
     isBrowser: null,
+    wishlist: [],
+    loading: false,
+    error: null,
   };
 
   componentDidMount() {
+    this.fetchWishList();
     if (isMobile) {
       this.setState({ isMobile: true, isBrowser: false });
     } else {
       this.setState({ isMobile: false, isBrowser: true });
     }
   }
+
+  fetchWishList = () => {
+    this.setState({ loading: true });
+    axiosInstance
+      .get("/wishlist/list")
+      .then((res) => {
+        this.setState({
+          wishlist: res.data,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        this.setState({ loading: false, error: err.response.data });
+      });
+  };
 
   render() {
     return (
@@ -90,61 +110,82 @@ class WishList extends Component {
                       <span className="material-icons-outlined">
                         local_mall
                       </span>
-                      My Orders
+                      My Wishlist
                     </div>
                     <div className="cart_list_wrap">
-                      <div></div>
-
                       <div className="cart_responsive">
-                        <div className="tr_item">
-                          <div className="td_item item_img">
-                            <img src="https://i.ibb.co/vQHXcYb/b68912b3426baa0b1f4c410a02174879.jpg" />
-                          </div>
-                          <div className="td_item item_name">
-                            <label
-                              style={{
-                                textTransform: "capitalize",
-                                fontFamily: "Ubuntu",
-                              }}
-                              className="main"
-                            >
-                              <Link href="/">Warfaze</Link>
-                            </label>
-                          </div>
-                          <div className="td_item item_color">
-                            <label>Qty :4 </label>
-                          </div>
+                        {this.state.wishlist
+                          ? this.state.wishlist.map((data) => {
+                              return (
+                                <div className="tr_item">
+                                  <div className="td_item item_img">
+                                    <img src={data.products.thumbnail} />
+                                  </div>
+                                  <div className="td_item item_name">
+                                    <label
+                                      style={{
+                                        textTransform: "capitalize",
+                                        fontFamily: "Ubuntu",
+                                      }}
+                                      className="main"
+                                    >
+                                      <Link href="/">{data.products.name}</Link>
+                                    </label>
+                                  </div>
+                                  {/* <div className="td_item item_color">
+                        <label>Qty :4 </label>
+                      </div> */}
 
-                          <div className="td_item item_price">
-                            <label>
-                              <img
-                                width="15px"
-                                height="15px"
-                                src="/images/taka.png"
-                              />
-                              5
-                            </label>
-                          </div>
-                          <div className="td_item item_price">
-                            <label>
-                              <img
-                                width="15px"
-                                height="15px"
-                                src="/images/taka.png"
-                              />
-                              5
-                            </label>
-                          </div>
+                                  <div className="td_item item_price">
+                                    <label>
+                                      <img
+                                        width="15px"
+                                        height="15px"
+                                        src="/images/taka.png"
+                                      />
+                                      5
+                                    </label>
+                                  </div>
+                                  <div className="td_item item_price">
+                                    <label>
+                                      <img
+                                        width="15px"
+                                        height="15px"
+                                        src="/images/taka.png"
+                                      />
+                                      5
+                                    </label>
+                                  </div>
+                                  <div className="td_item item_price">
+                                    <label>
+                                      <img
+                                        width="15px"
+                                        height="15px"
+                                        src="/images/taka.png"
+                                      />
+                                      5
+                                    </label>
+                                  </div>
+                                  <div className="td_item item_price">
+                                    <img
+                                      width="30px"
+                                      height="30px"
+                                      src="/images/plus.png"
+                                    />
+                                  </div>
 
-                          <div className="td_item item_remove">
-                            <span
-                              onClick={() => this.handleDelete(item.id)}
-                              className="material-icons"
-                            >
-                              close
-                            </span>
-                          </div>
-                        </div>
+                                  <div className="td_item item_remove">
+                                    <span
+                                      onClick={() => this.handleDelete(item.id)}
+                                      className="material-icons"
+                                    >
+                                      close
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          : ""}
                       </div>
                     </div>
                   </div>
