@@ -141,7 +141,7 @@ class Order extends Component {
                                         <img
                                           width="50px"
                                           height="50px"
-                                          src={`http://192.168.0.8:8000/${cart.product.thumbnail}`}
+                                          src={`http://127.0.0.1:8000/${cart.product.thumbnail}`}
                                         />
                                         <p className="cart-item-info__name">
                                           <Link

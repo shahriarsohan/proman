@@ -60,7 +60,7 @@ class QuickLookModal extends Component {
                   }}
                   src={
                     details.thumbnail
-                      ? `http://192.168.0.8:8000${details.thumbnail}`
+                      ? `http://127.0.0.1:8000${details.thumbnail}`
                       : "https://via.placeholder.com/550x750"
                   }
                   alt="#"

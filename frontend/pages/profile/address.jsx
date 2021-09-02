@@ -65,7 +65,7 @@ class Address extends Component {
   fetchAddress = () => {
     this.setState({ loading: true });
     axiosInstance
-      .get("http://192.168.0.8:8000/v1/address/user-address")
+      .get("http://127.0.0.1:8000/v1/address/user-address")
       .then((res) => {
         this.setState({
           loading: false,

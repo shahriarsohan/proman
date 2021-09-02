@@ -13,6 +13,7 @@ import {
   Header,
   Image,
   Modal,
+  Input,
 } from "semantic-ui-react";
 import axios from "axios";
 
@@ -123,7 +124,7 @@ class checkout extends Component {
     };
 
     axios
-      .post("http://192.168.0.8:8000/v1/orders/create-new-order", data, config)
+      .post("http://127.0.0.1:8000/v1/orders/create-new-order", data, config)
       .then((res) => {
         this.setState({ lol: "data" }, () => {
           this.checkUserAddress();
@@ -142,7 +143,7 @@ class checkout extends Component {
     };
     this.setState({ loading: true });
     axios
-      .get("http://192.168.0.8:8000/v1/address/user-address", config)
+      .get("http://127.0.0.1:8000/v1/address/user-address", config)
       .then((res) => {
         if (!res.data.user_have_address) {
           this.props.router.push({
@@ -177,11 +178,7 @@ class checkout extends Component {
     };
 
     axios
-      .post(
-        "http://192.168.0.8:8000/v1/orders/assosiate-to-order",
-        data,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/orders/assosiate-to-order", data, config)
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.updateDeliveryCharge()
@@ -202,7 +199,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://192.168.0.8:8000/v1/orders/update-shipping-charge",
+        "http://127.0.0.1:8000/v1/orders/update-shipping-charge",
         data,
         config
       )
@@ -225,11 +222,7 @@ class checkout extends Component {
       some: "thing",
     };
     axios
-      .post(
-        "http://192.168.0.8:8000/v1/orders/update-order-total",
-        data,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/orders/update-order-total", data, config)
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.getOrderPricing()
@@ -250,7 +243,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://192.168.0.8:8000/v1/orders/order-pricing-details",
+        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -286,7 +279,7 @@ class checkout extends Component {
 
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -318,7 +311,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -350,7 +343,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -382,7 +375,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -414,7 +407,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -447,7 +440,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -478,7 +471,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -509,7 +502,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://192.168.0.8:8000/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -600,7 +593,7 @@ class checkout extends Component {
 
                       axios
                         .put(
-                          `http://192.168.0.8:8000/v1/address/edit/${this.state.shipping_address.id}`,
+                          `http://127.0.0.1:8000/v1/address/edit/${this.state.shipping_address.id}`,
                           data,
                           config
                         )
@@ -716,7 +709,7 @@ class checkout extends Component {
                       </div>
 
                       <div className="col-lg-12 col-md-12 col-12 mt-3">
-                        <TextArea
+                        {/* <TextArea
                           placeholder="Address"
                           placeholder="Tell us more"
                           value={this.state.street_address}
@@ -724,6 +717,20 @@ class checkout extends Component {
                           label="Address"
                           name="street_address"
                           placeholder="Address"
+                        /> */}
+
+                        <Field
+                          as={TextArea}
+                          name="street_address"
+                          value={values.street_address}
+                          control={Input}
+                          error={
+                            this.state.error
+                              ? this.state.error.street_address
+                              : ""
+                          }
+                          label="Street Address"
+                          placeholder="Street Address"
                         />
                       </div>
 

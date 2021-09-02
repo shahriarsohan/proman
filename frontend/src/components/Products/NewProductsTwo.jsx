@@ -25,7 +25,7 @@ export default class MultipleRows extends Component {
                     className="default-img"
                     //   src={
                     //     img
-                    //       ? `http://192.168.0.8:8000${img}`
+                    //       ? `http://127.0.0.1:8000${img}`
                     //       : "https://via.placeholder.com/550x750"
                     //   }
                     alt={this.props.name}

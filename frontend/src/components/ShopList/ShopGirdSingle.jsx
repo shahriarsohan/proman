@@ -13,7 +13,7 @@ const ShopGirdSingle = ({ product }) => {
                 className="default-img"
                 src={
                   product.thumbnail
-                    ? `http://192.168.0.8:8000${product.thumbnail}`
+                    ? `http://127.0.0.1:8000${product.thumbnail}`
                     : "https://via.placeholder.com/550x750"
                 }
                 alt={product.name}

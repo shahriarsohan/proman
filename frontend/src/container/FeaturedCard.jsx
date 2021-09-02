@@ -18,7 +18,7 @@ class FeaturedCard extends React.Component {
     //console.log(slug);
 
     axios
-      .get(`http://192.168.0.8:8000/v1/products/details/${slug}`)
+      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )
@@ -42,7 +42,7 @@ class FeaturedCard extends React.Component {
                 className="default-img"
                 src={
                   img
-                    ? `http://192.168.0.8:8000${img}`
+                    ? `http://127.0.0.1:8000${img}`
                     : "https://via.placeholder.com/550x750"
                 }
                 alt={this.props.name}
