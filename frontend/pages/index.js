@@ -60,7 +60,7 @@ class Home extends Component {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://localhost/api/v1/products/trending"
+    "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
   );
 
   // const bestselling_res = await axios.get(
