@@ -1,7 +1,3 @@
-
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
@@ -28,19 +24,11 @@
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
-
-
-
-
+/*---------------------------------------------*/
 
 /*---------------------------------------------*/
 
-
-
-
-/*---------------------------------------------*/
-
-:root{
+:root {
   --primary: #08d9d6;
   --secondary-black: #252a34;
   --redis: #ff2e63;
@@ -48,8 +36,8 @@
 }
 
 input {
-	outline: none;
-	border: none;
+  outline: none;
+  border: none;
 }
 
 textarea {
@@ -57,29 +45,62 @@ textarea {
   border: none;
 }
 
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
   border-color: transparent !important;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+input:focus:-moz-placeholder {
+  color: transparent;
+}
+input:focus::-moz-placeholder {
+  color: transparent;
+}
+input:focus:-ms-input-placeholder {
+  color: transparent;
+}
 
-textarea:focus::-webkit-input-placeholder { color:transparent; }
-textarea:focus:-moz-placeholder { color:transparent; }
-textarea:focus::-moz-placeholder { color:transparent; }
-textarea:focus:-ms-input-placeholder { color:transparent; }
+textarea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+textarea:focus:-moz-placeholder {
+  color: transparent;
+}
+textarea:focus::-moz-placeholder {
+  color: transparent;
+}
+textarea:focus:-ms-input-placeholder {
+  color: transparent;
+}
 
-input::-webkit-input-placeholder { color: #555555;}
-input:-moz-placeholder { color: #555555;}
-input::-moz-placeholder { color: #555555;}
-input:-ms-input-placeholder { color: #555555;}
+input::-webkit-input-placeholder {
+  color: #555555;
+}
+input:-moz-placeholder {
+  color: #555555;
+}
+input::-moz-placeholder {
+  color: #555555;
+}
+input:-ms-input-placeholder {
+  color: #555555;
+}
 
-textarea::-webkit-input-placeholder { color: #555555;}
-textarea:-moz-placeholder { color: #555555;}
-textarea::-moz-placeholder { color: #555555;}
-textarea:-ms-input-placeholder { color: #555555;}
+textarea::-webkit-input-placeholder {
+  color: #555555;
+}
+textarea:-moz-placeholder {
+  color: #555555;
+}
+textarea::-moz-placeholder {
+  color: #555555;
+}
+textarea:-ms-input-placeholder {
+  color: #555555;
+}
 
 label {
   display: block;
@@ -88,19 +109,18 @@ label {
 
 /*---------------------------------------------*/
 button {
-	outline: none !important;
-	border: none;
-	background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
 }
 
 button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 iframe {
-	border: none !important;
+  border: none !important;
 }
-
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
@@ -118,7 +138,9 @@ iframe {
   line-height: 1.5;
 }
 
-.bo1 {border-bottom: 1px solid #999999;}
+.bo1 {
+  border-bottom: 1px solid #999999;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
@@ -129,7 +151,7 @@ iframe {
 }
 
 .container-login100 {
-  width: 100%;  
+  width: 100%;
   min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -140,12 +162,11 @@ iframe {
   justify-content: center;
   align-items: center;
   /* padding: 15px; */
-  
+
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;;
+  background-repeat: no-repeat;
 }
-
 
 .wrap-login100 {
   width: 680px;
@@ -153,7 +174,6 @@ iframe {
   border-radius: 10px;
   position: relative;
 }
-
 
 /*==================================================================
 [ Form ]*/
@@ -256,7 +276,6 @@ iframe {
   color: #fff;
 }
 
-
 /*------------------------------------------------------------------
 [ Input ]*/
 
@@ -267,7 +286,6 @@ iframe {
   border: 1px solid #e6e6e6;
   border-radius: 10px;
 }
-
 
 /*---------------------------------------------*/
 .input100 {
@@ -333,7 +351,6 @@ iframe {
   transform: scale(1);
 }
 
-
 /*------------------------------------------------------------------
 [ Button ]*/
 .container-login100-form-btn {
@@ -394,7 +411,6 @@ iframe {
 .login100-form-btn:hover:before {
   opacity: 1;
 }
-
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/
@@ -463,7 +479,6 @@ iframe {
   }
 }
 
-
 /*//////////////////////////////////////////////////////////////////
 [ Responsive ]*/
 @media (max-width: 768px) {
@@ -471,7 +486,7 @@ iframe {
     padding-left: 60px;
     padding-right: 60px;
   }
-
+}
 @media (max-width: 576px) {
   .wrap-login100 {
     padding-left: 15px;

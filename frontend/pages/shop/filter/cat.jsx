@@ -79,7 +79,7 @@ class AllListShop extends Component {
   };
 
   componentWillMount() {
-    //console.log(
+    console.log(
       "queryyyyyyyyy",
       this.props.router.query[Object.keys(this.props.router.query)[0]]
     );

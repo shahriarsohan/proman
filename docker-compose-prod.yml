@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nginx:
-    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest
+    image: 949478792120.dkr.ecr.ap-south-1.amazonaws.com/proman-nginx:latest
     restart: always
     build:
       context: ./nginx
@@ -10,12 +10,12 @@ services:
       - "80:80"
 
   client:
-    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest
+    image: 949478792120.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest
     build:
       context: ./frontend
 
   backend:
-    image: 215680092654.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest
+    image: 949478792120.dkr.ecr.ap-south-1.amazonaws.com/proman-backend:latest
     build:
       context: ./backend
     command: gunicorn cosmetica.wsgi --bind 0.0.0.0:8000

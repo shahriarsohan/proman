@@ -18,7 +18,7 @@ import {
   Message,
 } from "semantic-ui-react";
 import axiosInstance from "../../src/api/axios";
-import { DropdownField } from "./components/DropdownField";
+import { DropdownField } from "../../src/components/DropdownField";
 
 import ProfileNavbar from "../../src/components/Navbar/ProfileNavbar";
 

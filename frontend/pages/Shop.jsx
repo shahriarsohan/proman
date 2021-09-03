@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PromotionalSlider from "../src/components/Hero/PromotinalSlider";
 
 import NavbarTwo from "../src/components/Navbar/NavbarTwo";
-import PopularProductsForShop from "../src/components/ScrollProductsForShop";
+// import PopularProductsForShop from "../src/components/ScrollProductsForShop";
 
 export default class Shop extends Component {
   state = {
@@ -33,7 +33,7 @@ export default class Shop extends Component {
         <div className="product-area">
           <div className="container">
             <div className="row">
-              <PopularProductsForShop />
+              {/* <PopularProductsForShop /> */}
               <div className="col-md-9">
                 <div className="product-info">
                   <div className="nav-main">

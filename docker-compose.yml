@@ -23,7 +23,7 @@ services:
 
   backend:
     build:
-      context: ./src
+      context: ./backend
     ports:
       - "8000:8000"
     environment:

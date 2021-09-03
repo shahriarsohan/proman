@@ -3363,8 +3363,7 @@ Version:1.0
   font-size: 12px;
   margin-left: 3px;
 }
-.shop-list .list-content .des {
-}
+
 .shop-list .list-content .btn {
   margin-top: 22px;
   height: 42px;
@@ -4765,9 +4764,6 @@ Version:1.0
 /*=============================
       End Footer CSS
   ===============================*/
- {
-  "mode":"full","isactive": false;
-}
 
 .sample-slider {
   height: "510px";

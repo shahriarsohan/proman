@@ -42,8 +42,8 @@ class Home extends Component {
         <Featuredcat />
         <Products p={this.props.trending.trending_qs} />
         <MediumBanner />
-        <BestSelling bestselling={this.props.bestselling.bestSelling_qs} />
-        <FeaturedProducts featured={this.props.featured.featured_qs} />
+        {/* <BestSelling bestselling={this.props.bestselling.bestSelling_qs} /> */}
+        {/* <FeaturedProducts featured={this.props.featured.featured_qs} /> */}
         <Shop />
         <CountDownProducts />
         <Service />
@@ -60,19 +60,19 @@ class Home extends Component {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/trending"
+    "http://localhost/api/v1/products/trending"
   );
 
-  const bestselling_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/best-selling"
-  );
-  const featured_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/featured"
-  );
-  const bestselling = await bestselling_res.data;
+  // const bestselling_res = await axios.get(
+  //   "http://127.0.0.1:8000/api/v1/products/best-selling"
+  // );
+  // const featured_res = await axios.get(
+  //   "http://127.0.0.1:8000/api/v1/products/featured"
+  // );
+  // const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
   //console.log(trending);
-  const featured = await featured_res.data;
+  // const featured = await featured_res.data;
 
   if (!trending) {
     return {
@@ -83,7 +83,7 @@ export async function getServerSideProps() {
   }
   // Pass data to the page via props
   return {
-    props: { trending: trending, bestselling: bestselling, featured: featured },
+    props: { trending: trending },
   };
 }
 

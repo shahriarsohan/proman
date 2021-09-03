@@ -1394,18 +1394,6 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   margin-left: 10px;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;
-400;
-500;
-600;
-700&display=swap");
-@font-face {
-  font-family: "Material Icons Outlined";
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialiconsoutlined/v54/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2)
-    format("woff2");
-}
 .material-icons-outlined {
   font-family: "Material Icons Outlined";
   font-weight: normal;
