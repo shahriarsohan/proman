@@ -9,12 +9,14 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    image: proman-nginx:latest
     ports:
       - "80:80"
 
   client:
     build:
       context: ./frontend
+    image: proman-frontend:latest
     volumes:
       - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
     restart: on-failure
@@ -24,6 +26,7 @@ services:
   backend:
     build:
       context: ./backend
+    image: proman-backend:latest
     ports:
       - "8000:8000"
     environment:

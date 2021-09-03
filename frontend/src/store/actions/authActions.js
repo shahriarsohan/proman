@@ -41,10 +41,13 @@ export const authLogin = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/rest-auth/login/", {
-        username: username,
-        password: password,
-      })
+      .post(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/rest-auth/login/",
+        {
+          username: username,
+          password: password,
+        }
+      )
       .then((res) => {
         const token = res.data.key;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);

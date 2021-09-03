@@ -57,7 +57,11 @@ class Cart extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/cart/add-to-order-item", item, config)
+      .post(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-order-item",
+        item,
+        config
+      )
       .then((res) => {
         //console.log(res);
       })
@@ -80,7 +84,11 @@ class Cart extends Component {
       coupon: this.state.coupon,
     };
     axios
-      .post("http://127.0.0.1:8000/v1/coupon/validate-coupon", data, config)
+      .post(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/coupon/validate-coupon",
+        data,
+        config
+      )
       .then((res) => {
         //console.log(res.data);
         this.setState({ couponActivated: true }, () =>

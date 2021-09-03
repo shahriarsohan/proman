@@ -39,7 +39,7 @@ class Cart extends Component {
                         <img
                           src={
                             c.product.thumbnail
-                              ? `http://127.0.0.1:8000${c.product.thumbnail}`
+                              ? `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${c.product.thumbnail}`
                               : "https://via.placeholder.com/70x70"
                           }
                           alt="#"

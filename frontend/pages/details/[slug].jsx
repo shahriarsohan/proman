@@ -59,7 +59,7 @@ class DetailsPage extends Component {
     if (this.props.details.images) {
       //console.log("images//////////");
       this.props.details.images.map((img) => {
-        const src = `http://127.0.0.1:8000${img.image}`;
+        const src = `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${img.image}`;
         this.setState((state) => {
           const list = state.images.push(src);
           //console.log(list);
@@ -265,7 +265,7 @@ class DetailsPage extends Component {
                               src={
                                 this.state.activeImg
                                   ? this.state.activeImg
-                                  : `http://127.0.0.1:8000/${details.products.thumbnail}`
+                                  : `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/${details.products.thumbnail}`
                               }
                               width="100%"
                               id="ProductImg"
@@ -293,12 +293,12 @@ class DetailsPage extends Component {
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://127.0.0.1:8000${i.image}`}
+                                    src={`http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://127.0.0.1:8000${i.image}`,
+                                        activeImg: `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${i.image}`,
                                       })
                                     }
                                   />
@@ -914,7 +914,7 @@ class DetailsPage extends Component {
                               src={
                                 this.state.activeImg
                                   ? this.state.activeImg
-                                  : `http://127.0.0.1:8000/${details.products.thumbnail}`
+                                  : `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/${details.products.thumbnail}`
                               }
                               width="100%"
                               id="ProductImg"
@@ -925,12 +925,12 @@ class DetailsPage extends Component {
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://127.0.0.1:8000${i.image}`}
+                                    src={`http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://127.0.0.1:8000${i.image}`,
+                                        activeImg: `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${i.image}`,
                                       })
                                     }
                                   />
@@ -1540,7 +1540,7 @@ export async function getServerSideProps(context) {
   const images = [];
   if (details.images) {
     details.images.map((img) => {
-      const src = `http://127.0.0.1:8000${img.image}`;
+      const src = `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${img.image}`;
       images.push(src);
     });
   }

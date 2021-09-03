@@ -38,7 +38,7 @@ class Payment extends Component {
     };
     axios
       .post(
-        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -66,7 +66,11 @@ class Payment extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/ssl-payment", data, config)
+      .post(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/ssl-payment",
+        data,
+        config
+      )
       .then((res) =>
         this.setState(
           {
@@ -92,7 +96,11 @@ class Payment extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/order-confirm", data, config)
+      .post(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/order-confirm",
+        data,
+        config
+      )
       .then((res) => this.setState({ loading: false }))
       .catch((err) => console.log(err));
   };

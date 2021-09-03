@@ -160,7 +160,11 @@ class NewAddress extends Component {
       },
     };
     axios
-      .post("http://127.0.0.1:8000/v1/address/create", data, config)
+      .post(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/address/create",
+        data,
+        config
+      )
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         //console.log(res);

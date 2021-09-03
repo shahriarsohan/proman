@@ -63,11 +63,18 @@ export async function getServerSideProps() {
     "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
   );
 
+  axios
+    .get(
+      "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+    )
+    .then((response) => console.log("response", response))
+    .catch((err) => console.log("error", err));
+
   // const bestselling_res = await axios.get(
-  //   "http://127.0.0.1:8000/api/v1/products/best-selling"
+  //   "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/products/best-selling"
   // );
   // const featured_res = await axios.get(
-  //   "http://127.0.0.1:8000/api/v1/products/featured"
+  //   "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/products/featured"
   // );
   // const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;

@@ -65,7 +65,9 @@ class Address extends Component {
   fetchAddress = () => {
     this.setState({ loading: true });
     axiosInstance
-      .get("http://127.0.0.1:8000/v1/address/user-address")
+      .get(
+        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/address/user-address"
+      )
       .then((res) => {
         this.setState({
           loading: false,

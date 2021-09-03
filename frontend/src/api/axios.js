@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseUrl = "http://127.0.0.1:8000/v1/";
+const baseUrl =
+  "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/";
 const headers = {};
 
 const ISSERVER = typeof window === "undefined";
