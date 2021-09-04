@@ -6,7 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = [
+    '*', 'http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com']
 
 
 SYSTEM_APPS = [
@@ -76,23 +77,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'passwordless.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'cwxrlpdo',
-#         'USER': 'cwxrlpdo',
-#         'PASSWORD': 'H0dL5ndcKk1LsEOst5TwnKjDCB0RQ-Ww',
-#         'HOST': 'rosie.db.elephantsql.com',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'promandb',
+        'USER': 'promandb',
+        'PASSWORD': 'sohanhas45',
+        'HOST': 'proman.cn0zjhraxysk.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -122,6 +123,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
 
 
 PASSWORDLESS_AUTH = {
