@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('api/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('social/auth/', include('rest_framework_social_oauth2.urls')),
     path('phone_login/', include('phone_login.urls')),
