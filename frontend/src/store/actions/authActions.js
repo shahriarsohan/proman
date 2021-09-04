@@ -42,7 +42,7 @@ export const authLogin = (username, password) => {
     dispatch(authStart());
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/rest-auth/login/",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/rest-auth/login/",
         {
           username: username,
           password: password,

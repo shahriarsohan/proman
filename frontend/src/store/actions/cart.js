@@ -21,7 +21,7 @@ import {
 export const fetchUserOrder = () => (dispatch) => {
   axios
     .get(
-      "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/cart/user-cart"
+      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/user-cart"
     )
     .then((res) => {
       //console.log(res.data);
@@ -46,7 +46,7 @@ export const fetchUserCartPricing = () => (dispatch) => {
 
   axios
     .get(
-      "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/cart/cart-pricing-details"
+      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/cart-pricing-details"
     )
     .then((res) => {
       dispatch({
@@ -70,7 +70,7 @@ export const handleAddToCart = (data) => (dispatch) => {
 
   axios
     .post(
-      "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-cart",
+      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-cart",
       data
     )
     .then((res) => {
@@ -98,7 +98,7 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
 
   axios
     .post(
-      "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/cart/item-delete-from-cart",
+      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/item-delete-from-cart",
       data
     )
     .then((res) => {

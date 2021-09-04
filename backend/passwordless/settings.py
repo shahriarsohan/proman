@@ -8,7 +8,7 @@ SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*', 'http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com']
+    '*', 'http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com']
 
 
 SYSTEM_APPS = [

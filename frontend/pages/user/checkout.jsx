@@ -125,7 +125,7 @@ class checkout extends Component {
 
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/create-new-order",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/create-new-order",
         data,
         config
       )
@@ -148,7 +148,7 @@ class checkout extends Component {
     this.setState({ loading: true });
     axios
       .get(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/address/user-address",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/address/user-address",
         config
       )
       .then((res) => {
@@ -186,7 +186,7 @@ class checkout extends Component {
 
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/assosiate-to-order",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/assosiate-to-order",
         data,
         config
       )
@@ -210,7 +210,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping-charge",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping-charge",
         data,
         config
       )
@@ -234,7 +234,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-order-total",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-order-total",
         data,
         config
       )
@@ -258,7 +258,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -294,7 +294,7 @@ class checkout extends Component {
 
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -326,7 +326,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -358,7 +358,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -390,7 +390,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -422,7 +422,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -455,7 +455,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -486,7 +486,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -517,7 +517,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -608,7 +608,7 @@ class checkout extends Component {
 
                       axios
                         .put(
-                          `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/address/edit/${this.state.shipping_address.id}`,
+                          `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/address/edit/${this.state.shipping_address.id}`,
                           data,
                           config
                         )

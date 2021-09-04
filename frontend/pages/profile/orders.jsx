@@ -141,7 +141,7 @@ class Order extends Component {
                                         <img
                                           width="50px"
                                           height="50px"
-                                          src={`http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/${cart.product.thumbnail}`}
+                                          src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/${cart.product.thumbnail}`}
                                         />
                                         <p className="cart-item-info__name">
                                           <Link

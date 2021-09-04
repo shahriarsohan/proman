@@ -58,7 +58,7 @@ class Cart extends Component {
 
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-order-item",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-order-item",
         item,
         config
       )
@@ -85,7 +85,7 @@ class Cart extends Component {
     };
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/coupon/validate-coupon",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/coupon/validate-coupon",
         data,
         config
       )

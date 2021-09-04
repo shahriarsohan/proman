@@ -52,7 +52,7 @@ class AllListShop extends Component {
     //console.log("loading prod");
     axios
       .get(
-        `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter/?limit=${this.state.limit}&offset=${this.state.offset}`,
+        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter/?limit=${this.state.limit}&offset=${this.state.offset}`,
         {
           params: {
             query: this.state.query,
@@ -89,7 +89,7 @@ class AllListShop extends Component {
     }
     axios
       .get(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/products/product-filter/?limit=1&offset=0",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/product-filter/?limit=1&offset=0",
         {
           params: {
             query: this.state.query,

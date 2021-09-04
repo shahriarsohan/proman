@@ -120,7 +120,7 @@ class TrendingProductCard extends Component {
                     className="default-img"
                     src={
                       this.props.thumbnail
-                        ? `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/${this.props.thumbnail}`
+                        ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/${this.props.thumbnail}`
                         : "https://via.placeholder.com/550x750"
                     }
                     alt={this.props.name}

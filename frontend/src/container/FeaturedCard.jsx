@@ -19,7 +19,7 @@ class FeaturedCard extends React.Component {
 
     axios
       .get(
-        `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/products/details/${slug}`
+        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/details/${slug}`
       )
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
@@ -44,7 +44,7 @@ class FeaturedCard extends React.Component {
                 className="default-img"
                 src={
                   img
-                    ? `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${img}`
+                    ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${img}`
                     : "https://via.placeholder.com/550x750"
                 }
                 alt={this.props.name}

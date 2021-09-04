@@ -12,7 +12,7 @@ class test extends Component {
 
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/api/v1/cart/test"
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/cart/test"
       )
       .then((res) => this.props.router.push(res.data.GatewayPageURL))
       .catch((err) => console.log(err));

@@ -60,7 +60,7 @@ class QuickLookModal extends Component {
                   }}
                   src={
                     details.thumbnail
-                      ? `http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com${details.thumbnail}`
+                      ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${details.thumbnail}`
                       : "https://via.placeholder.com/550x750"
                   }
                   alt="#"

@@ -38,7 +38,7 @@ class Payment extends Component {
     };
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -67,7 +67,7 @@ class Payment extends Component {
 
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/ssl-payment",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/ssl-payment",
         data,
         config
       )
@@ -97,7 +97,7 @@ class Payment extends Component {
 
     axios
       .post(
-        "http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com/v1/orders/order-confirm",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/order-confirm",
         data,
         config
       )
