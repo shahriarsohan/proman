@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '*', 'http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com']
@@ -33,7 +34,6 @@ THIRD_PARTY_APPS = [
     'phonenumber_field',
     'django_celery_beat',
     'django_celery_results'
-
 ]
 
 
@@ -77,13 +77,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'passwordless.wsgi.application'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -123,13 +116,17 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static_my_project')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root')
 
 
 PASSWORDLESS_AUTH = {
     'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'noreply@example.com',
-
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

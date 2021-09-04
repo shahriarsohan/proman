@@ -12,6 +12,8 @@ services:
     image: proman-nginx:latest
     ports:
       - "80:80"
+    volumes:
+      - ./backend/static_cdn/static_root/:/static
 
   client:
     build:
@@ -29,6 +31,8 @@ services:
     image: proman-backend:latest
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend/static_cdn/static_root/:/app/static_cdn/static_root
     environment:
       - PGUSER=proman
       - PGHOST=postgres
