@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '*', 'http://promantest-env.eba-u7qpm2r2.ap-south-1.elasticbeanstalk.com']
