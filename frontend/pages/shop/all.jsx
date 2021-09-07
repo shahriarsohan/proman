@@ -73,7 +73,7 @@ class App extends React.Component {
     //console.log("ok.................");
     axios
       .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/trending-products"
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending-products"
       )
       .then((res) => {
         this.setState({
@@ -87,7 +87,7 @@ class App extends React.Component {
     //console.log("loading prod");
     axios
       .get(
-        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
+        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -157,7 +157,7 @@ class App extends React.Component {
   updateProducts = (e) => {
     axios
       .get(
-        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
+        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -348,7 +348,7 @@ class App extends React.Component {
                                   <img
                                     src={
                                       product.thumbnail
-                                        ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${product.thumbnail}`
+                                        ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${product.thumbnail}`
                                         : "https://via.placeholder.com/550x750"
                                     }
                                   />
@@ -549,7 +549,7 @@ class App extends React.Component {
                                 <img
                                   src={
                                     product.thumbnail
-                                      ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${product.thumbnail}`
+                                      ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${product.thumbnail}`
                                       : "https://via.placeholder.com/550x750"
                                   }
                                 />
@@ -703,7 +703,7 @@ export async function getServerSideProps(context) {
   //console.log("cat =>", context.query.cat);
 
   const details_qs = await axios.get(
-    `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/list-infinite/?limit=4&offset=0`,
+    `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/list-infinite/?limit=4&offset=0`,
     {
       params: {
         cat: context.query.cat,

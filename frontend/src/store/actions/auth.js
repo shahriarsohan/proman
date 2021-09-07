@@ -76,7 +76,7 @@ export const otpSend = (phoneNumber) => (dispatch) => {
 
   axios
     .post(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/phone_login/generate/",
+      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/phone_login/generate/",
       {
         phone_number: phoneNumber,
       }
@@ -90,7 +90,7 @@ export const otpSend = (phoneNumber) => (dispatch) => {
     .catch((err) =>
       dispatch({
         type: OTP_SEND_ERROR,
-        payload: err.data,
+        payload: err.response,
       })
     );
 };
@@ -103,7 +103,7 @@ export const otpVerify = (data, router) => (dispatch) => {
 
   axios
     .post(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/phone_login/validate/",
+      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/phone_login/validate/",
       data
     )
     .then((res) => {

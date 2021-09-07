@@ -19,7 +19,7 @@ class BestSellingCard extends React.Component {
 
     axios
       .get(
-        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/details/${slug}`
+        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/details/${slug}`
       )
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
@@ -46,7 +46,7 @@ class BestSellingCard extends React.Component {
                 className="default-img"
                 src={
                   img
-                    ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${img}`
+                    ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/${img}`
                     : "https://via.placeholder.com/550x750"
                 }
                 alt={this.props.name}

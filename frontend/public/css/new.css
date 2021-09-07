@@ -3064,6 +3064,28 @@ Version:1.0
   color: #333;
   padding-bottom: 5px;
 }
+
+.checkout-custom-heading h2 {
+  position: relative;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 0px 10px 0px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: #333;
+  padding-bottom: 5px;
+}
+
+.checkout-custom-heading h2:before {
+  position: absolute;
+  content: "";
+  left: 30px;
+  bottom: 0;
+  height: 2px;
+  width: 50px;
+  background: var(--primary);
+}
+
 .shop.checkout .single-widget h2:before {
   position: absolute;
   content: "";

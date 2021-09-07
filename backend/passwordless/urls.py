@@ -12,7 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('social/auth/', include('rest_framework_social_oauth2.urls')),
-    path('phone_login/', include('phone_login.urls')),
+    path('phone_login/', include('proman_phone_login.urls')),
 
     path('', include('drfpasswordless.urls')),
     path('v1/products/', include('products.api.urls')),

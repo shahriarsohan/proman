@@ -235,14 +235,14 @@ class SslCommerzTest(views.APIView):
         order_total = order_qs.total
         print(order_total)
 
-        settings = {'store_id': 'cosme607fe49547c5b',
-                    'store_pass': 'cosme607fe49547c5b@ssl', 'issandbox': True}
+        settings = {'store_id': 'proma6135dc6bc8c18',
+                    'store_pass': 'proma6135dc6bc8c18@ssl', 'issandbox': True}
         sslcz = SSLCOMMERZ(settings)
         post_body = {}
         post_body['total_amount'] = order_total
         post_body['currency'] = "BDT"
         post_body['tran_id'] = "12345"
-        post_body['success_url'] = "https://www.youtube.com/results?search_query=sslcommerz+python"
+        post_body['success_url'] = "http://proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/user/success"
         post_body['fail_url'] = "your fail url"
         post_body['cancel_url'] = "your cancel url"
         post_body['emi_option'] = 0
@@ -267,11 +267,11 @@ class SslCommerzTest(views.APIView):
 class SslCommerzTestIPN(views.APIView):
     def post(self, request, *args, **kwargs):
 
-        settings = {'store_id': 'test_testemi',
-                    'store_pass': 'test_testemi@ssl', 'issandbox': True}
-
+        settings = {'store_id': 'proma6135dc6bc8c18',
+                    'store_pass': 'proma6135dc6bc8c18@ssl', 'issandbox': True}
         sslcz = SSLCOMMERZ(settings)
         post_body = {}
+        print(post_body)
         post_body['tran_id'] = '5E121A0D01F92'
         post_body['val_id'] = '200105225826116qFnATY9sHIwo'
         post_body['amount'] = "10.00"

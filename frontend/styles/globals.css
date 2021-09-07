@@ -4976,12 +4976,8 @@ a:hover {
 }
 
 .login-signup-body {
-  margin-top: 55px;
   height: 100%;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
 }
 
 .login-mob-img-wrap {
@@ -5112,3 +5108,8 @@ a:hover {
 }
 
 /*x profilesection */
+.desktop-login-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -66,7 +66,7 @@ class Address extends Component {
     this.setState({ loading: true });
     axiosInstance
       .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/address/user-address"
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/address/user-address"
       )
       .then((res) => {
         this.setState({

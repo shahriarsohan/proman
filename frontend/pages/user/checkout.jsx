@@ -16,10 +16,12 @@ import {
   Input,
 } from "semantic-ui-react";
 import axios from "axios";
+import Link from "next/link";
 
 // import { Form } from "react-bootstrap";
 import { withRouter } from "next/router";
 import { Formik, Field } from "formik";
+import { isMobile } from "react-device-detect";
 
 import Loader from "react-loader-spinner";
 
@@ -29,7 +31,8 @@ import Footer from "../../src/components/Footer/Footer";
 import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
-import Link from "next/link";
+import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import Navigation from "../../src/components/Navigation";
 
 const region = [
   { key: "dhaka", value: "dhaka", text: "Dhaka" },
@@ -100,11 +103,18 @@ class checkout extends Component {
     openAddressEditModal: null,
     agree: false,
     lol: "",
+    isMobile: null,
+    isBrowser: null,
   };
 
   componentDidMount() {
     // this.props.router.reload("/");
     this.createOrder();
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
     // this.checkUserAddress();
     // this.assosiateAddressToOrder();
     // this.updateDeliveryCharge();
@@ -125,7 +135,7 @@ class checkout extends Component {
 
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/create-new-order",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/create-new-order",
         data,
         config
       )
@@ -148,7 +158,7 @@ class checkout extends Component {
     this.setState({ loading: true });
     axios
       .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/address/user-address",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/address/user-address",
         config
       )
       .then((res) => {
@@ -186,7 +196,7 @@ class checkout extends Component {
 
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/assosiate-to-order",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/assosiate-to-order",
         data,
         config
       )
@@ -210,7 +220,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping-charge",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping-charge",
         data,
         config
       )
@@ -234,7 +244,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-order-total",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-order-total",
         data,
         config
       )
@@ -258,7 +268,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -294,7 +304,7 @@ class checkout extends Component {
 
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -326,7 +336,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -358,7 +368,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -390,7 +400,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -422,7 +432,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -455,7 +465,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -486,7 +496,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -517,7 +527,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/update-shipping",
+                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -543,7 +553,11 @@ class checkout extends Component {
     //console.log(this.state.modalLoading);
     return (
       <>
-        <NavbarTwo />
+        <NavbarDetailsPage
+          // route={this.props.router.back}
+          name="Checkout"
+          isMobile={this.state.isMobile}
+        />
         <Modal
           onClose={() =>
             this.setState(
@@ -803,7 +817,7 @@ class checkout extends Component {
         </Modal>
 
         <section className="shop checkout section">
-          <div className="container">
+          <div className="container mt-4">
             {this.state.loading ? (
               <div
                 style={{
@@ -821,37 +835,44 @@ class checkout extends Component {
                 <div className="col-md-7 col-12 mt-4">
                   {this.state.user_have_address ? (
                     <div className="row">
-                      <div className="col-md-6 col-6">
-                        <p>Shipping Address</p>
-                        <ul style={{ listStylePosition: "inside" }}>
-                          <li
-                            onClick={() => {
-                              this.setState({
-                                openAddressEditModal: true,
-                              });
-                            }}
-                            className="p-4 address-box"
-                          >
-                            {this.state.shipping_address.l_name ? (
-                              <p>
-                                {this.state.shipping_address.f_name}{" "}
-                                {this.state.shipping_address.l_name}
-                              </p>
-                            ) : (
-                              <p>{this.state.shipping_address.f_name}</p>
-                            )}
-                            <p>
-                              {
-                                this.state.shipping_address
-                                  .alternate_phone_number
-                              }
-                            </p>
-                            <p>{this.state.shipping_address.region}</p>
-                            <p>{this.state.shipping_address.city}</p>
-                            <p>{this.state.shipping_address.area}</p>
-                            <p>{this.state.shipping_address.zip_code}</p>
-                            <div style={{ float: "right", display: "flex" }}>
-                              {/* <button
+                      <div className="col-12">
+                        <div className="checkout-custom-heading">
+                          <h2>Select Delivery Options</h2>
+                        </div>
+                        <div className="row">
+                          <div className="col-md-6 col-6">
+                            <p>Shipping Address</p>
+                            <ul style={{ listStylePosition: "inside" }}>
+                              <li
+                                onClick={() => {
+                                  this.setState({
+                                    openAddressEditModal: true,
+                                  });
+                                }}
+                                className="p-4 address-box"
+                              >
+                                {this.state.shipping_address.l_name ? (
+                                  <p>
+                                    {this.state.shipping_address.f_name}{" "}
+                                    {this.state.shipping_address.l_name}
+                                  </p>
+                                ) : (
+                                  <p>{this.state.shipping_address.f_name}</p>
+                                )}
+                                <p>
+                                  {
+                                    this.state.shipping_address
+                                      .alternate_phone_number
+                                  }
+                                </p>
+                                <p>{this.state.shipping_address.region}</p>
+                                <p>{this.state.shipping_address.city}</p>
+                                <p>{this.state.shipping_address.area}</p>
+                                <p>{this.state.shipping_address.zip_code}</p>
+                                <div
+                                  style={{ float: "right", display: "flex" }}
+                                >
+                                  {/* <button
                                 onClick={() => {
                                   this.setState({
                                     openAddressEditModal: true,
@@ -862,23 +883,27 @@ class checkout extends Component {
                                 <Icon name="edit outline"></Icon>
                                 Edit
                               </button> */}
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="col-md-6 col-6 ">
-                        <p>Billing Address</p>
-                        <ul style={{ listStylePosition: "inside" }}>
-                          <li className="p-4 address-box">
-                            Same as shipping address
-                            <div style={{ float: "right", display: "flex" }}>
-                              {/* <button className="p-1 m-2">
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="col-md-6 col-6 ">
+                            <p>Billing Address</p>
+                            <ul style={{ listStylePosition: "inside" }}>
+                              <li className="p-4 address-box">
+                                Same as shipping address
+                                <div
+                                  style={{ float: "right", display: "flex" }}
+                                >
+                                  {/* <button className="p-1 m-2">
                                 <Icon name="edit outline"></Icon>
                                 Edit
                               </button> */}
-                            </div>
-                          </li>
-                        </ul>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ) : (
@@ -1006,6 +1031,7 @@ class checkout extends Component {
         <Service />
         <NewsLetter />
         <Footer />
+        <Navigation />
       </>
     );
   }

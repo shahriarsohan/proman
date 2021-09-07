@@ -18,6 +18,20 @@ import { otpSend } from "../../src/store/actions/auth";
 import Navigation from "../../src/components/Navigation";
 import { isBrowser, isMobile } from "react-device-detect";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import Service from "../../src/components/Service/Service";
+import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
+import Footer from "../../src/components/Footer/Footer";
+import Slider from "react-slick";
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 100,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: true,
+  autoPlay: true,
+};
 
 class Login extends Component {
   state = {
@@ -63,7 +77,7 @@ class Login extends Component {
 
   render() {
     //console.log(this.state.phoneNumber);
-    //console.log(this.props.data.status);
+    console.log(this.props.data?.data?.reason);
     //console.log(this.props.router);
     if (this.props.data.status === 200) {
       this.props.router.push({
@@ -84,9 +98,16 @@ class Login extends Component {
           name="Signin/Register"
         />
 
-        {isBrowser ? (
+        {this.state.isBrowser ? (
           <div className="container">
-            <div className="row">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="row"
+            >
               <div className="col-md-6 col-lg-6 col-sm-12">
                 {/* <p
               style={{
@@ -107,9 +128,13 @@ class Login extends Component {
                   />
                 </div>
               </div>
-              <div className="col-md-6 col-lg-6 col-sm-12">
+              <div className="col-md-6 col-lg-6 col-sm-12 desktop-login-style">
                 {/* <div className="wrap-lon100"> */}
+
                 <div style={{ width: "100%", padding: "20px" }}>
+                  <div className="checkout-custom-heading p-3">
+                    <h2>Welcome to Prman</h2>
+                  </div>
                   <div className="phone-input">
                     <PhoneInput
                       country={"us"}
@@ -121,13 +146,11 @@ class Login extends Component {
                       prefix="+"
                     />
                   </div>
-                  {this.props.data.reason && (
-                    <Message>
-                      <Message.Header>Changes in Service</Message.Header>
-                      <p>
-                        We updated our privacy policy here to better service our
-                        customers. We recommend reviewing the changes.
-                      </p>
+                  {this.props.data?.data?.reason && (
+                    <Message negative style={{ fontFamily: "Ubuntu" }}>
+                      <Message.Header>
+                        {this.props.data?.data?.reason?.phone_number}
+                      </Message.Header>
                     </Message>
                   )}
                   {this.props.loading ? (
@@ -143,12 +166,12 @@ class Login extends Component {
                   ) : (
                     ""
                   )}
-                  <div className="container-login100-form-btn m-t-17">
+                  <div>
                     <button
                       onClick={this.sendOtp}
                       type="submit"
                       value="Submit"
-                      className="login100-form-btn"
+                      className="btn"
                     >
                       Send otp
                     </button>
@@ -160,15 +183,65 @@ class Login extends Component {
           </div>
         ) : (
           <div className="container-fluid">
-            <div className="row login-signup-body">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="row"
+            >
               <div className="col-md-6">
-                <div className="login-mob-img-wrap">
-                  <img
-                    style={{ borderRadius: "2px" }}
-                    width="auto"
-                    height="auto"
-                    src="/images/keagan-henman-Won79_9oUEk-unsplash.jpg"
-                  />
+                <div
+                  style={{ marginTop: "70px" }}
+                  className="login-mob-img-wrap"
+                >
+                  <section className="hro-slider mb-5">
+                    <Slider {...settings}>
+                      <div>
+                        <img
+                          height="100%"
+                          width="100%"
+                          src="/images/cover-real-desktop.png"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          height="100%"
+                          width="100%"
+                          src="/images/cover-real-2.png"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          height="100%"
+                          width="100%"
+                          src="/images/cover-real-2.png"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          height="100%"
+                          width="100%"
+                          src="/images/cover-real-3.png"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          height="100%"
+                          width="100%"
+                          src="/images/cover-real-4.png"
+                        />
+                      </div>
+                      <div>
+                        <img
+                          height="100%"
+                          width="100%"
+                          src="/images/cover-real-5.png"
+                        />
+                      </div>
+                    </Slider>
+                  </section>
                 </div>
               </div>
               <div className="col-md-6">
@@ -220,10 +293,16 @@ class Login extends Component {
             </div>
           </div>
         )}
+        {this.state.isBrowser ? (
+          <>
+            <Service />
+            <NewsLetter />
+            <Footer />
+          </>
+        ) : (
+          ""
+        )}
 
-        {/* <Service /> */}
-        {/* <Newsletter /> */}
-        {/* <Footer /> */}
         <Navigation />
       </>
     );

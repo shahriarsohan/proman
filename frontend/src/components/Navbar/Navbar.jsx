@@ -65,7 +65,7 @@ class Navbar extends Component {
                         </li>
                         <li>
                           <a href="mailto:support@proman.com.bd">
-                            <i className="ti-email" /> support@proman.com.bd
+                            <i className="ti-email" /> support@promen.clothing
                           </a>
                         </li>
                       </ul>
@@ -103,16 +103,16 @@ class Navbar extends Component {
                 <div className="row">
                   <div className="col-lg-2 col-md-2 col-12">
                     {/* Logo */}
-                    <div className="logo">
-                      <a href="index.html">
+                    <Link href="/">
+                      <div className="logo">
                         <Image
                           width="150px"
                           height="50px"
                           src="/images/proman-logo-two.png"
                           alt="logo"
                         />
-                      </a>
-                    </div>
+                      </div>
+                    </Link>
                     {/*/ End Logo */}
                     {/* Search Form */}
                     <div className="search-top">

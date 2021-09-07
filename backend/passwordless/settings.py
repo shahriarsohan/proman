@@ -7,9 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '*', 'http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com']
-
+ALLOWED_HOSTS = ['*']
 
 SYSTEM_APPS = [
     'django.contrib.admin',
@@ -30,7 +28,6 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_framework_social_oauth2',
     'drfpasswordless',
-    'phone_login',
     'phonenumber_field',
     'django_celery_beat',
     'django_celery_results'
@@ -38,7 +35,7 @@ THIRD_PARTY_APPS = [
 
 
 LOCAL_APPS = ['products', 'users', 'wishlist',
-              'orders', 'address', 'cart', 'coupon', 'userprofile']
+              'orders', 'address', 'cart', 'coupon', 'userprofile', 'proman_phone_login']
 
 INSTALLED_APPS = SYSTEM_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -130,13 +127,16 @@ PASSWORDLESS_AUTH = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+    'http://proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com'
+]
 
 CELERY_CACHE_BACKEND = 'default'
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/',
+        'LOCATION': 'proman-cache.idnaao.ng.0001.aps1.cache.amazonaws.com:6379',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
@@ -167,7 +167,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-    'phone_login.backends.phone_backend.PhoneBackend',
+    'proman_phone_login.backends.phone_backend.PhoneBackend',
 )
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "448045876292-4h78svvsdr86fbon1s6jlcqnf2sorjpd.apps.googleusercontent.com"
@@ -209,11 +209,12 @@ SESSION_COOKIE_HTTPONLY = False
 # (defaults to 'sendsms.backends.console.SmsBackend')
 
 
-SMS_BACKEND = 'sms.backends.twilio.SmsBackend'
-TWILIO_ACCOUNT_SID = 'ACdbffa1399e452a35e0773b665e01309a'
-TWILIO_AUTH_TOKEN = '85a46f82d8dacf858c00e5b050bb78fd'
+SMS_BACKEND = 'sendsms.backends.smssluzbacz'
 
-SENDSMS_BACKEND = 'sendsms.backends.console.SmsBackend'
+# TWILIO_ACCOUNT_SID = 'ACdbffa1399e452a35e0773b665e01309a'
+# TWILIO_AUTH_TOKEN = '85a46f82d8dacf858c00e5b050bb78fd'
+
+# SENDSMS_BACKEND = 'sendsms.backends.console.SmsBackend'
 SENDSMS_FROM_NUMBER = "+12569077289"
 
 

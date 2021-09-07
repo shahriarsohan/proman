@@ -18,6 +18,7 @@ import {
 } from "../../src/store/actions/cart";
 import Link from "next/link";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import Navigation from "../../src/components/Navigation";
 
 class Cart extends Component {
   constructor(props) {
@@ -111,14 +112,14 @@ class Cart extends Component {
       <>
         <NavbarDetailsPage
           // route={this.props.router.back}
-          name="Verify OTP"
+          name="Cart"
           isMobile={this.state.isMobile}
         />
         <div className="container">
           {/* Shopping Summery */}
           <div className="row mb-2">
             <div className="col-md-8">
-              <div className="cart_wrapper">
+              <div className="cart_wrapper mt-5">
                 {cart.length !== 0 ? (
                   <div className="cart_lists">
                     <div className="cart_title">
@@ -356,6 +357,7 @@ class Cart extends Component {
         <Service />
         <Newsletter />
         <Footer />
+        <Navigation />
       </>
     );
   }

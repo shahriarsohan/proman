@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl =
-  "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/";
+  "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/";
 const headers = {};
 
 const ISSERVER = typeof window === "undefined";

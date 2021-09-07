@@ -20,9 +20,7 @@ import {
 
 export const fetchUserOrder = () => (dispatch) => {
   axios
-    .get(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/user-cart"
-    )
+    .get("cart/user-cart")
     .then((res) => {
       //console.log(res.data);
       dispatch(fetchUserCartPricing());
@@ -45,9 +43,7 @@ export const fetchUserCartPricing = () => (dispatch) => {
   });
 
   axios
-    .get(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/cart-pricing-details"
-    )
+    .get("cart/cart-pricing-details")
     .then((res) => {
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
@@ -68,19 +64,14 @@ export const handleAddToCart = (data) => (dispatch) => {
     type: ADD_TO_CART_START,
   });
 
-  axios
-    .post(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-cart",
-      data
-    )
-    .then((res) => {
-      dispatch(fetchUserCartPricing());
-      dispatch(openSideBar());
-      dispatch({
-        type: ADD_TO_CART,
-        payload: res.data.item,
-      });
+  axios.post("cart/add-to-cart", data).then((res) => {
+    dispatch(fetchUserCartPricing());
+    dispatch(openSideBar());
+    dispatch({
+      type: ADD_TO_CART,
+      payload: res.data.item,
     });
+  });
 };
 
 export const handleComboAddToCart = (data) => (dispatch) => {
@@ -97,10 +88,7 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
   });
 
   axios
-    .post(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/item-delete-from-cart",
-      data
-    )
+    .post("cart/item-delete-from-cart", data)
     .then((res) => {
       dispatch(fetchUserCartPricing());
       dispatch({

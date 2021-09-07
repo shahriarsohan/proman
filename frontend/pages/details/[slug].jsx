@@ -59,7 +59,7 @@ class DetailsPage extends Component {
     if (this.props.details.images) {
       //console.log("images//////////");
       this.props.details.images.map((img) => {
-        const src = `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${img.image}`;
+        const src = `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${img.image}`;
         this.setState((state) => {
           const list = state.images.push(src);
           //console.log(list);
@@ -265,7 +265,7 @@ class DetailsPage extends Component {
                               src={
                                 this.state.activeImg
                                   ? this.state.activeImg
-                                  : `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/${details.products.thumbnail}`
+                                  : `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${details.products.thumbnail}`
                               }
                               width="100%"
                               id="ProductImg"
@@ -293,12 +293,12 @@ class DetailsPage extends Component {
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${i.image}`}
+                                    src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${i.image}`,
+                                        activeImg: `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`,
                                       })
                                     }
                                   />
@@ -914,7 +914,7 @@ class DetailsPage extends Component {
                               src={
                                 this.state.activeImg
                                   ? this.state.activeImg
-                                  : `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/${details.products.thumbnail}`
+                                  : `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${details.products.thumbnail}`
                               }
                               width="100%"
                               id="ProductImg"
@@ -925,12 +925,12 @@ class DetailsPage extends Component {
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${i.image}`}
+                                    src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${i.image}`,
+                                        activeImg: `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`,
                                       })
                                     }
                                   />
@@ -1540,7 +1540,7 @@ export async function getServerSideProps(context) {
   const images = [];
   if (details.images) {
     details.images.map((img) => {
-      const src = `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${img.image}`;
+      const src = `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${img.image}`;
       images.push(src);
     });
   }

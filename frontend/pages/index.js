@@ -42,8 +42,8 @@ class Home extends Component {
         <Featuredcat />
         <Products p={this.props.trending.trending_qs} />
         <MediumBanner />
-        {/* <BestSelling bestselling={this.props.bestselling.bestSelling_qs} /> */}
-        {/* <FeaturedProducts featured={this.props.featured.featured_qs} /> */}
+        <BestSelling bestselling={this.props.bestselling.bestSelling_qs} />
+        <FeaturedProducts featured={this.props.featured.featured_qs} />
         <Shop />
         <CountDownProducts />
         <Service />
@@ -63,23 +63,23 @@ export async function getServerSideProps() {
     "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
   );
 
-  axios
-    .get(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
-    )
-    .then((response) => console.log("response", response))
-    .catch((err) => console.log("error", err));
+  // axios
+  //   .get(
+  //     "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+  //   )
+  //   .then((response) => console.log("response", response))
+  //   .catch((err) => console.log("error", err));
 
-  // const bestselling_res = await axios.get(
-  //   "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/best-selling"
-  // );
-  // const featured_res = await axios.get(
-  //   "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/featured"
-  // );
-  // const bestselling = await bestselling_res.data;
+  const bestselling_res = await axios.get(
+    "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/best-selling"
+  );
+  const featured_res = await axios.get(
+    "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/featured"
+  );
+  const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
   //console.log(trending);
-  // const featured = await featured_res.data;
+  const featured = await featured_res.data;
 
   if (!trending) {
     return {
@@ -90,7 +90,7 @@ export async function getServerSideProps() {
   }
   // Pass data to the page via props
   return {
-    props: { trending: trending },
+    props: { trending: trending, bestselling: bestselling, featured: featured },
   };
 }
 

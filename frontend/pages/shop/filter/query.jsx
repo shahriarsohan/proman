@@ -89,7 +89,7 @@ class AllListShop extends Component {
     }
     axios
       .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/products/product-filter/?limit=1&offset=0",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter/?limit=1&offset=0",
         {
           params: {
             query: this.state.query,

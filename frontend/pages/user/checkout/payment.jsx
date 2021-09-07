@@ -2,10 +2,13 @@ import axios from "axios";
 import { withRouter } from "next/router";
 import React, { Component } from "react";
 import Loader from "react-spinners/HashLoader";
+import { isMobile } from "react-device-detect";
 
 import Footer from "../../../src/components/Footer/Footer";
 import NavbarTwo from "../../../src/components/Navbar/NavbarTwo";
 import Service from "../../../src/components/Service/Service";
+import NavbarDetailsPage from "../../../src/components/Navbar/NavbarDetailsPage";
+import Navigation from "../../../src/components/Navigation";
 
 class Payment extends Component {
   state = {
@@ -20,9 +23,16 @@ class Payment extends Component {
     agree: false,
 
     paymentGateWayUrl: "",
+    isMobile: null,
+    isBrowser: null,
   };
 
   componentDidMount() {
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
     this.getOrderPricing();
   }
 
@@ -38,7 +48,7 @@ class Payment extends Component {
     };
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/order-pricing-details",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -67,7 +77,7 @@ class Payment extends Component {
 
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/ssl-payment",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/ssl-payment",
         data,
         config
       )
@@ -97,7 +107,7 @@ class Payment extends Component {
 
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/orders/order-confirm",
+        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/order-confirm",
         data,
         config
       )
@@ -122,8 +132,11 @@ class Payment extends Component {
   render() {
     return (
       <div>
-        <NavbarTwo />
-
+        <NavbarDetailsPage
+          // route={this.props.router.back}
+          name="Payment"
+          isMobile={this.state.isMobile}
+        />
         {this.state.loading ? (
           <div
             style={{
@@ -137,38 +150,39 @@ class Payment extends Component {
             <Loader type="Circles" color="#00BFFF" height={80} width={80} />
           </div>
         ) : (
-          <section className="shop checkout section container p-4">
-            <div className="row">
-              <div className="col-md-7 col-12">
-                <div className="single-widget">
-                  <h2>Select Payment Options</h2>
-                  <div className="row text-center d-flex justify-content-center align-items-center p-2">
-                    <div className="col-md-3 col-6 p-2">
-                      <ul style={{ listStylePosition: "inside" }}>
-                        <li
-                          className={`p-4 ${
-                            this.state.card_payment ? "active-method" : ""
-                          }`}
-                          style={{
-                            border: "2px solid #08d9d6",
-                            cursor: "pointer",
-                          }}
-                          onClick={this.updateCardMethod}
-                        >
-                          <img
-                            //   width="50px"
-                            //   height="50px"
-                            src="https://www.paytheory.com/wp-content/uploads/2021/06/accept-credit-card-payments.jpg"
-                            alt="bkash"
-                          />
-                          Online payment
-                          <div
-                            style={{ float: "right", display: "flex" }}
-                          ></div>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* <div className="col-md-3 col-6 p-2 text-center">
+          <section className="shop checkout section single">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-7 col-12">
+                  <div className="single-widget mt-5">
+                    <h2>Select Payment Options</h2>
+                    <div className="row text-center d-flex justify-content-center align-items-center p-2">
+                      <div className="col-md-3 col-6 p-2">
+                        <ul style={{ listStylePosition: "inside" }}>
+                          <li
+                            className={`p-4 ${
+                              this.state.card_payment ? "active-method" : ""
+                            }`}
+                            style={{
+                              border: "2px solid #08d9d6",
+                              cursor: "pointer",
+                            }}
+                            onClick={this.updateCardMethod}
+                          >
+                            <img
+                              //   width="50px"
+                              //   height="50px"
+                              src="https://www.paytheory.com/wp-content/uploads/2021/06/accept-credit-card-payments.jpg"
+                              alt="bkash"
+                            />
+                            Online payment
+                            <div
+                              style={{ float: "right", display: "flex" }}
+                            ></div>
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <div className="col-md-3 col-6 p-2 text-center">
                       <ul style={{ listStylePosition: "inside" }}>
                         <li
                           className={`p-4 ${
@@ -193,92 +207,93 @@ class Payment extends Component {
                         </li>
                       </ul>
                     </div> */}
-                    <div className="col-md-3 col-6 p-2">
-                      <ul style={{ listStylePosition: "inside" }}>
-                        <li
-                          onClick={this.updateCodMethod}
-                          className="p-4 text-center"
-                          style={{
-                            border: "2px solid #08d9d6",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <img
-                            // width="65px"
-                            // height="65px"
-                            src="/images/4770613.jpg"
-                            alt="bkash"
-                          />
-                          Cash on delivery
-                        </li>
-                      </ul>
+                      <div className="col-md-3 col-6 p-2">
+                        <ul style={{ listStylePosition: "inside" }}>
+                          <li
+                            onClick={this.updateCodMethod}
+                            className="p-4 text-center"
+                            style={{
+                              border: "2px solid #08d9d6",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <img
+                              // width="65px"
+                              // height="65px"
+                              src="/images/4770613.jpg"
+                              alt="bkash"
+                            />
+                            Cash on delivery
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-md-5 col-12">
-                <div className="single-widget">
-                  <h2>CART TOTALS</h2>
-                  <div className="content">
-                    <ul>
-                      <li>
-                        Sub Total
-                        <span>
-                          <img
-                            width="15px"
-                            height="15px"
-                            src="/images/taka.png"
-                          />
-                          {this.state.sub_total_amount}
-                        </span>
-                      </li>
-                      {/* <li>
+                <div className="col-md-5 col-12">
+                  <div className="single-widget">
+                    <h2>CART TOTALS</h2>
+                    <div className="content">
+                      <ul>
+                        <li>
+                          Sub Total
+                          <span>
+                            <img
+                              width="15px"
+                              height="15px"
+                              src="/images/taka.png"
+                            />
+                            {this.state.sub_total_amount}
+                          </span>
+                        </li>
+                        {/* <li>
                             (+) Shipping
                             <span>${this.state.shipping_charge}</span>
                           </li> */}
-                      <li className="last">
-                        Total
-                        <span>
-                          <img
-                            width="15px"
-                            height="15px"
-                            src="/images/taka.png"
-                          />
-                          {this.state.total_amount}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
+                        <li className="last">
+                          Total
+                          <span>
+                            <img
+                              width="15px"
+                              height="15px"
+                              src="/images/taka.png"
+                            />
+                            {this.state.total_amount}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
 
-                  {this.state.cash_on_delivery ? (
-                    <div className="single-widget get-button">
-                      <div className="content">
-                        <div className="button">
-                          <button
-                            onClick={this.handleCodOrder}
-                            // disabled={!this.state.agree}
-                            className="btn"
-                          >
-                            Confirm Order
-                          </button>
+                    {this.state.cash_on_delivery ? (
+                      <div className="single-widget get-button">
+                        <div className="content">
+                          <div className="button">
+                            <button
+                              onClick={this.handleCodOrder}
+                              // disabled={!this.state.agree}
+                              className="btn"
+                            >
+                              Confirm Order
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="single-widget get-button">
-                      <div className="content">
-                        <div className="button">
-                          <button
-                            onClick={this.handlePayment}
-                            disabled={!this.state.card_payment}
-                            className="btn"
-                          >
-                            Procced to payment
-                          </button>
+                    ) : (
+                      <div className="single-widget get-button">
+                        <div className="content">
+                          <div className="button">
+                            <button
+                              onClick={this.handlePayment}
+                              disabled={!this.state.card_payment}
+                              className="btn"
+                            >
+                              Procced to payment
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -287,6 +302,7 @@ class Payment extends Component {
 
         <Service />
         <Footer />
+        <Navigation />
       </div>
     );
   }

@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import { Provider } from "react-redux";
+
+import mixpanel from "mixpanel-browser";
+
 // import "semantic-ui-css/semantic.min.css";
 import "react-notifications/lib/notifications.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -16,6 +19,8 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     authCheckState();
+    mixpanel.init("1c4b3e842cad38093bba2bd16d1b14cf");
+    mixpanel.track("Sign up");
   }, []);
 
   const authCheckState = () => {
@@ -40,6 +45,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <title>Promen || Pure Men Fashion</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/utils.css" />
         <link rel="stylesheet" href="/css/main.css" />
@@ -101,6 +110,7 @@ function MyApp({ Component, pageProps }) {
         <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/easing.js"></script>
         <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/active.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script src="https://proman-production.s3.ap-south-1.amazonaws.com/freshpaint.js"></script>
         <script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
