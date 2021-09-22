@@ -29,7 +29,7 @@ export default class AllGridShop extends Component {
                         <a href="#">jeans</a>
                       </li>
                       <li>
-                        <a href="#">sweatshirts</a>
+                        <a>sweatshirts</a>
                       </li>
                       <li>
                         <a href="#">trousers</a>

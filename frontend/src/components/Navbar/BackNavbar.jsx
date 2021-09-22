@@ -12,7 +12,10 @@ import { isMobile } from "react-device-detect";
 import HashLoader from "react-spinners/HashLoader";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
-import { closeSideBar, openSideBar } from "../../store/actions/cartSideBar";
+import {
+  closeSideBarCart,
+  openSideBarCart,
+} from "../../store/actions/cartSideBar";
 import Cart from "../SideCart/Cart";
 import SideNav from "./SideNav";
 
@@ -359,8 +362,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
-    openSideBarCart: () => dispatch(openSideBar()),
-    closeSideBar: () => dispatch(closeSideBar()),
+    openSideBarCart: () => dispatch(openSideBarCart()),
+    closeSideBar: () => dispatch(closeSideBarCart()),
   };
 };
 

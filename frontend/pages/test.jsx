@@ -11,9 +11,7 @@ class test extends Component {
     };
 
     axios
-      .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/cart/test"
-      )
+      .post("http://127.0.0.1:8000/v1/cart/test")
       .then((res) => this.props.router.push(res.data.GatewayPageURL))
       .catch((err) => console.log(err));
   }

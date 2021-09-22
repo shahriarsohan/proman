@@ -10,7 +10,7 @@ services:
       - "80:80"
 
   client:
-    image: 949478792120.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest
+    image: docker push 949478792120.dkr.ecr.ap-south-1.amazonaws.com/ui:latest
     build:
       context: ./frontend
 

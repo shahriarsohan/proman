@@ -7,7 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '*', 'proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com']
 
 SYSTEM_APPS = [
     'django.contrib.admin',
@@ -30,12 +31,13 @@ THIRD_PARTY_APPS = [
     'drfpasswordless',
     'phonenumber_field',
     'django_celery_beat',
-    'django_celery_results'
+    'django_celery_results',
+    'storages'
 ]
 
 
 LOCAL_APPS = ['products', 'users', 'wishlist',
-              'orders', 'address', 'cart', 'coupon', 'userprofile', 'proman_phone_login']
+              'orders', 'address', 'cart', 'coupon', 'userprofile', 'proman_phone_login', 'payment', 'contact']
 
 INSTALLED_APPS = SYSTEM_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -112,15 +114,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static_my_project')
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root')
-
-
 PASSWORDLESS_AUTH = {
     'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'noreply@example.com',
@@ -128,7 +121,7 @@ PASSWORDLESS_AUTH = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-    'http://proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com'
+    'https://proman.clothing'
 ]
 
 CELERY_CACHE_BACKEND = 'default'
@@ -229,3 +222,28 @@ SENDSMS_TWILIO_AUTH_TOKEN = '85a46f82d8dacf858c00e5b050bb78fd'
 BROKER_URL = 'redis://localhost:6379'
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_TASK_TRACK_STARTED = True
+
+# static and media configuration
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static_my_project')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root')
+
+# MEDIA_URL = '/mediafiles/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
+# aws s3 configuration
+AWS_ACCESS_KEY_ID = 'AKIA52EKYTO4HIS7YL2X'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'proman-media'
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+# s3 static settings
+AWS_LOCATION = 'static'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'passwordless.storages.MediaStore'

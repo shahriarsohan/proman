@@ -3,15 +3,16 @@ import Link from "next/link";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
+import { withAlert } from "react-alert";
 
 import { fetchUserOrder } from "../store/actions/cart";
-import QuickLookModal from "../container/QuickLookModal";
 import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
 import { withRouter } from "next/router";
 import axiosInstance from "../api/axios";
+import { addToWish } from "../store/actions/wishlist";
 
 class TrendingProductCard extends Component {
   state = {
@@ -21,6 +22,15 @@ class TrendingProductCard extends Component {
     details: {},
     order_added_success: null,
     order_added_error: null,
+  };
+
+  handleAddToWish = (value) => {
+    console.log(value);
+    const data = {
+      slug: value,
+      alert: this.props.alert,
+    };
+    this.props.addToWish(data, this.props.alert);
   };
 
   handleAddToCart = (slug) => {
@@ -100,7 +110,7 @@ class TrendingProductCard extends Component {
   render() {
     const { modal, order_added_success, order_added_error } = this.state;
     //console.log(order_added_success);
-    console.log(this.props.router);
+    console.log(this.props.thumbnail);
 
     if (typeof window !== "undefined") {
       var token = localStorage.getItem("access_token");
@@ -120,7 +130,7 @@ class TrendingProductCard extends Component {
                     className="default-img"
                     src={
                       this.props.thumbnail
-                        ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/${this.props.thumbnail}`
+                        ? `${this.props.thumbnail}`
                         : "https://via.placeholder.com/550x750"
                     }
                     alt={this.props.name}
@@ -148,7 +158,7 @@ class TrendingProductCard extends Component {
                     onClick={
                       token === null
                         ? () => this.redirectToLogin()
-                        : () => this.onSubmitCart(this.props.slug)
+                        : () => this.handleAddToWish(this.props.slug)
                     }
                   >
                     <i className=" ti-heart " />
@@ -186,6 +196,16 @@ class TrendingProductCard extends Component {
                       {this.props.price}
                     </span>
                   </span>
+                  {this.props.few_left && (
+                    <div className="sellingFastWrapperForProduct-few">
+                      <p>Few Left</p>
+                    </div>
+                  )}
+                  {this.props.out_of_stock && (
+                    <div className="sellingFastWrapperForProduct">
+                      <p>Out of stock</p>
+                    </div>
+                  )}
                   <span
                     style={{ float: "right", color: "red", fontWeight: "bold" }}
                   >
@@ -220,6 +240,6 @@ class TrendingProductCard extends Component {
   }
 }
 
-export default connect(null, { fetchUserOrder })(
-  withRouter(TrendingProductCard)
+export default connect(null, { fetchUserOrder, addToWish })(
+  withRouter(withAlert()(TrendingProductCard))
 );

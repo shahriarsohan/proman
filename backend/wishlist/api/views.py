@@ -27,6 +27,7 @@ class CreateWishListApiView(views.APIView):
     def post(self, request, *args, **kwargs):
         user = self.request.user
         slug = request.data.get('slug', None)
+        print(slug)
         qs = generics.get_object_or_404(Products, slug=slug)
         new_wishlist = WishList.objects.get_or_create(
             user=user,
@@ -40,3 +41,16 @@ class CreateWishListApiView(views.APIView):
             return response.Response({
                 'msg': 'err'
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DestroyWishList(views.APIView):
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        id = request.data.get('id', None)
+        qs = generics.get_object_or_404(WishList, id=id)
+        if qs:
+            if qs.user == user:
+                qs.delete()
+            return response.Response(status=status.HTTP_200_OK)
+        else:
+            return response.Response(status=status.HTTP_404_NOT_FOUND)

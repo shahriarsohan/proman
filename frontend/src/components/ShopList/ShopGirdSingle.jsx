@@ -4,7 +4,7 @@ import React from "react";
 const ShopGirdSingle = ({ product }) => {
   //console.log(product);
   return (
-    <div className="col-xl-3 col-lg-3 col-md-4 col-6">
+    <div className="col-xl-3 col-lg-3 col-md- col-6">
       <div className="single-product">
         <div className="product-img">
           <Link href={`/details/${product.slug}`}>
@@ -13,7 +13,7 @@ const ShopGirdSingle = ({ product }) => {
                 className="default-img"
                 src={
                   product.thumbnail
-                    ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/${product.thumbnail}`
+                    ? `${product.thumbnail}`
                     : "https://via.placeholder.com/550x750"
                 }
                 alt={product.name}
@@ -68,6 +68,11 @@ const ShopGirdSingle = ({ product }) => {
                   ${product.price}
                 </span>
               </span>
+              {product.few_left && (
+                <div className="sellingFastWrapperForProduct-few">
+                  <p>Few Left</p>
+                </div>
+              )}
               <span
                 style={{ float: "right", color: "red", fontWeight: "bold" }}
               >

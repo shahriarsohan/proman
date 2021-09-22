@@ -2,6 +2,7 @@ import { withRouter } from "next/router";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/auth";
+import Link from "next/link";
 
 class SideNav extends Component {
   state = { openDropdown: false };
@@ -14,13 +15,6 @@ class SideNav extends Component {
         id="mySidenav"
         className="sidenav"
       >
-        {/* <a onClick={this.toggleSideBar} className="closebtn">
-              ×
-            </a> */}
-        {/* <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a> */}
         <div className="sideNav-welcome-text">
           <h4>Welcome</h4>
           {!this.props.isAuthenticated ? (
@@ -47,10 +41,14 @@ class SideNav extends Component {
 
           <div className="mobile-sidebar">
             <ul className="sidebar-items">
-              <a>About</a>
+              <Link href="/about-us/our-story">
+                <a>About</a>
+              </Link>
               <a>Services</a>
               <a>Clients</a>
-              <a>Contact</a>
+              <Link href="/contact-us">
+                <a>Contact</a>
+              </Link>
               <div className="dropdown-button">
                 <a
                   onClick={() =>

@@ -34,12 +34,21 @@ const regionOptions = [
 ];
 
 const countryOptions = [
-  { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-  { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
-  { key: "al", value: "al", flag: "al", text: "Albania" },
-  { key: "dz", value: "dz", flag: "dz", text: "Algeria" },
-  { key: "as", value: "as", flag: "as", text: "American Samoa" },
-  { key: "ad", value: "ad", flag: "ad", text: "Andorra" },
+  { key: "af", value: "af", text: "Afghanistan" },
+  { key: "ax", value: "ax", text: "Aland Islands" },
+  { key: "al", value: "al", text: "Albania" },
+  { key: "dz", value: "dz", text: "Algeria" },
+  { key: "as", value: "as", text: "American Samoa" },
+  { key: "ad", value: "ad", text: "Andorra" },
+];
+
+const dhakaOptions = [
+  { key: "af", value: "af", text: "Mirpur" },
+  { key: "ax", value: "ax", text: "Aland Islands" },
+  { key: "al", value: "al", text: "Albania" },
+  { key: "dz", value: "dz", text: "Algeria" },
+  { key: "as", value: "as", text: "American Samoa" },
+  { key: "ad", value: "ad", text: "Andorra" },
 ];
 
 class Address extends Component {
@@ -60,14 +69,25 @@ class Address extends Component {
     } else {
       this.setState({ isMobile: false, isBrowser: true });
     }
+
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
+    if (!token) {
+      this.props.router.push({
+        pathname: "/user/login/",
+        query: {
+          redirectURL: this.props.router.asPath,
+        },
+        asPath: "main",
+      });
+    }
   }
 
   fetchAddress = () => {
     this.setState({ loading: true });
     axiosInstance
-      .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/address/user-address"
-      )
+      .get("http://127.0.0.1:8000/v1/address/user-address")
       .then((res) => {
         this.setState({
           loading: false,
@@ -79,6 +99,7 @@ class Address extends Component {
 
   render() {
     console.log(typeof this.state.error);
+
     return (
       <div>
         <ProfileNavbar
@@ -89,7 +110,7 @@ class Address extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-4 col-sm-12 mt-5">
-              <Segment>
+              <Segment className="mt-5">
                 <List divided relaxed>
                   <List.Item>
                     <div className="p-2">
@@ -237,43 +258,66 @@ class Address extends Component {
                                 placeholder="Email"
                               />
                             </Form.Group>
-                            <Form.Group widths="equal">
-                              <Field
-                                label="Select Region"
-                                component={DropdownField}
-                                handleChange={handleChange("region")}
-                                placeholder="Select Region"
-                                name="region"
-                                error={
-                                  this.state.error
-                                    ? this.state.error.region
-                                    : ""
-                                }
-                                options={regionOptions}
-                              />
-                              <Field
-                                label="Select Region"
-                                component={DropdownField}
-                                handleChange={handleChange("city")}
-                                placeholder="Select City"
-                                name="city"
-                                error={
-                                  this.state.error ? this.state.error.city : ""
-                                }
-                                options={countryOptions}
-                              />
-                              <Field
-                                label="Select Region"
-                                component={DropdownField}
-                                handleChange={handleChange("area")}
-                                placeholder="Select Area"
-                                name="area"
-                                error={
-                                  this.state.error ? this.state.error.area : ""
-                                }
-                                options={countryOptions}
-                              />
-                            </Form.Group>
+                            <div className="d-flex">
+                              <Form.Group widths="equal">
+                                <Field
+                                  label="Select Region"
+                                  component={DropdownField}
+                                  handleChange={handleChange("region")}
+                                  placeholder="Select Region"
+                                  name="region"
+                                  error={
+                                    this.state.error
+                                      ? this.state.error.region
+                                      : ""
+                                  }
+                                  options={regionOptions}
+                                />
+                                {values.region === "dhaka" ? (
+                                  <Field
+                                    label="Select Region"
+                                    component={DropdownField}
+                                    handleChange={handleChange("city")}
+                                    placeholder="Select City"
+                                    name="city"
+                                    error={
+                                      this.state.error
+                                        ? this.state.error.city
+                                        : ""
+                                    }
+                                    options={dhakaOptions}
+                                  />
+                                ) : (
+                                  <Field
+                                    label="Select Region"
+                                    component={DropdownField}
+                                    handleChange={handleChange("city")}
+                                    placeholder="Select City"
+                                    name="city"
+                                    error={
+                                      this.state.error
+                                        ? this.state.error.city
+                                        : ""
+                                    }
+                                    options={countryOptions}
+                                  />
+                                )}
+
+                                <Field
+                                  label="Select Region"
+                                  component={DropdownField}
+                                  handleChange={handleChange("area")}
+                                  placeholder="Select Area"
+                                  name="area"
+                                  error={
+                                    this.state.error
+                                      ? this.state.error.area
+                                      : ""
+                                  }
+                                  options={countryOptions}
+                                />
+                              </Form.Group>
+                            </div>
                             <Field
                               as={TextArea}
                               name="street_address"

@@ -8,6 +8,7 @@ import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 
 import LoadingOverlay from "react-loading-overlay";
 import axios from "../../api/axios";
+import { closeSideBarCart } from "../../store/actions/cartSideBar";
 
 class Cart extends Component {
   state = {
@@ -134,7 +135,7 @@ class Cart extends Component {
                               <img
                                 src={
                                   c.product.thumbnail
-                                    ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${c.product.thumbnail}`
+                                    ? `${c.product.thumbnail}`
                                     : "https://via.placeholder.com/70x70"
                                 }
                                 alt="#"
@@ -146,6 +147,7 @@ class Cart extends Component {
                                 <span className="qty">
                                   <button
                                     className="minus-button"
+                                    disabled={c.quantity === 1 ? true : false}
                                     onClick={() => this.minusQuantity(c.id)}
                                   >
                                     -
@@ -166,6 +168,7 @@ class Cart extends Component {
                                     disabled
                                   />
                                   <button
+                                    disabled={c.quantity === 6 ? true : false}
                                     className="plus-button"
                                     onClick={() => this.plusQuantity(c.id)}
                                   >
@@ -240,6 +243,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
+    closeSideCart: () => dispatch(closeSideBarCart()),
   };
 };
 

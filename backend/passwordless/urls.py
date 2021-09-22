@@ -21,6 +21,7 @@ urlpatterns = [
     path('v1/orders/', include('orders.api.urls')),
     path('v1/wishlist/', include('wishlist.api.urls')),
     path('v1/profile/', include('userprofile.api.urls')),
+    path('v1/contact/', include('contact.api.urls')),
     path('v1/cart/', include('cart.api.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

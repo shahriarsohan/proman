@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 export default class CountDownProducts extends Component {
   render() {
+    const { weekly_qs } = this.props;
+    console.log("nameeeeeeeeeeeeeeeeeeee", weekly_qs.product.name);
     return (
       <section className="cown-down mb-5">
         <div className="section-inner ">
@@ -9,10 +11,7 @@ export default class CountDownProducts extends Component {
             <div className="row">
               <div className="col-lg-6 col-12 padding-right">
                 <div className="image">
-                  <img
-                    src="https://wpthemesgrid.com/themes/eshop/images/count-down-image.jpg"
-                    alt="#"
-                  />
+                  <img src={`${weekly_qs.product.thumbnail}`} alt="#" />
                 </div>
               </div>
               <div className="col-lg-6 col-12 padding-left">

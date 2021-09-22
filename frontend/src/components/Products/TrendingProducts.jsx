@@ -39,6 +39,8 @@ export default class TrendingProducts extends Component {
                                   price={p.price}
                                   discount_price={p.discount_price}
                                   bogo={p.buy_one_get_one}
+                                  few_left={p.few_left}
+                                  out_of_stock={p.out_of_stock}
                                 />
                               );
                             })

@@ -51,7 +51,7 @@ export const checkAuthTimeout = (expirationTime) => {
 //   });
 
 //   axios
-//     .post("http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/phone_login/generate/", {
+//     .post("https://proman.clothing/phone_login/generate/", {
 //       phone_number: phoneNumber,
 //     })
 //     .then((res) => {
@@ -75,12 +75,9 @@ export const otpSend = (phoneNumber) => (dispatch) => {
   });
 
   axios
-    .post(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/phone_login/generate/",
-      {
-        phone_number: phoneNumber,
-      }
-    )
+    .post("http://127.0.0.1:8000/phone_login/generate/", {
+      phone_number: phoneNumber,
+    })
     .then((res) => {
       dispatch({
         type: OTP_SEND_SUCCESS,
@@ -102,10 +99,7 @@ export const otpVerify = (data, router) => (dispatch) => {
   });
 
   axios
-    .post(
-      "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/phone_login/validate/",
-      data
-    )
+    .post("http://127.0.0.1:8000/phone_login/validate/", data)
     .then((res) => {
       const token = res.data.token;
       const status = res.data.status;

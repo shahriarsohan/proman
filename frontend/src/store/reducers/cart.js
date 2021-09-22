@@ -23,6 +23,7 @@ const initialState = {
   total_price: 0,
   total_saving: 0,
   cart_total: 0,
+  actual_total: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -58,10 +59,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pricingLoader: false,
+        actual_total: action.payload.actual_total,
         total_price: action.payload.order_total,
         total_saving: action.payload.savings,
         cart_total: action.payload.cart_total,
       };
+    case FETCH_USER_CART_ERROR:
+      return { ...state, loading: false };
     default:
       return state;
   }

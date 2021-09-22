@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from products.models import Products, ProductImages
+from products.models import Products, ProductImages, DailyDeal
 
 
 class StringSerializer(serializers.StringRelatedField):
@@ -42,7 +42,7 @@ class ProductsSerializer(serializers.ModelSerializer):
             'quantity_in_stock',
             'out_of_stock',
             'images',
-
+            'few_left',
             's_size',
             'm_size',
             'l_size',
@@ -55,3 +55,10 @@ class ProductsSerializer(serializers.ModelSerializer):
             'combo_amount'
 
         ]
+
+
+class DailyDealSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = DailyDeal
+        fields = ('__all__')
+        depth = 1

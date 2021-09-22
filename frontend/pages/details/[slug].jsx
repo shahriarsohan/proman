@@ -7,10 +7,12 @@ import { Popup } from "semantic-ui-react";
 
 import ReactTooltip from "react-tooltip";
 import "react-medium-image-zoom/dist/styles.css";
+import { withAlert } from "react-alert";
 
 import moment from "moment";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
+import Head from "next/head";
 
 import { handleAddToCart, fetchUserOrder } from "../../src/store/actions/cart";
 
@@ -19,13 +21,20 @@ import Footer from "../../src/components/Footer/Footer";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { NotificationManager } from "react-notifications";
 import Navigation from "../../src/components/Navigation";
-import { openSideBar, closeSideBar } from "../../src/store/actions/cartSideBar";
+import {
+  openSideBarCart,
+  closeSideBarCart,
+} from "../../src/store/actions/cartSideBar";
 
 // const
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { isMobile, isBrowser } from "react-device-detect";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 import PopularProducts from "../../src/components/Products/NewProducts";
+import Cart from "../../src/components/SideCart/Cart";
+import { addToWish } from "../../src/store/actions/wishlist";
+import mixpanel from "mixpanel-browser";
+import RelatedProducts from "../../src/components/Products/RelatedProducts";
 
 class DetailsPage extends Component {
   state = {
@@ -41,6 +50,8 @@ class DetailsPage extends Component {
     images: [],
     index: 0,
     token: "",
+    relatedProducts: [],
+    relatedProductsError: "",
   };
 
   componentWillMount() {
@@ -49,6 +60,7 @@ class DetailsPage extends Component {
   }
 
   componentDidMount() {
+    // this.fetchRelatedProducts();
     axios.get("products/new-products");
     if (isMobile) {
       this.setState({ isMobile: true, isBrowser: false });
@@ -56,25 +68,51 @@ class DetailsPage extends Component {
       this.setState({ isMobile: false, isBrowser: true });
     }
 
+    mixpanel.init("1c4b3e842cad38093bba2bd16d1b14cf");
+    mixpanel.track("Details Page Initiate");
+
     if (this.props.details.images) {
-      //console.log("images//////////");
       this.props.details.images.map((img) => {
-        const src = `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${img.image}`;
+        const src = `${img.image}`;
         this.setState((state) => {
           const list = state.images.push(src);
-          //console.log(list);
         });
       });
     }
   }
 
-  componentDidUpdate(prevProps, nextProps) {
-    console.log("component did update");
-  }
+  fetchRelatedProducts = () => {
+    const data = {
+      category: this.props.details.products.category,
+    };
+    axios
+      .post("products/product-filter-category", {
+        category: this.props.details.products.category,
+      })
+      .then((res) => {
+        this.setState({
+          relatedProducts: res.data.category_product_qs,
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          relatedProductsError: err.response.data,
+        });
+      });
+  };
 
   componentWillUnmount() {
-    this.props.closeSideBar();
+    this.props.closeSideBarCart();
   }
+
+  handleAddToWish = (value) => {
+    console.log(value);
+    const data = {
+      slug: value,
+      alert: this.props.alert,
+    };
+    this.props.addToWish(data, this.props.alert);
+  };
 
   captions = [
     <div className="product-deslaimer">
@@ -149,6 +187,7 @@ class DetailsPage extends Component {
     //console.log(data);
     this.props.handleAddToCart(data);
     this.props.fetchUserOrder();
+    mixpanel.track_links("#AddToCart", "Clicked Link");
     // this.props.openSideBar();
   };
 
@@ -170,23 +209,20 @@ class DetailsPage extends Component {
   handleMinusQuantity = () => {
     this.setState({ quantity: this.state.quantity - 1 });
   };
-
   handleShareButton = () => {
     // Check if navigator.share is supported by the browser
     if (navigator.share) {
-      //console.log("Congrats! Your browser supports Web Share API");
+      console.log("Congrats! Your browser supports Web Share API");
       navigator
         .share({
-          url: `https://share.toogoodtogo.com/store/1006/milestones/meals-saved/`,
+          title: `${this.props.details.products.name}`,
+          title: `Check out ${this.props.details.products.name} on Proman Clothing`,
+          url: document.location.href,
         })
-        .then(() => {
-          //console.log("Sharing successfull");
-        })
-        .catch(() => {
-          //console.log("Sharing failed");
-        });
+        .then(() => {})
+        .catch(() => {});
     } else {
-      //console.log("Sorry! Your browser does not support Web Share API");
+      console.log("Sorry! Your browser does not support Web Share API");
     }
   };
 
@@ -200,7 +236,7 @@ class DetailsPage extends Component {
       new_qs,
       images,
     } = this.props;
-    // //console.log("imagessssssssssssssssssss", images);
+    console.log("imagessssssssssssssssssss", this.state.relatedProducts);
 
     if (typeof window !== "undefined") {
       var token = localStorage.getItem("access_token");
@@ -218,11 +254,17 @@ class DetailsPage extends Component {
 
     return (
       <>
+        <Head>
+          <title className="text-capitalize">
+            {details.products.name} |Proman Limited - Pure Men Fashion{" "}
+          </title>
+        </Head>
         <NavbarDetailsPage
           route={this.props.router.back}
-          name={details.products.name}
+          name={details.products.name.slice(0, 20)}
           isMobile={this.state.isMobile}
           slug={details.products.slug}
+          closeSideBar={this.props.cartSideBarOpenTwo}
         />
         <ReactTooltip />
         {add_to_cart_success
@@ -247,7 +289,7 @@ class DetailsPage extends Component {
             }
           />
         )}
-        {isMobile ? (
+        {this.state.isMobile ? (
           <section className="shop single section">
             <div className="container">
               <div className="row mt-4">
@@ -255,7 +297,7 @@ class DetailsPage extends Component {
                   <div className="row">
                     <div className="col-lg-6 col-12">
                       {/* Product Slider */}
-                      <div className="product-gallery">
+                      <div className="product-gallery mt-4">
                         {/* Images slider */}
                         <div className="flexslider-thumbnails">
                           <div class="col-md-10">
@@ -265,15 +307,17 @@ class DetailsPage extends Component {
                               src={
                                 this.state.activeImg
                                   ? this.state.activeImg
-                                  : `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${details.products.thumbnail}`
+                                  : `${details.products.thumbnail}`
                               }
                               width="100%"
                               id="ProductImg"
                               onClick={() => this.setState({ isOpen: true })}
                             />
-                            <div
+                            <button
                               onClick={this.handleShareButton}
                               className="share-button"
+                              type="button"
+                              title="Share this article"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -287,18 +331,18 @@ class DetailsPage extends Component {
                                   d="M1644-510v1684H-140V-510h1784m8-8H-148v1700h1800V-518z"
                                 />
                               </svg>
-                            </div>
+                            </button>
 
                             <div class="small-imgs">
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`}
+                                    src={`${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`,
+                                        activeImg: `${i.image}`,
                                       })
                                     }
                                   />
@@ -346,9 +390,21 @@ class DetailsPage extends Component {
                               <>
                                 <p className="price">
                                   <span className="discount">
-                                    ${details.products.discount_price}
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />
+                                    {details.products.discount_price}
                                   </span>
-                                  <s>${details.products.price}</s>{" "}
+                                  <s>
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />
+                                    {details.products.price}
+                                  </s>{" "}
                                   <h6 style={{ fontWeight: "normal" }}>
                                     Incl. taxes
                                   </h6>
@@ -358,7 +414,14 @@ class DetailsPage extends Component {
                               <>
                                 <p className="price">
                                   {/* <span className="discount">$70.00</span> */}
-                                  <s>${details.products.discount_price}</s>{" "}
+                                  <s>
+                                    <img
+                                      width="15px"
+                                      height="15px"
+                                      src="/images/taka.png"
+                                    />
+                                    {details.products.discount_price}
+                                  </s>{" "}
                                 </p>
                                 <h6>Incl. taxes</h6>
                               </>
@@ -371,6 +434,14 @@ class DetailsPage extends Component {
                               ""
                             )}
                           </div>
+                          {details.products.out_of_stock ? (
+                            <div className="sellingFastWrapperForProduct">
+                              <p>Out of stock</p>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
                           <hr />
                           <p className="description">
                             {details.products.short_desc}
@@ -567,39 +638,57 @@ class DetailsPage extends Component {
                             </div>
                             {/*/ End Input Order */}
                           </div>
-                          <div className="add-to-cart">
-                            <span
-                              data-tip="Specify Size"
-                              data-tip-disable={
-                                this.state.size === "" ? false : true
-                              }
-                            >
-                              <button
-                                data-tip
-                                data-for="registerTip"
+                          {details.products.out_of_stock ? (
+                            ""
+                          ) : (
+                            <div id="AddToCart" className="add-to-cart">
+                              <span
+                                data-tip="Specify Size"
+                                data-tip-disable={
+                                  this.state.size === "" ? false : true
+                                }
+                              >
+                                <button
+                                  id="AddToCart"
+                                  data-tip
+                                  data-for="registerTip"
+                                  onClick={
+                                    token === null
+                                      ? () => this.redirectToLogin()
+                                      : () =>
+                                          this.onSubmitCart(
+                                            details.products.slug
+                                          )
+                                  }
+                                  className="btn"
+                                  disabled={
+                                    this.state.size === "" ? true : false
+                                  }
+                                >
+                                  <p style={{ color: "white" }}>Add to cart</p>
+                                </button>
+                              </span>
+                              <a
+                                data-tip="Add To Wishlist"
+                                // onClick={
                                 onClick={
                                   token === null
                                     ? () => this.redirectToLogin()
                                     : () =>
-                                        this.onSubmitCart(details.products.slug)
+                                        this.handleAddToWish(
+                                          details.products.slug
+                                        )
                                 }
-                                className="btn"
-                                disabled={this.state.size === "" ? true : false}
+                                // }
+                                className="btn min"
                               >
-                                <p style={{ color: "white" }}>Add to cart</p>
-                              </button>
-                            </span>
-                            <a
-                              data-tip="Add To Wishlist"
-                              href="#"
-                              className="btn min"
-                            >
-                              <i className="ti-heart" />
-                            </a>
-                            <a href="#" className="btn min">
-                              <i className="fa fa-compress" />
-                            </a>
-                          </div>
+                                <i className="ti-heart" />
+                              </a>
+                              <a href="#" className="btn min">
+                                <i className="fa fa-compress" />
+                              </a>
+                            </div>
+                          )}
                           <p className="cat text-capitalize">
                             Category :
                             <a href="#">{details.products.category}</a>
@@ -893,11 +982,11 @@ class DetailsPage extends Component {
           <section className="shop single section">
             <div className="container">
               <Breadcrumb>
-                <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
-                  Library
+                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item href="">Details</Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                  {details.products.name}
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>Data</Breadcrumb.Item>
               </Breadcrumb>
               <div className="row">
                 <div className="col-12">
@@ -914,7 +1003,7 @@ class DetailsPage extends Component {
                               src={
                                 this.state.activeImg
                                   ? this.state.activeImg
-                                  : `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${details.products.thumbnail}`
+                                  : `${details.products.thumbnail}`
                               }
                               width="100%"
                               id="ProductImg"
@@ -925,12 +1014,12 @@ class DetailsPage extends Component {
                               {details.images.map((i) => {
                                 return (
                                   <img
-                                    src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`}
+                                    src={`${i.image}`}
                                     // width="60%"
                                     class="small-img"
                                     onClick={() =>
                                       this.setState({
-                                        activeImg: `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${i.image}`,
+                                        activeImg: `${i.image}`,
                                       })
                                     }
                                   />
@@ -976,9 +1065,21 @@ class DetailsPage extends Component {
                             <>
                               <p className="price">
                                 <span className="discount">
-                                  ${details.products.discount_price}
+                                  <img
+                                    width="15px"
+                                    height="15px"
+                                    src="/images/taka.png"
+                                  />
+                                  {details.products.discount_price}
                                 </span>
-                                <s>${details.products.price}</s>{" "}
+                                <s>
+                                  <img
+                                    width="15px"
+                                    height="15px"
+                                    src="/images/taka.png"
+                                  />
+                                  {details.products.price}
+                                </s>{" "}
                                 <h6 style={{ fontWeight: "normal" }}>
                                   Incl. taxes
                                 </h6>
@@ -988,7 +1089,14 @@ class DetailsPage extends Component {
                             <>
                               <p className="price">
                                 {/* <span className="discount">$70.00</span> */}
-                                <s>${details.products.discount_price}</s>{" "}
+                                <s>
+                                  <img
+                                    width="15px"
+                                    height="15px"
+                                    src="/images/taka.png"
+                                  />
+                                  {details.products.discount_price}
+                                </s>{" "}
                               </p>
                               <h6>Incl. taxes</h6>
                             </>
@@ -1000,6 +1108,13 @@ class DetailsPage extends Component {
                               ""
                             )}
                           </div>
+                          {details.products.out_of_stock ? (
+                            <div className="sellingFastWrapperForProduct">
+                              <p>Out of stock</p>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                           <p className="description">
                             {details.products.short_desc}
                           </p>
@@ -1194,39 +1309,58 @@ class DetailsPage extends Component {
                               {/*/ End Input Order */}
                             </div>
                           )}
-                          <div className="add-to-cart">
-                            <span
-                              data-tip="Specify Size"
-                              data-tip-disable={
-                                this.state.size === "" ? false : true
-                              }
-                            >
-                              <button
-                                data-tip
-                                data-for="registerTip"
+                          {details.products.out_of_stock ? (
+                            ""
+                          ) : (
+                            <div id="AddToCart" className="add-to-cart">
+                              <span
+                                data-tip="Specify Size"
+                                data-tip-disable={
+                                  this.state.size === "" ? false : true
+                                }
+                              >
+                                <button
+                                  id="AddToCart"
+                                  data-tip
+                                  data-for="registerTip"
+                                  onClick={
+                                    token === null
+                                      ? () => this.redirectToLogin()
+                                      : () =>
+                                          this.onSubmitCart(
+                                            details.products.slug
+                                          )
+                                  }
+                                  className="btn"
+                                  disabled={
+                                    this.state.size === "" ? true : false
+                                  }
+                                >
+                                  <p style={{ color: "white" }}>Add to cart</p>
+                                </button>
+                              </span>
+                              <a
+                                data-tip="Add To Wishlist"
+                                // onClick={
                                 onClick={
                                   token === null
                                     ? () => this.redirectToLogin()
                                     : () =>
-                                        this.onSubmitCart(details.products.slug)
+                                        this.handleAddToWish(
+                                          details.products.slug
+                                        )
                                 }
-                                className="btn"
-                                disabled={this.state.size === "" ? true : false}
+                                // }
+                                className="btn min"
                               >
-                                <p style={{ color: "white" }}>Add to cart</p>
-                              </button>
-                            </span>
-                            <a
-                              data-tip="Add To Wishlist"
-                              href="#"
-                              className="btn min"
-                            >
-                              <i className="ti-heart" />
-                            </a>
-                            <a href="#" className="btn min">
-                              <i className="fa fa-compress" />
-                            </a>
-                          </div>
+                                <i className="ti-heart" />
+                              </a>
+                              <a href="#" className="btn min">
+                                <i className="fa fa-compress" />
+                              </a>
+                            </div>
+                          )}
+
                           <p className="cat text-capitalize">
                             Category :
                             <a href="#">{details.products.category}</a>
@@ -1518,7 +1652,13 @@ class DetailsPage extends Component {
           </section>
         )}
         <hr />
+        {this.props.cartSideBarOpenTwo && (
+          <Cart close={this.props.closeSideBarCart} />
+        )}
         {/* <NotificationContainer  /> */}
+        <RelatedProducts
+          relatedProducts={this.props.relatedProducts.category_product_qs}
+        />
         <PopularProducts newProducts={new_qs} />
         <Footer />
         <Navigation />
@@ -1528,19 +1668,23 @@ class DetailsPage extends Component {
 }
 
 export async function getServerSideProps(context) {
-  // Fetch data from external API
   const details_qs = await axios.get(`products/details/${context.params.slug}`);
-
+  console.log(details_qs.data.products.category);
   const new_qs = await axios.get(`products/new-products`);
 
   const details = await details_qs.data;
   const newProducts = await new_qs.data;
-  //console.log("details =>", details.buy_one_get_one);
+
+  const related_qs = await axios.post("products/product-filter-category", {
+    category: details_qs.data.products.category,
+  });
+  const relatedProducts = await related_qs.data;
+  console.log("details =>", relatedProducts);
 
   const images = [];
   if (details.images) {
     details.images.map((img) => {
-      const src = `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${img.image}`;
+      const src = `${img.image}`;
       images.push(src);
     });
   }
@@ -1556,7 +1700,12 @@ export async function getServerSideProps(context) {
   }
   // Pass data to the page via props
   return {
-    props: { details: details, new_qs: newProducts, images: images },
+    props: {
+      details: details,
+      new_qs: newProducts,
+      images: images,
+      relatedProducts: relatedProducts,
+    },
   };
 }
 
@@ -1573,6 +1722,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   handleAddToCart,
   fetchUserOrder,
-  openSideBar,
-  closeSideBar,
-})(withRouter(DetailsPage));
+  openSideBarCart,
+  closeSideBarCart,
+  addToWish,
+})(withRouter(withAlert()(DetailsPage)));

@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 
 import Slider from "react-slick";
 import Cart from "../SideCart/Cart";
-import { openSideBar, closeSideBar } from "../../store/actions/cartSideBar";
+import {
+  openSideBarCart,
+  closeSideBarCart,
+} from "../../store/actions/cartSideBar";
 
 const settings = {
   dots: true,
@@ -28,27 +31,53 @@ class HeroSlider extends Component {
                 height="100%"
                 width="100%"
                 src="/images/cover-real-desktop.png"
+                alt="proman-hero-slider-images"
               />
             </div>
             <div>
-              <img height="100%" width="100%" src="/images/cover-real-2.png" />
+              <img
+                height="100%"
+                width="100%"
+                src="/images/cover/cover-real-2.png"
+                alt="proman-hero-slider-images"
+              />
             </div>
             <div>
-              <img height="100%" width="100%" src="/images/cover-real-2.png" />
+              <img
+                height="100%"
+                width="100%"
+                src="/images/cover/cover-real-2.png"
+                alt="proman-hero-slider-images"
+              />
             </div>
             <div>
-              <img height="100%" width="100%" src="/images/cover-real-3.png" />
+              <img
+                height="100%"
+                width="100%"
+                src="/images/cover/cover-real-3.png"
+                alt="proman-hero-slider-images"
+              />
             </div>
             <div>
-              <img height="100%" width="100%" src="/images/cover-real-4.png" />
+              <img
+                height="100%"
+                width="100%"
+                src="/images/cover/cover-real-4.png"
+                alt="proman-hero-slider-images"
+              />
             </div>
             <div>
-              <img height="100%" width="100%" src="/images/cover-real-5.png" />
+              <img
+                height="100%"
+                width="100%"
+                src="/images/cover/cover-real-5.png"
+                alt="proman-hero-slider-images"
+              />
             </div>
           </Slider>
         </section>
         {this.props.cartSideBarOpenTwo && (
-          <Cart close={this.props.closeSideBar} />
+          <Cart close={this.props.closeSideBarCart} />
         )}
       </>
     );
@@ -63,6 +92,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  openSideBar,
-  closeSideBar,
+  openSideBarCart,
+  closeSideBarCart,
 })(HeroSlider);

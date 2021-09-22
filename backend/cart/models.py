@@ -69,7 +69,7 @@ class FinalCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cart = models.ManyToManyField(Cart)
     created = models.DateTimeField(auto_now_add=True)
-    expires = models.BooleanField(blank=True, null=True)
+    expires = models.BooleanField(default=False)
     coupon = models.CharField(max_length=20, blank=True, null=True)
     sub_total = models.IntegerField(default=0, blank=True, null=True)
     free_delivery = models.BooleanField(default=False)

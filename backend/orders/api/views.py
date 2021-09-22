@@ -1,11 +1,19 @@
+
+import string
+import random
 from orders.api.serializers import OrderSerailizers
 from django.utils import timezone
-from orders.models import Order
+from orders.models import Order, PaymentInfo
 from address.models import Address
 from rest_framework import generics, views, permissions, status, response
 from rest_framework.response import Response
 from cart.models import Cart, FinalCart
 from sslcommerz_lib import SSLCOMMERZ
+from django.shortcuts import get_object_or_404
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class GetUserOrder(views.APIView):
@@ -113,6 +121,7 @@ class AssosiateOrderWithOrder(views.APIView):
         user = request.user
         order_qs = Order.objects.filter(user=user, ordered=False).first()
         address_qs = Address.objects.get(user=user)
+        print(address_qs)
         if order_qs:
             if address_qs:
                 order_qs.address = address_qs
@@ -182,6 +191,7 @@ class GetTotalPricing(views.APIView):
         user = request.user
         if(user.is_authenticated):
             order_qs = Order.objects.filter(user=user, ordered=False).first()
+            print(order_qs)
             if order_qs:
                 order_sub_total = order_qs.sub_total
                 shipping_charge = order_qs.shipping
@@ -197,29 +207,35 @@ class GetTotalPricing(views.APIView):
 class OrdercofirmApiView(views.APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
+        print('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', user)
         order_qs = Order.objects.filter(user=user, ordered=False).first()
-        print(order_qs)
+        print('order_qs', order_qs)
         payment_method = request.data.get('payment_method', None)
         # address_qs = Address.objects.filter(user=request.user).first()
         # if not address_qs:
         #     return response.Response({'error': 'Please Enter A valid Address'}, status=status.HTTP_400_BAD_REQUEST)
-        final_cart_qs = FinalCart.objects.filter(user=request.user).first()
+        final_cart_qs = FinalCart.objects.filter(
+            user=request.user, expires=False).first()
         cart_qs = Cart.objects.filter(user=request.user, expires=False)
+        print('cart_qs', cart_qs)
+        print('final_cart_qs', final_cart_qs)
         if final_cart_qs:
             final_cart_qs.expires = True
             final_cart_qs.save()
 
         if cart_qs:
+            print('cart_qs', cart_qs)
             for q in cart_qs:
                 q.expires = True
                 q.save()
 
-        if payment_method is not None:
-            print('ok')
-            order_qs.ordered = True
-            order_qs.payment_method = payment_method
-            # order_qs.address = address_qs
-            order_qs.save()
+        print('ok')
+        order_qs.ordered = True
+        order_qs.payment_method = payment_method
+        print('ordered', order_qs.ordered)
+        # order_qs.address = address_qs
+        order_qs.save()
+
         print(order_qs)
         return response.Response(status=status.HTTP_200_OK)
 
@@ -239,69 +255,95 @@ class SslCommerzTest(views.APIView):
                     'store_pass': 'proma6135dc6bc8c18@ssl', 'issandbox': True}
         sslcz = SSLCOMMERZ(settings)
         post_body = {}
+        # post_body['user'] = user
         post_body['total_amount'] = order_total
         post_body['currency'] = "BDT"
-        post_body['tran_id'] = "12345"
-        post_body['success_url'] = "http://proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/user/success"
-        post_body['fail_url'] = "your fail url"
-        post_body['cancel_url'] = "your cancel url"
+        post_body['tran_id'] = unique_trangection_id_generator()
+        post_body['success_url'] = 'http://localhost:3000/user/success'
+        post_body['fail_url'] = 'http://donatehub.herokuapp.com/payment/faild/'
+        post_body['cancel_url'] = 'http://donatehub.herokuapp.com/'
         post_body['emi_option'] = 0
-        post_body['cus_name'] = "test"
-        post_body['cus_email'] = "test@test.com"
-        post_body['cus_phone'] = "01700000000"
-        post_body['cus_add1'] = "customer address"
-        post_body['cus_city'] = "Dhaka"
-        post_body['cus_country'] = "Bangladesh"
+        post_body['cus_name'] = 'sohan'
+        post_body['cus_email'] = 'email@rmail.com'
+        post_body['cus_phone'] = '8888'
+        post_body['cus_add1'] = 'request.data'
+        post_body['cus_city'] = 'request.data'
+        post_body['cus_country'] = 'Bangladesh'
         post_body['shipping_method'] = "NO"
         post_body['multi_card_name'] = ""
         post_body['num_of_item'] = 1
         post_body['product_name'] = "Test"
         post_body['product_category'] = "Test Category"
         post_body['product_profile'] = "general"
+        post_body['value_a'] = user.id
+        post_body['value_b'] = order_qs.id
+        post_body['value_c'] = order_qs.id
         print(post_body)
         response = sslcz.createSession(post_body)
-        print(response)
+        # print(response)
         return Response(response)
+
+
+class OnlinePaymentCartExpires(views.APIView):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        final_cart_qs = FinalCart.objects.filter(user=user).first()
+        cart_qs = Cart.objects.filter(user=user, expires=False)
+        if final_cart_qs:
+            final_cart_qs.expires = True
+            final_cart_qs.save()
+
+        if cart_qs:
+            for q in cart_qs:
+                q.expires = True
+                q.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+def unique_trangection_id_generator(size=10, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 
 class SslCommerzTestIPN(views.APIView):
     def post(self, request, *args, **kwargs):
+        data = self.request.POST
+        print('daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaattttttttta', data)
 
-        settings = {'store_id': 'proma6135dc6bc8c18',
-                    'store_pass': 'proma6135dc6bc8c18@ssl', 'issandbox': True}
-        sslcz = SSLCOMMERZ(settings)
-        post_body = {}
-        print(post_body)
-        post_body['tran_id'] = '5E121A0D01F92'
-        post_body['val_id'] = '200105225826116qFnATY9sHIwo'
-        post_body['amount'] = "10.00"
-        post_body['card_type'] = "VISA-Dutch Bangla"
-        post_body['store_amount'] = "9.75"
-        post_body['card_no'] = "418117XXXXXX6675"
-        post_body['bank_tran_id'] = "200105225825DBgSoRGLvczhFjj"
-        post_body['status'] = "VALID"
-        post_body['tran_date'] = "2020-01-05 22:58:21"
-        post_body['currency'] = "BDT"
-        post_body['card_issuer'] = "TRUST BANK, LTD."
-        post_body['card_brand'] = "VISA"
-        post_body['card_issuer_country'] = "Bangladesh"
-        post_body['card_issuer_country_code'] = "BD"
-        post_body['store_id'] = "test_testemi"
-        post_body['verify_sign'] = "d42fab70ae0bcbda5280e7baffef60b0"
-        post_body['verify_key'] = "amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_type,currency,currency_amount,currency_rate,currency_type,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d"
-        post_body['verify_sign_sha2'] = "02c0417ff467c109006382d56eedccecd68382e47245266e7b47abbb3d43976e"
-        post_body['currency_type'] = "BDT"
-        post_body['currency_amount'] = "10.00"
-        post_body['currency_rate'] = "1.0000"
-        post_body['base_fair'] = "0.00"
-        post_body['value_a'] = ""
-        post_body['value_b'] = ""
-        post_body['value_c'] = ""
-        post_body['value_d'] = ""
-        post_body['risk_level'] = "0"
-        post_body['risk_title'] = "Safe"
-        if sslcz.hash_validate_ipn(post_body):
-            response = sslcz.validationTransactionOrder(post_body['val_id'])
-            print(response)
-        else:
-            print("Hash validation failed")
+        # value_a is a user instance
+        user = get_object_or_404(User, id=data['value_a'])
+        # print('user', user)
+
+        # value_b is a user cart instance
+        order_qs = get_object_or_404(Order, id=data['value_b'])
+        print('order_qs', order_qs)
+
+        # try:
+        PaymentInfo.objects.create(
+            user=user,
+            order=order_qs,
+            name=data['order_number'],
+            order_number=data['value_c'],
+            tran_id=data['tran_id'],
+            val_id=data['val_id'],
+            amount=data['amount'],
+            card_type=data['card_type'],
+            card_no=data['card_no'],
+            store_amount=data['store_amount'],
+            bank_tran_id=data['bank_tran_id'],
+            status=data['status'],
+            tran_date=data['tran_date'],
+            currency=data['currency'],
+            card_issuer=data['card_issuer'],
+            card_brand=data['card_brand'],
+            card_issuer_country=data['card_issuer_country'],
+            card_issuer_country_code=data['card_issuer_country_code'],
+            verify_sign=data['verify_sign'],
+            verify_sign_sha2=data['verify_sign_sha2'],
+            currency_rate=data['currency_rate'],
+            risk_title=data['risk_title'],
+            risk_level=data['risk_level'],
+        )
+
+        # except:
+        #     print('something went wrong')
+        return Response(data)

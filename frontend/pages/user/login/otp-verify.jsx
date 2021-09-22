@@ -11,6 +11,8 @@ import "semantic-ui-css/semantic.min.css";
 import { otpVerify } from "../../../src/store/actions/auth";
 import Navigation from "../../../src/components/Navigation";
 import NavbarDetailsPage from "../../../src/components/Navbar/NavbarDetailsPage";
+import LoadingOverlay from "react-loading-overlay";
+import HashLoader from "react-spinners/HashLoader";
 
 class Verify extends Component {
   state = { otp: "", isMobile: null, isBrowser: null };
@@ -87,6 +89,11 @@ class Verify extends Component {
                   {this.props.router.query.phoneNumber}
                 </p>
                 <hr />
+
+                <LoadingOverlay
+                  active={this.props.loading}
+                  spinner={<HashLoader color="#08d9d6" />}
+                ></LoadingOverlay>
               </div>
               <div className="d-flex justify-content-center align-items-center">
                 <OtpInput

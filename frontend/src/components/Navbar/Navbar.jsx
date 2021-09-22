@@ -15,7 +15,7 @@ import {
 import { fetchUserOrder } from "../../store/actions/cart";
 
 import { handleDeleteFromCart } from "../../store/actions/cart";
-import { openSideBar } from "../../store/actions/cartSideBar";
+import { openSideBarCart } from "../../store/actions/cartSideBar";
 import SideNav from "./SideNav";
 
 const override = css`
@@ -84,7 +84,8 @@ class Navbar extends Component {
                           <a href="#">Daily deal</a>
                         </li>
                         <li>
-                          <i className="ti-user" /> <a href="#">My account</a>
+                          <i className="ti-user" />{" "}
+                          <Link href="/profile/overview">My account</Link>
                         </li>
                         <li>
                           <i className="ti-power-off" />
@@ -97,7 +98,9 @@ class Navbar extends Component {
                 </div>
               </div>
             </div>
+
             {/* End Topbar */}
+
             <div className="middle-inner d-flex justify-content-center align-items-center">
               <div className="container">
                 <div className="row">
@@ -162,14 +165,18 @@ class Navbar extends Component {
                     <div className="right-bar">
                       {/* Search Form */}
                       <div className="sinlge-bar">
-                        <a href="#" className="single-icon">
-                          <i className="fa fa-heart-o" aria-hidden="true" />
-                        </a>
+                        <Link href="/profile/wishlist">
+                          <a className="single-icon">
+                            <i className="fa fa-heart-o" aria-hidden="true" />
+                          </a>
+                        </Link>
                       </div>
                       <div className="sinlge-bar">
-                        <a href="#" className="single-icon">
-                          <i class="far fa-user"></i>
-                        </a>
+                        <Link href="/profile/overview">
+                          <a className="single-icon">
+                            <i class="far fa-user"></i>
+                          </a>
+                        </Link>
                       </div>
                       <div className="sinlge-bar shopping">
                         <a
@@ -537,7 +544,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
-    openSideBarCart: () => dispatch(openSideBar()),
+    openSideBarCart: () => dispatch(openSideBarCart()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

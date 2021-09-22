@@ -8,6 +8,10 @@ import ShopGirdSingle from "../../src/components/ShopList/ShopGirdSingle";
 import Navigation from "../../src/components/Navigation";
 import { isMobile, isBrowser } from "react-device-detect";
 import { withRouter } from "next/router";
+import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import LoadingOverlay from "react-loading-overlay";
+import HashLoader from "react-spinners/HashLoader";
+import Loader from "react-loader-spinner";
 
 const style = {
   height: 30,
@@ -26,12 +30,13 @@ class App extends React.Component {
       products: [],
       hasMore: true,
       offset: 1,
-      limit: 1,
+      limit: 10,
       list: false,
       sort: "",
       min: 0,
       max: 0,
-
+      isMobile: null,
+      isBrowser: null,
       cat: "",
       size: "",
       trendingProducts: [],
@@ -67,14 +72,17 @@ class App extends React.Component {
       this.setState({ products: this.props.details, loading: false });
     }
     this.loadTrendingProducts();
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
   }
 
   loadTrendingProducts = () => {
     //console.log("ok.................");
     axios
-      .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending-products"
-      )
+      .get("http://127.0.0.1:8000/v1/products/trending-products")
       .then((res) => {
         this.setState({
           trendingProducts: res.data.new_qs,
@@ -87,7 +95,7 @@ class App extends React.Component {
     //console.log("loading prod");
     axios
       .get(
-        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
+        `http://127.0.0.1:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -157,7 +165,7 @@ class App extends React.Component {
   updateProducts = (e) => {
     axios
       .get(
-        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
+        `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -205,7 +213,10 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <NavbarTwo />
+        <NavbarDetailsPage
+          route={this.props.router.back}
+          isMobile={this.state.isMobile}
+        />
         {this.state.openFilterSideBar && (
           <div className="show-sidebar-cart">
             <aside id="sidebar-cart">
@@ -348,7 +359,7 @@ class App extends React.Component {
                                   <img
                                     src={
                                       product.thumbnail
-                                        ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${product.thumbnail}`
+                                        ? `${product.thumbnail}`
                                         : "https://via.placeholder.com/550x750"
                                     }
                                   />
@@ -423,7 +434,7 @@ class App extends React.Component {
           <div className="container">
             <div className="row">
               <p>{this.state.hasMore}</p>
-              {isBrowser && (
+              {this.state.isBrowser && (
                 <div className="col-lg-3 col-md-4 col-12">
                   <div className="shop-sidebar">
                     {/* Single Widget */}
@@ -549,7 +560,7 @@ class App extends React.Component {
                                 <img
                                   src={
                                     product.thumbnail
-                                      ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api${product.thumbnail}`
+                                      ? `${product.thumbnail}`
                                       : "https://via.placeholder.com/550x750"
                                   }
                                 />
@@ -618,7 +629,11 @@ class App extends React.Component {
                 <div className="row">
                   <div className="col-12">
                     {/* Shop Top */}
-                    <div className="shop-top">
+                    <div
+                      className={
+                        this.state.isMobile ? "shop-top mt-5" : "shop-top"
+                      }
+                    >
                       <div className="shop-shorter">
                         <div className="single-shorter">
                           <label>Show :</label>
@@ -683,8 +698,22 @@ class App extends React.Component {
                   <InfiniteScroll
                     dataLength={this.state.products.length}
                     next={this.loadProducts}
-                    hasMore={true}
-                    loader={<h4>Loading...</h4>}
+                    hasMore={this.state.hasMore}
+                    scrollThreshold="0.8"
+                    endMessage={
+                      <p style={{ textAlign: "center" }}>
+                        <b>Yay! You have seen it all</b>
+                      </p>
+                    }
+                    loader={
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={50}
+                        width={50}
+                        timeout={3000} //3 secs
+                      />
+                    }
                   ></InfiniteScroll>
                 </div>
               </div>
@@ -692,7 +721,7 @@ class App extends React.Component {
             </div>
           </div>
         </section>
-        {/* <Navigation /> */}
+        <Navigation />
         {/* <Footer /> */}
       </>
     );
@@ -703,7 +732,7 @@ export async function getServerSideProps(context) {
   //console.log("cat =>", context.query.cat);
 
   const details_qs = await axios.get(
-    `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/list-infinite/?limit=4&offset=0`,
+    `http://127.0.0.1:8000/v1/products/list-infinite/?limit=10&offset=0`,
     {
       params: {
         cat: context.query.cat,

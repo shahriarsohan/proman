@@ -4,11 +4,14 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Link from "next/link";
 import { css } from "@emotion/react";
-
+import Image from "next/image";
 import { isMobile } from "react-device-detect";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
-import { closeSideBar, openSideBar } from "../../store/actions/cartSideBar";
+import {
+  closeSideBarCart,
+  openSideBarCart,
+} from "../../store/actions/cartSideBar";
 import Cart from "../SideCart/Cart";
 import SideNav from "./SideNav";
 
@@ -54,7 +57,7 @@ class NavbarDetails extends React.Component {
 
             <div className="sinlge-bar shopping">
               <a
-                //   onClick={() => this.props.openSideBarCart()}
+                onClick={() => this.props.openSideBarCart()}
                 className="single-icon"
               >
                 <img
@@ -73,37 +76,43 @@ class NavbarDetails extends React.Component {
             <div className="topbar">
               <div className="container">
                 <div className="row">
-                  <div className="col-lg-4 col-md-12 col-12">
+                  <div className="col-lg-5 col-md-12 col-12">
                     {/* Top Left */}
                     <div className="top-left">
                       <ul className="list-main">
                         <li>
-                          <i className="ti-headphone-alt" /> +060 (800) 801-582
+                          <a href="tel:+8801786910645">
+                            <i className="ti-headphone-alt" /> +880 (178)
+                            6910-645
+                          </a>
                         </li>
                         <li>
-                          <i className="ti-email" /> support@shophub.com
+                          <a href="mailto:support@proman.com.bd">
+                            <i className="ti-email" /> support@promen.clothing
+                          </a>
                         </li>
                       </ul>
                     </div>
                     {/*/ End Top Left */}
                   </div>
-                  <div className="col-lg-8 col-md-12 col-12">
+                  <div className="col-lg-7 col-md-12 col-12">
                     {/* Top Right */}
                     <div className="right-content">
                       <ul className="list-main">
-                        <li>
-                          <i className="ti-location-pin" /> Store location
-                        </li>
+                        {/* <li>
+                      <i className="ti-location-pin" /> Store location
+                    </li> */}
                         <li>
                           <i className="ti-alarm-clock" />{" "}
                           <a href="#">Daily deal</a>
                         </li>
                         <li>
-                          <i className="ti-user" /> <a href="#">My account</a>
+                          <i className="ti-user" />{" "}
+                          <Link href="/profile/overview">My account</Link>
                         </li>
                         <li>
                           <i className="ti-power-off" />
-                          <a href="login.html#">Login</a>
+                          <Link href="/user/login">Login</Link>
                         </li>
                       </ul>
                     </div>
@@ -112,20 +121,23 @@ class NavbarDetails extends React.Component {
                 </div>
               </div>
             </div>
+
             {/* End Topbar */}
             <div className="middle-inner">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-2 col-md-2 col-12">
                     {/* Logo */}
-                    <div className="logo">
-                      <a href="index.html">
-                        <img
-                          src="https://cosmetica-eccom.s3.ap-south-1.amazonaws.com/shop-theme/images/logo.png"
+                    <Link href="/">
+                      <div className="logo">
+                        <Image
+                          width="150px"
+                          height="50px"
+                          src="/images/proman-logo-two.png"
                           alt="logo"
                         />
-                      </a>
-                    </div>
+                      </div>
+                    </Link>
                     {/*/ End Logo */}
                     {/* Search Form */}
                     <div className="search-top">
@@ -216,11 +228,11 @@ class NavbarDetails extends React.Component {
                             <div className="nav-inner">
                               <ul className="nav main-menu menu navbar-nav">
                                 <li className="active">
-                                  <a href="#">
+                                  <Link href="/">
                                     Home
-                                    <i className="ti-angle-down" />
-                                  </a>
-                                  <ul className="dropdown">
+                                    {/* <i className="ti-angle-down" /> */}
+                                  </Link>
+                                  {/* <ul className="dropdown">
                                     <li>
                                       <a href="index.html">Home Ecommerce V1</a>
                                     </li>
@@ -239,89 +251,22 @@ class NavbarDetails extends React.Component {
                                         Home Ecommerce V4
                                       </a>
                                     </li>
-                                  </ul>
+                                  </ul> */}
                                 </li>
                                 <li>
                                   <a href="#">Product</a>
                                 </li>
+
                                 <li>
-                                  <a href="#">Service</a>
+                                  <Link href="/shop/all">Shop</Link>
                                 </li>
+
                                 <li>
-                                  <a href="#">
-                                    Shop
-                                    <i className="ti-angle-down" />
-                                    <span className="new">New</span>
-                                  </a>
-                                  <ul className="dropdown">
-                                    <li>
-                                      <a href="shop-grid.html">Shop Grid</a>
-                                    </li>
-                                    <li>
-                                      <a href="shop-list.html">Shop List</a>
-                                    </li>
-                                    <li>
-                                      <a href="shop-single.html">shop Single</a>
-                                    </li>
-                                    <li>
-                                      <a href="cart.html">Cart</a>
-                                    </li>
-                                    <li>
-                                      <a href="checkout.html">Checkout</a>
-                                    </li>
-                                  </ul>
+                                  <Link href="/services">Services</Link>
                                 </li>
+
                                 <li>
-                                  <a href="#">
-                                    Pages
-                                    <i className="ti-angle-down" />
-                                  </a>
-                                  <ul className="dropdown">
-                                    <li>
-                                      <a href="about-us.html">About Us</a>
-                                    </li>
-                                    <li>
-                                      <a href="login.html">Login</a>
-                                    </li>
-                                    <li>
-                                      <a href="register.html">Register</a>
-                                    </li>
-                                    <li>
-                                      <a href="mail-success.html">
-                                        Mail Success
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="404.html">404</a>
-                                    </li>
-                                  </ul>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    Blog
-                                    <i className="ti-angle-down" />
-                                  </a>
-                                  <ul className="dropdown">
-                                    <li>
-                                      <a href="blog-grid.html">Blog Grid</a>
-                                    </li>
-                                    <li>
-                                      <a href="blog-grid-sidebar.html">
-                                        Blog Grid Sidebar
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="blog-single.html">Blog Single</a>
-                                    </li>
-                                    <li>
-                                      <a href="blog-single-sidebar.html">
-                                        Blog Single Sidebar
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </li>
-                                <li>
-                                  <a href="contact.html">Contact Us</a>
+                                  <Link href="/contact-us">Contact Us</Link>
                                 </li>
                               </ul>
                             </div>
@@ -338,7 +283,7 @@ class NavbarDetails extends React.Component {
           </header>
         )}
         {this.props.cartSideBarOpenTwo && (
-          <Cart slug={this.props.slug} close={this.props.closeSideBar} />
+          <Cart slug={this.props.slug} close={this.props.closeSideBarCart} />
         )}
       </>
     );
@@ -362,8 +307,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
-    openSideBarCart: () => dispatch(openSideBar()),
-    closeSideBar: () => dispatch(closeSideBar()),
+    openSideBarCart: () => dispatch(openSideBarCart()),
+    closeSideBarCart: () => dispatch(closeSideBarCart()),
   };
 };
 

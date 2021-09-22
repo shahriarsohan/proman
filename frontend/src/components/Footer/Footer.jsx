@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Link from "next/link";
 import {
   BrowserView,
   MobileView,
@@ -10,6 +10,8 @@ import {
 export default class Footer extends Component {
   state = {
     expand: false,
+    isMobile: null,
+    isBrowser: null,
   };
 
   componentDidMount() {
@@ -17,6 +19,11 @@ export default class Footer extends Component {
       this.setState({
         expand: true,
       });
+    }
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
     }
   }
 
@@ -49,33 +56,58 @@ export default class Footer extends Component {
         {this.state.expand && (
           <footer className="footer">
             {/* Footer Top */}
-            <div className="footer-top section">
+            <div className="section">
               <div className="container">
-                <div className="row">
-                  <div className="col-lg-5 col-md-6 col-12">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  className="row"
+                >
+                  <div
+                    className={
+                      this.state.isMobile
+                        ? "col-lg-3 col-md-6 col-12 text-center"
+                        : "col-lg-3 col-md-6 col-12"
+                    }
+                  >
                     {/* Single Widget */}
                     <div className="single-footer about">
                       <div className="logo">
-                        <a href="index.html">
-                          <img src="/images/proman-logo-two.png" alt="#" />
-                        </a>
+                        <Link href="/">
+                          <a>
+                            <img
+                              // height="100px"
+                              // width="100px"
+                              src="/images/proman-logo-two.png"
+                              alt="#"
+                            />
+                          </a>
+                        </Link>
                       </div>
                       <p className="text">
-                        Praesent dapibus, neque id cursus ucibus, tortor neque
-                        egestas augue, magna eros eu erat. Aliquam erat
-                        volutpat. Nam dui mi, tincidunt quis, accumsan
-                        porttitor, facilisis luctus, metus.
+                        Founded in 2021, Proman is a lifestyle fashion brand
+                        that makes creative, distinctive fashion for the trendy,
+                        contemporary Indian.
                       </p>
                       <p className="call">
                         Got Question? Call us 24/7
                         <span>
-                          <a href="tel:123456789">+0123 456 789</a>
+                          <a href="tel:+8801786910645">+8801786 910 645</a>
                         </span>
                       </p>
                     </div>
                     {/* End Single Widget */}
                   </div>
-                  <div className="col-lg-2 col-md-6 col-12">
+                  <div
+                    className={
+                      this.state.isMobile
+                        ? "col-lg-3 col-md-6 col-12 text-center"
+                        : "col-lg-3 col-md-6 col-12"
+                    }
+                  >
                     {/* Single Widget */}
                     <div className="single-footer links">
                       <h4>Information</h4>
@@ -99,7 +131,13 @@ export default class Footer extends Component {
                     </div>
                     {/* End Single Widget */}
                   </div>
-                  <div className="col-lg-2 col-md-6 col-12">
+                  <div
+                    className={
+                      this.state.isMobile
+                        ? "col-lg-3 col-md-6 col-12 text-center"
+                        : "col-lg-3 col-md-6 col-12"
+                    }
+                  >
                     {/* Single Widget */}
                     <div className="single-footer links">
                       <h4>Customer Service</h4>
@@ -123,7 +161,13 @@ export default class Footer extends Component {
                     </div>
                     {/* End Single Widget */}
                   </div>
-                  <div className="col-lg-3 col-md-6 col-12">
+                  <div
+                    className={
+                      this.state.isMobile
+                        ? "col-lg-3 col-md-6 col-12 text-center"
+                        : "col-lg-3 col-md-6 col-12"
+                    }
+                  >
                     {/* Single Widget */}
                     <div className="single-footer social">
                       <h4>Get In Tuch</h4>
@@ -166,18 +210,17 @@ export default class Footer extends Component {
               </div>
             </div>
             {/* End Footer Top */}
-            <div className="copyright">
+            <div
+              className={this.state.isMobile ? "copyright mb-5" : "copyright"}
+            >
               <div className="container">
                 <div className="inner">
                   <div className="row">
                     <div className="col-lg-6 col-12">
                       <div className="left">
                         <p>
-                          Copyright © 2020{" "}
-                          <a href="http://www.wpthemesgrid.com" target="_blank">
-                            Wpthemesgrid
-                          </a>{" "}
-                          - All Rights Reserved.
+                          Copyright © 2021 <a target="_blank">Proman LTD.</a> -
+                          All Rights Reserved.
                         </p>
                       </div>
                     </div>

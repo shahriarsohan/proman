@@ -134,11 +134,7 @@ class checkout extends Component {
     };
 
     axios
-      .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/create-new-order",
-        data,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/orders/create-new-order", data, config)
       .then((res) => {
         this.setState({ lol: "data" }, () => {
           this.checkUserAddress();
@@ -157,10 +153,7 @@ class checkout extends Component {
     };
     this.setState({ loading: true });
     axios
-      .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/address/user-address",
-        config
-      )
+      .get("http://127.0.0.1:8000/v1/address/user-address", config)
       .then((res) => {
         if (!res.data.user_have_address) {
           this.props.router.push({
@@ -195,11 +188,7 @@ class checkout extends Component {
     };
 
     axios
-      .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/assosiate-to-order",
-        data,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/orders/assosiate-to-order", data, config)
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.updateDeliveryCharge()
@@ -220,7 +209,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping-charge",
+        "http://127.0.0.1:8000/v1/orders/update-shipping-charge",
         data,
         config
       )
@@ -243,11 +232,7 @@ class checkout extends Component {
       some: "thing",
     };
     axios
-      .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-order-total",
-        data,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/orders/update-order-total", data, config)
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.getOrderPricing()
@@ -268,7 +253,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/order-pricing-details",
+        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -304,7 +289,7 @@ class checkout extends Component {
 
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -336,7 +321,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -368,7 +353,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -400,7 +385,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -432,7 +417,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -465,7 +450,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -496,7 +481,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -527,7 +512,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/orders/update-shipping",
+                "http://127.0.0.1:8000/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -622,7 +607,7 @@ class checkout extends Component {
 
                       axios
                         .put(
-                          `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/address/edit/${this.state.shipping_address.id}`,
+                          `https://proman.clothing/v1/address/edit/${this.state.shipping_address.id}`,
                           data,
                           config
                         )

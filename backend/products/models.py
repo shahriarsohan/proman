@@ -41,6 +41,7 @@ class Products(models.Model):
 
     quantity_in_stock = models.PositiveIntegerField(null=True, blank=True)
     out_of_stock = models.BooleanField(default=False)
+    few_left = models.BooleanField(default=False)
 
     # size
     s_size = models.BooleanField(default=True)
@@ -52,8 +53,8 @@ class Products(models.Model):
     buy_one_get_one = models.BooleanField(default=False)
 
     product_delivery_time = models.IntegerField(default=2)
-    combo_offer = models.BooleanField(default = False)
-    combo_amount = models.PositiveIntegerField(default = 500)
+    combo_offer = models.BooleanField(default=False)
+    combo_amount = models.PositiveIntegerField(default=500)
 
     class Meta:
         verbose_name = 'Product'
@@ -61,6 +62,17 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class DailyDeal(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    actual_price = models.IntegerField(null=True, blank=True)
+    discount_price = models.IntegerField(null=True, blank=True)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.product.name
 
 
 class ProductImages(models.Model):

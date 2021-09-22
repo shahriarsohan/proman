@@ -25,7 +25,7 @@ export default class MultipleRows extends Component {
                     className="default-img"
                     //   src={
                     //     img
-                    //       ? `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com${img}`
+                    //       ? `https://proman.clothing${img}`
                     //       : "https://via.placeholder.com/550x750"
                     //   }
                     alt={this.props.name}

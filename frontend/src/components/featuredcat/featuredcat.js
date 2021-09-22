@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Link from "next/link";
 
 export default class featuredcat extends Component {
   render() {
@@ -27,9 +28,11 @@ export default class featuredcat extends Component {
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
-                              <a href="#">
-                                <img src="/images/movie.webp" />
-                              </a>
+                              <Link href={`/shop/filter/products?cat=Movie`}>
+                                <a>
+                                  <img src="/images/movie.webp" />
+                                </a>
+                              </Link>
                             </div>
                             <span>Movie</span>
                           </li>
@@ -37,9 +40,11 @@ export default class featuredcat extends Component {
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
-                              <a href="#">
-                                <img src="/images/games.webp" />
-                              </a>
+                              <Link href={`/shop/filter/products?cat=Game`}>
+                                <a>
+                                  <img src="/images/games.webp" />
+                                </a>
+                              </Link>
                             </div>
                             <span>Game</span>
                           </li>
@@ -47,9 +52,11 @@ export default class featuredcat extends Component {
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
-                              <a href="#">
-                                <img src="/images/life.webp" />
-                              </a>
+                              <Link href={`/shop/filter/products?cat=Life`}>
+                                <a>
+                                  <img src="/images/life.webp" />
+                                </a>
+                              </Link>
                             </div>
                             <span>Life</span>
                           </li>
@@ -57,9 +64,11 @@ export default class featuredcat extends Component {
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
-                              <a href="#">
-                                <img src="/images/sports.webp" />
-                              </a>
+                              <Link href={`/shop/filter/products?cat=Sports`}>
+                                <a>
+                                  <img src="/images/sports.webp" />
+                                </a>
+                              </Link>
                             </div>
                             <span>Sports</span>
                           </li>
@@ -67,9 +76,11 @@ export default class featuredcat extends Component {
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
-                              <a href="#">
-                                <img src="/images/trend.webp" />
-                              </a>
+                              <Link href={`/shop/filter/products?cat=Trend`}>
+                                <a>
+                                  <img src="/images/trend.webp" />
+                                </a>
+                              </Link>
                             </div>
                             <span>Trend</span>
                           </li>
@@ -77,9 +88,13 @@ export default class featuredcat extends Component {
                         <div className="col-xl-2 col-lg-2 col-md-3 col-6">
                           <li className="item">
                             <div className="feature-box">
-                              <a href="#">
-                                <img src="/images/programming.webp" />
-                              </a>
+                              <Link
+                                href={`/shop/filter/products?cat=Programming`}
+                              >
+                                <a>
+                                  <img src="/images/programming.webp" />
+                                </a>
+                              </Link>
                             </div>
                             <span>Programming</span>
                           </li>

@@ -31,7 +31,7 @@ class Navigation extends Component {
               </Link>
             </div>
             <div className="mobile-bottom-nav__item">
-              <Link href="/">
+              <Link href="/shop/all">
                 <div className="mobile-bottom-nav__item-content">
                   <img
                     width="30px"

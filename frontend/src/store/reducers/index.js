@@ -6,6 +6,7 @@ import sidebar from "./sideBar";
 import cartsidebar from "./cartSideBar";
 import navOptions from "./navbar";
 import profile from "./profile";
+import wishlist from "./wishlist";
 
 export default combineReducers({
   cart,
@@ -14,4 +15,5 @@ export default combineReducers({
   cartsidebar,
   navOptions,
   profile,
+  wishlist,
 });

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import { isMobile } from "react-device-detect";
 
-import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 import BackNavbar from "../../src/components/Navbar/BackNavbar";
+import axiosInstance from "../../src/api/axios";
 
 export default class success extends Component {
   state = {
@@ -11,12 +11,19 @@ export default class success extends Component {
     isBrowser: null,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (isMobile) {
       this.setState({ isMobile: true, isBrowser: false });
     } else {
       this.setState({ isMobile: false, isBrowser: true });
     }
+  }
+
+  componentWillMount() {
+    axiosInstance
+      .post("orders/order-confirm")
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   render() {

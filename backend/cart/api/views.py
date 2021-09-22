@@ -26,8 +26,11 @@ class UserCartListApiView(generics.ListAPIView):
             print('working')
             final_qs = FinalCart.objects.filter(
                 user=user, expires=False).first()
-            cart_qs = final_qs.cart.all()
-            return cart_qs
+            if final_qs:
+                cart_qs = final_qs.cart.all()
+                return cart_qs
+            else:
+                return None
         else:
             print('workingworking')
             return None
@@ -155,27 +158,32 @@ class FinalCartPricingInfo(views.APIView):
         if user.is_authenticated:
             order_qs = FinalCart.objects.filter(
                 user=user, expires=False).first()
-            coupon_qs = order_qs.coupon
-            print(coupon_qs)
-            savings = 0
+            if order_qs:
+                coupon_qs = order_qs.coupon
+                print(coupon_qs)
+                savings = 0
 
-            if coupon_qs is not None:
-                discount_amount = Coupon.objects.get(code__iexact=coupon_qs)
-                if discount_amount:
-                    savings = savings + discount_amount.discount_amount
-            cart_total = 0
-            actual_total = 0
-            if order_qs.free_delivery:
-                print('free_delivery')
-                savings = savings + 60
+                if coupon_qs is not None:
+                    discount_amount = Coupon.objects.get(
+                        code__iexact=coupon_qs)
+                    if discount_amount:
+                        savings = savings + discount_amount.discount_amount
+                cart_total = 0
+                actual_total = 0
+                if order_qs.free_delivery:
+                    print('free_delivery')
+                    savings = savings + 60
 
-            cart_qs = Cart.objects.filter(user=user, expires=False)
+                cart_qs = Cart.objects.filter(user=user, expires=False)
 
-            for product in cart_qs:
-                actual_total += product.product.price * product.quantity
-            if actual_total != 0:
-                savings = actual_total - order_qs.get_total_product_price()
-            order_qs = order_qs
-            return Response({'cart_total': order_qs.get_total_product_price(), 'savings': savings, 'actual_total': actual_total}, status=status.HTTP_200_OK)
+                for product in cart_qs:
+                    actual_total += product.product.price * product.quantity
+                if actual_total != 0:
+                    savings = actual_total - order_qs.get_total_product_price()
+                order_qs = order_qs
+                return Response({'cart_total': order_qs.get_total_product_price(), 'savings': savings, 'actual_total': actual_total}, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_200_OK)
+
         else:
             return Response({'msg': 'auth-err'})

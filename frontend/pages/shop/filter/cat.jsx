@@ -23,7 +23,7 @@ class AllListShop extends Component {
       products: [],
       hasMore: true,
       offset: 1,
-      limit: 1,
+      limit: 20,
       list: false,
       query: "",
     };
@@ -53,7 +53,7 @@ class AllListShop extends Component {
     //console.log("loading prod");
     axios
       .get(
-        `http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
+        `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
         {
           params: {
             query: this.state.query,
@@ -95,7 +95,7 @@ class AllListShop extends Component {
     //console.log(this.state.query);
     axios
       .get(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/product-filter-cat/?limit=1&offset=0",
+        "http://127.0.0.1:5000/v1/products/product-filter-cat/?limit=1&offset=0",
         {
           params: {
             query: this.state.query,

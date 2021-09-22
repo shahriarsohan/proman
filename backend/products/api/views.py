@@ -6,9 +6,12 @@ from django.utils.decorators import method_decorator  # NEW
 from django.views.decorators.cache import cache_page  # NEW
 from django.shortcuts import get_object_or_404
 from rest_framework.serializers import Serializer
+from django.utils import timezone
 
-from products.models import Products, ProductImages
-from .serializers import ProductsSerializer, ProductImageSerializer
+from products.models import DailyDeal, Products, ProductImages
+from .serializers import DailyDealSerializers, ProductsSerializer, ProductImageSerializer
+
+now = timezone.now()
 
 
 class ProductsListApiView(views.APIView):
@@ -215,3 +218,33 @@ class GetProductsBasedOnCat(generics.ListAPIView):
             'products': serializer.data,
             'hasMore': is_there_more_cat(request)
         })
+
+
+# products fetch by category
+
+class ProductsFetchByCategory(views.APIView):
+    def post(self, request, *args, **kwargs):
+        category = request.data.get('category', None)
+        print('categoryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', category)
+        if category is None:
+            category_products = Products.objects.all().order_by(
+                '-timestamp')[:15]
+            category_product_qs = ProductsSerializer(
+                category_products, many=True)
+        else:
+            category_products = Products.objects.filter(
+                category__icontains=category).order_by('-timestamp')[:15]
+            category_product_qs = ProductsSerializer(
+                category_products, many=True)
+        return Response({'category_product_qs': category_product_qs.data}, status=status.HTTP_200_OK)
+
+
+class GetDailyDealsApiView(views.APIView):
+    def get(self, request, *args, **kwargs):
+        qs = DailyDeal.objects.get(
+            start_time__lte=now, end_time__gte=now)
+        if qs:
+            serializer = DailyDealSerializers(qs)
+            return Response({'daily_deal_qs': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'daily_deal_qs': 'Weekly Offer Will Start Soon'}, status=status.HTTP_200_OK)

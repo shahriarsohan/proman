@@ -19,6 +19,7 @@ import {
 import Link from "next/link";
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
 import Navigation from "../../src/components/Navigation";
+import { withRouter } from "next/router";
 
 class Cart extends Component {
   constructor(props) {
@@ -58,11 +59,7 @@ class Cart extends Component {
     };
 
     axios
-      .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/cart/add-to-order-item",
-        item,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/cart/add-to-order-item", item, config)
       .then((res) => {
         //console.log(res);
       })
@@ -85,11 +82,7 @@ class Cart extends Component {
       coupon: this.state.coupon,
     };
     axios
-      .post(
-        "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/v1/coupon/validate-coupon",
-        data,
-        config
-      )
+      .post("http://127.0.0.1:8000/v1/coupon/validate-coupon", data, config)
       .then((res) => {
         //console.log(res.data);
         this.setState({ couponActivated: true }, () =>
@@ -111,7 +104,7 @@ class Cart extends Component {
     return (
       <>
         <NavbarDetailsPage
-          // route={this.props.router.back}
+          route={this.props.router.back}
           name="Cart"
           isMobile={this.state.isMobile}
         />
@@ -143,7 +136,7 @@ class Cart extends Component {
                           return (
                             <div className="tr_item">
                               <div className="td_item item_img">
-                                <img src="https://i.ibb.co/vQHXcYb/b68912b3426baa0b1f4c410a02174879.jpg" />
+                                <img src={`${item.product.thumbnail}`} />
                               </div>
                               <div className="td_item item_name">
                                 <label
@@ -225,7 +218,7 @@ class Cart extends Component {
                               height="15px"
                               src="/images/taka.png"
                             />
-                            {this.props.total}
+                            {this.props.cart_total}
                           </strong>
                         </div>
                       </div>
@@ -247,7 +240,7 @@ class Cart extends Component {
                     Cart Total
                     <span>
                       <img width="15px" height="15px" src="/images/taka.png" />
-                      {this.props.cart_total}.00
+                      {this.props.total}.00
                     </span>
                   </li>
                   <li>
@@ -369,15 +362,17 @@ const mapStateToProps = (state) => {
     cart: state.cart.data,
     loading: state.cart.loading,
     error: state.cart.error,
-    total: state.cart.total_price,
+    total: state.cart.actual_total,
     total_saving: state.cart.total_saving,
     cart_total: state.cart.cart_total,
     pricingLoader: state.cart.pricingLoader,
   };
 };
 
-export default connect(mapStateToProps, {
-  fetchUserOrder,
-  handleDeleteFromCart,
-  fetchUserCartPricing,
-})(Cart);
+export default withRouter(
+  connect(mapStateToProps, {
+    fetchUserOrder,
+    handleDeleteFromCart,
+    fetchUserCartPricing,
+  })(Cart)
+);

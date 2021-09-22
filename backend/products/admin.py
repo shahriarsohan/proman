@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Products, ProductImages
+from .models import DailyDeal, Products, ProductImages
 
 
 class ProductsImages(admin.StackedInline):
@@ -30,7 +30,8 @@ class ProductAdmin(admin.ModelAdmin):
                  'xxl_size',
                  'product_delivery_time',
                  'combo_offer',
-                 'combo_amount'
+                 'combo_amount',
+                 'few_left'
              ),
              'classes': ('collapse',),
          },
@@ -64,3 +65,6 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductImages)
 class ProductsImageAdmin(admin.ModelAdmin):
     pass
+
+
+admin.site.register(DailyDeal)

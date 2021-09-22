@@ -1,6 +1,20 @@
 from django.urls import path
 
-from .views import GetProductsBasedOnCat, GetTrendingProductsTwo, ProductsListApiView, ProductsDetailsApiView, GetTrendingProducts, GetBestSellingProducts, FeaturedProducts, ProductsInfiniteScrollView, GetProductsBasedOnQuery, GetNewProducts, GetTrendingProducts
+from .views import (
+    GetProductsBasedOnCat,
+    GetTrendingProductsTwo,
+    ProductsListApiView,
+    ProductsDetailsApiView,
+    GetTrendingProducts,
+    GetBestSellingProducts,
+    FeaturedProducts,
+    ProductsInfiniteScrollView,
+    GetProductsBasedOnQuery,
+    GetNewProducts,
+    GetTrendingProducts,
+    ProductsFetchByCategory,
+    GetDailyDealsApiView
+)
 
 urlpatterns = [
     path('list', ProductsListApiView.as_view()),
@@ -12,5 +26,7 @@ urlpatterns = [
     path('featured', FeaturedProducts.as_view()),
     path('details/<slug>', ProductsDetailsApiView.as_view()),
     path('product-filter/', GetProductsBasedOnQuery.as_view()),
-    path('product-filter-cat/', GetProductsBasedOnCat.as_view())
+    path('product-filter-cat/', GetProductsBasedOnCat.as_view()),
+    path('product-filter-category', ProductsFetchByCategory.as_view()),
+    path('deal-of-the-week', GetDailyDealsApiView.as_view())
 ]

@@ -1,5 +1,5 @@
 import axios from "../../api/axios";
-import { openSideBar } from "./cartSideBar";
+import { openSideBarCart } from "./cartSideBar";
 
 import {
   FETCH_USER_CART,
@@ -45,10 +45,11 @@ export const fetchUserCartPricing = () => (dispatch) => {
   axios
     .get("cart/cart-pricing-details")
     .then((res) => {
+      console.log(res);
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
         payload: res.data,
-        cart_total: res.data.cart_total,
+        cart_total: res.data,
       });
     })
     .catch((err) => {
@@ -66,7 +67,7 @@ export const handleAddToCart = (data) => (dispatch) => {
 
   axios.post("cart/add-to-cart", data).then((res) => {
     dispatch(fetchUserCartPricing());
-    dispatch(openSideBar());
+    dispatch(openSideBarCart());
     dispatch({
       type: ADD_TO_CART,
       payload: res.data.item,

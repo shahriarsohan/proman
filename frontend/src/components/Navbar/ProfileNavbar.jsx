@@ -8,7 +8,10 @@ import { css } from "@emotion/react";
 import { isMobile } from "react-device-detect";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
-import { closeSideBar, openSideBar } from "../../store/actions/cartSideBar";
+import {
+  closeSideBarCart,
+  openSideBarCart,
+} from "../../store/actions/cartSideBar";
 import { showOptions, closeOptions } from "../../store/actions/navbar";
 
 import Cart from "../SideCart/Cart";
@@ -355,8 +358,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
-    openSideBarCart: () => dispatch(openSideBar()),
-    closeSideBar: () => dispatch(closeSideBar()),
+    openSideBarCart: () => dispatch(openSideBarCart()),
+    closeSideBar: () => dispatch(closeSideBarCart()),
     show: () => dispatch(showOptions()),
     hide: () => dispatch(closeOptions()),
   };

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { withRouter } from "next/router";
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import { isMobile } from "react-device-detect";
+import HashLoader from "react-spinners/HashLoader";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -15,55 +17,66 @@ import {
   Segment,
   Image,
 } from "semantic-ui-react";
-import axiosInstance from "../../src/api/axios";
 
 import ProfileNavbar from "../../src/components/Navbar/ProfileNavbar";
+import {
+  fetchWishList,
+  deleteWishList,
+} from "../../src/store/actions/wishlist";
+import axiosInstance from "../../src/api/axios";
+import LoadingOverlay from "react-loading-overlay";
+import { withAlert } from "react-alert";
 
 class WishList extends Component {
   state = {
     isMobile: null,
     isBrowser: null,
-    wishlist: [],
-    loading: false,
-    error: null,
   };
 
   componentDidMount() {
-    this.fetchWishList();
+    this.props.fetchWishList();
     if (isMobile) {
       this.setState({ isMobile: true, isBrowser: false });
     } else {
       this.setState({ isMobile: false, isBrowser: true });
     }
+
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
+    if (!token) {
+      this.props.router.push({
+        pathname: "/user/login/",
+        query: {
+          redirectURL: this.props.router.asPath,
+        },
+        asPath: "main",
+      });
+    }
   }
 
-  fetchWishList = () => {
-    this.setState({ loading: true });
-    axiosInstance
-      .get("/wishlist/list")
-      .then((res) => {
-        this.setState({
-          wishlist: res.data,
-          loading: false,
-        });
-      })
-      .catch((err) => {
-        this.setState({ loading: false, error: err.response.data });
-      });
+  handleDelete = (id) => {
+    const data = {
+      id: id,
+      alert: this.props.alert,
+    };
+    this.props.deleteWishList(data);
   };
 
   render() {
+    console.log(this.props.data);
+
     return (
       <div>
         <ProfileNavbar
-          // route={this.props.router.back}
+          route={this.props.router.back}
           name="Account Overview"
           isMobile={this.state.isMobile}
         />
         <div className="container">
           <div className="row">
             <div className="col-md-4 col-sm-12 mt-5">
-              <Segment>
+              <Segment className="mt-5">
                 <List divided relaxed>
                   <List.Item>
                     <div className="p-2">
@@ -113,9 +126,13 @@ class WishList extends Component {
                       My Wishlist
                     </div>
                     <div className="cart_list_wrap">
+                      <LoadingOverlay
+                        active={this.props.loading || this.props.pricingLoader}
+                        spinner={<HashLoader color="#08d9d6" />}
+                      ></LoadingOverlay>
                       <div className="cart_responsive">
-                        {this.state.wishlist
-                          ? this.state.wishlist.map((data) => {
+                        {this.props.data
+                          ? this.props.data.map((data) => {
                               return (
                                 <div className="tr_item">
                                   <div className="td_item item_img">
@@ -129,7 +146,11 @@ class WishList extends Component {
                                       }}
                                       className="main"
                                     >
-                                      <Link href="/">{data.products.name}</Link>
+                                      <Link
+                                        href={`/details/${data.products.slug}`}
+                                      >
+                                        {data.products.name}
+                                      </Link>
                                     </label>
                                   </div>
                                   {/* <div className="td_item item_color">
@@ -156,16 +177,7 @@ class WishList extends Component {
                                       5
                                     </label>
                                   </div>
-                                  <div className="td_item item_price">
-                                    <label>
-                                      <img
-                                        width="15px"
-                                        height="15px"
-                                        src="/images/taka.png"
-                                      />
-                                      5
-                                    </label>
-                                  </div>
+
                                   <div className="td_item item_price">
                                     <img
                                       width="30px"
@@ -176,7 +188,7 @@ class WishList extends Component {
 
                                   <div className="td_item item_remove">
                                     <span
-                                      onClick={() => this.handleDelete(item.id)}
+                                      onClick={() => this.handleDelete(data.id)}
                                       className="material-icons"
                                     >
                                       close
@@ -200,4 +212,15 @@ class WishList extends Component {
   }
 }
 
-export default withRouter(WishList);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.wishlist.loading,
+    data: state.wishlist.data,
+    error: state.wishlist.error,
+    success: state.wishlist.success,
+  };
+};
+
+export default connect(mapStateToProps, { fetchWishList, deleteWishList })(
+  withRouter(withAlert()(WishList))
+);

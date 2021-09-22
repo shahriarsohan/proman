@@ -22,10 +22,16 @@ import * as actions from "../src/store/actions/auth";
 import { useEffect } from "react";
 import { Component } from "react";
 import { withRouter } from "next/router";
+import { closeSideBarCart } from "../src/store/actions/cartSideBar";
 
 class Home extends Component {
   componentDidMount() {
     this.props.onTryAutoSignup();
+  }
+
+  componentWillUnmount() {
+    console.log("unmount");
+    this.props.closeSideCart();
   }
 
   render() {
@@ -44,8 +50,8 @@ class Home extends Component {
         <MediumBanner />
         <BestSelling bestselling={this.props.bestselling.bestSelling_qs} />
         <FeaturedProducts featured={this.props.featured.featured_qs} />
-        <Shop />
-        <CountDownProducts />
+        <Shop p={this.props.trending.trending_qs} />
+        <CountDownProducts weekly_qs={this.props.weekly_qs} />
         <Service />
         <NewsLetter />
         <Footer />
@@ -60,26 +66,33 @@ class Home extends Component {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+    "http://127.0.0.1:8000/v1/products/trending"
   );
 
   // axios
   //   .get(
-  //     "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/trending"
+  //     "http://127.0.0.1:8000/v1/products/trending"
   //   )
   //   .then((response) => console.log("response", response))
   //   .catch((err) => console.log("error", err));
 
+  const weekly_res = await axios.get(
+    "http://127.0.0.1:8000/v1/products/deal-of-the-week"
+  );
+
   const bestselling_res = await axios.get(
-    "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/best-selling"
+    "http://127.0.0.1:8000/v1/products/best-selling"
   );
   const featured_res = await axios.get(
-    "http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/api/v1/products/featured"
+    "http://127.0.0.1:8000/v1/products/featured"
   );
   const bestselling = await bestselling_res.data;
   const trending = await trending_res.data;
   //console.log(trending);
   const featured = await featured_res.data;
+  const weekly_qs = await weekly_res.data.daily_deal_qs;
+
+  console.log("weekly_qsssssssssssssssssssssssssssssss", weekly_qs);
 
   if (!trending) {
     return {
@@ -90,7 +103,12 @@ export async function getServerSideProps() {
   }
   // Pass data to the page via props
   return {
-    props: { trending: trending, bestselling: bestselling, featured: featured },
+    props: {
+      trending: trending,
+      bestselling: bestselling,
+      featured: featured,
+      weekly_qs: weekly_qs,
+    },
   };
 }
 
@@ -103,6 +121,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    closeSideCart: () => dispatch(closeSideBarCart()),
   };
 };
 

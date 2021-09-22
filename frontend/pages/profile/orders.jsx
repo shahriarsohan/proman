@@ -2,6 +2,7 @@ import Link from "next/link";
 import { withRouter } from "next/router";
 import React, { Component } from "react";
 import { isMobile } from "react-device-detect";
+import HashLoader from "react-spinners/HashLoader";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -23,6 +24,7 @@ import Services from "../../src/components/Service/Service";
 import Navigation from "../../src/components/Navigation";
 
 import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import LoadingOverlay from "react-loading-overlay";
 
 class Order extends Component {
   state = {
@@ -39,6 +41,18 @@ class Order extends Component {
       this.setState({ isMobile: true, isBrowser: false });
     } else {
       this.setState({ isMobile: false, isBrowser: true });
+    }
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
+    if (!token) {
+      this.props.router.push({
+        pathname: "/user/login/",
+        query: {
+          redirectURL: this.props.router.asPath,
+        },
+        asPath: "main",
+      });
     }
   }
 
@@ -64,14 +78,14 @@ class Order extends Component {
     return (
       <div>
         <NavbarDetailsPage
-          // route={this.props.router.back}
+          route={this.props.router.back}
           name="Account Overview"
           isMobile={this.state.isMobile}
         />
         <div className="container">
           <div className="row">
             <div className="col-md-4 col-sm-12 mt-5">
-              <Segment>
+              <Segment className="mt-5">
                 <List divided relaxed>
                   <List.Item>
                     <div className="p-2">
@@ -114,6 +128,10 @@ class Order extends Component {
                 {/* <div className="user-info"> */}
 
                 <div className="cart_list_wrap">
+                  <LoadingOverlay
+                    active={this.state.loading}
+                    spinner={<HashLoader color="#08d9d6" />}
+                  ></LoadingOverlay>
                   {this.state.userOrder
                     ? this.state.userOrder.map((order) => {
                         return (
@@ -141,7 +159,7 @@ class Order extends Component {
                                         <img
                                           width="50px"
                                           height="50px"
-                                          src={`http://Proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com/${cart.product.thumbnail}`}
+                                          src={`${cart.product.thumbnail}`}
                                         />
                                         <p className="cart-item-info__name">
                                           <Link

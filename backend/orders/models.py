@@ -1,3 +1,4 @@
+import requests
 from passwordless.utils import unique_order_id_generator
 from django.conf import settings
 from django.db import models
@@ -7,6 +8,8 @@ from address.models import Address
 from cart.models import FinalCart
 from coupon.models import Coupon
 
+greenweburl = "http://api.greenweb.com.bd/api.php"
+token = "78357850c4b1950fb49d91adca2e4318"
 User = settings.AUTH_USER_MODEL
 
 order_status = (
@@ -113,6 +116,34 @@ class Order(models.Model):
         return c
 
 
+class PaymentInfo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, blank=True, null=True
+    )
+    order_number = models.CharField(max_length=150, blank=True, null=True)
+    name = models.CharField(max_length=150)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    tran_id = models.CharField(max_length=15)
+    val_id = models.CharField(max_length=75)
+    card_type = models.CharField(max_length=150)
+    store_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    card_no = models.CharField(max_length=55, null=True)
+    bank_tran_id = models.CharField(max_length=155, null=True)
+    status = models.CharField(max_length=55)
+    tran_date = models.DateTimeField()
+    currency = models.CharField(max_length=10)
+    card_issuer = models.CharField(max_length=255)
+    card_brand = models.CharField(max_length=15)
+    card_issuer_country = models.CharField(max_length=55)
+    card_issuer_country_code = models.CharField(max_length=55)
+    currency_rate = models.DecimalField(max_digits=10, decimal_places=2)
+    verify_sign = models.CharField(max_length=155)
+    verify_sign_sha2 = models.CharField(max_length=255)
+    risk_level = models.CharField(max_length=15)
+    risk_title = models.CharField(max_length=25)
+
+
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
@@ -120,6 +151,41 @@ def pre_save_create_order_id(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_create_order_id, sender=Order)
 
+
+# def pre_save_address_assoiciate(sender, instance, *args, **kwargs):
+#     if not instance.address:
+#         print('send message 1')
+#         address_qs = Address.objects.filter(user=instance.user).first()
+
+#         if address_qs:
+#             print('send message 2')
+#             instance.address = address_qs
+#             instance.save()
+
+
+# pre_save.connect(pre_save_address_assoiciate, sender=Order)
+
+
+def pre_save_order_confirm(sender, instance, *args, **kwargs):
+    try:
+        if instance.ordered != Order.objects.get(id=instance.id).ordered and instance.ordered == True:
+            # qs = User.objects.get(user=instance.user)
+            print(instance.user)
+            print('send message')
+            message = "প্রিয় মার্চেন্ট, আপনার প্রস্তাবিত  অর্ডারটি ডেলিভারি সম্পন্ন হয়েছে। \nধন্যবাদ\nROMEX DELIVERY SERVICE."
+            data = {'token': token,
+                    'to': instance.user,
+                    'message': message}
+
+            responses = requests.post(url=greenweburl, data=data)
+            response = responses.text
+            print(response)
+
+    except:
+        print('not working')
+
+
+pre_save.connect(pre_save_order_confirm, sender=Order)
 # def pre_save_address_signal(sender, instance, *args, **kwargs):
 #     if not instance.address:
 #         return None

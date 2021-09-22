@@ -45,6 +45,19 @@ class Overview extends Component {
     } else {
       this.setState({ isMobile: false, isDesktop: true });
     }
+
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
+    if (!token) {
+      this.props.router.push({
+        pathname: "/user/login/",
+        query: {
+          redirectURL: this.props.router.asPath,
+        },
+        asPath: "main",
+      });
+    }
   }
 
   fetchDetails = () => {
@@ -80,6 +93,7 @@ class Overview extends Component {
     const { userdata } = this.props;
     console.log("props data", userdata);
     console.log("state data", this.state.error);
+
     return (
       <div>
         <ProfileNavbar
@@ -94,7 +108,7 @@ class Overview extends Component {
           ></LoadingOverlay>
           <div className="row">
             <div className="col-md-4 col-sm-12 mt-5">
-              <Segment>
+              <Segment className="mt-5">
                 <List divided relaxed>
                   <List.Item>
                     <div className="p-2">

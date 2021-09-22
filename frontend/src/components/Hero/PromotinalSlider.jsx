@@ -8,27 +8,27 @@ class PromotionalSlider extends Component {
       {
         id: 1,
         title: "item #1",
-        image: "/images/item1.png",
+        image: "/images/smallbanner/item1.png",
       },
       {
         id: 2,
         title: "item #2",
-        image: "/images/item2.png",
+        image: "/images/smallbanner/item2.png",
       },
       {
         id: 3,
         title: "item #3",
-        image: "/images/item3.png",
+        image: "/images/smallbanner/item3.png",
       },
       {
         id: 4,
         title: "item #4",
-        image: "/images/item4.png",
+        image: "/images/smallbanner/item4.png",
       },
       {
         id: 5,
         title: "item #5",
-        image: "/images/item5.png",
+        image: "/images/smallbanner/item5.png",
       },
     ],
   };
