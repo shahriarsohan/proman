@@ -49,6 +49,8 @@ class ProductsSerializer(serializers.ModelSerializer):
             'xl_size',
             'xxl_size',
 
+            'discount_percentage',
+
             'product_delivery_time',
             'buy_one_get_one',
             'combo_offer',

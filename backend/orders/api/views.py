@@ -28,6 +28,21 @@ class GetUserOrder(views.APIView):
             return Response({'msg': 'something went wrong'})
 
 
+class TrackOrder(views.APIView):
+    def post(self, request, *args, **kwargs):
+        order_id = request.data.get('order_id', None)
+        print('order_iddddddddddddddddd', order_id)
+        if order_id:
+            qs = get_object_or_404(Order, order_id=order_id)
+            if qs:
+                serializer = OrderSerailizers(qs)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'msg': 'Order Not Found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'msg': 'Please provide a tracker id'}, status=status.HTTP_404_NOT_FOUND)
+
+
 class CreateOrderApiView(views.APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
@@ -237,7 +252,8 @@ class OrdercofirmApiView(views.APIView):
         order_qs.save()
 
         print(order_qs)
-        return response.Response(status=status.HTTP_200_OK)
+        serializer = OrderSerailizers(order_qs)
+        return response.Response({'order_qs': serializer.data}, status=status.HTTP_200_OK)
 
 
 class SslCommerzTest(views.APIView):
@@ -259,9 +275,9 @@ class SslCommerzTest(views.APIView):
         post_body['total_amount'] = order_total
         post_body['currency'] = "BDT"
         post_body['tran_id'] = unique_trangection_id_generator()
-        post_body['success_url'] = 'http://localhost:3000/user/success'
-        post_body['fail_url'] = 'http://donatehub.herokuapp.com/payment/faild/'
-        post_body['cancel_url'] = 'http://donatehub.herokuapp.com/'
+        post_body['success_url'] = 'https://proman.clothing/user/success'
+        post_body['fail_url'] = 'https://proman.clothing/user/failure'
+        post_body['cancel_url'] = 'https://proman.clothing/user/cancel'
         post_body['emi_option'] = 0
         post_body['cus_name'] = 'sohan'
         post_body['cus_email'] = 'email@rmail.com'
@@ -275,9 +291,7 @@ class SslCommerzTest(views.APIView):
         post_body['product_name'] = "Test"
         post_body['product_category'] = "Test Category"
         post_body['product_profile'] = "general"
-        post_body['value_a'] = user.id
         post_body['value_b'] = order_qs.id
-        post_body['value_c'] = order_qs.id
         print(post_body)
         response = sslcz.createSession(post_body)
         # print(response)
@@ -309,20 +323,8 @@ class SslCommerzTestIPN(views.APIView):
         data = self.request.POST
         print('daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaattttttttta', data)
 
-        # value_a is a user instance
-        user = get_object_or_404(User, id=data['value_a'])
-        # print('user', user)
-
-        # value_b is a user cart instance
-        order_qs = get_object_or_404(Order, id=data['value_b'])
-        print('order_qs', order_qs)
-
-        # try:
         PaymentInfo.objects.create(
-            user=user,
-            order=order_qs,
-            name=data['order_number'],
-            order_number=data['value_c'],
+            order_number=data['value_b'],
             tran_id=data['tran_id'],
             val_id=data['val_id'],
             amount=data['amount'],
@@ -344,6 +346,4 @@ class SslCommerzTestIPN(views.APIView):
             risk_level=data['risk_level'],
         )
 
-        # except:
-        #     print('something went wrong')
         return Response(data)

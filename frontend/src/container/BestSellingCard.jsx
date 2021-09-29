@@ -4,6 +4,8 @@ import { Modal } from "react-bootstrap";
 
 import QuickLookModal from "../container/QuickLookModal";
 import Link from "next/link";
+import NotificationContainer from "react-notifications/lib/NotificationContainer";
+import { withAlert } from "react-alert";
 
 class BestSellingCard extends React.Component {
   state = {
@@ -27,13 +29,35 @@ class BestSellingCard extends React.Component {
       );
   };
 
+  redirectToLogin = () => {
+    //console.log("redirecting");
+    this.props.router.push({
+      pathname: "/user/login/",
+      query: {
+        redirectURL: this.props.router.asPath,
+      },
+      asPath: "main",
+    });
+  };
+
+  handleAddToWish = (value) => {
+    console.log(value);
+    const data = {
+      slug: value,
+      alert: this.props.alert,
+    };
+    this.props.addToWish(data, this.props.alert);
+  };
+
   onHide = () => {
     this.setState({ modal: false });
   };
 
   render() {
     const { img, slug, name, price, discount_price } = this.props;
-
+    if (typeof window !== "undefined") {
+      var token = localStorage.getItem("access_token");
+    }
     // //console.log(img);
     return (
       <>
@@ -50,7 +74,7 @@ class BestSellingCard extends React.Component {
             </a>
             <div className="button-head">
               <div className="product-action">
-                <a
+                {/* <a
                   data-toggle="modal"
                   data-target="#exampleModal"
                   title="Quick View"
@@ -61,15 +85,17 @@ class BestSellingCard extends React.Component {
                     className=" ti-eye"
                   />
                   <span>Quick Shop</span>
-                </a>
-                <a title="Wishlist" href="#">
+                </a> */}
+                <a
+                  title="Wishlist"
+                  onClick={
+                    token === null
+                      ? () => this.redirectToLogin()
+                      : () => this.handleAddToWish(this.props.slug)
+                  }
+                >
                   <i className=" ti-heart " />
                   <span>Add to Wishlist</span>
-                </a>
-              </div>
-              <div className="product-action-2">
-                <a title="Add to cart" href="#">
-                  Add to cart
                 </a>
               </div>
             </div>
@@ -90,7 +116,9 @@ class BestSellingCard extends React.Component {
                     {this.props.price}
                   </span>
                 </span>
-                <span style={{ float: "right", color: "red" }}>-10%</span>
+                <span style={{ float: "right", color: "red" }}>
+                  -{this.props.discount_percentage}%
+                </span>
               </div>
             ) : (
               <div className="product-price">
@@ -102,19 +130,10 @@ class BestSellingCard extends React.Component {
             )}
           </div>
         </div>
-        {this.state.modal && (
-          <Modal onHide={this.onHide} show={true}>
-            <Modal.Body>
-              <QuickLookModal
-                details={this.state.details}
-                loading={this.state.loading}
-              />
-            </Modal.Body>
-          </Modal>
-        )}
+        <NotificationContainer />
       </>
     );
   }
 }
 
-export default BestSellingCard;
+export default withAlert()(BestSellingCard);

@@ -1,8 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Nav } from "react-bootstrap";
 import Link from "next/link";
-import Image from "next/image";
 import { closeSideBar, openSideBar } from "../store/actions/sideBar";
 
 class Navigation extends Component {

@@ -29,7 +29,7 @@ class Products(models.Model):
     manufacturer = models.CharField(max_length=200, blank=True, null=True)
     country_made = models.CharField(max_length=200, blank=True, null=True)
     benifits = models.CharField(max_length=200, blank=True, null=True)
-
+    discount_percentage = models.IntegerField(blank=True, null=True)
     price = models.PositiveIntegerField(null=True)
     discount_price = models.PositiveIntegerField(null=True)
 
@@ -91,3 +91,16 @@ def product_unique_slug_generator(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(product_unique_slug_generator, sender=Products)
+
+
+def discount_percentage_calculator(sender, instance, *args, **kwargs):
+    if not instance.discount_percentage:
+        actual_price = float(instance.price)
+        discount_price = float(instance.discount_price)
+        percentage = (1-discount_price / actual_price) * 100
+        percentage_round = int(round(percentage))
+        print('The discount (in percentage) is', percentage_round, '%')
+        instance.discount_percentage = percentage_round
+
+
+pre_save.connect(discount_percentage_calculator, sender=Products)

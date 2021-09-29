@@ -112,13 +112,11 @@ class Cart extends Component {
           {/* Shopping Summery */}
           <div className="row mb-2">
             <div className="col-md-8">
-              <div className="cart_wrapper mt-5">
+              <div className="cart_wrapper pt-3 mt-5">
                 {cart.length !== 0 ? (
                   <div className="cart_lists">
                     <div className="cart_title">
-                      <span className="material-icons-outlined">
-                        local_mall
-                      </span>
+                      <i class="fas fa-shopping-basket"></i>
                       Your Shopping Cart
                     </div>
                     <div className="cart_list_wrap">

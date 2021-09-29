@@ -10,7 +10,8 @@ from .views import (
     SslCommerzTest,
     OrdercofirmApiView,
     SslCommerzTestIPN,
-    OnlinePaymentCartExpires
+    OnlinePaymentCartExpires,
+    TrackOrder
 )
 from django.urls import path
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path('ssl-payment', SslCommerzTest.as_view()),
     path('order-confirm', OrdercofirmApiView.as_view()),
     path('user-order', GetUserOrder.as_view()),
+    path('user-track-order', TrackOrder.as_view()),
     path('ipn-confirm-order', SslCommerzTestIPN.as_view()),
     path('online-payment-order-confirm', OnlinePaymentCartExpires.as_view())
 ]

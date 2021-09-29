@@ -83,7 +83,7 @@ export const handleComboAddToCart = (data) => (dispatch) => {
 };
 
 export const handleDeleteFromCart = (data) => (dispatch) => {
-  //console.log(data.id);
+  console.log(data);
   dispatch({
     type: DELETE_FROM_CART_START,
   });
@@ -91,6 +91,7 @@ export const handleDeleteFromCart = (data) => (dispatch) => {
   axios
     .post("cart/item-delete-from-cart", data)
     .then((res) => {
+      data.alert.success("Success");
       dispatch(fetchUserCartPricing());
       dispatch({
         type: DELETE_FROM_CART,

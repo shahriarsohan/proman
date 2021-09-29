@@ -146,9 +146,13 @@ class Order extends Component {
                                     Placed on {order.ordered_date}
                                   </p>
                                 </div>
-                                <div className="order-status">
-                                  {order.order_status}
-                                </div>
+                                <Link
+                                  href={`/user/track-order/query?=${order.order_id}`}
+                                >
+                                  <div className="order-status">
+                                    Track Order
+                                  </div>
+                                </Link>
                               </div>
                               <hr />
                               <div className="order-cart-items">

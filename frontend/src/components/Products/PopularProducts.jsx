@@ -64,6 +64,7 @@ export default class PopularProducts extends Component {
                           name={p.name}
                           price={p.price}
                           discount_price={p.discount_price}
+                          discount_percentage={p.discount_percentage}
                         />
                       );
                     })

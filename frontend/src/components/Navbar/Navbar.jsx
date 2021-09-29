@@ -17,6 +17,8 @@ import { fetchUserOrder } from "../../store/actions/cart";
 import { handleDeleteFromCart } from "../../store/actions/cart";
 import { openSideBarCart } from "../../store/actions/cartSideBar";
 import SideNav from "./SideNav";
+import { logout } from "../../store/actions/auth";
+import { withRouter } from "next/router";
 
 const override = css`
   display: block;
@@ -27,10 +29,17 @@ const override = css`
 class Navbar extends Component {
   state = {
     openSearch: false,
+    token: "",
   };
 
   componentDidMount() {
     this.props.fetchCart();
+    if (typeof window !== undefined) {
+      const token = localStorage.getItem("access_token");
+      this.setState({
+        token,
+      });
+    }
   }
 
   toggleSideBar = () => {
@@ -39,9 +48,15 @@ class Navbar extends Component {
     });
   };
 
+  handleLogout = () => {
+    this.props.logout();
+    this.props.router.reload(window.location.pathname);
+  };
+
   render() {
     const { cart } = this.props;
-    //console.log(cart);
+
+    console.log("tokeeeeen", this.state.token);
     return (
       <>
         {this.props.sidebar && <SideNav />}
@@ -59,8 +74,8 @@ class Navbar extends Component {
                       <ul className="list-main">
                         <li>
                           <a href="tel:+8801786910645">
-                            <i className="ti-headphone-alt" /> +880 (178)
-                            6910-645
+                            <i className="ti-headphone-alt" /> +88 (01309)
+                            466-923
                           </a>
                         </li>
                         <li>
@@ -87,10 +102,17 @@ class Navbar extends Component {
                           <i className="ti-user" />{" "}
                           <Link href="/profile/overview">My account</Link>
                         </li>
-                        <li>
-                          <i className="ti-power-off" />
-                          <Link href="/user/login">Login</Link>
-                        </li>
+                        {this.state.token === null ? (
+                          <li>
+                            <i className="ti-power-off" />
+                            <Link href="/user/login">Login</Link>
+                          </li>
+                        ) : (
+                          <li onClick={() => this.handleLogout()}>
+                            <i className="ti-power-off" />
+                            <a>Logout</a>
+                          </li>
+                        )}
                       </ul>
                     </div>
                     {/* End Top Right */}
@@ -545,6 +567,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCart: () => dispatch(fetchUserOrder()),
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
     openSideBarCart: () => dispatch(openSideBarCart()),
+    logout: () => dispatch(logout()),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

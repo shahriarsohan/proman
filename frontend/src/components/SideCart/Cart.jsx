@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
 import HashLoader from "react-spinners/HashLoader";
+import { withAlert } from "react-alert";
 
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 
@@ -27,7 +28,7 @@ class Cart extends Component {
     const data = {
       id: id,
     };
-    this.props.deleteItem(data);
+    this.props.deleteItem(data, this.props.alert);
   };
 
   plusQuantity = (id) => {
@@ -82,9 +83,7 @@ class Cart extends Component {
               <a onClick={this.props.close} className="close-button">
                 <span>X</span>
               </a>
-              <h2>
-                Shopping Bag <span className="count">2</span>
-              </h2>
+              <h2>Shopping Bag</h2>
               {/* {this.props.loading && ( */}
               <div>
                 <LoadingOverlay
@@ -247,4 +246,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(withAlert()(Cart))
+);

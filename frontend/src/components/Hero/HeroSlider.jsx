@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Image from "next/image";
 import { connect } from "react-redux";
 
 import Slider from "react-slick";
@@ -9,14 +8,9 @@ import {
   closeSideBarCart,
 } from "../../store/actions/cartSideBar";
 
-const settings = {
+var settings = {
   dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: true,
-  autoPlay: true,
+  autoplay: true,
 };
 
 class HeroSlider extends Component {
@@ -24,7 +18,7 @@ class HeroSlider extends Component {
     //console.log(this.props.cartSideBarOpenTwo);
     return (
       <>
-        <section className="hro-slider mb-5">
+        <section className="hro-slider mb-5 pb-4">
           <Slider {...settings}>
             <div>
               <img
@@ -42,14 +36,7 @@ class HeroSlider extends Component {
                 alt="proman-hero-slider-images"
               />
             </div>
-            <div>
-              <img
-                height="100%"
-                width="100%"
-                src="/images/cover/cover-real-2.png"
-                alt="proman-hero-slider-images"
-              />
-            </div>
+
             <div>
               <img
                 height="100%"

@@ -1,12 +1,10 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import Link from "next/link";
 import { css } from "@emotion/react";
 import Image from "next/image";
-import { isMobile } from "react-device-detect";
-
+import { logout } from "../../store/actions/auth";
+import { withRouter } from "next/router";
 import { fetchUserOrder, handleDeleteFromCart } from "../../store/actions/cart";
 import {
   closeSideBarCart,
@@ -15,15 +13,19 @@ import {
 import Cart from "../SideCart/Cart";
 import SideNav from "./SideNav";
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
-
 class NavbarDetails extends React.Component {
+  state = {
+    token: "",
+  };
+
   componentDidMount() {
     this.props.fetchCart();
+    if (typeof window !== undefined) {
+      const token = localStorage.getItem("access_token");
+      this.setState({
+        token,
+      });
+    }
   }
 
   handleDelete = (id) => {
@@ -31,6 +33,11 @@ class NavbarDetails extends React.Component {
       id: id,
     };
     this.props.deleteItem(data);
+  };
+
+  handleLogout = () => {
+    this.props.logout();
+    this.props.router.reload(window.location.pathname);
   };
 
   render() {
@@ -110,10 +117,17 @@ class NavbarDetails extends React.Component {
                           <i className="ti-user" />{" "}
                           <Link href="/profile/overview">My account</Link>
                         </li>
-                        <li>
-                          <i className="ti-power-off" />
-                          <Link href="/user/login">Login</Link>
-                        </li>
+                        {this.state.token === null ? (
+                          <li>
+                            <i className="ti-power-off" />
+                            <Link href="/user/login">Login</Link>
+                          </li>
+                        ) : (
+                          <li onClick={() => this.handleLogout()}>
+                            <i className="ti-power-off" />
+                            <a>Logout</a>
+                          </li>
+                        )}
                       </ul>
                     </div>
                     {/* End Top Right */}
@@ -204,7 +218,7 @@ class NavbarDetails extends React.Component {
                           >
                             <i className="ti-bag" />{" "}
                             <span className="total-count">
-                              {/* {cart. === undefined ? "" : cart.length} */}
+                              {cart === undefined ? "" : cart.length}
                             </span>
                           </a>
                         </div>
@@ -309,7 +323,11 @@ const mapDispatchToProps = (dispatch) => {
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
     openSideBarCart: () => dispatch(openSideBarCart()),
     closeSideBarCart: () => dispatch(closeSideBarCart()),
+    logout: () => dispatch(logout()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavbarDetails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(NavbarDetails));

@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -129,7 +130,7 @@ CELERY_CACHE_BACKEND = 'default'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'proman-cache.idnaao.ng.0001.aps1.cache.amazonaws.com:6379',
+        'LOCATION': 'redis://127.0.0.1:6379',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }

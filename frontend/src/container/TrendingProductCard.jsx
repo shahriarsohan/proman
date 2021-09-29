@@ -209,7 +209,7 @@ class TrendingProductCard extends Component {
                   <span
                     style={{ float: "right", color: "red", fontWeight: "bold" }}
                   >
-                    -10%
+                    -{this.props.discount_percentage}%
                   </span>
                 </div>
               ) : (

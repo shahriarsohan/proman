@@ -31,9 +31,9 @@ class ProductAdmin(admin.ModelAdmin):
                  'product_delivery_time',
                  'combo_offer',
                  'combo_amount',
-                 'few_left'
+                 'few_left',
+                 'discount_percentage'
              ),
-             'classes': ('collapse',),
          },
          ),
         ('Pricing Information',
@@ -52,11 +52,14 @@ class ProductAdmin(admin.ModelAdmin):
          },
          ),
     )
-    list_display = ('name', 'best_selling', 'featured',
-                    'category', 'discount_price', 'country_made')
+    list_display = ('name', 'best_selling', 'featured', 'out_of_stock',
+                    'category', 'discount_price')
     list_editable = ('best_selling', 'featured')
-    list_filter = ('best_selling', 'featured')
-    search_fields = ('name', 'category')
+    list_filter = ('best_selling', 'featured', 'best_selling',
+                   'featured',
+                   'trending')
+    search_fields = ('name', 'category', 'slug')
+    list_per_page = 50
 
     class Meta:
         model = Products

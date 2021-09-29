@@ -12,7 +12,6 @@ import {
 } from "./actionTypes";
 
 export const addToWish = (data) => (dispatch) => {
-  console.log("data", data);
   dispatch({
     type: WISH_LIST_CREATE_START,
   });
@@ -28,7 +27,6 @@ export const addToWish = (data) => (dispatch) => {
       });
     })
     .catch((error) => {
-      data.alert.error("Error");
       dispatch({
         type: WISH_LIST_CREATE_ERROR,
         payload: error.response.data,

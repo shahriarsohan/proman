@@ -684,9 +684,9 @@ class DetailsPage extends Component {
                               >
                                 <i className="ti-heart" />
                               </a>
-                              <a href="#" className="btn min">
+                              {/* <a href="#" className="btn min">
                                 <i className="fa fa-compress" />
-                              </a>
+                              </a> */}
                             </div>
                           )}
                           <p className="cat text-capitalize">
@@ -747,7 +747,7 @@ class DetailsPage extends Component {
                                 href="#reviews"
                                 role="tab"
                               >
-                                Reviews
+                                Size Chart
                               </a>
                             </li>
                           </ul>
@@ -1355,9 +1355,9 @@ class DetailsPage extends Component {
                               >
                                 <i className="ti-heart" />
                               </a>
-                              <a href="#" className="btn min">
+                              {/* <a href="#" className="btn min">
                                 <i className="fa fa-compress" />
-                              </a>
+                              </a> */}
                             </div>
                           )}
 
@@ -1419,7 +1419,7 @@ class DetailsPage extends Component {
                                 href="#reviews"
                                 role="tab"
                               >
-                                Reviews
+                                Size Chart
                               </a>
                             </li>
                           </ul>
@@ -1657,9 +1657,15 @@ class DetailsPage extends Component {
         )}
         {/* <NotificationContainer  /> */}
         <RelatedProducts
+          router={this.props.router}
+          addToWish={this.props.addToWish}
           relatedProducts={this.props.relatedProducts.category_product_qs}
         />
-        <PopularProducts newProducts={new_qs} />
+        <PopularProducts
+          router={this.props.router}
+          addToWish={this.props.addToWish}
+          newProducts={new_qs}
+        />
         <Footer />
         <Navigation />
       </>

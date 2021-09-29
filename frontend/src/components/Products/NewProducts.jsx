@@ -24,7 +24,7 @@ const responsive = {
 
 export default class PopularProducts extends Component {
   render() {
-    const { newProducts } = this.props;
+    const { newProducts, addToWish, router } = this.props;
     //console.log(newProducts.new_qs);
     return (
       <div className="product-area most-popular section">
@@ -59,6 +59,8 @@ export default class PopularProducts extends Component {
                   ? newProducts.new_qs.map((p) => {
                       return (
                         <BestSellingCard
+                          router={router}
+                          addToWish={addToWish}
                           img={p.thumbnail}
                           slug={p.slug}
                           name={p.name}

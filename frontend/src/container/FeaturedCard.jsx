@@ -70,7 +70,9 @@ class FeaturedCard extends React.Component {
                     {this.props.price}
                   </span>
                 </span>
-                <span style={{ float: "right", color: "red" }}>-10%</span>
+                <span style={{ float: "right", color: "red" }}>
+                  -{this.props.discount_percentage}%
+                </span>
               </div>
             ) : (
               <div className="product-price">

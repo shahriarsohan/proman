@@ -3475,7 +3475,7 @@ Version:1.0
 .cown-down .content .heading-block {
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
   padding: 75px;
 }

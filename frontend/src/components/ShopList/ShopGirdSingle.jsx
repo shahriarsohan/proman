@@ -76,7 +76,7 @@ const ShopGirdSingle = ({ product }) => {
               <span
                 style={{ float: "right", color: "red", fontWeight: "bold" }}
               >
-                -10%
+                -{product.discount_percentage}%
               </span>
             </div>
           ) : (
