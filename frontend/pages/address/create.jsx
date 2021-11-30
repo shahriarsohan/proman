@@ -9,6 +9,8 @@ import Service from "../../src/components/Service/Service";
 
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
+import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import { isMobile } from "react-device-detect";
 
 const region = [
   { key: "dhaka", value: "dhaka", text: "Dhaka" },
@@ -59,6 +61,7 @@ class NewAddress extends Component {
     area: "",
     street_address: "",
     loading: null,
+    isMobile: false,
 
     city_options: [
       { key: "af", value: "af", flag: "af", text: "Afghanistan" },
@@ -160,7 +163,7 @@ class NewAddress extends Component {
       },
     };
     axios
-      .post("http://127.0.0.1:8000/v1/address/create", data, config)
+      .post("https://proman.com.bd/api/v1/address/create", data, config)
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         //console.log(res);
@@ -173,10 +176,18 @@ class NewAddress extends Component {
       });
   };
 
+  componentDidMount() {
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
+  }
+
   render() {
     return (
       <>
-        <NavbarTwo />
+        <NavbarDetailsPage isMobile={this.state.isMobile} />
         <section className="shop checkout section container p-4">
           <p>Create Address</p>
           <Form

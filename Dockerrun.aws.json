@@ -13,7 +13,7 @@
       "image": "949478792120.dkr.ecr.ap-south-1.amazonaws.com/proman-frontend:latest",
       "hostname": "client",
       "essential": false,
-      "memory": 200
+      "memory": 500
     },
     {
       "name": "nginx",

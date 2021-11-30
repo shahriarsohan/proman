@@ -48,7 +48,7 @@ class Payment extends Component {
     };
     axios
       .post(
-        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
+        "https://proman.com.bd/api/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -76,7 +76,7 @@ class Payment extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/ssl-payment", data, config)
+      .post("https://proman.com.bd/api/v1/orders/ssl-payment", data, config)
       .then((res) =>
         this.setState(
           {
@@ -102,8 +102,14 @@ class Payment extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/order-confirm", data, config)
-      .then((res) => this.setState({ loading: false }))
+      .post("https://proman.com.bd/api/v1/orders/order-confirm", data, config)
+      .then((res) =>
+        this.setState({ loading: false }, () => {
+          this.props.router.push(
+            `/user/track-order/query?=${res.data.order_qs.order_id}`
+          );
+        })
+      )
       .catch((err) => console.log(err));
   };
 
@@ -164,7 +170,7 @@ class Payment extends Component {
                             <img
                               //   width="50px"
                               //   height="50px"
-                              src="https://www.paytheory.com/wp-content/uploads/2021/06/accept-credit-card-payments.jpg"
+                              src="/images/accept-credit-card-payments.jpg"
                               alt="bkash"
                             />
                             Online payment
@@ -254,6 +260,11 @@ class Payment extends Component {
                           </span>
                         </li>
                       </ul>
+                      <div className="single-widget payement p-4">
+                        <div className="content">
+                          <img src="/images/ssl-logo-1.png" alt="#" />
+                        </div>
+                      </div>
                     </div>
 
                     {this.state.cash_on_delivery ? (
@@ -274,13 +285,15 @@ class Payment extends Component {
                       <div className="single-widget get-button">
                         <div className="content">
                           <div className="button">
-                            <button
-                              onClick={this.handlePayment}
+                            {/* <button
+                              // onClick={this.handlePayment}
                               disabled={!this.state.card_payment}
-                              className="btn"
-                            >
-                              Procced to payment
-                            </button>
+                              className="btn btn-warning"
+                            > */}
+                            <p className="text-danger">
+                              Currently not accepting
+                            </p>
+                            {/* </button> */}
                           </div>
                         </div>
                       </div>

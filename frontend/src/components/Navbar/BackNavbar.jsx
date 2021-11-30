@@ -98,7 +98,9 @@ class NavbarDetails extends React.Component {
                         </li>
                         <li>
                           <i className="ti-alarm-clock" />{" "}
-                          <a href="#">Daily deal</a>
+                          <Link href="/daily-deals">
+                            <a>Daily deal</a>
+                          </Link>
                         </li>
                         <li>
                           <i className="ti-user" /> <a href="#">My account</a>

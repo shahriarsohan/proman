@@ -3,6 +3,7 @@ import Link from "next/link";
 import { withRouter } from "next/router";
 import React, { Component } from "react";
 import { isMobile } from "react-device-detect";
+import { Dropdown } from "semantic-ui-react";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -33,24 +34,6 @@ const regionOptions = [
   { key: "mymensingh", value: "mymensingh", text: "Mymensingh" },
 ];
 
-const countryOptions = [
-  { key: "af", value: "af", text: "Afghanistan" },
-  { key: "ax", value: "ax", text: "Aland Islands" },
-  { key: "al", value: "al", text: "Albania" },
-  { key: "dz", value: "dz", text: "Algeria" },
-  { key: "as", value: "as", text: "American Samoa" },
-  { key: "ad", value: "ad", text: "Andorra" },
-];
-
-const dhakaOptions = [
-  { key: "af", value: "af", text: "Mirpur" },
-  { key: "ax", value: "ax", text: "Aland Islands" },
-  { key: "al", value: "al", text: "Albania" },
-  { key: "dz", value: "dz", text: "Algeria" },
-  { key: "as", value: "as", text: "American Samoa" },
-  { key: "ad", value: "ad", text: "Andorra" },
-];
-
 class Address extends Component {
   state = {
     isMobile: null,
@@ -60,6 +43,14 @@ class Address extends Component {
     loading: false,
     error: [],
     success: false,
+    region: "",
+    city: "",
+
+    city_options: [
+      // { key: "Aruba", value: "Aruba", text: "Aruba" },
+      // { key: "Australia", value: "Australia", text: "Australia" },
+      // { key: "Austria", value: "Austria", text: "Austria" },
+    ],
   };
 
   componentDidMount() {
@@ -84,10 +75,24 @@ class Address extends Component {
     }
   }
 
+  onChangeCity = (e, data) => {
+    this.setState({ city: data.value });
+  };
+
+  redirectToAddress = () => {
+    this.props.router.push({
+      pathname: "/address/new",
+      query: {
+        redirectURL: this.props.router.asPath,
+      },
+      asPath: "main",
+    });
+  };
+
   fetchAddress = () => {
     this.setState({ loading: true });
     axiosInstance
-      .get("http://127.0.0.1:8000/v1/address/user-address")
+      .get("https://proman.com.bd/api/v1/address/user-address")
       .then((res) => {
         this.setState({
           loading: false,
@@ -97,8 +102,123 @@ class Address extends Component {
       });
   };
 
+  onChangeRegion = (e, data) => {
+    this.setState({ region: data.value }, () => {
+      if (data.value === "dhaka") {
+        this.setState({
+          city_options: [
+            { key: "Dhaka", value: "Dhaka", text: "Dhaka" },
+            { key: "Faridpur", value: "Faridpur", text: "Faridpur" },
+            { key: "Gazipur", value: "Gazipur", text: "Gazipur" },
+            { key: "Gopalganj", value: "Gopalganj", text: "Gopalganj" },
+            { key: "Kishoreganj", value: "Kishoreganj", text: "Kishoreganj" },
+            { key: "Madaripur", value: "Madaripur", text: "Madaripur" },
+            { key: "Manikganj", value: "Narayanganj", text: "Narayanganj" },
+            { key: "Narsingdi", value: "Narsingdi", text: "Narsingdi" },
+            { key: "Rajbari", value: "Rajbari", text: "Rajbari" },
+            { key: "Shariatpur", value: "Shariatpur", text: "Shariatpur" },
+            { key: "Tangail", value: "Tangail", text: "Tangail" },
+          ],
+        });
+      } else if (data.value === "rajshahi") {
+        this.setState({
+          city_options: [
+            { key: "Rajshahi", value: "Rajshahi", text: "Rajshahi" },
+            { key: "Natore", value: "Natore", text: "Natore" },
+            { key: "Pabna", value: "Pabna", text: "Pabna" },
+            { key: "Bogura", value: "Bogura", text: "Bogura" },
+            {
+              key: "Chapainawabganj",
+              value: "Chapainawabganj",
+              text: "Chapainawabganj",
+            },
+            { key: "Joypurhat", value: "Joypurhat", text: "Joypurhat" },
+            { key: "Naogaon", value: "Naogaon", text: "Naogaon" },
+            { key: "Sirajganj", value: "Sirajganj", text: "Sirajganj" },
+          ],
+        });
+      } else if (data.value === "rangpur") {
+        this.setState({
+          city_options: [
+            { key: "Rangpur", value: "Rangpur", text: "Rangpur" },
+            { key: "Gaibandha", value: "Gaibandha", text: "Gaibandha" },
+            { key: "Nilphamari", value: "Nilphamari", text: "Nilphamari" },
+            { key: "Kurigram", value: "Kurigram", text: "Kurigram" },
+            { key: "Lalmonirhat", value: "Lalmonirhat", text: "Lalmonirhat" },
+            { key: "Dinajpur", value: "Dinajpur", text: "Dinajpur" },
+            { key: "Thakurgaon", value: "Thakurgaon", text: "Thakurgaon" },
+            { key: "Panchagarh", value: "Panchagarh", text: "Panchagarh" },
+          ],
+        });
+      } else if (data.value === "chattogram") {
+        this.setState({
+          city_options: [
+            { key: "Chittagong", value: "Chittagong", text: "Chittagong" },
+            { key: "Rangamati", value: "Rangamati", text: "Rangamati" },
+            { key: "Bandarban", value: "Bandarban", text: "Bandarban" },
+            { key: "Khagrachari", value: "Khagrachari", text: "Khagrachari" },
+            { key: "Cox's Bazar", value: "Cox's Bazar", text: "Cox's Bazar" },
+            { key: "Feni", value: "Feni", text: "Feni" },
+            {
+              key: "Brahmanbaria",
+              value: "Brahmanbaria",
+              text: "Brahmanbaria",
+            },
+            { key: "Lakshmipur", value: "Lakshmipur", text: "Lakshmipur" },
+            { key: "Comilla", value: "Comilla", text: "Comilla" },
+            { key: "Chandpur", value: "Chandpur", text: "Chandpur" },
+            { key: "Noakhali", value: "Noakhali", text: "Noakhali" },
+          ],
+        });
+      } else if (data.value === "khulna") {
+        this.setState({
+          city_options: [
+            { key: "Satkhira", value: "Satkhira", text: "Satkhira" },
+            { key: "Jessore", value: "Jessore", text: "Jessore" },
+            { key: "Chuadanga", value: "Chuadanga", text: "Chuadanga" },
+            { key: "Narail", value: "Narail", text: "Narail" },
+            { key: "Bagerhat", value: "Bagerhat", text: "Bagerhat" },
+            { key: "Magura", value: "Magura", text: "Magura" },
+            { key: "Jhenaidah", value: "Jhenaidah", text: "Jhenaidah" },
+            { key: "Kushtia", value: "Kushtia", text: "Kushtia" },
+            { key: "Meherpur", value: "Meherpur", text: "Meherpur" },
+          ],
+        });
+      } else if (data.value === "shylhet") {
+        this.setState({
+          city_options: [
+            { key: "Habiganj", value: "Habiganj", text: "Habiganj" },
+            { key: "Moulvibazar", value: "Moulvibazar", text: "Moulvibazar" },
+            { key: "Sunamganj", value: "Sunamganj", text: "Sunamganj" },
+            { key: "Sylhet", value: "Sylhet", text: "Sylhet" },
+          ],
+        });
+      } else if (data.value === "barishal") {
+        this.setState({
+          city_options: [
+            { key: "Barisal", value: "Barisal", text: "Barisal" },
+            { key: "Barguna", value: "Barguna", text: "Barguna" },
+            { key: "Bhola", value: "Bhola", text: "Bhola" },
+            { key: "Jhalokati", value: "Jhalokati", text: "Jhalokati" },
+            { key: "Patuakhali", value: "Patuakhali", text: "Patuakhali" },
+            { key: "Pirojpur", value: "Pirojpur", text: "Pirojpur" },
+          ],
+        });
+      } else if (data.value === "mymensingh") {
+        this.setState({
+          city_options: [
+            { key: "Mymensingh", value: "Mymensingh", text: "Mymensingh" },
+            { key: "Netrokona", value: "Netrokona", text: "Netrokona" },
+            { key: "Jamalpur", value: "Jamalpur", text: "Jamalpur" },
+            { key: "Sherpur", value: "Sherpur", text: "Sherpur" },
+          ],
+        });
+      }
+    });
+  };
+
   render() {
-    console.log(typeof this.state.error);
+    console.log("regionnnnnnn", this.state.region);
 
     return (
       <div>
@@ -159,7 +279,12 @@ class Address extends Component {
                   />
                   <div className="user-dont-have-address-text">
                     <p>Dear user, you don't have any shipping address</p>
-                    <button className="btn btn-primary">Add Address</button>
+                    <button
+                      onClick={this.redirectToAddress}
+                      className="btn btn-primary"
+                    >
+                      Add Address
+                    </button>
                   </div>
                 </div>
               ) : (
@@ -185,8 +310,20 @@ class Address extends Component {
                                 loading: true,
                               });
                               e.preventDefault();
+
+                              const data = {
+                                f_name: values.f_name,
+                                l_name: values.l_name,
+                                alternate_phone_number:
+                                  values.alternate_phone_number,
+                                email: values.email,
+                                region: this.state.region,
+                                street_address: values.street_address,
+                                city: this.state.city,
+                                zip_code: values.zip_code,
+                              };
                               axiosInstance
-                                .put(`address/edit/${values.id}`, values)
+                                .put(`address/edit/${values.id}`, data)
                                 .then((res) => {
                                   this.setState({
                                     loading: false,
@@ -258,52 +395,28 @@ class Address extends Component {
                                 placeholder="Email"
                               />
                             </Form.Group>
-                            <div className="d-flex">
-                              <Form.Group widths="equal">
-                                <Field
-                                  label="Select Region"
-                                  component={DropdownField}
-                                  handleChange={handleChange("region")}
-                                  placeholder="Select Region"
-                                  name="region"
-                                  error={
-                                    this.state.error
-                                      ? this.state.error.region
-                                      : ""
-                                  }
-                                  options={regionOptions}
-                                />
-                                {values.region === "dhaka" ? (
-                                  <Field
-                                    label="Select Region"
-                                    component={DropdownField}
-                                    handleChange={handleChange("city")}
-                                    placeholder="Select City"
-                                    name="city"
-                                    error={
-                                      this.state.error
-                                        ? this.state.error.city
-                                        : ""
-                                    }
-                                    options={dhakaOptions}
-                                  />
-                                ) : (
-                                  <Field
-                                    label="Select Region"
-                                    component={DropdownField}
-                                    handleChange={handleChange("city")}
-                                    placeholder="Select City"
-                                    name="city"
-                                    error={
-                                      this.state.error
-                                        ? this.state.error.city
-                                        : ""
-                                    }
-                                    options={countryOptions}
-                                  />
-                                )}
+                            {/* <div className="d-flex"> */}
+                            <Form.Group className="p-2" widths="equal">
+                              <Dropdown
+                                className=" p-2"
+                                placeholder="Select Region"
+                                fluid
+                                search
+                                selection
+                                onChange={this.onChangeRegion}
+                                options={regionOptions}
+                              />
+                              <Dropdown
+                                className=" p-2"
+                                placeholder="Select City"
+                                fluid
+                                search
+                                selection
+                                onChange={this.onChangeCity}
+                                options={this.state.city_options}
+                              />
 
-                                <Field
+                              {/* <Field
                                   label="Select Region"
                                   component={DropdownField}
                                   handleChange={handleChange("area")}
@@ -315,9 +428,9 @@ class Address extends Component {
                                       : ""
                                   }
                                   options={countryOptions}
-                                />
-                              </Form.Group>
-                            </div>
+                                /> */}
+                            </Form.Group>
+                            {/* </div> */}
                             <Field
                               as={TextArea}
                               name="street_address"
@@ -359,7 +472,7 @@ class Address extends Component {
                               </Message>
                             )}
 
-                            <button className="btn">Apply</button>
+                            <button className="btn mt-2">Apply</button>
                           </Form>
                         )}
                       </Formik>

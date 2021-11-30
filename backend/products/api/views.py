@@ -15,7 +15,6 @@ now = timezone.now()
 
 
 class ProductsListApiView(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         hair_care_qs = Products.objects.filter(category="hair_care")
         skin_care_qs = Products.objects.filter(category="skin_care")
@@ -34,7 +33,6 @@ class ProductsListApiView(views.APIView):
 
 
 class GetTrendingProducts(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         trending_queryset = Products.objects.filter(
             trending=True).order_by('-timestamp')
@@ -45,7 +43,6 @@ class GetTrendingProducts(views.APIView):
 
 
 class GetBestSellingProducts(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         best_selling_queryset = Products.objects.filter(
             best_selling=True).order_by('-timestamp')
@@ -55,7 +52,6 @@ class GetBestSellingProducts(views.APIView):
 
 
 class FeaturedProducts(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         featured_queryset = Products.objects.filter(
             featured=True).order_by('-timestamp')
@@ -65,7 +61,6 @@ class FeaturedProducts(views.APIView):
 
 
 class ProductsDetailsApiView(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         slug = self.kwargs['slug']
         queryset = Products.objects.all()
@@ -158,7 +153,6 @@ class GetProductsBasedOnQuery(generics.ListAPIView):
 
 
 class GetNewProducts(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         featured_queryset = Products.objects.filter().order_by(
             '-timestamp')[:10]
@@ -227,7 +221,6 @@ class GetProductsBasedOnCat(generics.ListAPIView):
 # products fetch by category
 
 class ProductsFetchByCategory(views.APIView):
-    @method_decorator(cache_page(60*60*2))
     def post(self, request, *args, **kwargs):
         category = request.data.get('category', None)
         print('categoryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', category)
@@ -245,7 +238,7 @@ class ProductsFetchByCategory(views.APIView):
 
 
 class GetDailyDealsApiView(views.APIView):
-    @method_decorator(cache_page(60*60*2))
+    # @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
 
         try:

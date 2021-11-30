@@ -6,7 +6,8 @@ import Footer from "../../src/components/Footer/Footer";
 import NavbarTwo from "../../src/components/Navbar/NavbarTwo";
 import NewsLetter from "../../src/components/NewsLetter/NewsLetter";
 import Service from "../../src/components/Service/Service";
-
+import NavbarDetailsPage from "../../src/components/Navbar/NavbarDetailsPage";
+import { isMobile } from "react-device-detect";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 
@@ -22,29 +23,20 @@ const region = [
 ];
 
 const countryOptions = [
-  { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-  { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
-  { key: "al", value: "al", flag: "al", text: "Albania" },
-  { key: "dz", value: "dz", flag: "dz", text: "Algeria" },
-  { key: "as", value: "as", flag: "as", text: "American Samoa" },
-  { key: "ad", value: "ad", flag: "ad", text: "Andorra" },
-  { key: "ao", value: "ao", flag: "ao", text: "Angola" },
-  { key: "ai", value: "ai", flag: "ai", text: "Anguilla" },
-  { key: "ag", value: "ag", flag: "ag", text: "Antigua" },
-  { key: "ar", value: "ar", flag: "ar", text: "Argentina" },
-  { key: "am", value: "am", flag: "am", text: "Armenia" },
-  { key: "aw", value: "aw", flag: "aw", text: "Aruba" },
-  { key: "au", value: "au", flag: "au", text: "Australia" },
-  { key: "at", value: "at", flag: "at", text: "Austria" },
-  { key: "az", value: "az", flag: "az", text: "Azerbaijan" },
-  { key: "bs", value: "bs", flag: "bs", text: "Bahamas" },
-  { key: "bh", value: "bh", flag: "bh", text: "Bahrain" },
-  { key: "bd", value: "bd", flag: "bd", text: "Bangladesh" },
-  { key: "bb", value: "bb", flag: "bb", text: "Barbados" },
-  { key: "by", value: "by", flag: "by", text: "Belarus" },
-  { key: "be", value: "be", flag: "be", text: "Belgium" },
-  { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-  { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+  { key: "Afghanistan", value: "Afghanistan", text: "Afghanistan" },
+  { key: "Aland Islands", value: "Aland Islands", text: "Aland Islands" },
+  { key: "Albania", value: "Albania", text: "Albania" },
+  { key: "Algeria", value: "Algeria", text: "Algeria" },
+  { key: "American Samoa", value: "American Samoa", text: "American Samoa" },
+  { key: "Andorra", value: "Andorra", text: "Andorra" },
+  { key: "Angola", value: "Angola", text: "Angola" },
+  { key: "Anguilla", value: "Anguilla", text: "Anguilla" },
+  { key: "Antigua", value: "Antigua", text: "Antigua" },
+  { key: "Argentina", value: "Argentina", text: "Argentina" },
+  { key: "Argentina", value: "Argentina", text: "Argentina" },
+  { key: "Aruba", value: "Aruba", text: "Aruba" },
+  { key: "Australia", value: "Australia", text: "Australia" },
+  { key: "Austria", value: "Austria", text: "Austria" },
 ];
 
 class NewAddress extends Component {
@@ -59,11 +51,12 @@ class NewAddress extends Component {
     area: "",
     street_address: "",
     loading: null,
+    isMobile: false,
 
     city_options: [
-      { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-      { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
-      { key: "al", value: "al", flag: "al", text: "Albania" },
+      // { key: "Aruba", value: "Aruba", text: "Aruba" },
+      // { key: "Australia", value: "Australia", text: "Australia" },
+      // { key: "Austria", value: "Austria", text: "Austria" },
     ],
   };
 
@@ -72,76 +65,135 @@ class NewAddress extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  componentDidMount() {
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
+  }
+
   onChangeRegion = (e, data) => {
     this.setState({ region: data.value }, () => {
       if (data.value === "dhaka") {
         this.setState({
           city_options: [
-            { key: "be", value: "be", flag: "be", text: "Belgium" },
-            { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-            { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+            { key: "Dhaka", value: "Dhaka", text: "Dhaka" },
+            { key: "Faridpur", value: "Faridpur", text: "Faridpur" },
+            { key: "Gazipur", value: "Gazipur", text: "Gazipur" },
+            { key: "Gopalganj", value: "Gopalganj", text: "Gopalganj" },
+            { key: "Kishoreganj", value: "Kishoreganj", text: "Kishoreganj" },
+            { key: "Madaripur", value: "Madaripur", text: "Madaripur" },
+            { key: "Manikganj", value: "Narayanganj", text: "Narayanganj" },
+            { key: "Narsingdi", value: "Narsingdi", text: "Narsingdi" },
+            { key: "Rajbari", value: "Rajbari", text: "Rajbari" },
+            { key: "Shariatpur", value: "Shariatpur", text: "Shariatpur" },
+            { key: "Tangail", value: "Tangail", text: "Tangail" },
           ],
         });
       } else if (data.value === "rajshahi") {
         this.setState({
           city_options: [
-            { key: "be", value: "be", flag: "be", text: "Belgium" },
-            { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-            { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+            { key: "Rajshahi", value: "Rajshahi", text: "Rajshahi" },
+            { key: "Natore", value: "Natore", text: "Natore" },
+            { key: "Pabna", value: "Pabna", text: "Pabna" },
+            { key: "Bogura", value: "Bogura", text: "Bogura" },
+            {
+              key: "Chapainawabganj",
+              value: "Chapainawabganj",
+              text: "Chapainawabganj",
+            },
+            { key: "Joypurhat", value: "Joypurhat", text: "Joypurhat" },
+            { key: "Naogaon", value: "Naogaon", text: "Naogaon" },
+            { key: "Sirajganj", value: "Sirajganj", text: "Sirajganj" },
           ],
         });
       } else if (data.value === "rangpur") {
         this.setState({
           city_options: [
-            { key: "be", value: "be", flag: "be", text: "Belgium" },
-            { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-            { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+            { key: "Rangpur", value: "Rangpur", text: "Rangpur" },
+            { key: "Gaibandha", value: "Gaibandha", text: "Gaibandha" },
+            { key: "Nilphamari", value: "Nilphamari", text: "Nilphamari" },
+            { key: "Kurigram", value: "Kurigram", text: "Kurigram" },
+            { key: "Lalmonirhat", value: "Lalmonirhat", text: "Lalmonirhat" },
+            { key: "Dinajpur", value: "Dinajpur", text: "Dinajpur" },
+            { key: "Thakurgaon", value: "Thakurgaon", text: "Thakurgaon" },
+            { key: "Panchagarh", value: "Panchagarh", text: "Panchagarh" },
           ],
         });
       } else if (data.value === "chattogram") {
         this.setState({
           city_options: [
-            { key: "be", value: "be", flag: "be", text: "Belgium" },
-            { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-            { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+            { key: "Chittagong", value: "Chittagong", text: "Chittagong" },
+            { key: "Rangamati", value: "Rangamati", text: "Rangamati" },
+            { key: "Bandarban", value: "Bandarban", text: "Bandarban" },
+            { key: "Khagrachari", value: "Khagrachari", text: "Khagrachari" },
+            { key: "Cox's Bazar", value: "Cox's Bazar", text: "Cox's Bazar" },
+            { key: "Feni", value: "Feni", text: "Feni" },
+            {
+              key: "Brahmanbaria",
+              value: "Brahmanbaria",
+              text: "Brahmanbaria",
+            },
+            { key: "Lakshmipur", value: "Lakshmipur", text: "Lakshmipur" },
+            { key: "Comilla", value: "Comilla", text: "Comilla" },
+            { key: "Chandpur", value: "Chandpur", text: "Chandpur" },
+            { key: "Noakhali", value: "Noakhali", text: "Noakhali" },
           ],
         });
       } else if (data.value === "khulna") {
         this.setState({
           city_options: [
-            { key: "ad", value: "ad", flag: "ad", text: "Andorra" },
-            { key: "ao", value: "ao", flag: "ao", text: "Angola" },
-            { key: "ai", value: "ai", flag: "ai", text: "Anguilla" },
+            { key: "Satkhira", value: "Satkhira", text: "Satkhira" },
+            { key: "Jessore", value: "Jessore", text: "Jessore" },
+            { key: "Chuadanga", value: "Chuadanga", text: "Chuadanga" },
+            { key: "Narail", value: "Narail", text: "Narail" },
+            { key: "Bagerhat", value: "Bagerhat", text: "Bagerhat" },
+            { key: "Magura", value: "Magura", text: "Magura" },
+            { key: "Jhenaidah", value: "Jhenaidah", text: "Jhenaidah" },
+            { key: "Kushtia", value: "Kushtia", text: "Kushtia" },
+            { key: "Meherpur", value: "Meherpur", text: "Meherpur" },
           ],
         });
       } else if (data.value === "shylhet") {
         this.setState({
           city_options: [
-            { key: "bh", value: "bh", flag: "bh", text: "Bahrain" },
-            { key: "bd", value: "bd", flag: "bd", text: "Bangladesh" },
-            { key: "bb", value: "bb", flag: "bb", text: "Barbados" },
-            { key: "by", value: "by", flag: "by", text: "Belarus" },
+            { key: "Habiganj", value: "Habiganj", text: "Habiganj" },
+            { key: "Moulvibazar", value: "Moulvibazar", text: "Moulvibazar" },
+            { key: "Sunamganj", value: "Sunamganj", text: "Sunamganj" },
+            { key: "Sylhet", value: "Sylhet", text: "Sylhet" },
           ],
         });
       } else if (data.value === "barishal") {
         this.setState({
           city_options: [
-            { key: "az", value: "az", flag: "az", text: "Azerbaijan" },
-            { key: "bs", value: "bs", flag: "bs", text: "Bahamas" },
+            { key: "Barisal", value: "Barisal", text: "Barisal" },
+            { key: "Barguna", value: "Barguna", text: "Barguna" },
+            { key: "Bhola", value: "Bhola", text: "Bhola" },
+            { key: "Jhalokati", value: "Jhalokati", text: "Jhalokati" },
+            { key: "Patuakhali", value: "Patuakhali", text: "Patuakhali" },
+            { key: "Pirojpur", value: "Pirojpur", text: "Pirojpur" },
           ],
         });
       } else if (data.value === "mymensingh") {
         this.setState({
           city_options: [
-            { key: "au", value: "au", flag: "au", text: "Australia" },
-            { key: "at", value: "at", flag: "at", text: "Austria" },
+            { key: "Mymensingh", value: "Mymensingh", text: "Mymensingh" },
+            { key: "Netrokona", value: "Netrokona", text: "Netrokona" },
+            { key: "Jamalpur", value: "Jamalpur", text: "Jamalpur" },
+            { key: "Sherpur", value: "Sherpur", text: "Sherpur" },
           ],
         });
       }
     });
   };
 
+  onChangeCity = (e, data) => {
+    this.setState({ city: data.value });
+  };
+
   handleSubmit = (e) => {
+    this.setState({ loading: true });
     e.preventDefault();
     const data = {
       f_name: this.state.f_name,
@@ -160,7 +212,7 @@ class NewAddress extends Component {
       },
     };
     axios
-      .post("http://127.0.0.1:8000/v1/address/create", data, config)
+      .post("https://proman.com.bd/api/v1/address/create", data, config)
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         //console.log(res);
@@ -184,13 +236,23 @@ class NewAddress extends Component {
     console.log("redirect url", this.props.router.query.redirectURL);
     return (
       <>
-        <NavbarTwo />
-        <section className="shop checkout section container p-4">
-          <p>Create Address</p>
+        <NavbarDetailsPage isMobile={this.state.isMobile} />
+        <section className="shop checkout section container p-4 ">
+          <p
+            style={{
+              fontFamily: "Ubuntu",
+              fontWeight: "600",
+              fontSize: "20px",
+            }}
+            className="text-center"
+          >
+            Create Address
+          </p>
+          <hr />
           <Form
             loading={this.state.loading}
             onSubmit={this.handleSubmit}
-            className="form"
+            className="form mt-5"
             method="post"
             action="#"
           >
@@ -252,20 +314,20 @@ class NewAddress extends Component {
 
               <div className="col-12">
                 <div className="form-group">
-                  <label>
+                  {/* <label>
                     Postal Code<span>*</span>
-                  </label>
+                  </label> */}
                   <input
                     type="text"
                     name="zip"
-                    placeholder
+                    placeholder="Postal Code"
                     name="zip"
                     value={this.state.zip}
                     onChange={this.handleChange}
                   />
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-4">
+              <div className="col-lg-6 col-md-6 col-6">
                 <Dropdown
                   placeholder="Select Region"
                   fluid
@@ -275,7 +337,7 @@ class NewAddress extends Component {
                   options={region}
                 />
               </div>
-              <div className="col-lg-4 col-md-4 col-4">
+              <div className="col-lg-6 col-md-6 col-6">
                 <Dropdown
                   placeholder="Select City"
                   fluid
@@ -285,7 +347,7 @@ class NewAddress extends Component {
                   options={this.state.city_options}
                 />
               </div>
-              <div className="col-lg-4 col-md-4 col-4">
+              {/* <div className="col-12 mt-4">
                 <Dropdown
                   placeholder="Select Area"
                   fluid
@@ -294,7 +356,7 @@ class NewAddress extends Component {
                   onChange={this.onChangeArea}
                   options={countryOptions}
                 />
-              </div>
+              </div> */}
 
               <div className="col-lg-12 col-md-12 col-12 mt-3">
                 <TextArea
@@ -327,7 +389,7 @@ class NewAddress extends Component {
                           </div>
                         </div> */}
               <div className="col-12">
-                <button className="btn" type="submit">
+                <button className="btn mt-3" type="submit">
                   Save
                 </button>
               </div>

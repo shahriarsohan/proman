@@ -35,7 +35,6 @@ class Home extends Component {
   }
 
   render() {
-    //console.log(this.props.router);
     return (
       <>
         <Navbar />
@@ -46,12 +45,12 @@ class Home extends Component {
 
         <SmallBanner />
         <Featuredcat />
-        <Products p={this.props.trending.trending_qs} />
+        <Products p={this.props.trending} />
         <MediumBanner />
-        <BestSelling bestselling={this.props.bestselling.bestSelling_qs} />
-        <FeaturedProducts featured={this.props.featured.featured_qs} />
-        <Shop p={this.props.trending.trending_qs} />
-        <CountDownProducts weekly_qs={this.props.weekly_qs} />
+        <BestSelling bestselling={this.props.bestselling} />
+        <FeaturedProducts featured={this.props.featured} />
+        <Shop p={this.props.trending} />
+        {/* <CountDownProducts weekly_qs={this.props.weekly_qs} /> */}
         <Service />
         <NewsLetter />
         <Footer />
@@ -61,38 +60,29 @@ class Home extends Component {
   }
 }
 
-// //console.log(props.data);
-
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/trending"
+    "https://proman.com.bd/api/v1/products/trending"
   );
 
-  // axios
-  //   .get(
-  //     "http://127.0.0.1:8000/v1/products/trending"
-  //   )
-  //   .then((response) => console.log("response", response))
-  //   .catch((err) => console.log("error", err));
-
-  const weekly_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/deal-of-the-week"
-  );
-
+  // const weekly_res = await axios.get(
+  //   "https://proman.com.bd/api/v1/products/deal-of-the-week"
+  // );
+  // console.log("weekly_res", weekly_res.data);
   const bestselling_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/best-selling"
+    "https://proman.com.bd/api/v1/products/best-selling"
   );
   const featured_res = await axios.get(
-    "http://127.0.0.1:8000/v1/products/featured"
+    "https://proman.com.bd/api/v1/products/featured"
   );
-  const bestselling = await bestselling_res.data;
-  const trending = await trending_res.data;
-  //console.log(trending);
-  const featured = await featured_res.data;
-  const weekly_qs = await weekly_res.data.daily_deal_qs;
+  const bestselling = await bestselling_res.data.bestSelling_qs;
+  const trending = await trending_res.data.trending_qs;
+  const featured = await featured_res.data.featured_qs;
+  // const weekly_qs = await weekly_res.data.daily_deal_qs;
+  // console.log("weekly_res_final", weekly_qs);
 
-  console.log("weekly_qsssssssssssssssssssssssssssssss", weekly_qs);
+  // console.log("weekly_qsssssssssssssssssssssssssssssss", weekly_qs);
 
   if (!trending) {
     return {
@@ -101,13 +91,12 @@ export async function getServerSideProps() {
       },
     };
   }
-  // Pass data to the page via props
   return {
     props: {
       trending: trending,
       bestselling: bestselling,
       featured: featured,
-      weekly_qs: weekly_qs,
+      // weekly_qs: weekly_qs,
     },
   };
 }

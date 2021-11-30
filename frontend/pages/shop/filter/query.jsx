@@ -52,7 +52,7 @@ class AllListShop extends Component {
     //console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/v1/products/product-filter/?limit=${this.state.limit}&offset=${this.state.offset}`,
+        `https://proman.com.bd/api/v1/products/product-filter/?limit=${this.state.limit}&offset=${this.state.offset}`,
         {
           params: {
             query: this.state.query,
@@ -89,7 +89,7 @@ class AllListShop extends Component {
     }
     axios
       .get(
-        "http://127.0.0.1:8000/v1/products/product-filter/?limit=1&offset=0",
+        "https://proman.com.bd/api/v1/products/product-filter/?limit=1&offset=0",
         {
           params: {
             query: this.state.query,
@@ -154,7 +154,7 @@ class AllListShop extends Component {
                   </div>
                   {/*/ End Single Widget */}
                   {/* Shop By Price */}
-                  <div className="single-widget range">
+                  {/* <div className="single-widget range">
                     <h3 className="title">Shop by Price</h3>
                     <div className="price-filter">
                       <div className="price-filter-inner">
@@ -192,124 +192,13 @@ class AllListShop extends Component {
                         </label>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                   {/*/ End Shop By Price */}
                   {/* Single Widget */}
-                  <div className="single-widget recent-post">
-                    <h3 className="title">Recent post</h3>
-                    {/* Single Post */}
-                    <div className="single-post first">
-                      <div className="image">
-                        <img src="https://via.placeholder.com/75x75" alt="#" />
-                      </div>
-                      <div className="content">
-                        <h5>
-                          <a href="#">Girls Dress</a>
-                        </h5>
-                        <p className="price">$99.50</p>
-                        <ul className="reviews">
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li>
-                            <i className="ti-star" />
-                          </li>
-                          <li>
-                            <i className="ti-star" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End Single Post */}
-                    {/* Single Post */}
-                    <div className="single-post first">
-                      <div className="image">
-                        <img src="https://via.placeholder.com/75x75" alt="#" />
-                      </div>
-                      <div className="content">
-                        <h5>
-                          <a href="#">Women Clothings</a>
-                        </h5>
-                        <p className="price">$99.50</p>
-                        <ul className="reviews">
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li>
-                            <i className="ti-star" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End Single Post */}
-                    {/* Single Post */}
-                    <div className="single-post first">
-                      <div className="image">
-                        <img src="https://via.placeholder.com/75x75" alt="#" />
-                      </div>
-                      <div className="content">
-                        <h5>
-                          <a href="#">Man Tshirt</a>
-                        </h5>
-                        <p className="price">$99.50</p>
-                        <ul className="reviews">
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                          <li className="yellow">
-                            <i className="ti-star" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End Single Post */}
-                  </div>
+
                   {/*/ End Single Widget */}
                   {/* Single Widget */}
-                  <div className="single-widget category">
-                    <h3 className="title">Manufacturers</h3>
-                    <ul className="categor-list">
-                      <li>
-                        <a href="#">Forever</a>
-                      </li>
-                      <li>
-                        <a href="#">giordano</a>
-                      </li>
-                      <li>
-                        <a href="#">abercrombie</a>
-                      </li>
-                      <li>
-                        <a href="#">ecko united</a>
-                      </li>
-                      <li>
-                        <a href="#">zara</a>
-                      </li>
-                    </ul>
-                  </div>
+
                   {/*/ End Single Widget */}
                 </div>
               </div>
@@ -348,7 +237,7 @@ class AllListShop extends Component {
                               <i className="fa fa-th-large" />
                             </a>
                           </li>
-                          <li className="active">
+                          {/* <li className="active">
                             <a
                               onClick={() =>
                                 this.setState({ list: !this.state.list })
@@ -356,7 +245,7 @@ class AllListShop extends Component {
                             >
                               <i className="fa fa-th-list" />
                             </a>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                       {/*/ End Shop Top */}

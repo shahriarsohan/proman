@@ -45,6 +45,7 @@ class Login extends Component {
     if (this.props.router) {
       this.setState({
         redirectUrl: this.props.router.query.redirectURL,
+        size: this.props.router?.query?.size,
       });
     }
 
@@ -86,6 +87,7 @@ class Login extends Component {
           pk: this.props.data.data.pk,
           phoneNumber: this.state.phoneNumber,
           redirect: this.state.redirectUrl,
+          size: this.state.size,
         },
         asPath: "main",
       });

@@ -33,7 +33,7 @@ const options = {
   transition: transitions.SCALE,
 };
 const tagManagerArgs = {
-  gtmId: "GTM-5Z49FCZ",
+  gtmId: "GTM-MWV9ZC7",
 };
 
 function MyApp({ Component, pageProps }) {
@@ -42,6 +42,17 @@ function MyApp({ Component, pageProps }) {
     mixpanel.init("1c4b3e842cad38093bba2bd16d1b14cf");
     mixpanel.track("User initiate");
     TagManager.initialize(tagManagerArgs);
+    // ReactPixel.init("407862071065348");
+    import("react-facebook-pixel")
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init("166661055628939");
+        ReactPixel.pageView();
+
+        Router.events.on("routeChangeComplete", () => {
+          ReactPixel.pageView();
+        });
+      });
   }, []);
 
   const authCheckState = () => {
@@ -68,7 +79,7 @@ function MyApp({ Component, pageProps }) {
       <AlertProvider template={AlertTemplate} {...options}>
         <Head>
           <link rel="shortcut icon" href="/favicon.ico" />
-          <title>Promen || Pure Men Fashion</title>
+          <title>Proman || Pure Men Fashion</title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"

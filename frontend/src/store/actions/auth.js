@@ -75,7 +75,7 @@ export const otpSend = (phoneNumber) => (dispatch) => {
   });
 
   axios
-    .post("http://127.0.0.1:8000/phone_login/generate/", {
+    .post("https://proman.com.bd/api/phone_login/generate/", {
       phone_number: phoneNumber,
     })
     .then((res) => {
@@ -93,13 +93,13 @@ export const otpSend = (phoneNumber) => (dispatch) => {
 };
 
 export const otpVerify = (data, router) => (dispatch) => {
-  //console.log(router);
+  console.log("router", router);
   dispatch({
     type: AUTH_START,
   });
 
   axios
-    .post("http://127.0.0.1:8000/phone_login/validate/", data)
+    .post("https://proman.com.bd/api/phone_login/validate/", data)
     .then((res) => {
       const token = res.data.token;
       const status = res.data.status;
@@ -115,7 +115,12 @@ export const otpVerify = (data, router) => (dispatch) => {
       console.log("setToken", setToken);
       if (status === 200) {
         if (router.query.redirect) {
-          router.push(router.query.redirect);
+          router.push({
+            pathname: router.query.redirect,
+            query: {
+              size: router.query.size,
+            },
+          });
         } else {
           router.push("/");
         }
@@ -125,7 +130,6 @@ export const otpVerify = (data, router) => (dispatch) => {
       dispatch(authFail(err));
     });
 };
-
 export const authCheckState = () => {
   return (dispatch) => {
     const token = localStorage.getItem("access_token");

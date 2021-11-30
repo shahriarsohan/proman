@@ -53,7 +53,7 @@ class AllListShop extends Component {
     //console.log("loading prod");
     axios
       .get(
-        `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
+        `https://proman.com.bd/api/v1/products/product-filter-cat/?limit=${this.state.limit}&offset=${this.state.offset}`,
         {
           params: {
             query: this.state.query,

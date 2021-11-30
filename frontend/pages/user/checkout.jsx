@@ -17,6 +17,7 @@ import {
 } from "semantic-ui-react";
 import axios from "axios";
 import Link from "next/link";
+import { withAlert } from "react-alert";
 
 // import { Form } from "react-bootstrap";
 import { withRouter } from "next/router";
@@ -46,29 +47,20 @@ const region = [
 ];
 
 const countryOptions = [
-  { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-  { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
-  { key: "al", value: "al", flag: "al", text: "Albania" },
-  { key: "dz", value: "dz", flag: "dz", text: "Algeria" },
-  { key: "as", value: "as", flag: "as", text: "American Samoa" },
-  { key: "ad", value: "ad", flag: "ad", text: "Andorra" },
-  { key: "ao", value: "ao", flag: "ao", text: "Angola" },
-  { key: "ai", value: "ai", flag: "ai", text: "Anguilla" },
-  { key: "ag", value: "ag", flag: "ag", text: "Antigua" },
-  { key: "ar", value: "ar", flag: "ar", text: "Argentina" },
-  { key: "am", value: "am", flag: "am", text: "Armenia" },
-  { key: "aw", value: "aw", flag: "aw", text: "Aruba" },
-  { key: "au", value: "au", flag: "au", text: "Australia" },
-  { key: "at", value: "at", flag: "at", text: "Austria" },
-  { key: "az", value: "az", flag: "az", text: "Azerbaijan" },
-  { key: "bs", value: "bs", flag: "bs", text: "Bahamas" },
-  { key: "bh", value: "bh", flag: "bh", text: "Bahrain" },
-  { key: "bd", value: "bd", flag: "bd", text: "Bangladesh" },
-  { key: "bb", value: "bb", flag: "bb", text: "Barbados" },
-  { key: "by", value: "by", flag: "by", text: "Belarus" },
-  { key: "be", value: "be", flag: "be", text: "Belgium" },
-  { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-  { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+  { key: "Afghanistan", value: "Afghanistan", text: "Afghanistan" },
+  { key: "Aland Islands", value: "Aland Islands", text: "Aland Islands" },
+  { key: "Albania", value: "Albania", text: "Albania" },
+  { key: "Algeria", value: "Algeria", text: "Algeria" },
+  { key: "American Samoa", value: "American Samoa", text: "American Samoa" },
+  { key: "Andorra", value: "Andorra", text: "Andorra" },
+  { key: "Angola", value: "Angola", text: "Angola" },
+  { key: "Anguilla", value: "Anguilla", text: "Anguilla" },
+  { key: "Antigua", value: "Antigua", text: "Antigua" },
+  { key: "Argentina", value: "Argentina", text: "Argentina" },
+  { key: "Argentina", value: "Argentina", text: "Argentina" },
+  { key: "Aruba", value: "Aruba", text: "Aruba" },
+  { key: "Australia", value: "Australia", text: "Australia" },
+  { key: "Austria", value: "Austria", text: "Austria" },
 ];
 
 class checkout extends Component {
@@ -78,9 +70,9 @@ class checkout extends Component {
     errorMessage: null,
 
     shipping_address: {},
-
+    updated: false,
     user_have_address: null,
-
+    error: "",
     f_name: "",
     l_name: "",
     region: "",
@@ -91,9 +83,9 @@ class checkout extends Component {
     email: "",
     street_address: "",
     city_options: [
-      { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-      { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
-      { key: "al", value: "al", flag: "al", text: "Albania" },
+      { key: "Afghanistan", value: "Afghanistan", text: "Afghanistan" },
+      { key: "Aland Islands", value: "Aland Islands", text: "Aland Islands" },
+      { key: "Albania", value: "Albania", text: "Albania" },
     ],
 
     sub_total_amount: 0,
@@ -105,6 +97,8 @@ class checkout extends Component {
     lol: "",
     isMobile: null,
     isBrowser: null,
+    shippingUpdated: "",
+    newsletteragree: false,
   };
 
   componentDidMount() {
@@ -134,14 +128,19 @@ class checkout extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/create-new-order", data, config)
+      .post(
+        "https://proman.com.bd/api/v1/orders/create-new-order",
+        data,
+        config
+      )
       .then((res) => {
         this.setState({ lol: "data" }, () => {
           this.checkUserAddress();
         });
       })
       .catch((err) => {
-        //console.log(err);
+        // console.log(err);
+        this.setState({ loading: false, error: err.response.data.msg });
       });
   };
 
@@ -153,7 +152,7 @@ class checkout extends Component {
     };
     this.setState({ loading: true });
     axios
-      .get("http://127.0.0.1:8000/v1/address/user-address", config)
+      .get("https://proman.com.bd/api/v1/address/user-address", config)
       .then((res) => {
         if (!res.data.user_have_address) {
           this.props.router.push({
@@ -173,6 +172,12 @@ class checkout extends Component {
             () => this.assosiateAddressToOrder()
           );
         }
+      })
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          error: err.response.data?.msg,
+        });
       });
   };
 
@@ -188,13 +193,22 @@ class checkout extends Component {
     };
 
     axios
-      .post("http://127.0.0.1:8000/v1/orders/assosiate-to-order", data, config)
+      .post(
+        "https://proman.com.bd/api/v1/orders/assosiate-to-order",
+        data,
+        config
+      )
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.updateDeliveryCharge()
         )
       )
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          error: err.response.data?.msg,
+        });
+      });
   };
 
   updateDeliveryCharge = () => {
@@ -209,16 +223,22 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://127.0.0.1:8000/v1/orders/update-shipping-charge",
+        "https://proman.com.bd/api/v1/orders/update-shipping-charge",
         data,
         config
       )
       .then((res) =>
-        this.setState({ error: null, loading: false }, () =>
-          this.updateOrderTotal()
+        this.setState(
+          { error: null, loading: false, shippingUpdated: res.data.msg },
+          () => this.updateOrderTotal()
         )
       )
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          error: err.response.data?.msg,
+        });
+      });
   };
 
   updateOrderTotal = () => {
@@ -232,13 +252,22 @@ class checkout extends Component {
       some: "thing",
     };
     axios
-      .post("http://127.0.0.1:8000/v1/orders/update-order-total", data, config)
+      .post(
+        "https://proman.com.bd/api/v1/orders/update-order-total",
+        data,
+        config
+      )
       .then((res) =>
         this.setState({ error: null, loading: false }, () =>
           this.getOrderPricing()
         )
       )
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          error: err.response.data?.msg,
+        });
+      });
   };
 
   getOrderPricing = () => {
@@ -253,7 +282,7 @@ class checkout extends Component {
     };
     axios
       .post(
-        "http://127.0.0.1:8000/v1/orders/order-pricing-details",
+        "https://proman.com.bd/api/v1/orders/order-pricing-details",
         data,
         config
       )
@@ -265,7 +294,12 @@ class checkout extends Component {
           shipping_charge: res.data.shipping_charge,
         })
       )
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          error: err.response.data?.msg,
+        });
+      });
   };
 
   onChangeRegion = (e, data) => {
@@ -275,9 +309,13 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "be", value: "be", flag: "be", text: "Belgium" },
-              { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-              { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+              { key: "Afghanistan", value: "Afghanistan", text: "Afghanistan" },
+              {
+                key: "Aland Islands",
+                value: "Aland Islands",
+                text: "Aland Islands",
+              },
+              { key: "Albania", value: "Albania", text: "Albania" },
             ],
           },
           () => {
@@ -289,7 +327,7 @@ class checkout extends Component {
 
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -297,9 +335,10 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
-                  msg: response.data.msg,
+                  // msg: response.data.msg,
                   shipping_charge: 60,
                   modalLoading: false,
+                  updated: true,
                 });
               });
           }
@@ -308,9 +347,13 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "be", value: "be", flag: "be", text: "Belgium" },
-              { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-              { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+              { key: "Algeria", value: "Algeria", text: "Algeria" },
+              {
+                key: "American Samoa",
+                value: "American Samoa",
+                text: "American Samoa",
+              },
+              { key: "Andorra", value: "Andorra", text: "Andorra" },
             ],
           },
           () => {
@@ -321,7 +364,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -329,9 +372,10 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
-                  msg: response.data.msg,
-                  shipping_charge: 150,
+                  // msg: response.data.msg,
+                  shipping_charge: 100,
                   modalLoading: false,
+                  updated: true,
                 });
               });
           }
@@ -340,9 +384,9 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "be", value: "be", flag: "be", text: "Belgium" },
-              { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-              { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+              { key: "Angola", value: "Angola", text: "Angola" },
+              { key: "Anguilla", value: "Anguilla", text: "Anguilla" },
+              { key: "Antigua", value: "Antigua", text: "Antigua" },
             ],
           },
           () => {
@@ -353,7 +397,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -361,8 +405,9 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
+                  updatedShipping: true,
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 100,
                   modalLoading: false,
                 });
               });
@@ -372,9 +417,9 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "be", value: "be", flag: "be", text: "Belgium" },
-              { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-              { key: "bj", value: "bj", flag: "bj", text: "Benin" },
+              { key: "Argentina", value: "Argentina", text: "Argentina" },
+              { key: "Argentina", value: "Argentina", text: "Argentina" },
+              { key: "Aruba", value: "Aruba", text: "Aruba" },
             ],
           },
           () => {
@@ -385,7 +430,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -393,8 +438,9 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
+                  updatedShipping: true,
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 100,
                   modalLoading: false,
                 });
               });
@@ -404,9 +450,9 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "ad", value: "ad", flag: "ad", text: "Andorra" },
-              { key: "ao", value: "ao", flag: "ao", text: "Angola" },
-              { key: "ai", value: "ai", flag: "ai", text: "Anguilla" },
+              { key: "Aruba", value: "Aruba", text: "Aruba" },
+              { key: "Australia", value: "Australia", text: "Australia" },
+              { key: "Austria", value: "Austria", text: "Austria" },
             ],
           },
           () => {
@@ -417,7 +463,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -425,8 +471,9 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
+                  updatedShipping: true,
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 100,
                   modalLoading: false,
                 });
               });
@@ -436,10 +483,11 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "bh", value: "bh", flag: "bh", text: "Bahrain" },
-              { key: "bd", value: "bd", flag: "bd", text: "Bangladesh" },
-              { key: "bb", value: "bb", flag: "bb", text: "Barbados" },
-              { key: "by", value: "by", flag: "by", text: "Belarus" },
+              { key: "Andorra", value: "Andorra", text: "Andorra" },
+              { key: "Angola", value: "Angola", text: "Angola" },
+              { key: "Anguilla", value: "Anguilla", text: "Anguilla" },
+              { key: "Antigua", value: "Antigua", text: "Antigua" },
+              { key: "Argentina", value: "Argentina", text: "Argentina" },
             ],
           },
           () => {
@@ -450,7 +498,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -458,8 +506,9 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
+                  updatedShipping: true,
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 100,
                   modalLoading: false,
                 });
               });
@@ -469,8 +518,9 @@ class checkout extends Component {
         this.setState(
           {
             city_options: [
-              { key: "az", value: "az", flag: "az", text: "Azerbaijan" },
-              { key: "bs", value: "bs", flag: "bs", text: "Bahamas" },
+              { key: "Aruba", value: "Aruba", text: "Aruba" },
+              { key: "Australia", value: "Australia", text: "Australia" },
+              { key: "Austria", value: "Austria", text: "Austria" },
             ],
           },
           () => {
@@ -481,7 +531,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -489,8 +539,9 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
+                  updatedShipping: true,
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 100,
                   modalLoading: false,
                 });
               });
@@ -512,7 +563,7 @@ class checkout extends Component {
             };
             axios
               .post(
-                "http://127.0.0.1:8000/v1/orders/update-shipping",
+                "https://proman.com.bd/api/v1/orders/update-shipping",
                 {
                   region: data.value,
                 },
@@ -520,8 +571,9 @@ class checkout extends Component {
               )
               .then((response) => {
                 this.setState({
+                  updatedShipping: true,
                   msg: response.data.msg,
-                  shipping_charge: 120,
+                  shipping_charge: 100,
                   modalLoading: false,
                 });
               });
@@ -535,7 +587,7 @@ class checkout extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
-    //console.log(this.state.modalLoading);
+    const alert = this.props.alert;
     return (
       <>
         <NavbarDetailsPage
@@ -626,6 +678,11 @@ class checkout extends Component {
                     action="#"
                   >
                     <h3>Personal Information</h3>
+                    {this.state.updated && (
+                      <div className="text-center text-capitalize">
+                        <Message positive>Shipping Charge Updated</Message>
+                      </div>
+                    )}
                     <div className="row">
                       <div className="col-lg-6 col-md-6 col-sm-6">
                         <div className="form-group">
@@ -666,20 +723,8 @@ class checkout extends Component {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-6 col-md-6 col-6">
-                        <div className="form-group">
-                          <Field
-                            as={Form.Input}
-                            fluid
-                            value={values.alternate_phone_number}
-                            onChange={handleChange("alternate_phone_number")}
-                            label="Alternate Phone Number"
-                            name="alternate_phone_number"
-                            placeholder="Alternate Phone Number"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6 col-6">
+
+                      <div className="col-lg-12 col-md-12 col-12">
                         <div className="form-group">
                           <Field
                             as={Form.Input}
@@ -692,8 +737,21 @@ class checkout extends Component {
                           />
                         </div>
                       </div>
-                      <h3>Enter Proper Addresses</h3>
-                      <div className="col-lg-4 col-md-4 col-4">
+                      <div className="p-2">
+                        <input
+                          onChange={() =>
+                            this.setState({
+                              newsletteragree: !this.state.newsletteragree,
+                            })
+                          }
+                          className="agree-checkbox"
+                          type="checkbox"
+                        />
+                        Send me excluside offer and new design every week
+                      </div>
+
+                      <h5>Enter Proper Addresses</h5>
+                      <div className="col-lg-6 col-md-6 col-6">
                         <Dropdown
                           placeholder="Select Region"
                           fluid
@@ -703,7 +761,7 @@ class checkout extends Component {
                           options={region}
                         />
                       </div>
-                      <div className="col-lg-4 col-md-4 col-4">
+                      <div className="col-lg-6 col-md-6 col-6">
                         <Dropdown
                           placeholder="Select City"
                           fluid
@@ -712,7 +770,7 @@ class checkout extends Component {
                           options={this.state.city_options}
                         />
                       </div>
-                      <div className="col-lg-4 col-md-4 col-4">
+                      <div className="col-12 mt-4">
                         <Dropdown
                           placeholder="Select Area"
                           fluid
@@ -800,7 +858,6 @@ class checkout extends Component {
             </Button>
           </Modal.Actions>
         </Modal>
-
         <section className="shop checkout section">
           <div className="container mt-4">
             {this.state.loading ? (
@@ -828,12 +885,13 @@ class checkout extends Component {
                           <div className="col-md-6 col-6">
                             <p>Shipping Address</p>
                             <ul style={{ listStylePosition: "inside" }}>
+                              {/* <Link href/</ul>="/profile/address"> */}
                               <li
-                                onClick={() => {
-                                  this.setState({
-                                    openAddressEditModal: true,
-                                  });
-                                }}
+                                // onClick={() => {
+                                //   this.setState({
+                                //     openAddressEditModal: true,
+                                //   });
+                                // }}
                                 className="p-4 address-box"
                               >
                                 {this.state.shipping_address.l_name ? (
@@ -870,6 +928,7 @@ class checkout extends Component {
                               </button> */}
                                 </div>
                               </li>
+                              {/* </Link> */}
                             </ul>
                           </div>
                           <div className="col-md-6 col-6 ">
@@ -892,12 +951,18 @@ class checkout extends Component {
                       </div>
                     </div>
                   ) : (
-                    <>
+                    <div className="text-center text-capitalize">
                       <Message
-                        header="Changes in Service"
-                        content="We updated our privacy policy here to better service our customers. We recommend reviewing the changes."
+                        negative
+                        header="Something went wrong"
+                        content={this.state.error}
                       />
-                    </>
+                    </div>
+                  )}
+                  {this.state.updated && (
+                    <Message positive floating>
+                      Delivery charge updated
+                    </Message>
                   )}
                 </div>
                 <div className="col-lg-5 col-12">
@@ -987,8 +1052,18 @@ class checkout extends Component {
                         className="agree-checkbox"
                         type="checkbox"
                       />
-                      I Read and agree to the Terms & Conditions,Privacy Policy
-                      and Return Refund Policy
+                      I Read and agree to the{" "}
+                      <a href="/terms-and-condition" target="_blank">
+                        Terms & Conditions
+                      </a>
+                      ,{" "}
+                      <a href="/privacy-policy" target="_blank">
+                        Privacy Policy
+                      </a>{" "}
+                      and{" "}
+                      <a href="/refund-and-return" target="_blank">
+                        Return Refund Policy
+                      </a>
                     </div>
 
                     <div className="single-widget get-button">
@@ -1012,7 +1087,6 @@ class checkout extends Component {
             )}
           </div>
         </section>
-
         <Service />
         <NewsLetter />
         <Footer />
@@ -1022,4 +1096,4 @@ class checkout extends Component {
   }
 }
 
-export default withRouter(checkout);
+export default withRouter(withAlert()(checkout));

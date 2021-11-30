@@ -1110,6 +1110,12 @@ table th[class*="col-"] {
 
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300");
 @import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+/* @import url("https://proman-production.s3.ap-south-1.amazonaws.com/Blanka-Regular.otf"); */
+
+@font-face {
+  font-family: Blanka;
+  src: url(/fonts/Blanka-Regular.otf);
+}
 
 input[data-function*="swipe"] {
   position: absolute;
@@ -1319,6 +1325,7 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   right: 0;
   width: 100%;
   background-color: var(--white);
+  box-shadow: 0 2px 4px 0 hsl(0deg 0% 88% / 50%);
 }
 
 .search-bar {
@@ -4355,7 +4362,8 @@ input[data-function*="swipe"]:checked ~ .sidebar .menu li {
   z-index: 1000;
   max-height: 56px;
   text-align: center;
-  border-bottom: 1px solid #a2a2a2;
+  /* border-bottom: 1px solid #a2a2a2; */
+  box-shadow: 0 2px 4px 0 hsl(0deg 0% 88% / 50%);
   background: #fff;
 }
 
@@ -5432,4 +5440,178 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* terms */
+/* @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap"); */
+
+.title-mobile {
+  font-size: 18px;
+  color: #08d9d6;
+  font-family: Arial;
+  cursor: pointer;
+  padding-top: 30px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #6d6f79;
+  font-family: Arial;
+  cursor: pointer;
+}
+
+a:hover {
+  font-size: 16px;
+  color: #9598a7;
+}
+
+.card {
+  /* margin-top: 100px; */
+  margin-bottom: 100px;
+  /* height: 1950px;
+  width: 1200px; */
+  border-radius: 10px;
+  /* background-color: #333541; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card .primary-heading {
+  text-align: center;
+  font-family: josefin sans;
+  color: #08d9d6;
+  padding-top: 50px;
+  font-size: 4em;
+}
+
+.paragraph {
+  /* font-family: josefin sans; */
+  color: rgb(65, 65, 65);
+  margin-left: 50px;
+  margin-right: 25px;
+  padding-top: 50px;
+  font-size: 1em;
+  /* line-height: 1.3em; */
+  /* font-weight: 500; */
+}
+
+.bold {
+  font-weight: 700;
+  color: #08d9d6;
+}
+
+@media only screen and (max-width: 1218px) {
+  .card {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+    height: 2050px;
+    width: 1000px;
+    border-radius: 30px;
+    /* background-color: #333541; */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (max-width: 1012px) {
+  .card {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+    height: 2350px;
+    width: 800px;
+    border-radius: 30px;
+    /* background-color: #333541; */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (max-width: 832px) {
+  .card {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+    height: 2950px;
+    width: 600px;
+    border-radius: 30px;
+    /* background-color: #333541; */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .card .primary-heading {
+    font-size: 3.5em;
+  }
+
+  .footer-heading {
+    font-size: 1.5em;
+  }
+}
+
+@media only screen and (max-width: 626px) {
+  .card {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+    height: 3850px;
+    width: 450px;
+    border-radius: 30px;
+    /* background-color: #333541; */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .header-mobile {
+    display: block;
+  }
+
+  .main-header {
+    display: none;
+  }
+
+  .card .primary-heading {
+    font-size: 3em;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .card {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+    height: 5050px;
+    width: 350px;
+    border-radius: 30px;
+    /* background-color: #333541; */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card .primary-heading {
+    font-size: 2em;
+  }
+}
+
+@media only screen and (max-width: 365px) {
+  .card {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+    height: 6300px;
+    width: 290px;
+    border-radius: 30px;
+    background-color: #333541;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card .primary-heading {
+    font-size: 2em;
+  }
+}
+/* close terms */
+
+.logo-text {
+  font-family: "Blanka";
+}
+
+.deals-bg {
+  text-align: center;
+  margin-top: 50px;
 }

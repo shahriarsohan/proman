@@ -57,6 +57,11 @@ class DetailsPage extends Component {
   componentWillMount() {
     console.log("component will mount");
     axios.get("products/new-products");
+    if (this.props.router) {
+      this.setState({
+        size: this.props.router.query.size,
+      });
+    }
   }
 
   componentDidMount() {
@@ -197,6 +202,7 @@ class DetailsPage extends Component {
       pathname: "/user/login/",
       query: {
         redirectURL: this.props.router.asPath,
+        size: this.state.size,
       },
       asPath: "main",
     });
@@ -694,7 +700,7 @@ class DetailsPage extends Component {
                             <a href="#">{details.products.category}</a>
                           </p>
                           <p className="availability">
-                            Availability : 180 Products In Stock
+                            Availability : Few Products In Stock
                           </p>
                           <div className="details-page-more-details">
                             <img
@@ -774,7 +780,7 @@ class DetailsPage extends Component {
                                           >
                                             REGULAR FIT
                                           </h5>
-                                          <p>
+                                          <p style={{ color: "#0e0e0eab" }}>
                                             Fits just right - not too tight, not
                                             too loose.
                                           </p>
@@ -785,12 +791,16 @@ class DetailsPage extends Component {
                                               color: "rgba(14,14,14,.67)",
                                             }}
                                           >
-                                            180 GSM SJ COTTON, 100% COTTON
+                                            PRODUCT DESCRIPTION
                                           </h5>
-                                          <p>
-                                            Single Jersey, 100% Cotton,Classic,
-                                            lightweight <br /> jersey fabric
-                                            comprising 100% cotton.
+                                          <p style={{ color: "#0e0e0eab" }}>
+                                            Layer up this Winter season with
+                                            Poman. <br />
+                                            Style these cloth's with a pair of
+                                            pants and sneakers for a smart look.
+                                            <br />
+                                            Ditch the heater, your outfit's
+                                            gonna create enough heat!
                                           </p>
                                         </div>
                                         <div className="wash-info">
@@ -799,11 +809,10 @@ class DetailsPage extends Component {
                                               color: "rgba(14,14,14,.67)",
                                             }}
                                           >
-                                            REGULAR FIT
+                                            100% PURE MERCELINE
                                           </h5>
-                                          <p>
-                                            Fits just right - not too tight, not
-                                            too loose.
+                                          <p style={{ color: "#0e0e0eab" }}>
+                                            Soft & Durable
                                           </p>
                                         </div>
                                       </div>
@@ -915,55 +924,11 @@ class DetailsPage extends Component {
                             <div className="tab-single review-panel">
                               <div className="row">
                                 <div className="col-12">
-                                  <div className="ratting-main">
-                                    <div className="avg-ratting">
-                                      <h4>
-                                        4.5 <span>(Overall)</span>
-                                      </h4>
-                                      <span>Based on 1 Comments</span>
-                                    </div>
-                                    {/* Single Rating */}
-                                    <div className="single-rating">
-                                      {/* <div className="rating-author">
-                            <img
-                              src="https://via.placeholder.com/200x200"
-                              alt="#"
-                            />
-                          </div> */}
-                                      <div className="rating-des">
-                                        <h6>Naimur Rahman</h6>
-                                        <div className="ratings">
-                                          <ul className="rating">
-                                            <li>
-                                              <i className="fa fa-star" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star-half-o" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star-o" />
-                                            </li>
-                                          </ul>
-                                          <div className="rate-count">
-                                            (<span>3.5</span>)
-                                          </div>
-                                        </div>
-                                        <p>
-                                          Duis tincidunt mauris ac aliquet
-                                          congue. Donec vestibulum consequat
-                                          cursus. Aliquam pellentesque nulla
-                                          dolor, in imperdiet.
-                                        </p>
-                                      </div>
-                                    </div>
-                                    {/*/ End Single Rating */}
-                                    {/* Single Rating */}
+                                  <div className="size-chart-img">
+                                    <img
+                                      src="/images/WIDTH.png"
+                                      alt="size-chart"
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -1446,7 +1411,7 @@ class DetailsPage extends Component {
                                           >
                                             REGULAR FIT
                                           </h5>
-                                          <p>
+                                          <p style={{ color: "#0e0e0eab" }}>
                                             Fits just right - not too tight, not
                                             too loose.
                                           </p>
@@ -1457,12 +1422,16 @@ class DetailsPage extends Component {
                                               color: "rgba(14,14,14,.67)",
                                             }}
                                           >
-                                            180 GSM SJ COTTON, 100% COTTON
+                                            PRODUCT DESCRIPTION
                                           </h5>
-                                          <p>
-                                            Single Jersey, 100% Cotton,Classic,
-                                            lightweight <br /> jersey fabric
-                                            comprising 100% cotton.
+                                          <p style={{ color: "#0e0e0eab" }}>
+                                            Layer up this Winter season with
+                                            Poman. <br />
+                                            Style these cloth's with a pair of
+                                            pants and sneakers for a smart look.
+                                            <br />
+                                            Ditch the heater, your outfit's
+                                            gonna create enough heat!
                                           </p>
                                         </div>
                                         <div className="wash-info">
@@ -1471,11 +1440,10 @@ class DetailsPage extends Component {
                                               color: "rgba(14,14,14,.67)",
                                             }}
                                           >
-                                            REGULAR FIT
+                                            100% PURE MERCELINE
                                           </h5>
-                                          <p>
-                                            Fits just right - not too tight, not
-                                            too loose.
+                                          <p style={{ color: "#0e0e0eab" }}>
+                                            Soft & Durable
                                           </p>
                                         </div>
                                       </div>
@@ -1587,55 +1555,11 @@ class DetailsPage extends Component {
                             <div className="tab-single review-panel">
                               <div className="row">
                                 <div className="col-12">
-                                  <div className="ratting-main">
-                                    <div className="avg-ratting">
-                                      <h4>
-                                        4.5 <span>(Overall)</span>
-                                      </h4>
-                                      <span>Based on 1 Comments</span>
-                                    </div>
-                                    {/* Single Rating */}
-                                    <div className="single-rating">
-                                      {/* <div className="rating-author">
-                            <img
-                              src="https://via.placeholder.com/200x200"
-                              alt="#"
-                            />
-                          </div> */}
-                                      <div className="rating-des">
-                                        <h6>Naimur Rahman</h6>
-                                        <div className="ratings">
-                                          <ul className="rating">
-                                            <li>
-                                              <i className="fa fa-star" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star-half-o" />
-                                            </li>
-                                            <li>
-                                              <i className="fa fa-star-o" />
-                                            </li>
-                                          </ul>
-                                          <div className="rate-count">
-                                            (<span>3.5</span>)
-                                          </div>
-                                        </div>
-                                        <p>
-                                          Duis tincidunt mauris ac aliquet
-                                          congue. Donec vestibulum consequat
-                                          cursus. Aliquam pellentesque nulla
-                                          dolor, in imperdiet.
-                                        </p>
-                                      </div>
-                                    </div>
-                                    {/*/ End Single Rating */}
-                                    {/* Single Rating */}
+                                  <div className="size-chart-img">
+                                    <img
+                                      src="/images/WIDTH.png"
+                                      alt="size-chart"
+                                    />
                                   </div>
                                 </div>
                               </div>

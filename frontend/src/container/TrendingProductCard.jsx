@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -126,13 +127,15 @@ class TrendingProductCard extends Component {
             <div className="product-img">
               <Link href={`/details/${this.props.slug}`}>
                 <a>
-                  <img
+                  <Image
                     className="default-img"
                     src={
                       this.props.thumbnail
                         ? `${this.props.thumbnail}`
                         : "https://via.placeholder.com/550x750"
                     }
+                    height="500"
+                    width="400"
                     alt={this.props.name}
                   />
 

@@ -59,16 +59,15 @@ class NavbarTwo extends React.Component {
             >
               <div className="sinlge-bar shopping">
                 <a
-                  onClick={() => this.props.openSideBarCart()}
+                  onClick={() => this.props.openSideBar()}
                   className="single-icon"
                 >
                   <img
                     width="30px"
                     height="30px"
-                    src="/images/cart-nav.png"
+                    src="/images/hamburger-menu.png"
                     alt="logo"
                   />
-                  <span className="total-count">{cart.length}</span>
                 </a>
               </div>
 
@@ -118,7 +117,9 @@ class NavbarTwo extends React.Component {
                         </li>
                         <li>
                           <i className="ti-alarm-clock" />{" "}
-                          <a href="#">Daily deal</a>
+                          <Link href="/daily-deals">
+                            <a>Daily deal</a>
+                          </Link>
                         </li>
                         <li>
                           <i className="ti-user" /> <a href="#">My account</a>

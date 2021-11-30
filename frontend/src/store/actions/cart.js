@@ -22,7 +22,7 @@ export const fetchUserOrder = () => (dispatch) => {
   axios
     .get("cart/user-cart")
     .then((res) => {
-      //console.log(res.data);
+      console.log(res.data);
       dispatch(fetchUserCartPricing());
       dispatch({
         type: FETCH_USER_CART,
@@ -82,8 +82,8 @@ export const handleComboAddToCart = (data) => (dispatch) => {
   });
 };
 
-export const handleDeleteFromCart = (data) => (dispatch) => {
-  console.log(data);
+export const handleDeleteFromCart = (data, alert) => (dispatch) => {
+  console.log("alert", alert);
   dispatch({
     type: DELETE_FROM_CART_START,
   });

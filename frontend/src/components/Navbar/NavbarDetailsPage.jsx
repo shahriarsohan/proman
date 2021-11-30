@@ -10,6 +10,8 @@ import {
   closeSideBarCart,
   openSideBarCart,
 } from "../../store/actions/cartSideBar";
+import { closeSideBar, openSideBar } from "../../store/actions/sideBar";
+
 import Cart from "../SideCart/Cart";
 import SideNav from "./SideNav";
 
@@ -64,16 +66,15 @@ class NavbarDetails extends React.Component {
 
             <div className="sinlge-bar shopping">
               <a
-                onClick={() => this.props.openSideBarCart()}
+                onClick={() => this.props.openSideBar()}
                 className="single-icon"
               >
                 <img
                   width="30px"
                   height="30px"
-                  src="/images/cart-nav.png"
+                  src="/images/hamburger-menu.png"
                   alt="logo"
                 />
-                <span className="total-count">{cart.length}</span>
               </a>
             </div>
           </div>
@@ -89,13 +90,13 @@ class NavbarDetails extends React.Component {
                       <ul className="list-main">
                         <li>
                           <a href="tel:+8801786910645">
-                            <i className="ti-headphone-alt" /> +880 (178)
-                            6910-645
+                            <i className="ti-headphone-alt" /> +88 (01309)
+                            466-923
                           </a>
                         </li>
                         <li>
                           <a href="mailto:support@proman.com.bd">
-                            <i className="ti-email" /> support@promen.clothing
+                            <i className="ti-email" /> support@promen.com.bd
                           </a>
                         </li>
                       </ul>
@@ -111,7 +112,9 @@ class NavbarDetails extends React.Component {
                     </li> */}
                         <li>
                           <i className="ti-alarm-clock" />{" "}
-                          <a href="#">Daily deal</a>
+                          <Link href="/daily-deals">
+                            <a>Daily deal</a>
+                          </Link>
                         </li>
                         <li>
                           <i className="ti-user" />{" "}
@@ -146,7 +149,7 @@ class NavbarDetails extends React.Component {
                       <div className="logo">
                         <Image
                           width="150px"
-                          height="50px"
+                          height="80px"
                           src="/images/proman-logo-two.png"
                           alt="logo"
                         />
@@ -154,27 +157,7 @@ class NavbarDetails extends React.Component {
                     </Link>
                     {/*/ End Logo */}
                     {/* Search Form */}
-                    <div className="search-top">
-                      <div className="top-search">
-                        <a href="#0">
-                          <i className="ti-search" />
-                        </a>
-                      </div>
-                      {/* Search Form */}
-                      <div className="search-top">
-                        <form className="search-form">
-                          <input
-                            type="text"
-                            placeholder="Search here..."
-                            name="search"
-                          />
-                          <button value="search" type="submit">
-                            <i className="ti-search" />
-                          </button>
-                        </form>
-                      </div>
-                      {/*/ End Search Form */}
-                    </div>
+
                     {/*/ End Search Form */}
                     <div className="mobile-nav" />
                   </div>
@@ -198,9 +181,11 @@ class NavbarDetails extends React.Component {
                     <div className="right-bar">
                       {/* Search Form */}
                       <div className="sinlge-bar">
-                        <a href="#" className="single-icon">
-                          <i className="fa fa-heart-o" aria-hidden="true" />
-                        </a>
+                        <Link href="/profile/wishlist">
+                          <a className="single-icon">
+                            <i className="fa fa-heart-o" aria-hidden="true" />
+                          </a>
+                        </Link>
                       </div>
                       <div className="sinlge-bar">
                         <a href="#" className="single-icon">
@@ -268,7 +253,7 @@ class NavbarDetails extends React.Component {
                                   </ul> */}
                                 </li>
                                 <li>
-                                  <a href="#">Product</a>
+                                  <Link href="/shop/all">Product</Link>
                                 </li>
 
                                 <li>
@@ -324,6 +309,7 @@ const mapDispatchToProps = (dispatch) => {
     openSideBarCart: () => dispatch(openSideBarCart()),
     closeSideBarCart: () => dispatch(closeSideBarCart()),
     logout: () => dispatch(logout()),
+    openSideBar: () => dispatch(openSideBar()),
   };
 };
 

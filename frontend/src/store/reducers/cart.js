@@ -29,20 +29,29 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER_CART:
+      // console.log(data);
       return {
         ...state,
         data: action.payload,
         loading: false,
       };
-    case DELETE_FROM_CART:
-      return Object.assign({}, state, {
-        data: [...state.data.filter((item) => item.id !== action.payload)],
-        loading: false,
-      });
+
     case ADD_TO_CART_START:
       return { ...state, loading: true };
     case DELETE_FROM_CART_START:
       return { ...state, loading: true };
+    case DELETE_FROM_CART:
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        data: [...state.data.filter((item) => item.id !== action.payload)],
+        loading: false,
+      });
+    case DELETE_FROM_CART_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     case ADD_TO_CART:
       return {
         ...state,

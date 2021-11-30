@@ -58,7 +58,7 @@ export default class Shop extends Component {
     const { p } = this.props;
     console.log("shooooooopp", p);
     return (
-      <section className="section container p-2 mb-5">
+      <section className="section container p-3 mb-5">
         <div className="row">
           <div className="col-12">
             <div className="section-title">

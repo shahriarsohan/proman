@@ -10,6 +10,8 @@ import HashLoader from "react-spinners/HashLoader";
 import moment from "moment";
 import BackNavbar from "../../../src/components/Navbar/BackNavbar";
 import axiosInstance from "../../../src/api/axios";
+import NavbarDetailsPage from "../../../src/components/Navbar/NavbarDetailsPage";
+import Navigation from "../../../src/components/Navigation";
 
 class success extends Component {
   state = {
@@ -23,11 +25,6 @@ class success extends Component {
   };
 
   componentWillMount() {
-    if (isMobile) {
-      this.setState({ isMobile: true, isBrowser: false });
-    } else {
-      this.setState({ isMobile: false, isBrowser: true });
-    }
     this.setState({
       query: this.props?.router?.query[Object.keys(this.props.router.query)[0]],
     });
@@ -41,6 +38,11 @@ class success extends Component {
   // }
 
   componentDidMount() {
+    if (isMobile) {
+      this.setState({ isMobile: true, isBrowser: false });
+    } else {
+      this.setState({ isMobile: false, isBrowser: true });
+    }
     this.getUserOrder();
   }
 
@@ -77,7 +79,7 @@ class success extends Component {
     console.log(date);
     return (
       <>
-        <BackNavbar isMobile={this.state.isMobile} />
+        <NavbarDetailsPage isMobile={this.state.isMobile} />
         <div className="container">
           {this.state.loading ? (
             <LoadingOverlay
@@ -91,11 +93,11 @@ class success extends Component {
                   {" "}
                   My Orders / Tracking{" "}
                 </header>
-                <div className="card-body">
+                <div className="card-body mt-5">
                   <h6 className="text-uppercase">
                     Order ID: #{userOrder.order_id}{" "}
                   </h6>
-                  <article className="card">
+                  <article className="card mt-4">
                     <div className="card-body row">
                       <div className="col">
                         {" "}
@@ -177,7 +179,6 @@ class success extends Component {
             </a> */}
                 </div>
               </article>
-
               <div className="row d-flex justify-content-center mt-70 mb-70">
                 <div className="col-md-12">
                   <div className="main-card mb-3 card-timeline">
@@ -462,6 +463,7 @@ class success extends Component {
             </>
           )}
         </div>
+        <Navigation />
       </>
     );
   }

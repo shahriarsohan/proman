@@ -20,6 +20,7 @@ class Cart extends Component {
   };
 
   componentDidMount() {
+    // console.log(this.props.alert);
     this.props.fetchCart();
     // this.getOrderPricing();
   }
@@ -27,8 +28,9 @@ class Cart extends Component {
   handleDelete = (id) => {
     const data = {
       id: id,
+      alert: this.props.alert,
     };
-    this.props.deleteItem(data, this.props.alert);
+    this.props.deleteItem(data);
   };
 
   plusQuantity = (id) => {
@@ -175,7 +177,11 @@ class Cart extends Component {
                                   </button>
                                 </span>
                                 <span className="price">
-                                  $
+                                  <img
+                                    width="15px"
+                                    height="15px"
+                                    src="/images/taka.png"
+                                  />
                                   {c.product.discount_price
                                     ? c.product.discount_price
                                     : c.product.price}

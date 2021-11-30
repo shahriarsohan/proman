@@ -40,7 +40,7 @@ class Navigation extends Component {
                 </div>
               </Link>
             </div>
-            <div className="mobile-bottom-nav__item">
+            {/* <div className="mobile-bottom-nav__item">
               <Link href="/">
                 <div className="mobile-bottom-nav__item-content">
                   <img
@@ -51,7 +51,7 @@ class Navigation extends Component {
                   />
                 </div>
               </Link>
-            </div>
+            </div> */}
             <div className="mobile-bottom-nav__item">
               <Link href="/user/cart">
                 <div className="mobile-bottom-nav__item-content">
@@ -64,35 +64,19 @@ class Navigation extends Component {
                 </div>
               </Link>
             </div>
-            {this.props.sidebar ? (
-              <div className="mobile-bottom-nav__item">
-                <div
-                  onClick={this.props.openSideBar}
-                  className="mobile-bottom-nav__item-content"
-                >
+            {/* {this.props.sidebar ? ( */}
+            <div className="mobile-bottom-nav__item">
+              <Link href="/profile/overview">
+                <div className="mobile-bottom-nav__item-content">
                   <img
                     width="30px"
                     height="30px"
-                    src="/images/hide.png"
+                    src="/images/profile.png"
                     alt=""
                   />
                 </div>
-              </div>
-            ) : (
-              <div className="mobile-bottom-nav__item">
-                <div
-                  onClick={this.props.closeSideBar}
-                  className="mobile-bottom-nav__item-content"
-                >
-                  <img
-                    width="30px"
-                    height="30px"
-                    src="/images/show.png"
-                    alt=""
-                  />
-                </div>
-              </div>
-            )}
+              </Link>
+            </div>
           </nav>
         </div>
       </div>

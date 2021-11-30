@@ -11,7 +11,11 @@ export default class Service extends Component {
               <div className="single-service">
                 <i className="ti-rocket" />
                 <h4>Free shiping</h4>
-                <p>Orders over $100</p>
+                <p>
+                  Orders over{" "}
+                  <img width="15px" height="15px" src="/images/taka.png" />
+                  1000
+                </p>
               </div>
               {/* End Single Service */}
             </div>
@@ -20,7 +24,7 @@ export default class Service extends Component {
               <div className="single-service">
                 <i className="ti-reload" />
                 <h4>Free Return</h4>
-                <p>Within 30 days returns</p>
+                <p>Within 03 days returns(C.A)</p>
               </div>
               {/* End Single Service */}
             </div>

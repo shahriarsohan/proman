@@ -16,6 +16,8 @@ import { fetchUserOrder } from "../../store/actions/cart";
 
 import { handleDeleteFromCart } from "../../store/actions/cart";
 import { openSideBarCart } from "../../store/actions/cartSideBar";
+import { closeSideBar, openSideBar } from "../../store/actions/sideBar";
+
 import SideNav from "./SideNav";
 import { logout } from "../../store/actions/auth";
 import { withRouter } from "next/router";
@@ -80,7 +82,7 @@ class Navbar extends Component {
                         </li>
                         <li>
                           <a href="mailto:support@proman.com.bd">
-                            <i className="ti-email" /> support@promen.clothing
+                            <i className="ti-email" /> support@promen.com.bd
                           </a>
                         </li>
                       </ul>
@@ -96,7 +98,9 @@ class Navbar extends Component {
                     </li> */}
                         <li>
                           <i className="ti-alarm-clock" />{" "}
-                          <a href="#">Daily deal</a>
+                          <Link href="/daily-deals">
+                            <a>Daily deal</a>
+                          </Link>
                         </li>
                         <li>
                           <i className="ti-user" />{" "}
@@ -132,7 +136,7 @@ class Navbar extends Component {
                       <div className="logo">
                         <Image
                           width="150px"
-                          height="50px"
+                          height="80px"
                           src="/images/proman-logo-two.png"
                           alt="logo"
                         />
@@ -229,12 +233,8 @@ class Navbar extends Component {
                         </h3>
                         <ul className="main-category">
                           <li>
-                            <Link href="/shop/filter/query?=best_selling">
-                              New Arrivals
-                            </Link>
-                            <Link href="/shop/filter/query?=trending">
-                              Trending
-                            </Link>
+                            <Link href="/shop/all">New Arrivals</Link>
+                            <Link href="/shop/all">Trending</Link>
                             {/* <ul className="sub-category">
                           <li>
                             <a href="#">accessories</a>
@@ -509,18 +509,15 @@ class Navbar extends Component {
               >
                 <div className="sinlge-bar shopping">
                   <a
-                    onClick={() => this.props.openSideBarCart()}
+                    onClick={() => this.props.openSideBar()}
                     className="single-icon"
                   >
                     <img
                       width="30px"
                       height="30px"
-                      src="/images/cart-nav.png"
+                      src="/images/hamburger-menu.png"
                       alt="logo"
                     />
-                    <span className="total-count">
-                      {cart === undefined ? "" : cart.length}
-                    </span>
                   </a>
                 </div>
 
@@ -568,6 +565,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteItem: (data) => dispatch(handleDeleteFromCart(data)),
     openSideBarCart: () => dispatch(openSideBarCart()),
     logout: () => dispatch(logout()),
+    openSideBar: () => dispatch(openSideBar()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

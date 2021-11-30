@@ -127,15 +127,15 @@ CORS_ORIGIN_WHITELIST = [
 
 CELERY_CACHE_BACKEND = 'default'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379',
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#         }
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -180,12 +180,12 @@ OAUTH2_PROVIDER = {
 CORS_ALLOW_CREDENTIALS = True
 
 
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'postmaster@mail.romex.com.bd	'
-EMAIL_HOST_PASSWORD = 'd02efeb5cba71c6459e46679f3062d93-e438c741-265fed91'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "please do not reply <no-reply@romex.com.bd>"
+# EMAIL_HOST = 'smtp.mailgun.org'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'postmaster@mail.romex.com.bd	'
+# EMAIL_HOST_PASSWORD = 'd02efeb5cba71c6459e46679f3062d93-e438c741-265fed91'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = "please do not reply <no-reply@romex.com.bd>"
 
 DEFAULTS = {
     'PASSWORDLESS_REGISTER_NEW_USERS': True,
@@ -248,3 +248,13 @@ AWS_LOCATION = 'static'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'passwordless.storages.MediaStore'
+
+MAILCHIMP_API_KEY = '4f0c17c2cb2a8adc112a93779473e339-us5'
+MAILCHIMP_DATA_CENTER = 'us5'
+MAILCHIMP_EMAIL_LIST_ID = '639bf71e33'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

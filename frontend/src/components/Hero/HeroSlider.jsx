@@ -7,6 +7,9 @@ import {
   openSideBarCart,
   closeSideBarCart,
 } from "../../store/actions/cartSideBar";
+import Image from "next/image";
+
+import { isMobile } from "react-device-detect";
 
 var settings = {
   dots: true,
@@ -14,6 +17,20 @@ var settings = {
 };
 
 class HeroSlider extends Component {
+  state = {
+    mobile: null,
+  };
+
+  componentDidMount() {
+    if (isMobile) {
+      this.setState({
+        mobile: true,
+      });
+    } else {
+      this.setState({ mobile: false });
+    }
+  }
+
   render() {
     //console.log(this.props.cartSideBarOpenTwo);
     return (
@@ -21,46 +38,21 @@ class HeroSlider extends Component {
         <section className="hro-slider mb-5 pb-4">
           <Slider {...settings}>
             <div>
-              <img
-                height="100%"
-                width="100%"
-                src="/images/cover-real-desktop.png"
+              <Image
+                height={this.state.mobile ? "720" : "520"}
+                width="2000"
+                src="/images/herobanner/be_cooler.png"
                 alt="proman-hero-slider-images"
               />
             </div>
-            <div>
-              <img
-                height="100%"
-                width="100%"
-                src="/images/cover/cover-real-2.png"
+            {/* <div>
+              <Image
+                height={this.state.mobile ? "720" : "520"}
+                width="2000"
+                src="/images/herobanner/proman_fb_cover.png"
                 alt="proman-hero-slider-images"
               />
-            </div>
-
-            <div>
-              <img
-                height="100%"
-                width="100%"
-                src="/images/cover/cover-real-3.png"
-                alt="proman-hero-slider-images"
-              />
-            </div>
-            <div>
-              <img
-                height="100%"
-                width="100%"
-                src="/images/cover/cover-real-4.png"
-                alt="proman-hero-slider-images"
-              />
-            </div>
-            <div>
-              <img
-                height="100%"
-                width="100%"
-                src="/images/cover/cover-real-5.png"
-                alt="proman-hero-slider-images"
-              />
-            </div>
+            </div> */}
           </Slider>
         </section>
         {this.props.cartSideBarOpenTwo && (

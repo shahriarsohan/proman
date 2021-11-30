@@ -16,31 +16,7 @@ import LiveChat from "react-livechat";
 import { Freshchat } from "reactjs-freshchat";
 import "reactjs-freshchat/dist/index.css";
 
-const countryOptions = [
-  { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-  { key: "ax", value: "ax", flag: "ax", text: "Aland Islands" },
-  { key: "al", value: "al", flag: "al", text: "Albania" },
-  { key: "dz", value: "dz", flag: "dz", text: "Algeria" },
-  { key: "as", value: "as", flag: "as", text: "American Samoa" },
-  { key: "ad", value: "ad", flag: "ad", text: "Andorra" },
-  { key: "ao", value: "ao", flag: "ao", text: "Angola" },
-  { key: "ai", value: "ai", flag: "ai", text: "Anguilla" },
-  { key: "ag", value: "ag", flag: "ag", text: "Antigua" },
-  { key: "ar", value: "ar", flag: "ar", text: "Argentina" },
-  { key: "am", value: "am", flag: "am", text: "Armenia" },
-  { key: "aw", value: "aw", flag: "aw", text: "Aruba" },
-  { key: "au", value: "au", flag: "au", text: "Australia" },
-  { key: "at", value: "at", flag: "at", text: "Austria" },
-  { key: "az", value: "az", flag: "az", text: "Azerbaijan" },
-  { key: "bs", value: "bs", flag: "bs", text: "Bahamas" },
-  { key: "bh", value: "bh", flag: "bh", text: "Bahrain" },
-  { key: "bd", value: "bd", flag: "bd", text: "Bangladesh" },
-  { key: "bb", value: "bb", flag: "bb", text: "Barbados" },
-  { key: "by", value: "by", flag: "by", text: "Belarus" },
-  { key: "be", value: "be", flag: "be", text: "Belgium" },
-  { key: "bz", value: "bz", flag: "bz", text: "Belize" },
-  { key: "bj", value: "bj", flag: "bj", text: "Benin" },
-];
+const countryOptions = [{ key: "gn", value: "general", text: "General" }];
 
 class Contact extends Component {
   state = {
@@ -139,11 +115,11 @@ class Contact extends Component {
                     <h2>Address</h2>
                   </div>
                   <div className="contact-address p-2">
-                    <p>Bewakoof Brands Pvt. Ltd.</p>
-                    <p>WeWorks Chromium,</p>
-                    <p>3rd Floor, B114-116,</p>
-                    <p>Next to L&T Flyover, Jogeshwari Vikhroli Link Road,</p>
-                    <p>Andheri (East) Mumbai, Maharashtra, 400076</p>
+                    <p>Proman Pvt. Ltd.</p>
+                    <p>Hyperion Tower</p>
+                    <p>3rd Floor, H/01, R/04</p>
+                    <p>Next to Popular Diagnostic Center, Section-10</p>
+                    <p>Mirpur ,Dhaka-1216</p>
                     <br />
                     <span style={{ marginTop: "30px" }}>
                       You can reach us at{" "}
@@ -152,11 +128,11 @@ class Contact extends Component {
                           href="mailto:care@proman.clothing"
                           style={{ fontWeight: "bold" }}
                         >
-                          care@proman.clothing
+                          care@proman.com.bd
                         </a>
                       </span>{" "}
-                      with all queries. We do not have a Bewakoof customer care
-                      number.
+                      {/* with all queries. We do not have a Bewakoof customer care
+                      number. */}
                     </span>
                   </div>
                 </div>

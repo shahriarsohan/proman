@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default class featuredcat extends Component {
   render() {
@@ -30,7 +31,12 @@ export default class featuredcat extends Component {
                             <div className="feature-box">
                               <Link href={`/shop/filter/products?cat=Movie`}>
                                 <a>
-                                  <img src="/images/movie.webp" />
+                                  <Image
+                                    width="400"
+                                    height="450"
+                                    src="/images/movie.webp"
+                                    alt="movie-category"
+                                  />
                                 </a>
                               </Link>
                             </div>
@@ -42,7 +48,12 @@ export default class featuredcat extends Component {
                             <div className="feature-box">
                               <Link href={`/shop/filter/products?cat=Game`}>
                                 <a>
-                                  <img src="/images/games.webp" />
+                                  <Image
+                                    width="400"
+                                    height="450"
+                                    src="/images/games.webp"
+                                    alt="games-category"
+                                  />
                                 </a>
                               </Link>
                             </div>
@@ -54,7 +65,12 @@ export default class featuredcat extends Component {
                             <div className="feature-box">
                               <Link href={`/shop/filter/products?cat=Life`}>
                                 <a>
-                                  <img src="/images/life.webp" />
+                                  <Image
+                                    width="400"
+                                    height="450"
+                                    src="/images/life.webp"
+                                    alt="life-category"
+                                  />
                                 </a>
                               </Link>
                             </div>
@@ -66,7 +82,12 @@ export default class featuredcat extends Component {
                             <div className="feature-box">
                               <Link href={`/shop/filter/products?cat=Sports`}>
                                 <a>
-                                  <img src="/images/sports.webp" />
+                                  <Image
+                                    width="400"
+                                    height="450"
+                                    src="/images/sports.webp"
+                                    alt="sports-category"
+                                  />
                                 </a>
                               </Link>
                             </div>
@@ -78,7 +99,12 @@ export default class featuredcat extends Component {
                             <div className="feature-box">
                               <Link href={`/shop/filter/products?cat=Trend`}>
                                 <a>
-                                  <img src="/images/trend.webp" />
+                                  <Image
+                                    width="400"
+                                    height="450"
+                                    src="/images/trend.webp"
+                                    alt="trend-category"
+                                  />
                                 </a>
                               </Link>
                             </div>
@@ -92,7 +118,12 @@ export default class featuredcat extends Component {
                                 href={`/shop/filter/products?cat=Programming`}
                               >
                                 <a>
-                                  <img src="/images/programming.webp" />
+                                  <Image
+                                    width="400"
+                                    height="450"
+                                    src="/images/programming.webp"
+                                    alt="programming-category"
+                                  />
                                 </a>
                               </Link>
                             </div>

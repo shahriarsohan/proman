@@ -1,5 +1,24 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import Image from "next/image";
+
+import Countdown from "react-countdown";
+
+const Completionist = () => <span>You are good to go!</span>;
+
+const renderer = ({ hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a complete state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <span>
+        {hours}:{minutes}:{seconds}
+      </span>
+    );
+  }
+};
 
 export default class CountDownProducts extends Component {
   state = {
@@ -31,13 +50,15 @@ export default class CountDownProducts extends Component {
               <div className="row">
                 <div className="col-lg-6 col-12 padding-right">
                   <div className="image">
-                    <img
+                    <Image
+                      width="1000"
+                      height="600"
                       src={`${this.state.weekly_offer_qs.product.thumbnail}`}
                       alt="#"
                     />
                   </div>
                 </div>
-                <div className="col-lg-6 col-12 padding-left">
+                <div className="col-lg-6 col-12 mt-5 padding-left">
                   <div className="content">
                     <div className="heading-block">
                       {/* <div className="heading-countdown"> */}
@@ -68,9 +89,7 @@ export default class CountDownProducts extends Component {
                           {this.state.weekly_offer_qs.actual_price}
                         </s>
                       </h1>
-                      <div className="coming-time">
-                        <div className="clearfix" data-countdown="2021/02/30" />
-                      </div>
+                      <div className="coming-time"></div>
                     </div>
                   </div>
                 </div>

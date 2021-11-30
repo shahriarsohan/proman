@@ -254,7 +254,7 @@ Version:1.0
 /* Logo */
 .header .logo {
   float: left;
-  margin-top: 35px;
+  /* margin-top: 35px; */
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   transition: all 0.4s ease;
@@ -386,7 +386,7 @@ Version:1.0
 }
 .header.shop .logo {
   float: left;
-  margin-top: 35px;
+  /* margin-top: 35px; */
 }
 .header.shop .top-contact {
   margin-top: 0px;
@@ -642,7 +642,7 @@ Version:1.0
 }
 .header.shop .logo {
   float: left;
-  margin: 19px 0 0;
+  margin: 0px 0 0;
 }
 .header.shop .top-contact {
   margin-top: 0px;

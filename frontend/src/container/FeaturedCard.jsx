@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import Image from "next/image";
 
 import QuickLookModal from "../container/QuickLookModal";
 import Link from "next/link";
@@ -18,7 +19,7 @@ class FeaturedCard extends React.Component {
     //console.log(slug);
 
     axios
-      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
+      .get(`https://proman.com.bd/api/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )
@@ -38,7 +39,9 @@ class FeaturedCard extends React.Component {
         <div className="single-product">
           <div className="product-img">
             <a href="product-details.html">
-              <img
+              <Image
+                width="400"
+                height="500"
                 className="default-img"
                 src={img ? `${img}` : "https://via.placeholder.com/550x750"}
                 alt={this.props.name}

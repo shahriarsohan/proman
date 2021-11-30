@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const ShopGirdSingle = ({ product }) => {
   //console.log(product);
@@ -9,8 +10,10 @@ const ShopGirdSingle = ({ product }) => {
         <div className="product-img">
           <Link href={`/details/${product.slug}`}>
             <a>
-              <img
-                className="default-img"
+              <Image
+                width="300"
+                height="400"
+                // className="default-img"
                 src={
                   product.thumbnail
                     ? `${product.thumbnail}`
@@ -63,9 +66,11 @@ const ShopGirdSingle = ({ product }) => {
           {product.discount_price ? (
             <div className="product-price">
               <span style={{ marginRight: "10px" }}>
-                ${product.discount_price}
+                <img width="15px" height="15px" src="/images/taka.png" />
+                {product.discount_price}
                 <span style={{ marginLeft: "10px" }} className="old">
-                  ${product.price}
+                  <img width="15px" height="15px" src="/images/taka.png" />
+                  {product.price}
                 </span>
               </span>
               {product.few_left && (
@@ -82,7 +87,8 @@ const ShopGirdSingle = ({ product }) => {
           ) : (
             <div className="product-price">
               <span style={{ marginLeft: "10px" }} className="old">
-                ${product.price}
+                <img width="15px" height="15px" src="/images/taka.png" />
+                {product.price}
               </span>
             </div>
           )}

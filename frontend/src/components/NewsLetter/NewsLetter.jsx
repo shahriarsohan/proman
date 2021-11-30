@@ -13,13 +13,12 @@ export default class NewsLetter extends Component {
                   <h4>Newsletter</h4>
                   <p>
                     {" "}
-                    Subscribe to our newsletter and get <span>10%</span> off
-                    your first purchase
+                    Subscribe to our newsletter and get <span>5%</span> off your
+                    first purchase
                   </p>
                   <form
-                    action="mail/mail.php"
-                    method="get"
-                    target="_blank"
+                    // method="Post"
+                    // target="_blank"
                     className="newsletter-inner"
                   >
                     <input

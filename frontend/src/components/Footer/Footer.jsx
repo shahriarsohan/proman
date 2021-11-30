@@ -81,7 +81,7 @@ export default class Footer extends Component {
                             <img
                               // height="100px"
                               // width="100px"
-                              src="/images/proman-logo-two.png"
+                              src="/images/proman-logo-new.png"
                               alt="#"
                             />
                           </a>
@@ -90,12 +90,12 @@ export default class Footer extends Component {
                       <p className="text">
                         Founded in 2021, Proman is a lifestyle fashion brand
                         that makes creative, distinctive fashion for the trendy,
-                        contemporary Indian.
+                        contemporary Bangali Youth.
                       </p>
                       <p className="call">
                         Got Question? Call us 24/7
                         <span>
-                          <a href="tel:+8801786910645">+8801786 910 645</a>
+                          <a href="tel:+8801309466923">+88013 09466 923</a>
                         </span>
                       </p>
                     </div>
@@ -113,20 +113,23 @@ export default class Footer extends Component {
                       <h4>Information</h4>
                       <ul>
                         <li>
-                          <a href="#">About Us</a>
+                          <Link href="/about-us/our-story">About Us</Link>
+                        </li>
+
+                        <li>
+                          <a target="_blank" href="/terms-and-condition">
+                            Terms &amp; Conditions
+                          </a>
                         </li>
                         <li>
-                          <a href="#">Faq</a>
+                          <a href="/contact-us">Contact Us</a>
                         </li>
                         <li>
-                          <a href="#">Terms &amp; Conditions</a>
+                          <Link href="/careers">Careers</Link>
                         </li>
-                        <li>
-                          <a href="#">Contact Us</a>
-                        </li>
-                        <li>
+                        {/* <li>
                           <a href="#">Help</a>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                     {/* End Single Widget */}
@@ -143,19 +146,21 @@ export default class Footer extends Component {
                       <h4>Customer Service</h4>
                       <ul>
                         <li>
-                          <a href="#">Payment Methods</a>
+                          <a href="#">Faq</a>
                         </li>
+
                         <li>
-                          <a href="#">Money-back</a>
-                        </li>
-                        <li>
-                          <a href="#">Returns</a>
+                          <a href="/refund-and-return" target="_blank">
+                            Returns
+                          </a>
                         </li>
                         <li>
                           <a href="#">Shipping</a>
                         </li>
                         <li>
-                          <a href="#">Privacy Policy</a>
+                          <a href="/privacy-policy" target="_blank">
+                            Privacy Policy
+                          </a>
                         </li>
                       </ul>
                     </div>
@@ -174,20 +179,23 @@ export default class Footer extends Component {
                       {/* Single Widget */}
                       <div className="contact">
                         <ul>
-                          <li>NO. 342 - London Oxford Street.</li>
-                          <li>012 United Kingdom.</li>
-                          <li>info@eshop.com</li>
-                          <li>+032 3456 7890</li>
+                          <li>H 01,Road 04,Block-A,Section-10</li>
+                          <li>Mirpur, Dhaka-1216</li>
+                          <li>care@proman.com.bd</li>
+                          <li>+88013 09466 923</li>
                         </ul>
                       </div>
                       {/* End Single Widget */}
                       <ul>
                         <li>
-                          <a href="#">
+                          <a
+                            target="_blank"
+                            href="https://www.facebook.com/proman.com.bd"
+                          >
                             <i className="ti-facebook" />
                           </a>
                         </li>
-                        <li>
+                        {/* <li>
                           <a href="#">
                             <i className="ti-twitter" />
                           </a>
@@ -196,9 +204,12 @@ export default class Footer extends Component {
                           <a href="#">
                             <i className="ti-flickr" />
                           </a>
-                        </li>
+                        </li> */}
                         <li>
-                          <a href="#">
+                          <a
+                            target="_blank"
+                            href="https://www.instagram.com/proman.clothing/"
+                          >
                             <i className="ti-instagram" />
                           </a>
                         </li>
@@ -218,9 +229,8 @@ export default class Footer extends Component {
                   <div className="row">
                     <div className="col-lg-6 col-12">
                       <div className="left">
-                        <p>
-                          Copyright © 2021 <a target="_blank">Proman LTD.</a> -
-                          All Rights Reserved.
+                        <p style={{ color: "#979797" }}>
+                          Copyright © 2021 Proman All Rights Reserved.
                         </p>
                       </div>
                     </div>

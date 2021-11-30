@@ -49,28 +49,31 @@ class CreateOrderApiView(views.APIView):
         cart_qs = FinalCart.objects.filter(
             user=user, expires=False
         ).first()
-        ordered_date = timezone.now()
-        order_qs = Order.objects.filter(
-            user=user,
-            ordered=False,
-            products__id=cart_qs.id
-        ).first()
-        address_qs = Address.objects.filter(
-            user=user,
-        )
-        if order_qs:
-            order_qs.sub_total = cart_qs.sub_total
-            order_qs.save()
-            return response.Response(status=status.HTTP_200_OK)
-        else:
-            new_order = Order.objects.create(
+        if cart_qs:
+            ordered_date = timezone.now()
+            order_qs = Order.objects.filter(
                 user=user,
-                ordered_date=ordered_date,
-                products=cart_qs,
-                order_status='created',
-                sub_total=cart_qs.sub_total,
+                ordered=False,
+                products__id=cart_qs.id
+            ).first()
+            address_qs = Address.objects.filter(
+                user=user,
             )
-            return response.Response(status=status.HTTP_200_OK)
+            if order_qs:
+                order_qs.sub_total = cart_qs.sub_total
+                order_qs.save()
+                return response.Response(status=status.HTTP_200_OK)
+            else:
+                new_order = Order.objects.create(
+                    user=user,
+                    ordered_date=ordered_date,
+                    products=cart_qs,
+                    order_status='created',
+                    sub_total=cart_qs.sub_total,
+                )
+                return response.Response(status=status.HTTP_200_OK)
+        else:
+            return Response({'msg': 'no active cart found'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SavePricingDetails(views.APIView):
@@ -142,7 +145,7 @@ class AssosiateOrderWithOrder(views.APIView):
                 order_qs.address = address_qs
                 order_qs.save()
                 return response.Response({"msg": "Address associated with the order"}, status=status.HTTP_200_OK)
-        return response.Response({"msg": "Something went wrong"})
+        return response.Response({"msg": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateDeliveryCharge(views.APIView):
@@ -161,7 +164,7 @@ class UpdateDeliveryCharge(views.APIView):
                             order_qs.shipping = 60
                             order_qs.save()
                         elif region == 'rajshahi':
-                            order_qs.shipping = 150
+                            order_qs.shipping = 100
                             order_qs.save()
                         elif region == 'rangpur':
                             order_qs.shipping = 100
@@ -199,6 +202,8 @@ class UpdateTotal(views.APIView):
             order_qs.total = total
             order_qs.save()
             return response.Response({"msg": "Order total updated"}, status=status.HTTP_200_OK)
+        else:
+            return Response({'msg': 'no active cart found'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetTotalPricing(views.APIView):
@@ -216,7 +221,7 @@ class GetTotalPricing(views.APIView):
             else:
                 return response.Response(status=status.HTTP_404_NOT_FOUND)
         else:
-            return response.Response({'msg': 'false'}, status=status.HTTP_200_OK)
+            return response.Response({'msg': 'Authentication error'}, status=status.HTTP_200_OK)
 
 
 class OrdercofirmApiView(views.APIView):
