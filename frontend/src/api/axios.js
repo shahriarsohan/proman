@@ -9,8 +9,8 @@ if (!ISSERVER) {
   var token = localStorage.getItem("access_token");
 }
 
-console.log("token", token);
-console.log("headers", headers);
+// console.log("token", token);
+// console.log("headers", headers);
 
 if (token) {
   headers.Authorization = `Token ${token}`;

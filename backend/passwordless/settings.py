@@ -1,11 +1,21 @@
 import os
 from pathlib import Path
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
-DEBUG = True
+DEBUG = False
+
+if DEBUG == False:
+    sentry_sdk.init(
+        dsn="https://a0cf0173df224328aa46f72e17ec2aa7@o1089788.ingest.sentry.io/6105239",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True
+    )
 
 ALLOWED_HOSTS = [
     '*', 'proman-prod.eba-faitp54h.ap-south-1.elasticbeanstalk.com']
@@ -36,8 +46,13 @@ THIRD_PARTY_APPS = [
 ]
 
 
-LOCAL_APPS = ['products', 'users', 'wishlist',
-              'orders', 'address', 'cart', 'coupon', 'userprofile', 'proman_phone_login', 'payment', 'contact']
+LOCAL_APPS = [
+    'products', 'users', 'wishlist',
+    'orders', 'address', 'cart',
+    'coupon', 'userprofile', 'proman_phone_login',
+    'payment', 'contact'
+]
+
 
 INSTALLED_APPS = SYSTEM_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -122,20 +137,31 @@ PASSWORDLESS_AUTH = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-    'https://proman.clothing'
+    'https://proman.com.bd'
 ]
 
 CELERY_CACHE_BACKEND = 'default'
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': 'redis://127.0.0.1:6379',
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#         }
-#     }
-# }
+if DEBUG == False:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': 'redis://proman.idnaao.ng.0001.aps1.cache.amazonaws.com:6379',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

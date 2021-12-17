@@ -22,7 +22,7 @@ export const fetchUserOrder = () => (dispatch) => {
   axios
     .get("cart/user-cart")
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(fetchUserCartPricing());
       dispatch({
         type: FETCH_USER_CART,
@@ -45,7 +45,7 @@ export const fetchUserCartPricing = () => (dispatch) => {
   axios
     .get("cart/cart-pricing-details")
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch({
         type: FETCH_PRICING_DETAILS_SUCCESS,
         payload: res.data,

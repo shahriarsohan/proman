@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   BrowserView,
   MobileView,
@@ -78,9 +79,9 @@ export default class Footer extends Component {
                       <div className="logo">
                         <Link href="/">
                           <a>
-                            <img
-                              // height="100px"
-                              // width="100px"
+                            <Image
+                              height="100px"
+                              width="500px"
                               src="/images/proman-logo-new.png"
                               alt="#"
                             />
@@ -236,7 +237,12 @@ export default class Footer extends Component {
                     </div>
                     <div className="col-lg-6 col-12">
                       <div className="right">
-                        <img src="/images/ssl-logo-1.png" alt="#" />
+                        <Image
+                          height="20px"
+                          width="500px"
+                          src="/images/ssl-logo-1.png"
+                          alt="#"
+                        />
                       </div>
                     </div>
                   </div>

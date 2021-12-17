@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import { Provider } from "react-redux";
-
+import "reactjs-popup/dist/index.css";
 import mixpanel from "mixpanel-browser";
 import AlertTemplate from "react-alert-template-basic";
 
@@ -146,6 +146,10 @@ function MyApp({ Component, pageProps }) {
           <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/easing.js"></script>
           <script src="https://proman-static.s3.ap-south-1.amazonaws.com/js/active.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+          <script
+            src="https://kit.fontawesome.com/51af182525.js"
+            crossorigin="anonymous"
+          ></script>
           <script src="https://proman-production.s3.ap-south-1.amazonaws.com/freshpaint.js"></script>
           <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -159,6 +163,7 @@ function MyApp({ Component, pageProps }) {
           ></script>
           <script src="https://proman-production.s3.ap-south-1.amazonaws.com/livechat.js"></script>
           <script src="/test.js"></script>
+          <script src="https://proman-production.s3.ap-south-1.amazonaws.com/gtag.js"></script>
         </Head>
         <Component {...pageProps} />
       </AlertProvider>

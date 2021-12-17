@@ -155,17 +155,20 @@ pre_save.connect(pre_save_create_order_id, sender=Order)
 def pre_save_order_confirm(sender, instance, *args, **kwargs):
     try:
         if instance.ordered != Order.objects.get(id=instance.id).ordered and instance.ordered == True:
-            # qs = User.objects.get(user=instance.user)
-            print(instance.user)
-            print('send message')
-            message = "প্রিয় মার্চেন্ট, আপনার প্রস্তাবিত  অর্ডারটি ডেলিভারি সম্পন্ন হয়েছে। \nধন্যবাদ\nROMEX DELIVERY SERVICE."
+
+            message = "Dear Customer, Your Order Placed successfully.Thanks For Shopping With Us। \nProman."
             data = {'token': token,
                     'to': instance.user,
                     'message': message}
 
             responses = requests.post(url=greenweburl, data=data)
+
             response = responses.text
-            print(response)
+            message_admin = 'New Order Added.Please Have a look at admin dashboard'
+            admin_data = {'token': token,
+                          'to': ['+8801601910645'],
+                          'message': message_admin}
+            admin_responses = requests.post(url=greenweburl, data=admin_data)
 
     except:
         print('not working')

@@ -218,7 +218,7 @@ class Address extends Component {
   };
 
   render() {
-    console.log("regionnnnnnn", this.state.region);
+    // console.log("regionnnnnnn", this.state.region);
 
     return (
       <div>

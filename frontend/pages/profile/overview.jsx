@@ -91,8 +91,8 @@ class Overview extends Component {
 
   render() {
     const { userdata } = this.props;
-    console.log("props data", userdata);
-    console.log("state data", this.state.error);
+    // console.log("props data", userdata);
+    // console.log("state data", this.state.error);
 
     return (
       <div>

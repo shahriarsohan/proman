@@ -995,6 +995,12 @@ class checkout extends Component {
                               {this.state.shipping_charge}
                             </span>
                           </li>
+                          <li>
+                            <Message className="text-center" positive>
+                              <p>Free Home Delivery</p>
+                            </Message>
+                          </li>
+
                           <li className="last">
                             Total
                             <span>

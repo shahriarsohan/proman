@@ -79,10 +79,10 @@ class AllListShop extends Component {
   };
 
   componentWillMount() {
-    console.log(
-      "queryyyyyyyyy",
-      this.props.router.query[Object.keys(this.props.router.query)[0]]
-    );
+    // console.log(
+    //   "queryyyyyyyyy",
+    //   this.props.router.query[Object.keys(this.props.router.query)[0]]
+    // );
     this.setState({
       query: this.props.router.query[Object.keys(this.props.router.query)[0]],
     });

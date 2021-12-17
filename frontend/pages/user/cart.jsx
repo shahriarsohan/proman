@@ -8,8 +8,8 @@ import Service from "../../src/components/Service/Service";
 import { isMobile } from "react-device-detect";
 import LoadingOverlay from "react-loading-overlay";
 import HashLoader from "react-spinners/HashLoader";
-
-import { Checkbox } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
+import { Checkbox, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import {
   fetchUserOrder,
@@ -28,6 +28,7 @@ class Cart extends Component {
       coupon: "",
       couponActivated: false,
       couponActivatedError: false,
+      msg: "",
       isMobile: null,
       isBrowser: null,
     };
@@ -85,13 +86,16 @@ class Cart extends Component {
       .post("https://proman.com.bd/api/v1/coupon/validate-coupon", data, config)
       .then((res) => {
         //console.log(res.data);
-        this.setState({ couponActivated: true }, () =>
-          this.props.fetchUserCartPricing()
+        this.setState(
+          { couponActivated: true, couponActivatedError: false },
+          () => this.props.fetchUserCartPricing()
         );
       })
       .catch((err) =>
         this.setState({
           couponActivatedError: true,
+          couponActivated: false,
+          msg: err.response.data.msg,
         })
       );
   };
@@ -309,27 +313,15 @@ class Cart extends Component {
                   </div>
                 </div>
                 {this.state.couponActivated && (
-                  <div className="coupon-activated">
-                    <img
-                      width="30px"
-                      height="30px"
-                      src="/images/grinning.png"
-                      alt="success"
-                    />
-                    <h4>Yeee! Coupon Activated</h4>
-                  </div>
+                  <Message positive className="text-center">
+                    <Message.Header>Coupon Activated</Message.Header>
+                  </Message>
                 )}
 
                 {this.state.couponActivatedError && (
-                  <div className="coupon-activation-error">
-                    <img
-                      width="30px"
-                      height="30px"
-                      src="/images/face.png"
-                      alt="success"
-                    />
-                    <h4>Crap! Used Already</h4>
-                  </div>
+                  <Message negative className="text-center">
+                    <Message.Header>{this.state.msg}</Message.Header>
+                  </Message>
                 )}
 
                 <div className="button5">

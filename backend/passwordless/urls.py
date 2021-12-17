@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('sdfgdsfg-dsfgdfg-dfgdfg/', admin.site.urls),
+    path('proman-admin-panel-restricted-area/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('social/auth/', include('rest_framework_social_oauth2.urls')),
     path('phone_login/', include('proman_phone_login.urls')),
@@ -24,6 +24,7 @@ urlpatterns = [
     path('v1/contact/', include('contact.api.urls')),
     path('v1/cart/', include('cart.api.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
+
 ]
 
 if settings.DEBUG:

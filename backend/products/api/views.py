@@ -2,8 +2,8 @@ from rest_framework import views
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.response import Response
-from django.utils.decorators import method_decorator  # NEW
-from django.views.decorators.cache import cache_page  # NEW
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404
 from rest_framework.serializers import Serializer
 from django.utils import timezone
@@ -15,6 +15,7 @@ now = timezone.now()
 
 
 class ProductsListApiView(views.APIView):
+    # @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         hair_care_qs = Products.objects.filter(category="hair_care")
         skin_care_qs = Products.objects.filter(category="skin_care")
@@ -33,6 +34,7 @@ class ProductsListApiView(views.APIView):
 
 
 class GetTrendingProducts(views.APIView):
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         trending_queryset = Products.objects.filter(
             trending=True).order_by('-timestamp')
@@ -43,6 +45,7 @@ class GetTrendingProducts(views.APIView):
 
 
 class GetBestSellingProducts(views.APIView):
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         best_selling_queryset = Products.objects.filter(
             best_selling=True).order_by('-timestamp')
@@ -52,6 +55,7 @@ class GetBestSellingProducts(views.APIView):
 
 
 class FeaturedProducts(views.APIView):
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         featured_queryset = Products.objects.filter(
             featured=True).order_by('-timestamp')
@@ -61,6 +65,7 @@ class FeaturedProducts(views.APIView):
 
 
 class ProductsDetailsApiView(views.APIView):
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         slug = self.kwargs['slug']
         queryset = Products.objects.all()
@@ -85,19 +90,11 @@ def infinte_scroll(request):
     limit = request.GET.get('limit')
     offset = request.GET.get('offset')
     cat = request.query_params.get('cat')
-    # size = request.query_params.get('size')
-    # print(size)
-    print('cat', cat)
     if cat is None:
         return Products.objects.all()[int(offset): int(offset) + int(limit)]
     else:
         filter_kwargs = {
             'category__icontains': cat,
-            # 's_size__iexact': size,
-            # 'm_size__iexact': size,
-            # 'l_size__iexact': size,
-            # 'xl_size__iexact': size,
-            # 'xxl_size__iexact': size,
         }
 
         return Products.objects.filter(**filter_kwargs)[int(offset): int(offset) + int(limit)]
@@ -106,6 +103,7 @@ def infinte_scroll(request):
 class ProductsInfiniteScrollView(generics.ListAPIView):
     serializer_class = ProductsSerializer
 
+    # @method_decorator(cache_page(60*60*2))
     def get_queryset(self, **kwargs):
         qs = infinte_scroll(self.request)
         return qs
@@ -139,6 +137,7 @@ def is_there_more_query(request):
 class GetProductsBasedOnQuery(generics.ListAPIView):
     serializer_class = ProductsSerializer
 
+    @method_decorator(cache_page(60*60*2))
     def get_queryset(self, **kwargs):
         qs = infinte_scroll_query(self.request)
         return qs
@@ -153,6 +152,7 @@ class GetProductsBasedOnQuery(generics.ListAPIView):
 
 
 class GetNewProducts(views.APIView):
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         featured_queryset = Products.objects.filter().order_by(
             '-timestamp')[:10]
@@ -163,6 +163,7 @@ class GetNewProducts(views.APIView):
 
 
 class GetTrendingProductsTwo(views.APIView):
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         featured_queryset = Products.objects.filter(trending=True).order_by(
             '-timestamp')[:4]
@@ -205,6 +206,7 @@ def is_there_more_cat(request):
 class GetProductsBasedOnCat(generics.ListAPIView):
     serializer_class = ProductsSerializer
 
+    @method_decorator(cache_page(60*60*2))
     def get_queryset(self, **kwargs):
         qs = infinte_scroll_cat(self.request)
         return qs
@@ -238,7 +240,7 @@ class ProductsFetchByCategory(views.APIView):
 
 
 class GetDailyDealsApiView(views.APIView):
-    # @method_decorator(cache_page(60*60*2))
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
 
         try:

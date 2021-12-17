@@ -67,7 +67,7 @@ class success extends Component {
 
   render() {
     const { userOrder, query, products } = this.state;
-    console.log("query", query);
+    // console.log("query", query);
 
     // if (this.state.products){
     //   const choices =
@@ -76,7 +76,7 @@ class success extends Component {
     var date = moment()
       .add(3, "d") //replace 2 with number of days you want to add
       .toDate();
-    console.log(date);
+    // console.log(date);
     return (
       <>
         <NavbarDetailsPage isMobile={this.state.isMobile} />
@@ -106,7 +106,7 @@ class success extends Component {
                       </div>
                       <div className="col">
                         {" "}
-                        <strong>Shipping BY:</strong> <br /> Redx, |{" "}
+                        <strong>Shipping BY:</strong> <br /> Pathao, |{" "}
                         <i className="fa fa-phone" /> +০৯৬১০০০৭৩৩৯{" "}
                       </div>
                       <div
@@ -168,7 +168,7 @@ class success extends Component {
                         {" "}
                         <i className="fas fa-people-carry" />{" "}
                       </span>{" "}
-                      <span className="text">Ready for pickup</span>{" "}
+                      <span className="text">Ready for delivery</span>{" "}
                     </div>
                   </div>
                   <hr />

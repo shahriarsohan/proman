@@ -213,7 +213,7 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("categorrrrrrrryyyy", this.state.cat);
+    // console.log("categorrrrrrrryyyy", this.state.cat);
     return (
       <>
         <NavbarDetailsPage

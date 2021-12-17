@@ -65,7 +65,7 @@ class SideNav extends Component {
               </Link>
               <a>Best Selling</a>
               <a>Featured</a>
-              <Link href="/contact-us">
+              <Link href="/daily-deals">
                 <a>Daily Deal</a>
               </Link>
               <div className="dropdown-button">
@@ -136,39 +136,45 @@ class SideNav extends Component {
                 <a>Trend</a>
                 <a>Programming</a> */}
               </div>
-              <a>Search</a>
+              {/* <a>Search</a> */}
             </ul>
           </div>
         </div>
 
         <div className="main-cat">
-          <h4>Contact us</h4>
+          <h4>My Profile</h4>
 
           <div className="mobile-sidebar">
             <ul className="sidebar-items">
-              <a>Clients</a>
-              <a>Contact</a>
-              <div className="dropdown-button">
-                <a>Dropdown</a>
-                <i class="fa fa-caret-down"></i>
-              </div>
-
-              <div
-                class={
-                  this.state.openDropdown
-                    ? "dropdown1-container-active"
-                    : "dropdown1-container"
-                }
-              >
-                <a>Link 1</a>
-                <a>Link 2</a>
-                <a>Link 3</a>
-              </div>
-              <a>Search</a>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+              <Link href="/profile/overview">
+                <a>My Account</a>
+              </Link>
+              <Link href="/profile/overview">
+                <a>My Order</a>
+              </Link>
+              <Link href="profile/wishlist">
+                <a>My Wishlist</a>
+              </Link>
             </ul>
           </div>
         </div>
+        <div className="main-cat">
+          <h4>About Us</h4>
 
+          <div className="mobile-sidebar">
+            <ul className="sidebar-items">
+              <Link href="/about-us/our-story">
+                <a>Our Story</a>
+              </Link>
+              <Link href="/contact-us">
+                <a>Contact Us</a>
+              </Link>
+            </ul>
+          </div>
+        </div>
         <div className="sidebar-social-icon">
           <a href="">
             <i class="fab fa-facebook-f"></i>

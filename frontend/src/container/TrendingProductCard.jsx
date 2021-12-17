@@ -132,7 +132,7 @@ class TrendingProductCard extends Component {
                     src={
                       this.props.thumbnail
                         ? `${this.props.thumbnail}`
-                        : "https://via.placeholder.com/550x750"
+                        : "/images/default-thumb.png"
                     }
                     height="500"
                     width="400"
@@ -199,11 +199,11 @@ class TrendingProductCard extends Component {
                       {this.props.price}
                     </span>
                   </span>
-                  {this.props.few_left && (
+                  {/* {this.props.few_left && (
                     <div className="sellingFastWrapperForProduct-few">
-                      <p>Few Left</p>
+                      <p style={{ fontSize: "8px" }}>Few Left</p>
                     </div>
-                  )}
+                  )} */}
                   {this.props.out_of_stock && (
                     <div className="sellingFastWrapperForProduct">
                       <p>Out of stock</p>

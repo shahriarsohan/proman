@@ -100,35 +100,39 @@ class SaveShippingCharge(views.APIView):
         if region is not None:
             if order_qs:
                 if region == 'dhaka':
-                    order_qs.shipping = 60
-                    order_qs.total = order_qs.sub_total + 60
+                    order_qs.shipping = 0
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 elif region == 'rajshahi':
                     order_qs.shipping = 150
-                    order_qs.total = order_qs.sub_total + 150
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 elif region == 'rangpur':
                     order_qs.shipping = 100
-                    order_qs.total = order_qs.sub_total + 100
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 elif region == 'chattogram':
                     order_qs.shipping = 100
-                    order_qs.total = order_qs.sub_total + 100
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 elif region == 'khulna':
                     order_qs.shipping = 100
-                    order_qs.total = order_qs.sub_total + 100
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 elif region == 'shylhet':
                     order_qs.shipping = 100
-                    order_qs.total = order_qs.sub_total + 100
+                    order_qs.total = order_qs.sub_total + 0
+                    order_qs.save()
+                elif region == 'mymensingh':
+                    order_qs.shipping = 100
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 elif region == 'barishal':
                     order_qs.shipping = 100
-                    order_qs.total = order_qs.sub_total + 100
+                    order_qs.total = order_qs.sub_total + 0
                     order_qs.save()
                 else:
-                    order_qs.shipping = 60
+                    order_qs.shipping = 0
                     order_qs.save()
 
         return response.Response({'msg': "Shipping charge updated successfully"}, status=status.HTTP_200_OK)
@@ -161,28 +165,32 @@ class UpdateDeliveryCharge(views.APIView):
                     print(region)
                     if region is not None:
                         if region == 'dhaka':
-                            order_qs.shipping = 60
+                            order_qs.shipping = 0
                             order_qs.save()
                         elif region == 'rajshahi':
-                            order_qs.shipping = 100
+                            order_qs.shipping = 0
                             order_qs.save()
                         elif region == 'rangpur':
-                            order_qs.shipping = 100
+                            order_qs.shipping = 0
                             order_qs.save()
                         elif region == 'chattogram':
-                            order_qs.shipping = 100
+                            order_qs.shipping = 0
                             order_qs.save()
                         elif region == 'khulna':
-                            order_qs.shipping = 100
+                            order_qs.shipping = 0
                             order_qs.save()
                         elif region == 'shylhet':
-                            order_qs.shipping = 100
+                            order_qs.shipping = 0
                             order_qs.save()
                         elif region == 'barishal':
-                            order_qs.shipping = 100
+                            order_qs.shipping = 0
+                            order_qs.save()
+                        elif region == 'mymensingh':
+                            order_qs.shipping = 0
+                            order_qs.total = order_qs.sub_total + 0
                             order_qs.save()
                         else:
-                            order_qs.shipping = 60
+                            order_qs.shipping = 0
                             order_qs.save()
                     return response.Response({"msg": "Shipping charge updated"}, status=status.HTTP_200_OK)
         if order_qs.free_delivery:
@@ -227,7 +235,6 @@ class GetTotalPricing(views.APIView):
 class OrdercofirmApiView(views.APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
-        print('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', user)
         order_qs = Order.objects.filter(user=user, ordered=False).first()
         print('order_qs', order_qs)
         payment_method = request.data.get('payment_method', None)

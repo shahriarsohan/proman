@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default class MediumBanner extends Component {
   render() {
@@ -10,19 +11,19 @@ export default class MediumBanner extends Component {
             {/* Single Banner  */}
             <div className="col-lg-6 col-md-6 col-12">
               <div className="single-banner">
-                <img
+                <Image
                   height="615"
                   width="1000"
                   src="/images/10_off.png"
                   alt="#"
                 />
                 <div className="content">
-                  <p>Man's Collectons</p>
+                  <p>Winter's Collectons</p>
                   <h3>
-                    Man's items <br />
+                    Winter's items <br />
                     Up to<span> 10%</span>
                   </h3>
-                  <a href="#">Shop Now</a>
+                  <Link href="/shop/all">Shop Now</Link>
                 </div>
               </div>
             </div>
@@ -30,12 +31,14 @@ export default class MediumBanner extends Component {
             {/* Single Banner  */}
             <div className="col-lg-6 col-md-6 col-12">
               <div className="single-banner">
-                <img
-                  height="615"
-                  width="1000"
-                  src="/images/be_wise.gif"
-                  alt="#"
-                />
+                <Link href="/details/sweet-corn-color-hoddie">
+                  <Image
+                    height="615"
+                    width="1000"
+                    src="/images/be_wise.gif"
+                    alt="#"
+                  />
+                </Link>
                 {/* <div className="content">
                   <p>shoes women</p>
                   <h3>

@@ -41,7 +41,7 @@ class Home extends Component {
 
         <HeroSlider />
 
-        <PromotionalSlider />
+        {/* <PromotionalSlider /> */}
 
         <SmallBanner />
         <Featuredcat />

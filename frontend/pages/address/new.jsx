@@ -219,8 +219,8 @@ class NewAddress extends Component {
         // if (res.status === 201) {
         //   this.props.router.push("/user/checkout");
         // }
-        console.log(res.status);
-        console.log(this.props.router);
+        // console.log(res.status);
+        // console.log(this.props.router);
         // if (this.props.router.query.redirectURL) {
         this.props.router.push(this.props.router.query.redirectURL);
         // } else {

@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
     case DELETE_FROM_CART_START:
       return { ...state, loading: true };
     case DELETE_FROM_CART:
-      console.log(action.payload);
+      // console.log(action.payload);
       return Object.assign({}, state, {
         data: [...state.data.filter((item) => item.id !== action.payload)],
         loading: false,

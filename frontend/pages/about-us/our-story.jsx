@@ -53,17 +53,18 @@ class AboutUs extends Component {
                 </p>
                 <div className="detail-content">
                   <p className="head">
-                    Society perceives Bewakoof as stupid. But what does society
-                    call Bewakoof? Often, it’s anything different or anything
-                    that’s done differently.
+                    Proman is a lifestyle fashion brand that creates trendy,
+                    creative, distinctive fashions for Bangladeshi youth. Proman
+                    trying to Make an impact through innovation, honesty and
+                    thoughtfulness.
                   </p>
                 </div>
-                <p className="detail-content">
+                {/* <p className="detail-content">
                   Often when people have done the right thing, without caring
                   about what society thinks, they have been called Bewakoof.
                   These are the people who have changed the world and made it a
                   better place.
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
@@ -78,7 +79,7 @@ class AboutUs extends Component {
                     <span style={{ fontWeight: "bold" }}>innovation</span>,
                     <br />
                     <span style={{ fontWeight: "bold" }}>honesty</span>,, and
-                    <span style={{ fontWeight: "bold" }}>thoughtfulness</span>,
+                    <span style={{ fontWeight: "bold" }}> thoughtfulness</span>,
                   </p>
                 </div>
               </div>
@@ -89,7 +90,7 @@ class AboutUs extends Component {
           <div className="row">
             <div className="col-12">
               <p className="explain-title">
-                For us, Bewakoof is the spirit of looking at things differently.
+                For us, Proman is the spirit of looking at things differently.
               </p>
               <div className="explain-body">
                 <p>Trying new things even when success is not guaranteed.</p>
@@ -124,7 +125,7 @@ class AboutUs extends Component {
                   <br />
                   for the{" "}
                   <span style={{ fontWeight: "bolder", fontSize: "35px" }}>
-                    contemporary Indian
+                    contemporary Bangali's
                   </span>
                 </p>
                 <p className="defination-line3">
@@ -141,7 +142,7 @@ class AboutUs extends Component {
           </div>
         </div>
         {/* <div className="company-stats section"> */}
-        <div className="container mb-5">
+        {/* <div className="container mb-5">
           <div className="row">
             <div className="col-lg-3 col-md-3 col-sm-6 col-6">
               <div className="mt-5 mb-5">
@@ -167,9 +168,8 @@ class AboutUs extends Component {
                 <p className="stats-tail">app downloads</p>
               </div>
             </div>
-            {/* </div> */}
           </div>
-        </div>
+        </div> */}
         <div className="story-nutshell section">
           <div className="container">
             <div className="row">
@@ -211,7 +211,7 @@ class AboutUs extends Component {
                 <div className="story-block">
                   <p className="title-story">Homegrown</p>
                   <p className="body-story">
-                    Imagined in India, Made in India.
+                    Imagined in Bangaladesh, Made in Bangaladesh.
                   </p>
                 </div>
               </div>

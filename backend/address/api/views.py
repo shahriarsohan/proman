@@ -13,7 +13,7 @@ class GetUserAddress(views.APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         try:
-            address_qs = Address.objects.filter(user=user).first()
+            address_qs = Address.objects.get(user=user)
             serializer = AddressSerializer(address_qs)
             return response.Response({'user_address': serializer.data, 'user_have_address': True})
         except:

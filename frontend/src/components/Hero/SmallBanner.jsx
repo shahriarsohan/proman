@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default class SmallBanner extends Component {
   render() {
@@ -10,12 +11,15 @@ export default class SmallBanner extends Component {
             {/* Single Banner  */}
             <div className="col-lg-4 col-md-6 col-12">
               <div className="single-banner">
-                <Image
-                  height="615"
-                  width="1000"
-                  src="/images/real_comfort.png"
-                  alt="#"
-                />
+                <Link href="/details/relaxed-fit-s-hoodie">
+                  <Image
+                    height="615"
+                    width="1000"
+                    src="/images/real_comfort.png"
+                    alt="#"
+                  />
+                </Link>
+
                 {/* <div className="content">
                   <p>Man's Collectons</p>
                   <h3>
@@ -29,12 +33,15 @@ export default class SmallBanner extends Component {
             {/* Single Banner  */}
             <div className="col-lg-4 col-md-6 col-12">
               <div className="single-banner">
-                <Image
-                  height="615"
-                  width="1000"
-                  src="/images/be_wise.gif"
-                  alt="#"
-                />
+                <Link href="/details/sweet-corn-color-hoddie">
+                  <Image
+                    height="615"
+                    width="1000"
+                    src="/images/be_wise.gif"
+                    alt="#"
+                  />
+                </Link>
+
                 {/* <div className="content">
                   <p>Bag Collectons</p>
                   <h3>
@@ -48,12 +55,15 @@ export default class SmallBanner extends Component {
             {/* Single Banner  */}
             <div className="col-lg-4 col-12">
               <div className="single-banner tab-height">
-                <Image
-                  height="615"
-                  width="1000"
-                  src="/images/full_proof_winter.gif"
-                  alt="#"
-                />
+                <Link href="/details/deer-sequence">
+                  <Image
+                    height="615"
+                    width="1000"
+                    src="/images/full_proof_winter.gif"
+                    alt="#"
+                  />
+                </Link>
+
                 {/* <div className="content">
                   <p>Flash Sale</p>
                   <h3>

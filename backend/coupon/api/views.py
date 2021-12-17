@@ -17,9 +17,12 @@ class ValidateCoupon(views.APIView):
         if coupone_code is None:
             return response.Response({'msg': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            coupon_qs = Coupon.objects.get(
-                code=coupone_code, active=True, valid_from__lte=now, valid_to__gte=now)
-            if coupon_qs:
+            coupon_qs = Coupon.objects.filter(
+                code=coupone_code, active=True, valid_from__lte=now, valid_to__gte=now).first()
+
+            if not coupon_qs:
+                return response.Response({'msg': 'Coupon Not Found Or Expired'}, status=status.HTTP_404_NOT_FOUND)
+            else:
                 coupon_used_before = False
                 order_qs = FinalCart.objects.filter(
                     user=user, expires=False).first()
@@ -27,15 +30,13 @@ class ValidateCoupon(views.APIView):
                 if order_qs.coupon == coupone_code:
                     coupon_used_before = True
                 if coupon_used_before:
-                    return response.Response({'msg': 'coupon_used_before'}, status=status.HTTP_400_BAD_REQUEST)
+                    return response.Response({'msg': 'Coupon Used Already'}, status=status.HTTP_400_BAD_REQUEST)
                 apply_coupon = FinalCart.objects.filter(
                     user=user, expires=False).first()
                 if apply_coupon:
-                    print('workinmgggggggg')
                     apply_coupon.coupon = coupon_qs.code
                     apply_coupon.save()
 
                 else:
                     pass
-                print(order_qs)
-            return response.Response({'msg': 'OK'}, status=status.HTTP_200_OK)
+                return response.Response({'msg': 'Coupon Activated'}, status=status.HTTP_200_OK)
