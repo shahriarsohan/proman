@@ -75,7 +75,7 @@ export const otpSend = (phoneNumber) => (dispatch) => {
   });
 
   axios
-    .post("https://proman.com.bd/api/phone_login/generate/", {
+    .post("http://127.0.0.1:8000/phone_login/generate/", {
       phone_number: phoneNumber,
     })
     .then((res) => {
@@ -99,7 +99,7 @@ export const otpVerify = (data, router) => (dispatch) => {
   });
 
   axios
-    .post("https://proman.com.bd/api/phone_login/validate/", data)
+    .post("http://127.0.0.1:8000/phone_login/validate/", data)
     .then((res) => {
       const token = res.data.token;
       const status = res.data.status;

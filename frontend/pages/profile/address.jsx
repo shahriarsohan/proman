@@ -92,7 +92,7 @@ class Address extends Component {
   fetchAddress = () => {
     this.setState({ loading: true });
     axiosInstance
-      .get("https://proman.com.bd/api/v1/address/user-address")
+      .get("http://127.0.0.1:8000/v1/address/user-address")
       .then((res) => {
         this.setState({
           loading: false,
@@ -431,6 +431,19 @@ class Address extends Component {
                                 /> */}
                             </Form.Group>
                             {/* </div> */}
+                            <Field
+                              as={Form.Input}
+                              name="recipient_landmark"
+                              value={values.recipient_landmark}
+                              control={Input}
+                              error={
+                                this.state.error
+                                  ? this.state.error.recipient_landmark
+                                  : ""
+                              }
+                              label="Landmark"
+                              placeholder="Recipient Landmark"
+                            />
                             <Field
                               as={TextArea}
                               name="street_address"

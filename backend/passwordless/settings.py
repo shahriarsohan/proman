@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 's*wkso3p2o%olg@gy^&^qq(t(4$u=zn^-#4%ase+^00!5v^5(_'
-DEBUG = False
+DEBUG = True
 
 if DEBUG == False:
     sentry_sdk.init(
@@ -284,3 +284,9 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = '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'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+#eCourier Credentials
+USER_ID = 'L2542'
+API_KEY = '1VSU'
+API_SECRET = 'D4Ut2'

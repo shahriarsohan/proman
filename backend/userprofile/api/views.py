@@ -18,3 +18,12 @@ class ProfileEditView(generics.RetrieveUpdateDestroyAPIView):
         obj = get_object_or_404(queryset)
         self.check_object_permissions(self.request, obj)
         return obj
+
+
+class UserWalletAmount(views.APIView):
+    def get(self, request, *args, **kwargs):
+        amount = UserProfile.objects.get(user=request.user)
+        return response.Response({"pro-credit": amount.wallet_amount}, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        print(request.data.get('amount_discount'))

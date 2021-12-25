@@ -63,18 +63,18 @@ class Home extends Component {
 export async function getServerSideProps() {
   // Fetch data from external API
   const trending_res = await axios.get(
-    "https://proman.com.bd/api/v1/products/trending"
+    "http://127.0.0.1:8000/v1/products/trending"
   );
 
   // const weekly_res = await axios.get(
-  //   "https://proman.com.bd/api/v1/products/deal-of-the-week"
+  //   "http://127.0.0.1:8000/v1/products/deal-of-the-week"
   // );
   // console.log("weekly_res", weekly_res.data);
   const bestselling_res = await axios.get(
-    "https://proman.com.bd/api/v1/products/best-selling"
+    "http://127.0.0.1:8000/v1/products/best-selling"
   );
   const featured_res = await axios.get(
-    "https://proman.com.bd/api/v1/products/featured"
+    "http://127.0.0.1:8000/v1/products/featured"
   );
   const bestselling = await bestselling_res.data.bestSelling_qs;
   const trending = await trending_res.data.trending_qs;

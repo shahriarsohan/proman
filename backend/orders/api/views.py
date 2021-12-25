@@ -1,4 +1,5 @@
-
+from django.conf import settings
+import requests
 import string
 import random
 from orders.api.serializers import OrderSerailizers
@@ -236,7 +237,6 @@ class OrdercofirmApiView(views.APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
         order_qs = Order.objects.filter(user=user, ordered=False).first()
-        print('order_qs', order_qs)
         payment_method = request.data.get('payment_method', None)
         # address_qs = Address.objects.filter(user=request.user).first()
         # if not address_qs:
@@ -359,3 +359,8 @@ class SslCommerzTestIPN(views.APIView):
         )
 
         return Response(data)
+
+
+url = "https://staging.ecourier.com.bd/api/area-list"
+headers = {'USER-ID': settings.USER_ID, 'API-KEY': settings.API_KEY,
+           'API-SECRET': settings.API_SECRET, 'Content-Type': 'application/json'}

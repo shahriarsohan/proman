@@ -18,6 +18,8 @@ class Address(models.Model):
     area = models.CharField(max_length=50, blank=True, null=True)
     street_address = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=100, blank=True, null=True)
+    recipient_landmark = models.CharField(
+        max_length=100, blank=True, null=True)
 
     # def __str__(self):
     #     return self.inside_dahaka_or_outside_dhaka

@@ -244,6 +244,7 @@ class DetailsPage extends Component {
   };
   handleShareButton = () => {
     // Check if navigator.share is supported by the browser
+    alert(navigator.share);
     if (navigator.share) {
       // console.log("Congrats! Your browser supports Web Share API");
       navigator

@@ -6027,3 +6027,174 @@ a:hover {
     display: flex;
     align-items: end;
 }
+
+
+
+#wheel {
+  background-image: url("https://images.bewakoof.com/web/STW-background-1617269373.png")
+}
+
+.spinTheWheelContainer {
+  text-align: center;
+}
+
+.stw-footer {
+  z-index: 31;
+}
+
+.stw-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: #42a2a2;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.coin-wrap {
+  height: 64px;
+  width: calc(100% - 16px);
+  margin: 10px auto 0;
+  background-color: #fdf7ff;
+}
+
+.balance {
+  font-family: HelveticaNeue;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+
+.coin-text span {
+  font-family: HelveticaNeue;
+  font-size: 12px;
+  color: rgba(0,0,0,.5);
+}
+
+.listWrpr img {
+  max-width: 35px;
+  max-height: 35px;
+  object-fit: contain;
+}
+
+.listWrpr p {
+  margin: auto;
+  padding-left: 15px;
+}
+
+.explorePageWrpr  li {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.explorePageWrpr  li {
+  padding: 20px 0;
+}
+
+.explorePageWrpr p {
+  font-weight: bold;
+}
+
+.widgetImg {
+  width: 150px;
+  height: 140px;
+  padding : 10px
+
+}
+
+.widgetImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.popularCategories {
+  font-family: montserrat-bold,sans-serif;
+  margin-top: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,400;1,500;1,900&display=swap');
+
+.categoriesTitle {
+  font-size: 20px;
+  margin-bottom: 15px;
+  padding-top : 10px;
+  font-weight: bold
+}
+
+.exploreTitle {
+  font-size: 20px;
+  font-weight: bold
+}
+
+
+.refer-text {
+  padding-top  : 15px;
+  text-align: center;
+}
+
+.refer-button{
+  display : flex;
+  padding : 50px;
+  padding-bottom : 10px;
+  justify-content : space-between;
+  align-items : center
+}
+
+.referralBlockText {
+  color: #000;
+}
+
+.refer-copy {
+  text-align: center
+}
+
+.referralBlockCode {
+  display: inline-block;
+  font-size: 14px;
+  border: 1px dashed #42a2a2;
+  color: #000;
+  border-radius: 5px;
+  text-align: center;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 5px;
+padding-bottom: 5px;
+}
+
+.instructionsCard .instructionsTitle {
+  font-size: 12px;
+  margin-bottom: 14px;
+  margin-top: 20px;
+}
+
+.instructionsContent li {
+  font-size: 11px;
+  line-height: 1.45;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: start;
+}
+
+.instructionsContentBullet {
+  display: inline-block;
+  background-color: #443dc4;
+  color: #fff;
+  font-size: 9px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.instructionsContent li .instructionsContentText {
+  line-height: 1.45;
+}
+
+.instructionsContentBullet {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+.instructionsTitle {
+  color: #000;
+}

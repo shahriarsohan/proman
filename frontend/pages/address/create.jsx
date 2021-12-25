@@ -163,7 +163,7 @@ class NewAddress extends Component {
       },
     };
     axios
-      .post("https://proman.com.bd/api/v1/address/create", data, config)
+      .post("http://127.0.0.1:8000/v1/address/create", data, config)
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         //console.log(res);

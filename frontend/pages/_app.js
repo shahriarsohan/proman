@@ -10,6 +10,7 @@ import { transitions, positions, Provider as AlertProvider } from "react-alert";
 // import "semantic-ui-css/semantic.min.css";
 import "react-notifications/lib/notifications.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+// import "react-wheel-of-prizes/";
 import "react-phone-number-input/style.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "slick-carousel/slick/slick.css";

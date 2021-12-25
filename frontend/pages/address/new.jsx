@@ -52,6 +52,7 @@ class NewAddress extends Component {
     street_address: "",
     loading: null,
     isMobile: false,
+    recipient_landmark: "",
 
     city_options: [
       // { key: "Aruba", value: "Aruba", text: "Aruba" },
@@ -205,6 +206,7 @@ class NewAddress extends Component {
       area: this.state.area,
       street_address: this.state.street_address,
       zip_code: this.state.zip,
+      recipient_landmark: this.state.recipient_landmark,
     };
     const config = {
       headers: {
@@ -212,7 +214,7 @@ class NewAddress extends Component {
       },
     };
     axios
-      .post("https://proman.com.bd/api/v1/address/create", data, config)
+      .post("http://127.0.0.1:8000/v1/address/create", data, config)
       .then((res) => {
         // this.setState({ loading: false, cart: res.data });
         //console.log(res);
@@ -321,7 +323,6 @@ class NewAddress extends Component {
                     type="text"
                     name="zip"
                     placeholder="Postal Code"
-                    name="zip"
                     value={this.state.zip}
                     onChange={this.handleChange}
                   />
@@ -357,37 +358,30 @@ class NewAddress extends Component {
                   options={countryOptions}
                 />
               </div> */}
-
+              <div className="col-12 mt-3">
+                <div className="form-group">
+                  {/* <label>
+                    Postal Code<span>*</span>
+                  </label> */}
+                  <input
+                    type="text"
+                    name="recipient_landmark"
+                    placeholder="Nearby landmark (Optinal)"
+                    value={this.state.recipient_landmark}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
               <div className="col-lg-12 col-md-12 col-12 mt-3">
                 <TextArea
                   placeholder="Address"
-                  placeholder="Tell us more"
                   value={this.state.street_address}
                   onChange={this.handleChange}
                   label="Address"
                   name="street_address"
-                  placeholder="Address"
                 />
               </div>
 
-              {/* <div className="col-lg-6 col-md-6 col-12">
-                          <div className="form-group">
-                            <label>
-                              Company<span>*</span>
-                            </label>
-                            <select name="company_name" id="company">
-                              <option value="company" selected="selected">
-                                Microsoft
-                              </option>
-                              <option>Apple</option>
-                              <option>Xaiomi</option>
-                              <option>Huawer</option>
-                              <option>Wpthemesgrid</option>
-                              <option>Samsung</option>
-                              <option>Motorola</option>
-                            </select>
-                          </div>
-                        </div> */}
               <div className="col-12">
                 <button className="btn mt-3" type="submit">
                   Save

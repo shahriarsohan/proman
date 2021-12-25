@@ -19,7 +19,7 @@ class BestSellingCard extends React.Component {
     // //console.log(slug);
 
     axios
-      .get(`https://proman.com.bd/api/v1/products/details/${slug}`)
+      .get(`http://127.0.0.1:8000/v1/products/details/${slug}`)
       .then((res) =>
         this.setState({ loading: false, details: res.data.products })
       )

@@ -60,7 +60,7 @@ class Cart extends Component {
     };
 
     axios
-      .post("https://proman.com.bd/api/v1/cart/add-to-order-item", item, config)
+      .post("http://127.0.0.1:8000/v1/cart/add-to-order-item", item, config)
       .then((res) => {
         //console.log(res);
       })
@@ -83,7 +83,7 @@ class Cart extends Component {
       coupon: this.state.coupon,
     };
     axios
-      .post("https://proman.com.bd/api/v1/coupon/validate-coupon", data, config)
+      .post("http://127.0.0.1:8000/v1/coupon/validate-coupon", data, config)
       .then((res) => {
         //console.log(res.data);
         this.setState(

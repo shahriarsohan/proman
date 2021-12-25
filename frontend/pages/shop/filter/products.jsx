@@ -84,7 +84,7 @@ class App extends React.Component {
   loadTrendingProducts = () => {
     //console.log("ok.................");
     axios
-      .get("https://proman.com.bd/api/v1/products/trending-products")
+      .get("http://127.0.0.1:8000/v1/products/trending-products")
       .then((res) => {
         this.setState({
           trendingProducts: res.data.new_qs,
@@ -97,7 +97,7 @@ class App extends React.Component {
     //console.log("loading prod");
     axios
       .get(
-        `https://proman.com.bd/api/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
+        `http://127.0.0.1:8000/v1/products/list-infinite/?limit=${this.state.limit}&offset=${this.state.offset}&cat=${this.state.cat}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -167,7 +167,7 @@ class App extends React.Component {
   updateProducts = (e) => {
     axios
       .get(
-        `https://proman.com.bd/api/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
+        `http://127.0.0.1:8000/v1/products/product-filter-cat/?limit=1&offset=0&cat=${this.state.cat}&size=${this.state.size}`
       )
       .then((res) => {
         const newProducts = res.data.products;
@@ -732,7 +732,7 @@ export async function getServerSideProps(context) {
   console.log("cat =>", context.query.cat);
 
   const details_qs = await axios.get(
-    `https://proman.com.bd/api/v1/products/list-infinite/?limit=8&offset=0`,
+    `http://127.0.0.1:8000/v1/products/list-infinite/?limit=8&offset=0`,
     {
       params: {
         cat: context.query.cat,

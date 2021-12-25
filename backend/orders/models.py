@@ -13,13 +13,13 @@ token = "78357850c4b1950fb49d91adca2e4318"
 User = settings.AUTH_USER_MODEL
 
 order_status = (
-    ('created', 'Created'),
-    ('failed', 'Failed'),
-    ('shipped', 'Shipped'),
-    ('refund', 'Refund'),
-    ('confirm', 'Confirm'),
+    ('created', 'created'),
+    ('confirm', 'confirm'),
+    ('order_processing', 'order_processing'),
     ('picked_by_delivery', 'picked_by_delivery'),
     ('delivery_complete', 'delivery_complete'),
+    ('failed', 'Failed'),
+    ('refund', 'Refund'),
 )
 
 
@@ -54,6 +54,14 @@ class PaymentInfo(models.Model):
     risk_title = models.CharField(max_length=25)
 
 
+PAYMENT_METHOD = (
+    ('COD', 'COD'),
+    ('CCRD', 'CCRD'),
+    ('MPAY', 'MPAY'),
+
+)
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=64, blank=True, null=True)
@@ -73,8 +81,11 @@ class Order(models.Model):
         Address, on_delete=models.SET_NULL, blank=True, null=True)
     delivery_charge = models.ForeignKey(
         DeliveryCharge, on_delete=models.CASCADE, blank=True, null=True)
+    ecourier_tracker_id = models.CharField(
+        max_length=100, blank=True, null=True)
     shipping = models.IntegerField(default=60)
-    payment_method = models.CharField(max_length=50, blank=True, null=True)
+    payment_method = models.CharField(
+        max_length=50, blank=True, null=True, choices=PAYMENT_METHOD)
     payment_number = models.CharField(max_length=100, blank=True, null=True)
     free_delivery = models.BooleanField(default=False)
     being_delivered = models.BooleanField(default=False)
@@ -185,7 +196,50 @@ def pre_payment_save_to_order(sender, instance, *args, **kwargs):
             instance.payment_info = payment_qs
             instance.save()
         else:
-            print('not working')
+            print('not')
 
 
 pre_save.connect(pre_payment_save_to_order, sender=Order)
+
+
+def order_confirm_signal(sender, instance, *args, **kwargs):
+    try:
+        print('id', Order.objects.get(id=instance.id))
+        if instance.order_status != Order.objects.get(id=instance.id).order_status and instance.order_status == 'confirm':
+            url = "https://staging.ecourier.com.bd/api/order-place"
+            headers = {'USER-ID': settings.USER_ID, 'API-KEY': settings.API_KEY,
+                       'API-SECRET': settings.API_SECRET, 'Content-Type': 'application/json'}
+            data = {
+                "recipient_name": "Debashis",
+                "recipient_mobile": "01834795469",
+                "recipient_city": "Dhaka",
+                "recipient_area": "Badda",
+                "recipient_thana": "Badda",
+                "recipient_address": "Full Address",
+                "package_code": "#2416",
+                "product_price": 1500,
+                "payment_method": "COD",
+                "recipient_landmark": "DBBL ATM",
+                "parcel_type": "BOX",
+                "requested_delivery_time": "2019-07-05",
+                "delivery_hour": "any",
+                "recipient_zip": "1212",
+                "pick_hub": " 18490",
+                "product_id": "DAFS",
+                "pick_address": "Gudaraghat new mobile",
+                "comments": "Please handle carefully",
+                "number_of_item": "3",
+                "actual_product_price": 1200,
+                "pgwid": 8888,
+                "pgwtxn_id": "asdasdsad"
+            }
+            r = requests.post(url=url, headers=headers, json=data)
+            json = r.json()
+            id = json.get('ID')
+            print(id)
+            instance.ecourier_tracker_id = id
+    except Exception as e:
+        print('not working', e)
+
+
+pre_save.connect(order_confirm_signal, sender=Order)

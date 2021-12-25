@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://proman.com.bd/api/v1/";
+const baseUrl = "http://127.0.0.1:8000/v1/";
 const headers = {};
 
 const ISSERVER = typeof window === "undefined";
